@@ -1,10 +1,23 @@
 Folder PATH listing
-Volume serial number is 00000160 7478:274D
+Volume serial number is 00000153 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_DB
 |   README.md
 |   structure.txt
 |   
++---docs
+|       001_database_design.md
+|       
 +---dumps
++---scripts
+|       001_create_users.sql
+|       002_create_vendors.sql
+|       003_create_categories.sql
+|       004_create_products.sql
+|       005_create_orders.sql
+|       006_create_order_items.sql
+|       007_create_payments.sql
+|       008_create_reviews.sql
+|       
 \---security
         001_logins.sql
         
