@@ -6,7 +6,7 @@ function App() {
       </h1>
 
       <button className="btn btn-success">
-        Click Me
+        Click here
       </button>
     </div>
   );
