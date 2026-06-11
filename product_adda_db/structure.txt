@@ -1,0 +1,10 @@
+Folder PATH listing
+Volume serial number is 00000160 7478:274D
+C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_DB
+|   README.md
+|   structure.txt
+|   
++---dumps
+\---security
+        001_logins.sql
+        
