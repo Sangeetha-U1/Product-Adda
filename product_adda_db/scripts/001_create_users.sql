@@ -2,7 +2,7 @@
 ===============================================================================
 Table       : users
 Description :
-    Stores basic user information for customers, vendors, and admins.
+    Core authentication and identity table for ProductAdda system.
 ===============================================================================
 */
 
@@ -14,15 +14,22 @@ USE product_adda_db;
 
 CREATE TABLE IF NOT EXISTS users
 (
-    user_id          BIGINT AUTO_INCREMENT NOT NULL,
+    pk_user_id       BINARY(16)      NOT NULL,
 
-    first_name       VARCHAR(100)          NOT NULL,
-    last_name        VARCHAR(100)          NOT NULL,
-    email            VARCHAR(255)          NOT NULL,
-    mobile           VARCHAR(20)           NULL,
+    first_name       VARCHAR(100)    NOT NULL,
+    last_name        VARCHAR(100)    NOT NULL,
 
-    CONSTRAINT pk_users
-        PRIMARY KEY (user_id),
+    email            VARCHAR(255)    NOT NULL,
+    mobile           VARCHAR(20)     NULL,
+
+    password_hash    VARCHAR(255)    NOT NULL,
+
+    is_active        BOOLEAN         NOT NULL DEFAULT TRUE,
+
+    created_at       TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT pk_users_user_id
+        PRIMARY KEY (pk_user_id),
 
     CONSTRAINT uq_users_email
         UNIQUE (email),
@@ -41,8 +48,11 @@ CREATE INDEX idx_users_email
 CREATE INDEX idx_users_mobile
     ON users(mobile);
 
+CREATE INDEX idx_users_is_active
+    ON users(is_active);
+
 -- ============================================================================
--- Table Verification
+-- Verification
 -- ============================================================================
 
 DESCRIBE users;

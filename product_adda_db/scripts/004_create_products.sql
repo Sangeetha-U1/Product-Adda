@@ -2,7 +2,8 @@
 ===============================================================================
 Table       : products
 Description :
-    Stores products listed by vendors under categories.
+    Stores vendor product listings with category mapping, pricing,
+    inventory tracking, and status management.
 ===============================================================================
 */
 
@@ -14,29 +15,31 @@ USE product_adda_db;
 
 CREATE TABLE IF NOT EXISTS products
 (
-    product_id       BIGINT AUTO_INCREMENT NOT NULL,
-    vendor_id        BIGINT                NOT NULL,
-    category_id      BIGINT                NOT NULL,
+    pk_product_id     BINARY(16)        NOT NULL,
+    fk_vendor_id      BINARY(16)        NOT NULL,
+    fk_category_id    BINARY(16)        NOT NULL,
 
-    title            VARCHAR(255)          NOT NULL,
-    description      TEXT                  NULL,
-    price            DECIMAL(10,2)         NOT NULL,
-    stock_quantity   INT                   NOT NULL,
+    title             VARCHAR(255)      NOT NULL,
+    description       TEXT              NULL,
 
-    payment_id       BIGINT                NULL,
-    order_id         BIGINT                NULL,
+    price             DECIMAL(10,2)     NOT NULL,
+    discount_price    DECIMAL(10,2)     NULL,
 
-    CONSTRAINT pk_products
-        PRIMARY KEY (product_id),
+    stock_quantity    INT               NOT NULL DEFAULT 0,
 
-    CONSTRAINT fk_products_vendor
-        FOREIGN KEY (vendor_id)
-        REFERENCES vendors(vendor_id)
+    is_active         BOOLEAN           NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT pk_products_product_id
+        PRIMARY KEY (pk_product_id),
+
+    CONSTRAINT fk_products_vendor_id
+        FOREIGN KEY (fk_vendor_id)
+        REFERENCES vendors(pk_vendor_id)
         ON DELETE CASCADE,
 
-    CONSTRAINT fk_products_category
-        FOREIGN KEY (category_id)
-        REFERENCES categories(category_id)
+    CONSTRAINT fk_products_category_id
+        FOREIGN KEY (fk_category_id)
+        REFERENCES categories(pk_category_id)
         ON DELETE RESTRICT
 );
 
@@ -45,10 +48,10 @@ CREATE TABLE IF NOT EXISTS products
 -- ============================================================================
 
 CREATE INDEX idx_products_vendor_id
-    ON products(vendor_id);
+    ON products(fk_vendor_id);
 
 CREATE INDEX idx_products_category_id
-    ON products(category_id);
+    ON products(fk_category_id);
 
 CREATE INDEX idx_products_title
     ON products(title);
@@ -56,8 +59,11 @@ CREATE INDEX idx_products_title
 CREATE INDEX idx_products_price
     ON products(price);
 
+CREATE INDEX idx_products_is_active
+    ON products(is_active);
+
 -- ============================================================================
--- Table Verification
+-- Verification
 -- ============================================================================
 
 DESCRIBE products;

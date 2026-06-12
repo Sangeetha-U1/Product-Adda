@@ -14,23 +14,41 @@ USE product_adda_db;
 
 CREATE TABLE IF NOT EXISTS payments
 (
-    transaction_id   BIGINT AUTO_INCREMENT NOT NULL,
+    pk_payment_id     BINARY(16)        NOT NULL,
+    fk_order_id       BINARY(16)        NOT NULL,
 
-    payment_status   VARCHAR(50)           NOT NULL,
+    payment_method    VARCHAR(50)       NOT NULL,
+    payment_status    VARCHAR(50)       NOT NULL,
 
-    CONSTRAINT pk_payments
-        PRIMARY KEY (transaction_id)
+    transaction_ref   VARCHAR(255)      NULL,
+    amount_paid       DECIMAL(10,2)     NOT NULL,
+
+    paid_at           TIMESTAMP         NULL,
+
+    CONSTRAINT pk_payments_payment_id
+        PRIMARY KEY (pk_payment_id),
+
+    CONSTRAINT fk_payments_order_id
+        FOREIGN KEY (fk_order_id)
+        REFERENCES orders(pk_order_id)
+        ON DELETE CASCADE
 );
 
 -- ============================================================================
 -- Indexes
 -- ============================================================================
 
+CREATE INDEX idx_payments_order_id
+    ON payments(fk_order_id);
+
 CREATE INDEX idx_payments_status
     ON payments(payment_status);
 
+CREATE INDEX idx_payments_method
+    ON payments(payment_method);
+
 -- ============================================================================
--- Table Verification
+-- Verification
 -- ============================================================================
 
 DESCRIBE payments;

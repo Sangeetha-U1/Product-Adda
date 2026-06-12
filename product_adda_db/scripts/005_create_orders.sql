@@ -2,7 +2,7 @@
 ===============================================================================
 Table       : orders
 Description :
-    Stores customer orders placed in the marketplace.
+    Stores customer orders placed in the ProductAdda marketplace.
 ===============================================================================
 */
 
@@ -14,18 +14,18 @@ USE product_adda_db;
 
 CREATE TABLE IF NOT EXISTS orders
 (
-    order_id        BIGINT AUTO_INCREMENT NOT NULL,
-    customer_id     BIGINT                NOT NULL,
+    pk_order_id      BINARY(16)        NOT NULL,
+    fk_user_id       BINARY(16)        NOT NULL,
 
-    order_status    VARCHAR(50)           NOT NULL,
-    total_amount    DECIMAL(10,2)         NOT NULL,
+    order_status     VARCHAR(50)       NOT NULL,
+    total_amount     DECIMAL(10,2)     NOT NULL,
 
-    CONSTRAINT pk_orders
-        PRIMARY KEY (order_id),
+    CONSTRAINT pk_orders_order_id
+        PRIMARY KEY (pk_order_id),
 
-    CONSTRAINT fk_orders_customer
-        FOREIGN KEY (customer_id)
-        REFERENCES users(user_id)
+    CONSTRAINT fk_orders_user_id
+        FOREIGN KEY (fk_user_id)
+        REFERENCES users(pk_user_id)
         ON DELETE CASCADE
 );
 
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS orders
 -- Indexes
 -- ============================================================================
 
-CREATE INDEX idx_orders_customer_id
-    ON orders(customer_id);
+CREATE INDEX idx_orders_user_id
+    ON orders(fk_user_id);
 
 CREATE INDEX idx_orders_status
     ON orders(order_status);
@@ -43,7 +43,7 @@ CREATE INDEX idx_orders_total_amount
     ON orders(total_amount);
 
 -- ============================================================================
--- Table Verification
+-- Verification
 -- ============================================================================
 
 DESCRIBE orders;

@@ -2,7 +2,7 @@
 ===============================================================================
 Table       : reviews
 Description :
-    Stores product reviews and ratings given by customers.
+    Stores product reviews and ratings submitted by customers.
 ===============================================================================
 */
 
@@ -14,24 +14,24 @@ USE product_adda_db;
 
 CREATE TABLE IF NOT EXISTS reviews
 (
-    review_id      BIGINT AUTO_INCREMENT NOT NULL,
-    product_id     BIGINT                NOT NULL,
-    customer_id    BIGINT                NOT NULL,
+    pk_review_id      BINARY(16)        NOT NULL,
+    fk_product_id     BINARY(16)        NOT NULL,
+    fk_user_id        BINARY(16)        NOT NULL,
 
-    rating         INT                   NOT NULL,
-    review_text    TEXT                  NULL,
+    rating            INT               NOT NULL,
+    review_text       TEXT              NULL,
 
-    CONSTRAINT pk_reviews
-        PRIMARY KEY (review_id),
+    CONSTRAINT pk_reviews_review_id
+        PRIMARY KEY (pk_review_id),
 
-    CONSTRAINT fk_reviews_product
-        FOREIGN KEY (product_id)
-        REFERENCES products(product_id)
+    CONSTRAINT fk_reviews_product_id
+        FOREIGN KEY (fk_product_id)
+        REFERENCES products(pk_product_id)
         ON DELETE CASCADE,
 
-    CONSTRAINT fk_reviews_customer
-        FOREIGN KEY (customer_id)
-        REFERENCES users(user_id)
+    CONSTRAINT fk_reviews_user_id
+        FOREIGN KEY (fk_user_id)
+        REFERENCES users(pk_user_id)
         ON DELETE CASCADE
 );
 
@@ -40,16 +40,16 @@ CREATE TABLE IF NOT EXISTS reviews
 -- ============================================================================
 
 CREATE INDEX idx_reviews_product_id
-    ON reviews(product_id);
+    ON reviews(fk_product_id);
 
-CREATE INDEX idx_reviews_customer_id
-    ON reviews(customer_id);
+CREATE INDEX idx_reviews_user_id
+    ON reviews(fk_user_id);
 
 CREATE INDEX idx_reviews_rating
     ON reviews(rating);
 
 -- ============================================================================
--- Table Verification
+-- Verification
 -- ============================================================================
 
 DESCRIBE reviews;
