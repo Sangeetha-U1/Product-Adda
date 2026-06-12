@@ -10,6 +10,8 @@ public class PublicRoutes {
             // Helath
             "/api/health/app",
             "/api/health/db",
+            // TODO: Only for testing, delete later.
+            "/api/health/repository",
 
             // Auth APIs
             "/api/auth/register",

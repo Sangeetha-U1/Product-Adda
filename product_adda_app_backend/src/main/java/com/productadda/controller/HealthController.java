@@ -1,78 +1,59 @@
 package com.productadda.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.productadda.dto.ApiSuccessResponseDto;
 import com.productadda.dto.HealthResponseDto;
-import com.productadda.exception.ApiException; // Import your custom exception
+import com.productadda.dto.RepositoryHealthResponseDto;
+import com.productadda.service.HealthService;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/health")
+@RequiredArgsConstructor
 public class HealthController {
 
-        @PersistenceContext
-        private EntityManager entityManager;
+        private final HealthService healthService;
 
         @GetMapping("/db")
         public ResponseEntity<ApiSuccessResponseDto<HealthResponseDto>> dbHealth() {
 
-                long startTime = System.currentTimeMillis();
+                HealthResponseDto dto = healthService.getDatabaseHealth();
 
-                try {
-                        Object result = entityManager
-                                        .createNativeQuery("SELECT VERSION()")
-                                        .getSingleResult();
-
-                        long endTime = System.currentTimeMillis();
-
-                        HealthResponseDto dto = HealthResponseDto.builder()
-                                        .status("UP")
-                                        .database("CONNECTED")
-                                        .dbVersion(result != null ? result.toString() : "UNKNOWN")
-                                        .latencyMs(endTime - startTime)
-                                        .build();
-
-                        return ResponseEntity.ok(
-                                        ApiSuccessResponseDto.<HealthResponseDto>builder()
-                                                        .success(true)
-                                                        .message("Database connection successful")
-                                                        .data(dto)
-                                                        .build());
-
-                } catch (Exception e) {
-                        throw new ApiException(
-                                        HttpStatus.SERVICE_UNAVAILABLE,
-                                        "Database connection failed");
-                }
+                return ResponseEntity.ok(
+                                ApiSuccessResponseDto.<HealthResponseDto>builder()
+                                                .success(true)
+                                                .message("Database connection successful")
+                                                .data(dto)
+                                                .build());
         }
 
         @GetMapping("/app")
         public ResponseEntity<ApiSuccessResponseDto<Object>> appHealth() {
 
-                long uptime = java.lang.management.ManagementFactory
-                                .getRuntimeMXBean()
-                                .getUptime();
-
-                String version = "1.0.0"; // can later move to application.properties
-
-                Map<String, Object> data = new HashMap<>();
-                data.put("status", "UP");
-                data.put("uptimeMs", uptime);
-                data.put("version", version);
-
                 return ResponseEntity.ok(
                                 ApiSuccessResponseDto.builder()
                                                 .success(true)
                                                 .message("Application is running")
-                                                .data(data)
+                                                .data(healthService.getApplicationHealth())
+                                                .build());
+        }
+
+        // TODO: Only for testing, delete later.
+        @GetMapping("/repository")
+        public ResponseEntity<ApiSuccessResponseDto<RepositoryHealthResponseDto>> repositoryHealth() {
+
+                RepositoryHealthResponseDto dto = healthService.getRepositoryHealth();
+
+                return ResponseEntity.ok(
+                                ApiSuccessResponseDto.<RepositoryHealthResponseDto>builder()
+                                                .success(true)
+                                                .message("Repository verification successful")
+                                                .data(dto)
                                                 .build());
         }
 }
