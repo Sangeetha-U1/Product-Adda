@@ -1,39 +1,40 @@
 function Login() {
   return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">
-        Login Page
-      </h2>
+    <div className="login-section">
+      <div className="login-card">
 
-      <form className="w-50 mx-auto">
-        <div className="mb-3">
-          <label className="form-label">
-            Email
-          </label>
+        <h2 className="login-title">
+          ProductAdda Login
+        </h2>
+
+        <form>
 
           <input
             type="email"
-            className="form-control"
-            placeholder="Enter email"
+            className="login-input"
+            placeholder="Enter your email"
           />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">
-            Password
-          </label>
 
           <input
             type="password"
-            className="form-control"
-            placeholder="Enter password"
+            className="login-input"
+            placeholder="Enter your password"
           />
-        </div>
 
-        <button className="btn btn-primary w-100">
-          Login
-        </button>
-      </form>
+          <button className="login-btn">
+            Login
+          </button>
+
+          <p style={{ textAlign: "center", marginTop: "15px" }}>
+            Don't have an account? 
+            <a href="/" style={{ color: "#007bff" }}>
+              Register
+            </a>
+          </p>
+
+        </form>
+
+      </div>
     </div>
   );
 }
