@@ -3,12 +3,12 @@ package com.productadda.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "payments")
@@ -32,15 +32,40 @@ public class Payment {
     @Column(name = "payment_method", nullable = false, length = 50)
     private String paymentMethod;
 
-    @Column(name = "payment_status", nullable = false, length = 50)
-    private String paymentStatus;
-
-    @Column(name = "transaction_ref", length = 255)
-    private String transactionRef;
+    /*
+     * =========================================================
+     * FOREIGN KEY → PAYMENT STATUS LOOKUP
+     * =========================================================
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_status_id", nullable = false)
+    private PaymentStatus fkStatus;
 
     @Column(name = "amount_paid", nullable = false, precision = 10, scale = 2)
     private BigDecimal amountPaid;
 
-    @Column(name = "paid_at")
-    private LocalDateTime paidAt;
+    @Column(name = "razorpay_order_id", nullable = true, length = 255)
+    private String razorpayOrderId;
+
+    @Column(name = "razorpay_payment_id", length = 255)
+    private String razorpayPaymentId;
+
+    @Column(name = "razorpay_payment_link_id", length = 255)
+    private String razorpayPaymentLinkId;
+
+    @Column(name = "razorpay_signature", length = 500)
+    private String razorpaySignature;
+
+    @Column(name = "paid_at_utc")
+    private LocalDateTime paidAtUtc;
+
+    /*
+     * ===========================================================================
+     * AUDIT
+     * ===========================================================================
+     */
+
+    @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
+    private LocalDateTime createdAtUtc;
+
 }

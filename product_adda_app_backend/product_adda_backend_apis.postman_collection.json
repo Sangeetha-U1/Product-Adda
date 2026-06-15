@@ -8,28 +8,11 @@
   },
   "item": [
     {
-      "name": "/api/health/db",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/api/health/db",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "api",
-            "health",
-            "db"
-          ]
-        }
-      },
-      "response": [
+      "name": "health",
+      "item": [
         {
-          "name": "200 OK",
-          "originalRequest": {
+          "name": "/api/health/db",
+          "request": {
             "method": "GET",
             "header": [],
             "url": {
@@ -46,83 +29,83 @@
               ]
             }
           },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": null,
-          "header": [
+          "response": [
             {
-              "key": "X-Content-Type-Options",
-              "value": "nosniff"
-            },
-            {
-              "key": "X-XSS-Protection",
-              "value": "0"
-            },
-            {
-              "key": "Cache-Control",
-              "value": "no-cache, no-store, max-age=0, must-revalidate"
-            },
-            {
-              "key": "Pragma",
-              "value": "no-cache"
-            },
-            {
-              "key": "Expires",
-              "value": "0"
-            },
-            {
-              "key": "X-Frame-Options",
-              "value": "DENY"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            },
-            {
-              "key": "Transfer-Encoding",
-              "value": "chunked"
-            },
-            {
-              "key": "Date",
-              "value": "Fri, 12 Jun 2026 06:53:28 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=60"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/health/db",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "health",
+                    "db"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 12 Jun 2026 06:53:28 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Database connection successful\",\n    \"data\": {\n        \"status\": \"UP\",\n        \"database\": \"CONNECTED\",\n        \"dbVersion\": \"8.4.9\",\n        \"latencyMs\": 92\n    }\n}"
             }
-          ],
-          "cookie": [],
-          "body": "{\n    \"success\": true,\n    \"message\": \"Database connection successful\",\n    \"data\": {\n        \"status\": \"UP\",\n        \"database\": \"CONNECTED\",\n        \"dbVersion\": \"8.4.9\",\n        \"latencyMs\": 92\n    }\n}"
-        }
-      ]
-    },
-    {
-      "name": "/api/health/app",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/api/health/app",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "api",
-            "health",
-            "app"
           ]
-        }
-      },
-      "response": [
+        },
         {
-          "name": "200 OK",
-          "originalRequest": {
+          "name": "/api/health/app",
+          "request": {
             "method": "GET",
             "header": [],
             "url": {
@@ -139,59 +122,736 @@
               ]
             }
           },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": null,
-          "header": [
+          "response": [
             {
-              "key": "X-Content-Type-Options",
-              "value": "nosniff"
-            },
-            {
-              "key": "X-XSS-Protection",
-              "value": "0"
-            },
-            {
-              "key": "Cache-Control",
-              "value": "no-cache, no-store, max-age=0, must-revalidate"
-            },
-            {
-              "key": "Pragma",
-              "value": "no-cache"
-            },
-            {
-              "key": "Expires",
-              "value": "0"
-            },
-            {
-              "key": "X-Frame-Options",
-              "value": "DENY"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json"
-            },
-            {
-              "key": "Transfer-Encoding",
-              "value": "chunked"
-            },
-            {
-              "key": "Date",
-              "value": "Fri, 12 Jun 2026 06:54:12 GMT"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=60"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/health/app",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "health",
+                    "app"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 12 Jun 2026 06:54:12 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Application is running\",\n    \"data\": {\n        \"version\": \"1.0.0\",\n        \"uptimeMs\": 69071,\n        \"status\": \"UP\"\n    }\n}"
             }
-          ],
-          "cookie": [],
-          "body": "{\n    \"success\": true,\n    \"message\": \"Application is running\",\n    \"data\": {\n        \"version\": \"1.0.0\",\n        \"uptimeMs\": 69071,\n        \"status\": \"UP\"\n    }\n}"
+          ]
         }
       ]
+    },
+    {
+      "name": "payment",
+      "item": [
+        {
+          "name": "/api/payment/health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/payment/health",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "payment",
+                "health"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/payment/health",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "payment",
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 13 Jun 2026 06:42:27 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Payment gateway health verified\",\n    \"data\": {\n        \"gateway\": \"RAZORPAY\",\n        \"status\": \"CONNECTED\",\n        \"mode\": \"TEST\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/payment/create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"orderId\": \"019ec565-7b21-790a-88a5-25ee4cd49015\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/payment/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "payment",
+                "create"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "502 Bad Gateway",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"orderId\": \"019ec057-62e3-70cc-a9e9-441490e7110c\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/payment/create",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "payment",
+                    "create"
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 13 Jun 2026 10:38:16 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Failed to create Razorpay order\",\n    \"error\": {\n        \"code\": 502,\n        \"type\": \"BAD_GATEWAY\"\n    }\n}"
+            },
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"orderId\": \"019ec185-f7c9-7037-8166-625362ec668d\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/payment/create",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "payment",
+                    "create"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 13 Jun 2026 15:07:56 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Order not found\",\n    \"error\": {\n        \"code\": 404,\n        \"type\": \"NOT_FOUND\"\n    }\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"orderId\": \"019ec565-7b21-790a-88a5-25ee4cd49015\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/payment/create",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "payment",
+                    "create"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 14 Jun 2026 10:55:48 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Payment order created\",\n    \"data\": {\n        \"cancelled_at\": 0,\n        \"reminders\": [],\n        \"amount_paid\": 0,\n        \"notes\": null,\n        \"reference_id\": \"019ec565-7b21-790a-88a5-25ee4cd49015\",\n        \"payments\": null,\n        \"created_at\": 1781434547,\n        \"description\": \"Verification Testing for Order 019ec565-7b21-790a-88a5-25ee4cd49015\",\n        \"expired_at\": 0,\n        \"notify\": {\n            \"whatsapp\": false,\n            \"sms\": false,\n            \"email\": false\n        },\n        \"short_url\": \"https://rzp.io/rzp/TBn8un7\",\n        \"callback_url\": \"https://example.com\",\n        \"updated_at\": 1781434547,\n        \"upi_link\": false,\n        \"accept_partial\": false,\n        \"currency\": \"INR\",\n        \"id\": \"plink_T1UBQkrCL64eNm\",\n        \"callback_method\": \"get\",\n        \"payment_plan\": false,\n        \"expire_by\": 0,\n        \"first_min_partial_amount\": 0,\n        \"whatsapp_link\": false,\n        \"amount\": 3059800,\n        \"allow_full_payment\": false,\n        \"reminder_enable\": false,\n        \"user_id\": \"\",\n        \"customer\": [],\n        \"status\": \"created\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/payment/verify",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"razorpayPaymentId\": \"pay_T1UC20OceAehX0\",\r\n    \"razorpayPaymentLinkId\": \"plink_T1UBQkrCL64eNm\",\r\n    \"razorpayPaymentLinkReferenceId\": \"019ec565-7b21-790a-88a5-25ee4cd49015\",\r\n    \"razorpayPaymentLinkStatus\": \"paid\",\r\n    \"razorpaySignature\": \"a388c3f5375e79291d12e040890afb407ce88cabe1391229f79054fc6928b9e3\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/payment/verify",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "payment",
+                "verify"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"razorpayOrderId\": \"order_T1AXe7q8JlCn1R\",\r\n    \"razorpayPaymentId\": \"pay_T1AYeCYn3nS4nw\",\r\n    \"razorpaySignature\": \"134ac45528a7f2b3f7916105dd844d5478dd8b055d6f97e8051269bcedcb8c3b\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/payment/verify",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "payment",
+                    "verify"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 13 Jun 2026 15:48:13 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Payment record not found\",\n    \"error\": {\n        \"code\": 404,\n        \"type\": \"NOT_FOUND\"\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"originalOrderId\": \"order_T1BVE5o2BbwarW\",\r\n    \"razorpayOrderId\": \"order_T1BVE5o2BbwarW\",\r\n    \"razorpayPaymentId\": \"pay_T1BZxJA7XfRXSP\",\r\n    \"razorpaySignature\": \"7aaf12401d236ca91476e6b5db8750c33f5bf83a52a0c9fcb81a729a3334ae1a\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/payment/verify",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "payment",
+                    "verify"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 13 Jun 2026 16:46:17 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Original order id is required\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"razorpayOrderId\": \"order_T1Ck1ZwOHW9W0T\",\r\n    \"razorpayPaymentLinkId\": \"plink_T1Ck2BV0mHgLDs\",\r\n    \"razorpayPaymentId\": \"pay_T1ClngVWJ0Dsvn\",\r\n    \"razorpaySignature\": \"363f2688fabfa8eae6007111f862ef7c14412167d91a126e8595a6d65239e96e\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/payment/verify",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "payment",
+                    "verify"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 13 Jun 2026 17:55:11 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Payment verification completed\",\n    \"data\": {\n        \"verified\": true,\n        \"paymentStatus\": \"SUCCESS\",\n        \"orderStatus\": \"PROCESSING\",\n        \"razorpayOrderId\": \"order_T1Ck1ZwOHW9W0T\",\n        \"razorpayPaymentId\": \"pay_T1ClngVWJ0Dsvn\",\n        \"message\": \"Payment verified and matched successfully!\",\n        \"internalOrderId\": \"019ec19f-e2ad-7a31-8be6-b0eb65904399\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_password_0d65",
+      "secret": true
     }
   ]
 }

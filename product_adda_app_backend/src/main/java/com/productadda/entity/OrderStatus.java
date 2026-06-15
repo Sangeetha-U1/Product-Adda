@@ -3,7 +3,6 @@ package com.productadda.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,33 +10,24 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "order_items")
-
+@Table(name = "order_statuses")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderItem {
+public class OrderStatus {
 
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_order_item_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkOrderItemId;
+    @Column(name = "pk_status_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkStatusId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_order_id", nullable = false)
-    private Order fkOrder;
+    @Column(name = "status_name", nullable = false, unique = true, length = 50)
+    private String statusName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_product_id", nullable = false)
-    private Product fkProduct;
-
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
-
-    @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
-    private BigDecimal unitPrice;
+    @Column(name = "description", length = 255)
+    private String description;
 
     /*
      * ===========================================================================

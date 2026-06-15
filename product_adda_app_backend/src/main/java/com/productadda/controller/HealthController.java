@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.productadda.dto.ApiSuccessResponseDto;
 import com.productadda.dto.HealthResponseDto;
-import com.productadda.dto.RepositoryHealthResponseDto;
 import com.productadda.service.HealthService;
 
 import lombok.RequiredArgsConstructor;
@@ -40,20 +39,6 @@ public class HealthController {
                                                 .success(true)
                                                 .message("Application is running")
                                                 .data(healthService.getApplicationHealth())
-                                                .build());
-        }
-
-        // TODO: Only for testing, delete later.
-        @GetMapping("/repository")
-        public ResponseEntity<ApiSuccessResponseDto<RepositoryHealthResponseDto>> repositoryHealth() {
-
-                RepositoryHealthResponseDto dto = healthService.getRepositoryHealth();
-
-                return ResponseEntity.ok(
-                                ApiSuccessResponseDto.<RepositoryHealthResponseDto>builder()
-                                                .success(true)
-                                                .message("Repository verification successful")
-                                                .data(dto)
                                                 .build());
         }
 }

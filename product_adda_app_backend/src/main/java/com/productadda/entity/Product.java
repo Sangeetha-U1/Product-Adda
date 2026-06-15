@@ -3,11 +3,12 @@ package com.productadda.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
 @Table(name = "products")
@@ -66,4 +67,13 @@ public class Product {
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
+    
+    /*
+     * ===========================================================================
+     * AUDIT
+     * ===========================================================================
+     */
+
+    @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
+    private LocalDateTime createdAtUtc;
 }

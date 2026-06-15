@@ -3,10 +3,11 @@ package com.productadda.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -66,6 +67,6 @@ public class User {
      * AUDIT
      * =========================================================
      */
-    @Column(name = "created_at", nullable = false)
-    private java.time.LocalDateTime createdAt;
+    @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
+    private LocalDateTime createdAtUtc;
 }

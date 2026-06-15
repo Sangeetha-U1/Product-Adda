@@ -10,8 +10,6 @@ public class PublicRoutes {
             // Helath
             "/api/health/app",
             "/api/health/db",
-            // TODO: Only for testing, delete later.
-            "/api/health/repository",
 
             // Auth APIs
             "/api/auth/register",
@@ -36,6 +34,9 @@ public class PublicRoutes {
             // Swagger
             "/swagger-ui.html",
             "/swagger-ui/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+
+            // Payments
+            "/api/payment/**"
     };
 }

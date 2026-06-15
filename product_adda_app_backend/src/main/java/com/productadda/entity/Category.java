@@ -7,6 +7,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "categories")
@@ -35,4 +36,13 @@ public class Category {
      */
     @Column(name = "category_name", nullable = false, unique = true, length = 150)
     private String categoryName;
+
+    /*
+     * ===========================================================================
+     * AUDIT
+     * ===========================================================================
+     */
+
+    @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
+    private LocalDateTime createdAtUtc;
 }

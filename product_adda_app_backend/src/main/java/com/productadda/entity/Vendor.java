@@ -3,10 +3,11 @@ package com.productadda.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "vendors")
@@ -47,4 +48,13 @@ public class Vendor {
 
     @Column(name = "gst_number", nullable = false, length = 50, unique = true)
     private String gstNumber;
+
+    /*
+     * ===========================================================================
+     * AUDIT
+     * ===========================================================================
+     */
+
+    @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
+    private LocalDateTime createdAtUtc;
 }

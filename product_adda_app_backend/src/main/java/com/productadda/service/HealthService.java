@@ -7,16 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.productadda.dto.HealthResponseDto;
-import com.productadda.dto.RepositoryHealthResponseDto;
 import com.productadda.exception.ApiException;
-import com.productadda.repository.CategoryRepository;
-import com.productadda.repository.OrderItemRepository;
-import com.productadda.repository.OrderRepository;
-import com.productadda.repository.PaymentRepository;
-import com.productadda.repository.ProductRepository;
-import com.productadda.repository.ReviewRepository;
-import com.productadda.repository.UserRepository;
-import com.productadda.repository.VendorRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -28,15 +19,6 @@ public class HealthService {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    private final UserRepository userRepository;
-    private final VendorRepository vendorRepository;
-    private final CategoryRepository categoryRepository;
-    private final ProductRepository productRepository;
-    private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
-    private final PaymentRepository paymentRepository;
-    private final ReviewRepository reviewRepository;
 
     public HealthResponseDto getDatabaseHealth() {
 
@@ -80,21 +62,5 @@ public class HealthService {
         data.put("version", version);
 
         return data;
-    }
-
-    // TODO: Repository verification endpoint.
-    // Remove after repository layer validation is completed.
-    public RepositoryHealthResponseDto getRepositoryHealth() {
-
-        return RepositoryHealthResponseDto.builder()
-                .users(userRepository.count())
-                .vendors(vendorRepository.count())
-                .categories(categoryRepository.count())
-                .products(productRepository.count())
-                .orders(orderRepository.count())
-                .orderItems(orderItemRepository.count())
-                .payments(paymentRepository.count())
-                .reviews(reviewRepository.count())
-                .build();
     }
 }
