@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS order_items
 
     quantity           INT               NOT NULL,
     unit_price         DECIMAL(10,2)     NOT NULL,
+    
+    created_at_utc    TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP()),
 
     CONSTRAINT pk_order_items_order_item_id
         PRIMARY KEY (pk_order_item_id),

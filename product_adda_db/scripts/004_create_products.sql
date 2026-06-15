@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS products
     stock_quantity    INT               NOT NULL DEFAULT 0,
 
     is_active         BOOLEAN           NOT NULL DEFAULT TRUE,
+    
+    created_at_utc    TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP()),
 
     CONSTRAINT pk_products_product_id
         PRIMARY KEY (pk_product_id),

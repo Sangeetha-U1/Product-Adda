@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS users
 
     is_active        BOOLEAN         NOT NULL DEFAULT TRUE,
 
-    created_at       TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at_utc    TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP()),
 
     CONSTRAINT pk_users_user_id
         PRIMARY KEY (pk_user_id),

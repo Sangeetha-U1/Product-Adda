@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS vendors
 
     business_name   VARCHAR(255)    NOT NULL,
     gst_number      VARCHAR(50)     NOT NULL,
+    
+    created_at_utc    TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP()),
 
     CONSTRAINT pk_vendors_vendor_id
         PRIMARY KEY (pk_vendor_id),

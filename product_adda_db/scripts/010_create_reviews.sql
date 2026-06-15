@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS reviews
 
     rating            INT               NOT NULL,
     review_text       TEXT              NULL,
+    
+    created_at_utc    TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP()),
 
     CONSTRAINT pk_reviews_review_id
         PRIMARY KEY (pk_review_id),

@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS categories
 (
     pk_category_id    BINARY(16)      NOT NULL,
     category_name     VARCHAR(150)    NOT NULL,
+    
+    created_at_utc    TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP()),
 
     CONSTRAINT pk_categories_category_id
         PRIMARY KEY (pk_category_id),
