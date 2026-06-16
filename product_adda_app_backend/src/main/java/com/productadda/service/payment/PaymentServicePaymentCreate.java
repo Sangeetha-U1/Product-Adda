@@ -1,7 +1,6 @@
 package com.productadda.service.payment;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.UUID;
 
 import org.json.JSONObject;
@@ -51,8 +50,7 @@ public class PaymentServicePaymentCreate {
             // fundamental requirements.
             // ==========================================
             UUID orderId = UUID.fromString(requestDto.getOrderId());
-            Objects.requireNonNull(orderId, "orderId must not be null");
-
+            
             // ==========================================
             // 1.2 DATABASE LOOKUP VALIDATION
             // Description: Verifies existence of dependent target records within the
@@ -109,7 +107,6 @@ public class PaymentServicePaymentCreate {
              * payment entity to the database.
              * ================================================================
              */
-            Objects.requireNonNull(payment, "payment must not be null");
 
             paymentRepository.save(payment);
 

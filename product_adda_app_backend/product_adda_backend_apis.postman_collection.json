@@ -301,7 +301,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"orderId\": \"019ec565-7b21-790a-88a5-25ee4cd49015\"\r\n}",
+              "raw": "{\r\n  \"orderId\": \"019ec565-7b22-72eb-89ad-e457eff850b2\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -585,7 +585,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"razorpayPaymentId\": \"pay_T1UC20OceAehX0\",\r\n    \"razorpayPaymentLinkId\": \"plink_T1UBQkrCL64eNm\",\r\n    \"razorpayPaymentLinkReferenceId\": \"019ec565-7b21-790a-88a5-25ee4cd49015\",\r\n    \"razorpayPaymentLinkStatus\": \"paid\",\r\n    \"razorpaySignature\": \"a388c3f5375e79291d12e040890afb407ce88cabe1391229f79054fc6928b9e3\"\r\n}",
+              "raw": "{\r\n    \"razorpayPaymentId\": \"pay_T1uIVuIg5NBfSW\",\r\n    \"razorpayPaymentLinkId\": \"plink_T1uI18KUVInUnR\",\r\n    \"razorpayPaymentLinkReferenceId\": \"019ec565-7b22-72eb-89ad-e457eff850b2\",\r\n    \"razorpayPaymentLinkStatus\": \"paid\",\r\n    \"razorpaySignature\": \"ffe26df3b88ec7c9908b5db36044eaaeb20c097676193aba253eb2a2a22e8675\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -842,6 +842,381 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Payment verification completed\",\n    \"data\": {\n        \"verified\": true,\n        \"paymentStatus\": \"SUCCESS\",\n        \"orderStatus\": \"PROCESSING\",\n        \"razorpayOrderId\": \"order_T1Ck1ZwOHW9W0T\",\n        \"razorpayPaymentId\": \"pay_T1ClngVWJ0Dsvn\",\n        \"message\": \"Payment verified and matched successfully!\",\n        \"internalOrderId\": \"019ec19f-e2ad-7a31-8be6-b0eb65904399\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "/api/auth/register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"firstName\": \"sharukh\",\r\n  \"lastName\": \"khan\",\r\n  \"email\": \"sharukhkhan@test.com\",\r\n  \"mobile\": \"9999999998\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"ADMIN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}} /api/auth/register",
+              "host": [
+                "{{baseUrl}} "
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"firstName\": \"katrina\",\r\n  \"lastName\": \"kaif\",\r\n  \"email\": \"katrinakaif@test.com\",\r\n  \"mobile\": \"9999999998\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"VENDOR\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}} /api/auth/register",
+                  "host": [
+                    "{{baseUrl}} "
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 15 Jun 2026 12:11:42 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"userId\": \"019ecb31-da43-72c9-9f03-e119c672bcdb\",\n        \"email\": \"katrinakaif@test.com\",\n        \"roleName\": \"VENDOR\",\n        \"message\": \"User registered successfully\"\n    }\n}"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"firstName\": \"sharukh\",\r\n  \"lastName\": \"khan\",\r\n  \"email\": \"sharukhkhan@test.com\",\r\n  \"mobile\": \"9000000003\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"ADMIN\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}} /api/auth/register",
+                  "host": [
+                    "{{baseUrl}} "
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 15 Jun 2026 12:12:46 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"You are not allowed to assign ADMIN or SUPER_ADMIN roles\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/auth/login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"rajesh@techsolutions.com\",\r\n  \"password\": \"Vendor@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}} /api/auth/login",
+              "host": [
+                "{{baseUrl}} "
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"rajesh@techsolutions.com\",\r\n  \"password\": \"Vendor@123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}} /api/auth/login",
+                  "host": [
+                    "{{baseUrl}} "
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 15 Jun 2026 11:56:25 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"User authenticated successfully\",\n    \"data\": {\n        \"userId\": \"019eca82-3595-7d2b-9713-684ca2427c79\",\n        \"email\": \"rajesh@techsolutions.com\",\n        \"roleName\": \"VENDOR\",\n        \"message\": \"Login successful\"\n    }\n}"
+            },
+            {
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"email\": \"admin@productadda.com\",\r\n  \"password\": \"Admin@123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}} /api/auth/login",
+                  "host": [
+                    "{{baseUrl}} "
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 15 Jun 2026 11:57:04 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Admin portal login is required\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
             }
           ]
         }
