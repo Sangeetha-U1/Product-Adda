@@ -8,15 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.productadda.dto.auth.LoginRequestDto;
 import com.productadda.dto.auth.LoginResponseDto;
-import com.productadda.dto.TokenDto;
-
+import com.productadda.dto.token.TokenDto;
 import com.productadda.entity.User;
 import com.productadda.exception.ApiException;
 import com.productadda.repository.UserRepository;
 
 import com.productadda.entity.UserRole;
 import com.productadda.repository.UserRoleRepository;
-import com.productadda.service.token.JwtService;
+import com.productadda.service.token.TokenService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,7 +37,7 @@ public class AuthServiceLogin {
      * ================================================================
      */
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    private final TokenService.JwtService jwtService;
 
     /*
      * ================================================================
@@ -98,13 +97,19 @@ public class AuthServiceLogin {
          * 4. BUSINESS VALIDATION
          * ============================================================
          */
+
         if (!Boolean.TRUE.equals(user.getIsActive())) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Account is inactive");
+        }
+
+        if (!Boolean.TRUE.equals(user.getEmailVerified())) {
+            throw new ApiException(HttpStatus.FORBIDDEN, "Email address not verified");
         }
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
+
         /*
          * ============================================================
          * 5. BUSINESS SECTION

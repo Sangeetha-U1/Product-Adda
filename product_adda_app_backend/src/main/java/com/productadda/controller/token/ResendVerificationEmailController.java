@@ -1,0 +1,64 @@
+package com.productadda.controller.token;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.productadda.dto.ApiSuccessResponseDto;
+import com.productadda.dto.token.ResendVerificationEmailRequestDto;
+import com.productadda.dto.token.ResendVerificationEmailResponseDto;
+import com.productadda.service.token.ResendVerificationEmailService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/token")
+@RequiredArgsConstructor
+public class ResendVerificationEmailController {
+
+    private final ResendVerificationEmailService resendVerificationEmailService;
+
+    /*
+     * ================================================================
+     * RESEND VERIFICATION EMAIL API
+     * Description:
+     * Generates a new verification token and sends verification email.
+     *
+     * FLOW:
+     *
+     * Request
+     * ↓
+     * Validate email
+     * ↓
+     * Find user
+     * ↓
+     * Check verification status
+     * ↓
+     * Generate new token
+     * ↓
+     * Send email
+     * ↓
+     * Response
+     *
+     * ================================================================
+     */
+
+    @PostMapping("/resend-verification-email")
+    public ResponseEntity<ApiSuccessResponseDto<ResendVerificationEmailResponseDto>> resendVerificationEmail(
+            @Valid @RequestBody ResendVerificationEmailRequestDto requestDto) {
+
+        ResendVerificationEmailResponseDto response = resendVerificationEmailService.resend(requestDto);
+
+        return ResponseEntity.ok(
+                ApiSuccessResponseDto.<ResendVerificationEmailResponseDto>builder()
+                        .success(true)
+                        .message("Verification email sent successfully")
+                        .data(response)
+                        .build());
+
+    }
+
+}

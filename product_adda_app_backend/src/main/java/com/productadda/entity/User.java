@@ -54,6 +54,9 @@ public class User {
     @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
+    @Column(name = "email_verified", nullable = false)
+    private Boolean emailVerified;
+
     /*
      * =========================================================
      * STATUS

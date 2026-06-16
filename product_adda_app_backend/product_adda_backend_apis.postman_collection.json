@@ -857,7 +857,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"firstName\": \"sharukh\",\r\n  \"lastName\": \"khan\",\r\n  \"email\": \"sharukhkhan@test.com\",\r\n  \"mobile\": \"9999999998\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"ADMIN\"\r\n}",
+              "raw": "{\r\n  \"firstName\": \"hrithik\",\r\n  \"lastName\": \"roshan\",\r\n  \"email\": \"tay3u@web-library.net\",\r\n  \"mobile\": \"9999999994\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"USER\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -865,9 +865,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}} /api/auth/register",
+              "raw": "{{baseUrl}}/api/auth/register",
               "host": [
-                "{{baseUrl}} "
+                "{{baseUrl}}"
               ],
               "path": [
                 "api",
@@ -1032,17 +1032,91 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": false,\n    \"message\": \"You are not allowed to assign ADMIN or SUPER_ADMIN roles\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"firstName\": \"sharukh\",\r\n  \"lastName\": \"khan\",\r\n  \"email\": \"tiwovel132@lidugw.com\",\r\n  \"mobile\": \"9999999997\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"ADMI\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}} /api/auth/register",
+                  "host": [
+                    "{{baseUrl}} "
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 09:01:00 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Invalid role: ADMI\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
             }
           ]
         },
         {
-          "name": "/api/auth/login",
+          "name": "/api/token/verify-email",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"email\": \"rajesh@techsolutions.com\",\r\n  \"password\": \"Vendor@123\"\r\n}",
+              "raw": "{\r\n    \"token\": \"019ecfc2-b7cc-7024-b424-d10cee636407\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1050,14 +1124,14 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}} /api/auth/login",
+              "raw": "{{baseUrl}}/api/token/verify-email",
               "host": [
-                "{{baseUrl}} "
+                "{{baseUrl}}"
               ],
               "path": [
                 "api",
-                "auth",
-                "login"
+                "token",
+                "verify-email"
               ]
             }
           },
@@ -1069,7 +1143,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"rajesh@techsolutions.com\",\r\n  \"password\": \"Vendor@123\"\r\n}",
+                  "raw": "{\r\n    \"token\": \"019ecfc2-b7cc-7024-b424-d10cee636407\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1077,14 +1151,14 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}} /api/auth/login",
+                  "raw": "{{baseUrl}} /api/token/verify-email",
                   "host": [
                     "{{baseUrl}} "
                   ],
                   "path": [
                     "api",
-                    "auth",
-                    "login"
+                    "token",
+                    "verify-email"
                   ]
                 }
               },
@@ -1126,7 +1200,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Mon, 15 Jun 2026 11:56:25 GMT"
+                  "value": "Tue, 16 Jun 2026 09:29:20 GMT"
                 },
                 {
                   "key": "Keep-Alive",
@@ -1138,8 +1212,37 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"User authenticated successfully\",\n    \"data\": {\n        \"userId\": \"019eca82-3595-7d2b-9713-684ca2427c79\",\n        \"email\": \"rajesh@techsolutions.com\",\n        \"roleName\": \"VENDOR\",\n        \"message\": \"Login successful\"\n    }\n}"
+              "body": "{\n    \"success\": true,\n    \"message\": \"Email verified successfully\",\n    \"data\": {\n        \"userId\": \"019ecfc2-b6c1-7169-aa2a-5942df457bfe\",\n        \"email\": \"k4ws3dbfg9@wnbaldwy.com\",\n        \"emailVerified\": true,\n        \"isActive\": true\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/auth/login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"k4ws3dbfg9@wnbaldwy.com\",\r\n    \"password\": \"Test123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
             {
               "name": "403 Forbidden",
               "originalRequest": {
@@ -1217,6 +1320,265 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": false,\n    \"message\": \"Admin portal login is required\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"k4ws3dbfg9@wnbaldwy.com\",\r\n    \"password\": \"Test123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}} /api/auth/login",
+                  "host": [
+                    "{{baseUrl}} "
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 09:33:18 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"User authenticated successfully\",\n    \"data\": {\n        \"userId\": \"019ecfc2-b6c1-7169-aa2a-5942df457bfe\",\n        \"email\": \"k4ws3dbfg9@wnbaldwy.com\",\n        \"roleName\": \"VENDOR\",\n        \"token\": {\n            \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJrNHdzM2RiZmc5QHduYmFsZHd5LmNvbSIsImlhdCI6MTc4MTYwMjM5NywiZXhwIjoxNzgxNjA1OTk3fQ.HCB4Ax4BEQ3YCok-OcyhaOSDIk5Ff4ITPhsffDw36T3Mo06l5IrNjwsFlGzRuDoP\",\n            \"refreshToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJrNHdzM2RiZmc5QHduYmFsZHd5LmNvbSIsImlhdCI6MTc4MTYwMjM5OCwiZXhwIjoxNzgxNjg4Nzk4fQ.r2uQEwqfzJGNHZVey_UBWs3V213BIf5gD7wormlXKl6SYekM26_8uv_xPkj7z2AW\"\n        },\n        \"message\": \"Login successful\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/token/resend-verification-email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"k4ws3dbfg9@wnbaldwy.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/token/resend-verification-email",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "token",
+                "resend-verification-email"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"tiwovel132@lidugw.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/token/resend-verification-email",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "token",
+                    "resend-verification-email"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 11:50:04 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Verification email sent successfully\",\n    \"data\": {\n        \"userId\": \"019ecfab-363d-7754-a06f-11599af8f3c6\",\n        \"email\": \"tiwovel132@lidugw.com\",\n        \"emailVerificationRequired\": true,\n        \"message\": \"Verification email sent successfully.\"\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"k4ws3dbfg9@wnbaldwy.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/token/resend-verification-email",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "token",
+                    "resend-verification-email"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 11:52:12 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Email already verified\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
             }
           ]
         }

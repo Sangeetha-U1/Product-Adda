@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
-import com.github.f4b6a3.uuid.UuidCreator;
 
 import com.productadda.config.RazorpayConfig;
 import com.productadda.dto.payment.PaymentCreateRequestDto;
@@ -21,6 +20,7 @@ import com.productadda.exception.ApiException;
 import com.productadda.repository.OrderRepository;
 import com.productadda.repository.PaymentRepository;
 import com.productadda.repository.PaymentStatusRepository;
+import com.productadda.util.UuidUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +32,7 @@ public class PaymentServicePaymentCreate {
     private final PaymentRepository paymentRepository;
     private final PaymentStatusRepository paymentStatusRepository;
     private final RazorpayConfig razorpayConfig;
+    private final UuidUtil uuidUtil;
 
     public PaymentCreateResponseDto paymentCreate(PaymentCreateRequestDto requestDto) {
         try {
@@ -50,7 +51,7 @@ public class PaymentServicePaymentCreate {
             // fundamental requirements.
             // ==========================================
             UUID orderId = UUID.fromString(requestDto.getOrderId());
-            
+
             // ==========================================
             // 1.2 DATABASE LOOKUP VALIDATION
             // Description: Verifies existence of dependent target records within the
@@ -91,7 +92,7 @@ public class PaymentServicePaymentCreate {
             String razorpayPaymentLinkId = paymentLink.get("id");
 
             Payment payment = Payment.builder()
-                    .pkPaymentId(UuidCreator.getTimeOrderedEpoch())
+                    .pkPaymentId(uuidUtil.generateUuidV7())
                     .fkOrder(order)
                     .paymentMethod("RAZORPAY")
                     .fkStatus(pendingStatus)

@@ -2,7 +2,7 @@ package com.productadda.dto.auth;
 
 import java.util.UUID;
 
-import com.productadda.dto.TokenDto;
+import com.productadda.dto.token.TokenDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,7 @@
-package com.productadda.dto.auth;
+package com.productadda.dto.token;
 
-import java.util.UUID;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,16 +14,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegisterResponseDto {
+public class ResendVerificationEmailRequestDto {
 
-    private UUID userId;
-
+    @NotBlank
+    @Email
     private String email;
-
-    private String roleName;
-
-    private Boolean emailVerificationRequired;
-
-    private String message;
-
 }

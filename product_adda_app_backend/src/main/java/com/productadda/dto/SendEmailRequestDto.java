@@ -11,9 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TokenDto {
 
-    private String accessToken;
+public class SendEmailRequestDto {
 
-    private String refreshToken;
+    private String toEmail;
+
+    private String subject;
+
+    private String body;
 }

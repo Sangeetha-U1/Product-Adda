@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 0000026E 7478:274D
+Volume serial number is 0000026A 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -30,15 +30,19 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---auth
 |   |           |   |       AuthController.java
 |   |           |   |       
-|   |           |   \---payment
-|   |           |           PaymentController.java
+|   |           |   +---payment
+|   |           |   |       PaymentController.java
+|   |           |   |       
+|   |           |   \---token
+|   |           |           ResendVerificationEmailController.java
+|   |           |           VerifyEmailController.java
 |   |           |           
 |   |           +---dto
 |   |           |   |   ApiErrorResponseDto.java
 |   |           |   |   ApiResponse.java
 |   |           |   |   ApiSuccessResponseDto.java
 |   |           |   |   HealthResponseDto.java
-|   |           |   |   TokenDto.java
+|   |           |   |   SendEmailRequestDto.java
 |   |           |   |   
 |   |           |   +---auth
 |   |           |   |       LoginRequestDto.java
@@ -46,15 +50,23 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       RegisterRequestDto.java
 |   |           |   |       RegisterResponseDto.java
 |   |           |   |       
-|   |           |   \---payment
-|   |           |           PaymentCreateRequestDto.java
-|   |           |           PaymentCreateResponseDto.java
-|   |           |           PaymentGatewayHealthResponseDto.java
-|   |           |           PaymentVerifyRequestDto.java
-|   |           |           PaymentVerifyResponseDto.java
+|   |           |   +---payment
+|   |           |   |       PaymentCreateRequestDto.java
+|   |           |   |       PaymentCreateResponseDto.java
+|   |           |   |       PaymentGatewayHealthResponseDto.java
+|   |           |   |       PaymentVerifyRequestDto.java
+|   |           |   |       PaymentVerifyResponseDto.java
+|   |           |   |       
+|   |           |   \---token
+|   |           |           ResendVerificationEmailRequestDto.java
+|   |           |           ResendVerificationEmailResponseDto.java
+|   |           |           TokenDto.java
+|   |           |           VerifyEmailRequestDto.java
+|   |           |           VerifyEmailResponseDto.java
 |   |           |           
 |   |           +---entity
 |   |           |       Category.java
+|   |           |       EmailVerificationToken.java
 |   |           |       Order.java
 |   |           |       OrderItem.java
 |   |           |       OrderStatus.java
@@ -74,6 +86,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       
 |   |           +---repository
 |   |           |       CategoryRepository.java
+|   |           |       EmailVerificationTokenRepository.java
 |   |           |       OrderItemRepository.java
 |   |           |       OrderRepository.java
 |   |           |       OrderStatusRepository.java
@@ -97,15 +110,24 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       AuthServiceLogin.java
 |   |           |   |       AuthServiceRegister.java
 |   |           |   |       
+|   |           |   +---mail
+|   |           |   |       EmailService.java
+|   |           |   |       MailStartupValidator.java
+|   |           |   |       
 |   |           |   +---payment
 |   |           |   |       PaymentServicePaymentCreate.java
 |   |           |   |       PaymentServicePaymentGatewayHealth.java
 |   |           |   |       PaymentServicePaymentVerify.java
 |   |           |   |       
 |   |           |   \---token
-|   |           |           JwtService.java
+|   |           |           EmailVerificationService.java
+|   |           |           ResendVerificationEmailService.java
+|   |           |           TokenService.java
 |   |           |           
 |   |           \---util
+|   |                   HashUtil.java
+|   |                   UuidUtil.java
+|   |                   
 |   \---resources
 |       |   application.properties
 |       |   
@@ -122,7 +144,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
                     
 
 Folder PATH listing
-Volume serial number is 00000259 7478:274D
+Volume serial number is 00000120 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties
