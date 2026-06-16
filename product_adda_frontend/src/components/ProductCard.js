@@ -1,29 +1,19 @@
 import React from "react";
+import "../styles/ProductCard.css";
 
 function ProductCard({ image, name, price }) {
+  return (
+    <div className="product-card">
+      <img src={image} alt={name} />
 
-return(
+      <h4>{name}</h4>
+      <p className="price">{price}</p>
 
-<div className="product-card">
+      <div className="rating">⭐⭐⭐⭐⭐</div>
 
-<img src={image} alt={name}/>
-
-<h4>{name}</h4>
-
-<p className="price">{price}</p>
-
-<div className="rating">
-⭐⭐⭐⭐⭐
-</div>
-
-<button>
-Add To Cart
-</button>
-
-</div>
-
-);
-
+      <button className="btn-cart">Add To Cart</button>
+    </div>
+  );
 }
 
 export default ProductCard;
