@@ -37,6 +37,8 @@ TRUNCATE TABLE products;
 TRUNCATE TABLE vendors;
 TRUNCATE TABLE categories;
 TRUNCATE TABLE users;
+TRUNCATE TABLE roles;
+TRUNCATE TABLE user_roles;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ============================================================================
@@ -63,6 +65,7 @@ DROP TABLE IF EXISTS `orders`;
 -- ============================================================================
 DROP TABLE IF EXISTS `payment_statuses`;
 DROP TABLE IF EXISTS `order_statuses`;
+DROP TABLE IF EXISTS `roles`;
 
 -- ============================================================================
 -- Drop Core / Independent Tables Last
@@ -71,6 +74,7 @@ DROP TABLE IF EXISTS `products`;
 DROP TABLE IF EXISTS `categories`;
 DROP TABLE IF EXISTS `vendors`;
 DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `user_roles`;
 
 -- ============================================================================
 -- Re-enable foreign key checks

@@ -44,25 +44,58 @@ TRUNCATE TABLE products;
 TRUNCATE TABLE vendors;
 TRUNCATE TABLE categories;
 TRUNCATE TABLE users;
+TRUNCATE TABLE roles;
+TRUNCATE TABLE user_roles;
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+/*==============================================================
+  no. SEED DATA FOR: roles
+==============================================================*/
+
+INSERT INTO roles (pk_role_id,role_name,description)
+VALUES
+(UUID_V7(), 'SUPER_ADMIN', 'SuperAdministrator role'),
+(UUID_V7(), 'ADMIN', 'Administrator role'),
+(UUID_V7(), 'USER', 'User role'),
+(UUID_V7(), 'CUSTOMER', 'Customer role'),
+(UUID_V7(), 'VENDOR', 'Vendor role');
 
 /*==============================================================
   1. SEED DATA FOR: users (Master Table - Uses UUID_V7 Directly)
   --------------------------------------------------------------
   PLAIN TEXT PASSWORDS FOR TESTING:
-  - standard 60-character BCrypt hashes (cost factor 12)
-  - admin@productadda.com      --> Admin@123
-  - rajesh@techsolutions.com   --> Vendor@123
-  - anita@fashionhub.com       --> Vendor@123
-  - rahul.verma@gmail.com      --> Customer@123
-  - pooja.singh@yahoo.com      --> Customer@123
+	- standard 60-character BCrypt hashes (cost factor 12)
+	superadmin@productadda.com --> SuperAdmin@123
+	admin@productadda.com      --> Admin@123
+	rajesh@techsolutions.com   --> Vendor@123
+	anita@fashionhub.com       --> Vendor@123
+	rahul.verma@gmail.com      --> Customer@123
+	pooja.singh@yahoo.com      --> Customer@123
+	vikram.m@gmail.com         --> User@123
 ==============================================================*/
 INSERT INTO `users` (`pk_user_id`, `first_name`, `last_name`, `email`, `mobile`, `password_hash`, `is_active`, `created_at_utc`) VALUES
-(UUID_V7(), 'Amit', 'Sharma', 'admin@productadda.com', '9876543210', '$2b$12$6R8A0P7E3mK9vXz2YqW1uO.Lh9T8eD7cB6A5f4E3d2C1b0A987654', 1, '2025-01-15 08:30:00'),
-(UUID_V7(), 'Rajesh', 'Kumar', 'rajesh@techsolutions.com', '9876543211', '$2b$12$4mK9vXz2YqW1uO.Lh9T8eD7cB6A5f4E3d2C1b0A987654R8A0P7E3', 1, '2025-01-20 10:15:00'),
-(UUID_V7(), 'Anita', 'Desai', 'anita@fashionhub.com', '9876543212', '$2b$12$4mK9vXz2YqW1uO.Lh9T8eD7cB6A5f4E3d2C1b0A987654R8A0P7E3', 1, '2025-02-02 11:45:00'),
-(UUID_V7(), 'Rahul', 'Verma', 'rahul.verma@gmail.com', '9876543213', '$2b$12$uO.Lh9T8eD7cB6A5f4E3d2C1b0A987654R8A0P7E34mK9vXz2YqW1', 1, '2025-02-18 14:20:00'),
-(UUID_V7(), 'Pooja', 'Singh', 'pooja.singh@yahoo.com', '9876543214', '$2b$12$uO.Lh9T8eD7cB6A5f4E3d2C1b0A987654R8A0P7E34mK9vXz2YqW1', 1, '2025-03-05 16:10:00');
+(UUID_V7(), 'varun', 'Sharma', 'superadmin@productadda.com', '9377843209', '$2a$10$TyG6KONDY7vEatUM0b4wKOWbSsjdhzTQ7KwokqPhfFAypCGv1LHTK', 1, '2025-01-12 12:30:00'),
+(UUID_V7(), 'Amit', 'Sharma', 'admin@productadda.com', '9876543210', '$2a$10$1j3ofRgdrvWDhhkPVe7jT.lnNmrzVPQ6bk9mYwr11fC0jR20paISm', 1, '2025-01-15 08:30:00'),
+(UUID_V7(), 'Rajesh', 'Kumar', 'rajesh@techsolutions.com', '9876543211', '$2a$10$7Xxl52l8ZVhs7rgA4ukpCuMjgDLCE0tz4Ufg55cuapaq5PgZNn2GK', 1, '2025-01-20 10:15:00'),
+(UUID_V7(), 'Anita', 'Desai', 'anita@fashionhub.com', '9876543212', '$2a$10$9ckr2EjB0KEOHjohrz24S.HkZcCKRn7LKuHE/SSNt6UHUXFSnDEn6', 1, '2025-02-02 11:45:00'),
+(UUID_V7(), 'Rahul', 'Verma', 'rahul.verma@gmail.com', '9876543213', '$2a$10$MkIcjobv7RhNDYUweNAOs.Pze8.VT6ww9T8kYEhgWrOTQivhBKHvK', 1, '2025-02-18 14:20:00'),
+(UUID_V7(), 'Pooja', 'Singh', 'pooja.singh@yahoo.com', '9876543214', '$2a$10$wWtVDkKKXm1tlQhjHY9xRu1d69R9JtkKgbExoiWPoShvqjLWxEq2S', 1, '2025-03-05 16:10:00'),
+(UUID_V7(), 'Vikram', 'Malhotra', 'vikram.m@gmail.com', '9876543215', '$2a$10$vyGDa4ZUqhK3dzHH9437ROuwZLBNpSsZZWcvuldj7a30U1ZKA/rfW', 1, '2025-03-10 09:00:00');
+
+/*==============================================================
+  no. SEED DATA FOR: user_roles
+==============================================================*/
+
+INSERT INTO user_roles (pk_user_role_id, fk_user_id, fk_role_id, created_at_utc)
+VALUES
+(UUID_V7(), (SELECT pk_user_id FROM users WHERE email = 'superadmin@productadda.com'), (SELECT pk_role_id FROM roles WHERE role_name = 'SUPER_ADMIN'), '2025-01-12 12:35:00'),
+(UUID_V7(), (SELECT pk_user_id FROM users WHERE email = 'admin@productadda.com'), (SELECT pk_role_id FROM roles WHERE role_name = 'ADMIN'), '2025-01-15 08:35:00'),
+(UUID_V7(), (SELECT pk_user_id FROM users WHERE email = 'rajesh@techsolutions.com'), (SELECT pk_role_id FROM roles WHERE role_name = 'VENDOR'), '2025-01-20 10:20:00'),
+(UUID_V7(), (SELECT pk_user_id FROM users WHERE email = 'anita@fashionhub.com'), (SELECT pk_role_id FROM roles WHERE role_name = 'VENDOR'), '2025-02-02 11:50:00'),
+(UUID_V7(), (SELECT pk_user_id FROM users WHERE email = 'rahul.verma@gmail.com'), (SELECT pk_role_id FROM roles WHERE role_name = 'CUSTOMER'), '2025-02-18 14:25:00'),
+(UUID_V7(), (SELECT pk_user_id FROM users WHERE email = 'pooja.singh@yahoo.com'), (SELECT pk_role_id FROM roles WHERE role_name = 'CUSTOMER'), '2025-03-05 16:15:00'),
+(UUID_V7(), (SELECT pk_user_id FROM users WHERE email = 'vikram.m@gmail.com'), (SELECT pk_role_id FROM roles WHERE role_name = 'USER'), '2025-03-10 09:05:00');
 
 /*==============================================================
   2. VENDORS
