@@ -1,94 +1,110 @@
 .hero {
-    padding: 80px 0;
-    background-color: #ffffff;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+
+    background-image:
+        linear-gradient(
+            100deg,
+            rgba(0, 20, 50, 0.85) 0%,
+            rgba(0, 20, 50, 0.55) 40%,
+            rgba(0, 20, 50, 0.10) 70%,
+            transparent 100%
+        ),
+        url("../assets/banner.png");
+
+   background-size:cover;
+    background-repeat: no-repeat;
+}
+.hero-content {
+    max-width: 600px;
+    z-index: 2;
+}
+.offer-tag {
+    display: inline-block;
+    background: linear-gradient(90deg, #FF8A00, #FF006E);
+    color: white;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 25px;
 }
 
 .hero-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 50px;
+    color: white;
+    font-size: 60px;
     font-weight: 700;
-    color: #003B95;
+    line-height: 1.2;
     margin-bottom: 20px;
 }
 
 .hero-text {
-    font-family: "Poppins", sans-serif;
-    font-size: 18px;
-    color: #333;
+    color: #e8e8e8;
+    font-size: 19px;
     line-height: 1.7;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
-
+/* Buttons */
 .hero-buttons {
     display: flex;
-    gap: 15px;
+    gap: 20px;
 }
 
+.shop-btn,
+.explore-btn {
+    padding: 15px 35px;
+    border-radius: 35px;
+    border: none;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.4s;
+}
 
 .shop-btn {
     background: #003B95;
     color: white;
-    border: none;
-    padding: 14px 30px;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
 }
 
-.shop-btn:hover {
-    background: #FF8A00;
-}
-
-
-.category-btn {
+.explore-btn {
     background: transparent;
-    color: #003B95;
-    border: 2px solid #003B95;
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.category-btn:hover {
-    background: #FF8A00;
     color: white;
-    border-color: #FF8A00;
+    border: 2px solid white;
 }
 
-
-.hero-image {
-    width: 100%;
-    max-width: 500px;
-}
-.hero-tag {
-  color: #FF8A00;
-  font-weight: 600;
-  font-size: 16px;
+.shop-btn:hover,
+.explore-btn:hover {
+    background: linear-gradient(90deg, #FF8A00, #FF006E);
+    color: white;
+    transform: translateY(-5px);
+    border-color: transparent;
+    box-shadow: 0 10px 25px rgba(255, 80, 80, 0.5);
 }
 
-/* Mobile Responsive */
-
+/* Responsive */
 @media (max-width: 768px) {
 
     .hero {
+        height: auto;
+        padding: 80px 5%;
         text-align: center;
-        padding: 50px 20px;
     }
 
     .hero-title {
-        font-size: 35px;
+        font-size: 38px;
+    }
+
+    .hero-text {
+        font-size: 16px;
     }
 
     .hero-buttons {
-        justify-content: center;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .hero-image {
-        margin-top: 40px;
-    }
 }
