@@ -21,7 +21,9 @@ Description :
 -- 008_create_order_items.sql
 -- 009_create_payments.sql
 -- 010_create_reviews.sql
-
+-- 011_create_roles.sql
+-- 012_create_user_roles.sql
+-- 013_create_email_verification_tokens.sql
 
 /*==============================================================
   WIPE EXISTING DATA (Reverse FK Dependency Order)
@@ -39,6 +41,7 @@ TRUNCATE TABLE categories;
 TRUNCATE TABLE users;
 TRUNCATE TABLE roles;
 TRUNCATE TABLE user_roles;
+TRUNCATE TABLE email_verification_tokens;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ============================================================================
@@ -75,6 +78,7 @@ DROP TABLE IF EXISTS `categories`;
 DROP TABLE IF EXISTS `vendors`;
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `user_roles`;
+DROP TABLE IF EXISTS `email_verification_tokens`;
 
 -- ============================================================================
 -- Re-enable foreign key checks

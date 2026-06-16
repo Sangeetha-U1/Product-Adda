@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS users
 
     password_hash    VARCHAR(255)    NOT NULL,
 
+    email_verified TINYINT(1) NOT NULL DEFAULT 0,
+
     is_active        BOOLEAN         NOT NULL DEFAULT TRUE,
 
     created_at_utc    TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP()),

@@ -23,6 +23,7 @@ DESCRIBE reviews;
 DESCRIBE users;
 DESCRIBE roles;
 DESCRIBE user_roles;
+DESCRIBE email_verification_tokens;
 DESCRIBE vendors;
 
 -- ============================================================================
@@ -40,6 +41,7 @@ SHOW CREATE TABLE reviews;
 SHOW CREATE TABLE users;
 SHOW CREATE TABLE roles;
 SHOW CREATE TABLE user_roles;
+SHOW CREATE TABLE email_verification_tokens;
 SHOW CREATE TABLE vendors;
 
 -- ============================================================================
@@ -57,5 +59,6 @@ SELECT * FROM reviews;
 SELECT * FROM users;
 SELECT * FROM roles;
 SELECT * FROM user_roles;
+SELECT * FROM email_verification_tokens;
 SELECT * FROM vendors;
 

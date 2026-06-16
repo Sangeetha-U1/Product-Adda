@@ -215,3 +215,4 @@ INSERT INTO `payment_statuses` (`pk_status_id`, `status_name`, `description`, `c
 INSERT INTO `reviews` (`pk_review_id`, `fk_product_id`, `fk_user_id`, `rating`, `review_text`, `created_at_utc`) VALUES
 (UUID_V7(), (SELECT `pk_product_id` FROM `products` WHERE `title` = 'ProBook 15 Laptop'), (SELECT `pk_user_id` FROM `users` WHERE `email` = 'rahul.verma@gmail.com'), 5, 'Absolutely loving the processing speed! Well worth the price.', '2025-04-15 12:00:00'),
 (UUID_V7(), (SELECT `pk_product_id` FROM `products` WHERE `title` = 'Classic Slim Fit T-Shirt'), (SELECT `pk_user_id` FROM `users` WHERE `email` = 'rahul.verma@gmail.com'), 4, 'Good fit and quality fabric, but delivery took a day extra.', '2025-04-16 14:30:00');
+

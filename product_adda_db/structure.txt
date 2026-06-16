@@ -1,5 +1,5 @@
 Folder PATH listing
-Volume serial number is 00000153 7478:274D
+Volume serial number is 000001A7 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_DB
 |   README.md
 |   structure.txt
@@ -13,11 +13,21 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_DB
 |       002_create_vendors.sql
 |       003_create_categories.sql
 |       004_create_products.sql
-|       005_create_orders.sql
-|       006_create_order_items.sql
-|       007_create_payments.sql
-|       008_create_reviews.sql
+|       005_create_order_statuses.sql
+|       006_create_payment_statuses.sql
+|       007_create_orders.sql
+|       008_create_order_items.sql
+|       009_create_payments.sql
+|       00_create_drop_truncate_execution order.sql
+|       00_describe_showcreatetable_select.sql
+|       010_create_reviews.sql
+|       011_create_roles.sql
+|       012_create_user_roles.sql
+|       013_create_email_verification_tokens.sql
 |       
-\---security
-        001_logins.sql
++---security
+|       001_logins.sql
+|       
+\---seeddata
+        01_seed_product_adda_db.sql
         
