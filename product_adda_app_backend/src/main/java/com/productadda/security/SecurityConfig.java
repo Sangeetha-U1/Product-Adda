@@ -3,7 +3,7 @@ package com.productadda.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import org.springframework.security.config.Customizer;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,7 +31,8 @@ public class SecurityConfig {
          * ================================================================
          */
 
-        // private final JwtAuthenticationFilter jwtAuthenticationFilter;
+        private final JwtAuthenticationFilter jwtAuthenticationFilter;
+        private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http)
@@ -56,6 +57,9 @@ public class SecurityConfig {
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+                                .exceptionHandling(exception -> exception
+                                                .authenticationEntryPoint(customAuthenticationEntryPoint))
+
                                 /*
                                  * ============================================================
                                  * AUTHORIZATION RULES
@@ -71,17 +75,9 @@ public class SecurityConfig {
                                                 .anyRequest()
                                                 .authenticated())
 
-                                /*
-                                 * ============================================================
-                                 * TEMP AUTH METHOD
-                                 * ============================================================
-                                 * Using HTTP Basic only for testing before JWT layer
-                                 */
-                                .httpBasic(Customizer.withDefaults());
-
-                // FUTURE:
-                // .addFilterBefore(jwtAuthenticationFilter,
-                // UsernamePasswordAuthenticationFilter.class);
+                                .addFilterBefore(
+                                                jwtAuthenticationFilter,
+                                                UsernamePasswordAuthenticationFilter.class);
 
                 return http.build();
         }

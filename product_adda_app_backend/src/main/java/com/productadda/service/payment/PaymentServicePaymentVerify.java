@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +21,13 @@ import com.productadda.dto.payment.PaymentVerifyResponseDto;
 import com.productadda.entity.Order;
 import com.productadda.entity.Payment;
 import com.productadda.entity.PaymentStatus;
+import com.productadda.entity.User;
 import com.productadda.entity.OrderStatus;
 import com.productadda.exception.ApiException;
 import com.productadda.repository.OrderRepository;
 import com.productadda.repository.PaymentRepository;
 import com.productadda.repository.PaymentStatusRepository;
+import com.productadda.repository.UserRepository;
 import com.productadda.repository.OrderStatusRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +40,7 @@ public class PaymentServicePaymentVerify {
         private final OrderStatusRepository orderStatusRepository;
         private final PaymentRepository paymentRepository;
         private final PaymentStatusRepository paymentStatusRepository;
+        private final UserRepository userRepository; // Added for isolated database verification
         private final RazorpayConfig razorpayConfig;
 
         @Transactional
@@ -43,29 +49,62 @@ public class PaymentServicePaymentVerify {
 
                         /*
                          * ================================================================
-                         * 1. VALIDATION SECTION
-                         * Description: Centralized block handling all input data integrity checks and
-                         * database lookups.
+                         * 1. ISOLATED SECURITY & VALIDATION SECTION
+                         * Description: Independent database verification. Even if upstream layers are
+                         * bypassed, this block guarantees session data integrity and strict ownership.
                          * ================================================================
                          */
 
                         // ==========================================
-                        // 1.1 DATABASE LOOKUP VALIDATION
-                        // Description: Verifies existence of dependent target records within the
-                        // database before running process logic.
+                        // 1.1 Read email from Security Context
+                        // ==========================================
+                        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                        if (authentication == null || !authentication.isAuthenticated()) {
+                                throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
+                        }
+
+                        String email;
+                        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
+                                email = userDetails.getUsername(); // Look, no manual casting!
+                        } else {
+                                email = authentication.getPrincipal().toString();
+                        }
+
+                        // ==========================================
+                        // 1.2 Isolated Database Check: Fetch fresher user record directly from DB
+                        // ==========================================
+                        User currentUser = userRepository.findByEmail(email)
+                                        .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
+                                                        "Authenticated user no longer exists"));
+
+                        // ==========================================
+                        // 1.3 DATABASE LOOKUP VALIDATION (Payment & Order)
                         // ==========================================
                         Payment payment = paymentRepository
                                         .findByRazorpayPaymentLinkId(requestDto.getRazorpayPaymentLinkId())
                                         .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                         "Payment record not found in DB"));
 
-                        PaymentStatus status = payment.getFkStatus();
+                        Order order = payment.getFkOrder();
+                        if (order == null) {
+                                throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
+                                                "Payment association order link broken");
+                        }
 
                         // ==========================================
-                        // 1.2 REQUEST VALIDATION
-                        // Description: Parses and ensures that incoming payload data parameters meet
-                        // fundamental requirements.
+                        // 1.4 Strict Ownership Validation: Check if the payment/order belongs to
+                        // current user
                         // ==========================================
+                        if (order.getFkUser() == null
+                                        || !order.getFkUser().getPkUserId().equals(currentUser.getPkUserId())) {
+                                throw new ApiException(HttpStatus.FORBIDDEN,
+                                                "Access denied: You do not own the order linked to this payment link");
+                        }
+
+                        // ==========================================
+                        // 1.5 PAYMENT STATUS STATE INTEGRITY CHECKS
+                        // ==========================================
+                        PaymentStatus status = payment.getFkStatus();
                         if (status != null && "SUCCESS".equals(status.getStatusName())) {
                                 throw new ApiException(
                                                 HttpStatus.BAD_REQUEST,
@@ -80,12 +119,10 @@ public class PaymentServicePaymentVerify {
                                                 HttpStatus.BAD_REQUEST,
                                                 "Payment Link ID mismatch");
                         }
+
                         /*
                          * ================================================================
-                         * 2. BUSINESS SECTION
-                         * Description: Initiates external integration with the Razorpay Payment
-                         * Gateway,
-                         * calculates pricing units, and configures external link instances.
+                         * 2. BUSINESS SECTION (Signature verification & Razorpay capture check)
                          * ================================================================
                          */
                         String paymentId = requestDto.getRazorpayPaymentId();
@@ -143,6 +180,7 @@ public class PaymentServicePaymentVerify {
                                         .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                                                         "Status PROCESSING not found"));
 
+                        // Update Payment record fields
                         payment.setFkStatus(successStatus);
                         payment.setRazorpayPaymentId(paymentId);
                         payment.setRazorpayOrderId(razorpayFetchedOrderId);
@@ -152,17 +190,9 @@ public class PaymentServicePaymentVerify {
                         /*
                          * ================================================================
                          * 3. DB SAVING SECTION
-                         * Description: Executes persistence validations and stores the final local
-                         * payment entity to the database.
                          * ================================================================
                          */
                         paymentRepository.save(payment);
-
-                        Order order = payment.getFkOrder();
-
-                        if (order == null) {
-                                throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Order link broken");
-                        }
 
                         order.setFkStatus(processingStatus);
                         orderRepository.save(order);
@@ -170,8 +200,6 @@ public class PaymentServicePaymentVerify {
                         /*
                          * ================================================================
                          * 4. RESPONSE SECTION
-                         * Description: Extracts generation properties into structural payloads for API
-                         * presentation returns.
                          * ================================================================
                          */
                         return PaymentVerifyResponseDto.builder()
@@ -187,9 +215,6 @@ public class PaymentServicePaymentVerify {
                 } catch (ApiException ex) {
                         throw ex;
                 } catch (RazorpayException ex) {
-
-                        // ex.printStackTrace();
-
                         String razorpayErrorMessage = ex.getMessage();
                         throw new ApiException(
                                         HttpStatus.BAD_REQUEST,

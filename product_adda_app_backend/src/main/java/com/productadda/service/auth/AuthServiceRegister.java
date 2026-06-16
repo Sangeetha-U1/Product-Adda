@@ -20,7 +20,7 @@ import com.productadda.repository.EmailVerificationTokenRepository;
 import com.productadda.repository.RoleRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.repository.UserRoleRepository;
-import com.productadda.service.token.TokenService;
+import com.productadda.service.token.TokenProvider.TokenService;
 import com.productadda.service.mail.EmailService;
 import com.productadda.util.UuidUtil;
 
@@ -34,7 +34,7 @@ public class AuthServiceRegister {
         private final RoleRepository roleRepository;
         private final UserRoleRepository userRoleRepository;
         private final PasswordEncoder passwordEncoder;
-        private final TokenService.VerificationTokenService verificationTokenService;
+        private final TokenService tokenService;
         private final EmailVerificationTokenRepository emailVerificationTokenRepository;
         private final EmailService emailService;
         private final UuidUtil uuidUtil;
@@ -158,7 +158,7 @@ public class AuthServiceRegister {
 
                 emailVerificationTokenRepository.deleteByFkUser(userInstance);
 
-                TokenService.VerificationTokenService.TokenResult tokenResult = verificationTokenService
+                TokenService.TokenResult tokenResult = tokenService
                                 .generateEmailVerificationToken();
 
                 LocalDateTime expiresAtUtc = LocalDateTime.now(ZoneOffset.UTC)

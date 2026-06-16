@@ -14,7 +14,7 @@ import com.productadda.entity.User;
 import com.productadda.exception.ApiException;
 import com.productadda.repository.EmailVerificationTokenRepository;
 import com.productadda.repository.UserRepository;
-import com.productadda.util.HashUtil;
+import com.productadda.service.token.TokenProvider.TokenService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +24,7 @@ public class EmailVerificationService {
 
         private final EmailVerificationTokenRepository emailVerificationTokenRepository;
         private final UserRepository userRepository;
-        private final HashUtil hashUtil;
+        private final TokenService verificationTokenService;
 
         /*
          * ================================================================
@@ -55,7 +55,7 @@ public class EmailVerificationService {
                 // Description: Hashes the raw token and checks its existence in the database.
                 // ==========================================
 
-                String hashedToken = hashUtil.hashSha256(rawToken);
+                String hashedToken = verificationTokenService.hashToken(rawToken);
 
                 EmailVerificationToken emailVerificationToken = emailVerificationTokenRepository
                                 .findByVerificationToken(hashedToken)

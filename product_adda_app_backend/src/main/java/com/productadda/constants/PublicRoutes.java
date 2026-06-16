@@ -16,27 +16,22 @@ public class PublicRoutes {
             "/api/auth/login",
             "/api/auth/forgot-password",
             "/api/auth/reset-password",
-            "/api/auth/logout",
 
             // token
             "/api/token/verify-email",
-            "/api/token/refresh-token",
             "/api/token/resend-verification-email",
 
             // Admin Auth APIs
             "/api/admin/auth/register",
             "/api/admin/auth/verify-email",
             "/api/admin/auth/login",
-            "/api/admin/auth/logout",
-
-            "/api/admin/users",
 
             // Swagger
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/v3/api-docs/**",
 
-            // Payments
-            "/api/payment/**"
+            // Payments heatlh
+            "/api/payment/health"
     };
 }

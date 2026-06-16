@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.razorpay.RazorpayClient;
@@ -16,10 +19,12 @@ import com.productadda.dto.payment.PaymentCreateResponseDto;
 import com.productadda.entity.Order;
 import com.productadda.entity.Payment;
 import com.productadda.entity.PaymentStatus;
+import com.productadda.entity.User;
 import com.productadda.exception.ApiException;
 import com.productadda.repository.OrderRepository;
 import com.productadda.repository.PaymentRepository;
 import com.productadda.repository.PaymentStatusRepository;
+import com.productadda.repository.UserRepository;
 import com.productadda.util.UuidUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +36,7 @@ public class PaymentServicePaymentCreate {
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
     private final PaymentStatusRepository paymentStatusRepository;
+    private final UserRepository userRepository; // Isolated layer DB verification
     private final RazorpayConfig razorpayConfig;
     private final UuidUtil uuidUtil;
 
@@ -39,36 +45,62 @@ public class PaymentServicePaymentCreate {
 
             /*
              * ================================================================
-             * 1. VALIDATION SECTION
-             * Description: Centralized block handling all input data integrity checks and
-             * database lookups.
+             * 1. ISOLATED SECURITY & VALIDATION SECTION
+             * Description: Independent database verification. Even if filters are
+             * bypassed, this block guarantees data integrity and strict ownership.
              * ================================================================
              */
+            // ==========================================
+            // 1.1 Read email from Security Context
+            // ==========================================
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
+            }
+
+            String email;
+            if (authentication.getPrincipal() instanceof UserDetails userDetails) {
+                email = userDetails.getUsername(); // Look, no manual casting!
+            } else {
+                email = authentication.getPrincipal().toString();
+            }
+            // ==========================================
+            // 1.2 Isolated Database Check: Ensure user exists and is up to date in DB right
+            // now
+            // ==========================================
+            User currentUser = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user no longer exists"));
 
             // ==========================================
-            // 1.1 REQUEST VALIDATION
-            // Description: Parses and ensures that incoming payload data parameters meet
-            // fundamental requirements.
+            // 1.3 Request Formatting
             // ==========================================
             UUID orderId = UUID.fromString(requestDto.getOrderId());
 
             // ==========================================
-            // 1.2 DATABASE LOOKUP VALIDATION
-            // Description: Verifies existence of dependent target records within the
-            // database before running process logic.
+            // 1.4 Database Check: Fetch target order
             // ==========================================
             Order order = orderRepository.findById(orderId)
                     .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Order not found"));
 
+            // ==========================================
+            // 1.5 Strict Ownership Validation: Cross-verify IDs straight from the DB
+            // records
+            // ==========================================
+            if (order.getFkUser() == null || !order.getFkUser().getPkUserId().equals(currentUser.getPkUserId())) {
+                throw new ApiException(HttpStatus.FORBIDDEN, "Access denied: This order does not belong to user "
+                        + email + "with user id" + currentUser.getPkUserId());
+            }
+
+            // ==========================================
+            // 1.6 Fetch Pending Status
+            // ==========================================
             PaymentStatus pendingStatus = paymentStatusRepository.findByStatusName("PENDING")
                     .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                             "Payment status PENDING not found"));
 
             /*
              * ================================================================
-             * 2. BUSINESS SECTION
-             * Description: Initiates external integration with the Razorpay Payment
-             * Gateway, calculates pricing units, and configures external link instances.
+             * 2. BUSINESS SECTION (Razorpay Integration)
              * ================================================================
              */
             RazorpayClient razorpayClient = new RazorpayClient(razorpayConfig.getKeyId(),
@@ -80,15 +112,11 @@ public class PaymentServicePaymentCreate {
             linkOptions.put("amount", amountInPaise);
             linkOptions.put("currency", "INR");
             linkOptions.put("description", "Verification Testing for Order " + orderId);
-
-            // Map your own DB Order UUID straight to the reference_id!
             linkOptions.put("reference_id", order.getPkOrderId().toString());
             linkOptions.put("callback_url", "https://example.com");
             linkOptions.put("callback_method", "get");
 
-            // API call to Razorpay to get the hosted short_url
             com.razorpay.PaymentLink paymentLink = razorpayClient.paymentLink.create(linkOptions);
-
             String razorpayPaymentLinkId = paymentLink.get("id");
 
             Payment payment = Payment.builder()
@@ -104,21 +132,15 @@ public class PaymentServicePaymentCreate {
             /*
              * ================================================================
              * 3. DB SAVING SECTION
-             * Description: Executes persistence validations and stores the final local
-             * payment entity to the database.
              * ================================================================
              */
-
             paymentRepository.save(payment);
 
             /*
              * ================================================================
              * 4. RESPONSE SECTION
-             * Description: Extracts generation properties into structural payloads for API
-             * presentation returns.
              * ================================================================
              */
-
             return PaymentCreateResponseDto.builder()
                     .rawLinkDetails(paymentLink.toJson().toMap())
                     .build();
@@ -126,9 +148,6 @@ public class PaymentServicePaymentCreate {
         } catch (ApiException ex) {
             throw ex;
         } catch (RazorpayException ex) {
-
-            // ex.printStackTrace();
-
             String razorpayErrorMessage = ex.getMessage();
             throw new ApiException(
                     HttpStatus.BAD_REQUEST,

@@ -18,7 +18,7 @@ import com.productadda.exception.ApiException;
 import com.productadda.repository.EmailVerificationTokenRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.service.mail.EmailService;
-import com.productadda.service.token.TokenService.VerificationTokenService;
+import com.productadda.service.token.TokenProvider.TokenService;
 import com.productadda.util.UuidUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class ResendVerificationEmailService {
 
     private final EmailVerificationTokenRepository emailVerificationTokenRepository;
 
-    private final VerificationTokenService verificationTokenService;
+    private final TokenService verificationTokenService;
 
     private final EmailService emailService;
 
@@ -103,7 +103,7 @@ public class ResendVerificationEmailService {
         emailVerificationTokenRepository
                 .deleteByFkUser(user);
 
-        VerificationTokenService.TokenResult tokenResult = verificationTokenService
+        TokenService.TokenResult tokenResult = verificationTokenService
                 .generateEmailVerificationToken();
 
         LocalDateTime expiresAtUtc = LocalDateTime.now(ZoneOffset.UTC)

@@ -17,7 +17,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 
 @Service
-public class TokenService {
+public class TokenProvider {
 
     /*
      * ============================================================================
@@ -36,28 +36,61 @@ public class TokenService {
         @Value("${app.jwt.refresh-token-expiration-ms}")
         private long refreshTokenExpiryMs;
 
-        public String generateAccessToken(String email) {
-            SecretKey secretKey = Keys.hmacShaKeyFor(
+        private SecretKey getSigningKey() {
+            return Keys.hmacShaKeyFor(
                     jwtSecret.getBytes(StandardCharsets.UTF_8));
+        }
+
+        public String generateAccessToken(String email) {
 
             return Jwts.builder()
                     .subject(email)
                     .issuedAt(new Date())
                     .expiration(new Date(System.currentTimeMillis() + accessTokenExpiryMs))
-                    .signWith(secretKey)
+                    .signWith(getSigningKey())
                     .compact();
         }
 
         public String generateRefreshToken(String email) {
-            SecretKey secretKey = Keys.hmacShaKeyFor(
-                    jwtSecret.getBytes(StandardCharsets.UTF_8));
 
             return Jwts.builder()
                     .subject(email)
                     .issuedAt(new Date())
                     .expiration(new Date(System.currentTimeMillis() + refreshTokenExpiryMs))
-                    .signWith(secretKey)
+                    .signWith(getSigningKey())
                     .compact();
+        }
+
+        public String extractEmailFromToken(String token) {
+            return extractAllClaims(token)
+                    .getSubject();
+        }
+
+        public boolean isTokenExpired(String token) {
+            return extractAllClaims(token)
+                    .getExpiration()
+                    .before(new Date());
+        }
+
+        public boolean isTokenValid(String token) {
+
+            try {
+
+                return !isTokenExpired(token);
+
+            } catch (Exception exception) {
+
+                return false;
+            }
+        }
+
+        private io.jsonwebtoken.Claims extractAllClaims(String token) {
+
+            return Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
         }
 
         public LocalDateTime getRefreshTokenExpiryDate() {
@@ -68,12 +101,12 @@ public class TokenService {
 
     /*
      * ============================================================================
-     * 2. VERIFICATION TOKEN SERVICE
+     * 2. TOKEN SERVICE
      * ============================================================================
      */
     @Service
     @RequiredArgsConstructor
-    public static class VerificationTokenService {
+    public static class TokenService {
 
         private final UuidUtil uuidUtil;
         private final HashUtil hashUtil;
@@ -91,6 +124,12 @@ public class TokenService {
             String hashedToken = hashUtil.hashSha256(rawToken);
 
             return new TokenResult(rawToken, hashedToken);
+        }
+
+        public String hashToken(String rawToken) {
+            String hashedToken = hashUtil.hashSha256(rawToken);
+
+            return hashedToken;
         }
     }
 }

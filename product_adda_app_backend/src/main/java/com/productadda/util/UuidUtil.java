@@ -19,5 +19,4 @@ public class UuidUtil {
         return UuidCreator.getTimeOrderedEpoch().toString();
     }
 
-
 }

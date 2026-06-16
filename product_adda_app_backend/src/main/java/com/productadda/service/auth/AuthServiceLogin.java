@@ -15,7 +15,8 @@ import com.productadda.repository.UserRepository;
 
 import com.productadda.entity.UserRole;
 import com.productadda.repository.UserRoleRepository;
-import com.productadda.service.token.TokenService;
+import com.productadda.service.token.RefreshTokenService;
+import com.productadda.service.token.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +38,8 @@ public class AuthServiceLogin {
      * ================================================================
      */
     private final PasswordEncoder passwordEncoder;
-    private final TokenService.JwtService jwtService;
+    private final TokenProvider.JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
     /*
      * ================================================================
@@ -119,8 +121,8 @@ public class AuthServiceLogin {
         String accessToken = jwtService.generateAccessToken(
                 user.getEmail());
 
-        String refreshToken = jwtService.generateRefreshToken(
-                user.getEmail());
+        String refreshToken = refreshTokenService.createRefreshToken(
+                user);
 
         TokenDto token = TokenDto.builder()
                 .accessToken(accessToken)

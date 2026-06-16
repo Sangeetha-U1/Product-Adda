@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.List;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -72,4 +73,12 @@ public class User {
      */
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;
+
+    /*
+     * =========================================================
+     * ROLES
+     * =========================================================
+     */
+    @OneToMany(mappedBy = "fkUser", fetch = FetchType.LAZY)
+    private List<UserRole> userRoles;
 }

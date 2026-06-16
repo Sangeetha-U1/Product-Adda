@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 0000026A 7478:274D
+Volume serial number is 0000025C 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -34,6 +34,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       PaymentController.java
 |   |           |   |       
 |   |           |   \---token
+|   |           |           RefreshController.java
 |   |           |           ResendVerificationEmailController.java
 |   |           |           VerifyEmailController.java
 |   |           |           
@@ -47,8 +48,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---auth
 |   |           |   |       LoginRequestDto.java
 |   |           |   |       LoginResponseDto.java
+|   |           |   |       LogoutRequestDto.java
 |   |           |   |       RegisterRequestDto.java
 |   |           |   |       RegisterResponseDto.java
+|   |           |   |       UserProfileResponseDto.java
 |   |           |   |       
 |   |           |   +---payment
 |   |           |   |       PaymentCreateRequestDto.java
@@ -58,6 +61,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       PaymentVerifyResponseDto.java
 |   |           |   |       
 |   |           |   \---token
+|   |           |           RefreshTokenRequestDto.java
+|   |           |           RefreshTokenResponseDto.java
 |   |           |           ResendVerificationEmailRequestDto.java
 |   |           |           ResendVerificationEmailResponseDto.java
 |   |           |           TokenDto.java
@@ -73,6 +78,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       Payment.java
 |   |           |       PaymentStatus.java
 |   |           |       Product.java
+|   |           |       RefreshToken.java
 |   |           |       Review.java
 |   |           |       Role.java
 |   |           |       User.java
@@ -93,6 +99,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       PaymentRepository.java
 |   |           |       PaymentStatusRepository.java
 |   |           |       ProductRepository.java
+|   |           |       RefreshTokenRepository.java
 |   |           |       ReviewRepository.java
 |   |           |       RoleRepository.java
 |   |           |       UserRepository.java
@@ -100,6 +107,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       VendorRepository.java
 |   |           |       
 |   |           +---security
+|   |           |       CustomAuthenticationEntryPoint.java
+|   |           |       CustomUserDetailsService.java
 |   |           |       JwtAuthenticationFilter.java
 |   |           |       SecurityConfig.java
 |   |           |       
@@ -108,6 +117,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |   
 |   |           |   +---auth
 |   |           |   |       AuthServiceLogin.java
+|   |           |   |       AuthServiceLogout.java
+|   |           |   |       AuthServiceMe.java
 |   |           |   |       AuthServiceRegister.java
 |   |           |   |       
 |   |           |   +---mail
@@ -121,8 +132,9 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       
 |   |           |   \---token
 |   |           |           EmailVerificationService.java
+|   |           |           RefreshTokenService.java
 |   |           |           ResendVerificationEmailService.java
-|   |           |           TokenService.java
+|   |           |           TokenProvider.java
 |   |           |           
 |   |           \---util
 |   |                   HashUtil.java
@@ -144,7 +156,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
                     
 
 Folder PATH listing
-Volume serial number is 00000120 7478:274D
+Volume serial number is 000001CC 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties
