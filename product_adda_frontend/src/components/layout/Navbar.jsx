@@ -1,14 +1,18 @@
-import { Link } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
+import "./Navbar.css";
+import logo from "../../assets/logo.png";
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark custom-navbar">
       <div className="container">
 
-        <Link className="navbar-brand" to="/">
-          ProductAdda
-        </Link>
-
+<NavLink className="navbar-brand" to="/">
+  <img
+    src={logo}
+    alt="ProductAdda Logo"
+    className="logo"
+  />
+</NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -19,39 +23,56 @@ function Navbar() {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
+
+          <ul className="navbar-nav mx-auto">
 
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <NavLink className="nav-link" to="/">
                 Home
-              </Link>
+              </NavLink>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/products">
+              <NavLink className="nav-link" to="/products">
                 Products
-              </Link>
+              </NavLink>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/categories">
+              <NavLink className="nav-link" to="/categories">
                 Categories
-              </Link>
+              </NavLink>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/cart">
+              <NavLink className="nav-link" to="/cart">
                 Cart
-              </Link>
+              </NavLink>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/contact">
+              <NavLink className="nav-link" to="/contact">
                 Contact
-              </Link>
+              </NavLink>
             </li>
 
           </ul>
+
+          <form className="d-flex me-3">
+            <input
+              className="form-control"
+              type="search"
+              placeholder="Search Products"
+            />
+          </form>
+
+<button className="btn-login me-2">
+  Login
+</button>
+
+<button className="btn-register">
+  Register
+</button>
         </div>
       </div>
     </nav>
