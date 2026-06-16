@@ -28,9 +28,13 @@ function HeroSection() {
           </button>
           
         </div>
-
+ <img 
+            src="https://img.freepik.com/free-vector/online-shopping-concept-illustration_114360-1084.jpg"
+            alt="Online Shopping"
+            className="mobile-hero-image"
+        />
       </div>
-      
+     
     </section>
   );
 }
