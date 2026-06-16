@@ -25,6 +25,7 @@ DESCRIBE roles;
 DESCRIBE user_roles;
 DESCRIBE email_verification_tokens;
 DESCRIBE vendors;
+DESCRIBE refresh_tokens;
 
 -- ============================================================================
 -- Show create table
@@ -43,6 +44,7 @@ SHOW CREATE TABLE roles;
 SHOW CREATE TABLE user_roles;
 SHOW CREATE TABLE email_verification_tokens;
 SHOW CREATE TABLE vendors;
+SHOW CREATE TABLE refresh_tokens;
 
 -- ============================================================================
 -- Select
@@ -61,4 +63,4 @@ SELECT * FROM roles;
 SELECT * FROM user_roles;
 SELECT * FROM email_verification_tokens;
 SELECT * FROM vendors;
-
+SELECT * FROM refresh_tokens;

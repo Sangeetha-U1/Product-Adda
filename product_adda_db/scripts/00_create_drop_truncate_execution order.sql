@@ -42,6 +42,7 @@ TRUNCATE TABLE users;
 TRUNCATE TABLE roles;
 TRUNCATE TABLE user_roles;
 TRUNCATE TABLE email_verification_tokens;
+TRUNCATE TABLE refresh_tokens;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ============================================================================
@@ -79,6 +80,7 @@ DROP TABLE IF EXISTS `vendors`;
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `user_roles`;
 DROP TABLE IF EXISTS `email_verification_tokens`;
+DROP TABLE IF EXISTS `refresh_tokens`;
 
 -- ============================================================================
 -- Re-enable foreign key checks
