@@ -1,12 +1,16 @@
 /*
 ===============================================================================
-Table       : user_roles
+Table       : vendors
 Description :
-    Maps users to roles.
+    Stores vendor business profile information.
+
+    Represents sellers on the marketplace.
 
     Supports:
-    - One user to many roles
-    - One role to many users
+    - Vendor Registration
+    - Store Management
+    - Vendor Dashboard
+    - Revenue Tracking
 ===============================================================================
 */
 
@@ -16,19 +20,25 @@ USE product_adda_db;
 -- Drop Table
 -- ============================================================================
 
-DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS vendors;
 
 -- ============================================================================
 -- Create Table
 -- ============================================================================
 
-CREATE TABLE user_roles
+CREATE TABLE vendors
 (
-    pk_user_role_id BINARY(16) NOT NULL,
+    pk_vendor_id BINARY(16) NOT NULL,
 
     fk_user_id BINARY(16) NOT NULL,
 
-    fk_role_id BINARY(16) NOT NULL,
+    business_name VARCHAR(255) NOT NULL,
+
+    store_name VARCHAR(255) NOT NULL,
+
+    gst_number VARCHAR(50) NOT NULL,
+
+    business_description TEXT NULL,
 
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
 
@@ -39,20 +49,18 @@ CREATE TABLE user_roles
         DEFAULT (UTC_TIMESTAMP())
         ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT pk_user_roles_user_role_id
-        PRIMARY KEY (pk_user_role_id),
+    CONSTRAINT pk_vendors_vendor_id
+        PRIMARY KEY (pk_vendor_id),
 
-    CONSTRAINT uq_user_roles_user_role
-        UNIQUE (fk_user_id, fk_role_id),
+    CONSTRAINT uq_vendors_gst_number
+        UNIQUE (gst_number),
 
-    CONSTRAINT fk_user_roles_user_id
+    CONSTRAINT uq_vendors_user_id
+        UNIQUE (fk_user_id),
+
+    CONSTRAINT fk_vendors_user_id
         FOREIGN KEY (fk_user_id)
         REFERENCES users(pk_user_id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT fk_user_roles_role_id
-        FOREIGN KEY (fk_role_id)
-        REFERENCES roles(pk_role_id)
         ON DELETE RESTRICT
 );
 
@@ -60,19 +68,22 @@ CREATE TABLE user_roles
 -- Indexes
 -- ============================================================================
 
-CREATE INDEX idx_user_roles_user_id
-    ON user_roles(fk_user_id);
+CREATE INDEX idx_vendors_user_id
+    ON vendors(fk_user_id);
 
-CREATE INDEX idx_user_roles_role_id
-    ON user_roles(fk_role_id);
+CREATE INDEX idx_vendors_business_name
+    ON vendors(business_name);
 
-CREATE INDEX idx_user_roles_is_active
-    ON user_roles(is_active);
+CREATE INDEX idx_vendors_store_name
+    ON vendors(store_name);
+
+CREATE INDEX idx_vendors_is_active
+    ON vendors(is_active);
 
 -- ============================================================================
 -- Verification
 -- ============================================================================
 
-DESCRIBE user_roles;
+DESCRIBE vendors;
 
-SHOW CREATE TABLE user_roles;
+SHOW CREATE TABLE vendors;

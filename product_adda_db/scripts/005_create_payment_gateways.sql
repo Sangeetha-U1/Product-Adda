@@ -1,12 +1,9 @@
 /*
 ===============================================================================
-Table       : user_roles
+Table       : payment_gateways
 Description :
-    Maps users to roles.
-
-    Supports:
-    - One user to many roles
-    - One role to many users
+Stores supported payment gateways used by checkout and payment
+processing modules.
 ===============================================================================
 */
 
@@ -16,19 +13,19 @@ USE product_adda_db;
 -- Drop Table
 -- ============================================================================
 
-DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS payment_gateways;
 
 -- ============================================================================
 -- Create Table
 -- ============================================================================
 
-CREATE TABLE user_roles
+CREATE TABLE payment_gateways
 (
-    pk_user_role_id BINARY(16) NOT NULL,
+    pk_gateway_id BINARY(16) NOT NULL,
 
-    fk_user_id BINARY(16) NOT NULL,
+    gateway_name VARCHAR(100) NOT NULL,
 
-    fk_role_id BINARY(16) NOT NULL,
+    description VARCHAR(255) NULL,
 
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
 
@@ -39,40 +36,28 @@ CREATE TABLE user_roles
         DEFAULT (UTC_TIMESTAMP())
         ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT pk_user_roles_user_role_id
-        PRIMARY KEY (pk_user_role_id),
+    CONSTRAINT pk_payment_gateways_gateway_id
+        PRIMARY KEY (pk_gateway_id),
 
-    CONSTRAINT uq_user_roles_user_role
-        UNIQUE (fk_user_id, fk_role_id),
+    CONSTRAINT uq_payment_gateways_gateway_name
+        UNIQUE (gateway_name)
 
-    CONSTRAINT fk_user_roles_user_id
-        FOREIGN KEY (fk_user_id)
-        REFERENCES users(pk_user_id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT fk_user_roles_role_id
-        FOREIGN KEY (fk_role_id)
-        REFERENCES roles(pk_role_id)
-        ON DELETE RESTRICT
 );
 
 -- ============================================================================
 -- Indexes
 -- ============================================================================
 
-CREATE INDEX idx_user_roles_user_id
-    ON user_roles(fk_user_id);
+CREATE INDEX idx_payment_gateways_gateway_name
+ON payment_gateways(gateway_name);
 
-CREATE INDEX idx_user_roles_role_id
-    ON user_roles(fk_role_id);
-
-CREATE INDEX idx_user_roles_is_active
-    ON user_roles(is_active);
+CREATE INDEX idx_payment_gateways_is_active
+ON payment_gateways(is_active);
 
 -- ============================================================================
 -- Verification
 -- ============================================================================
 
-DESCRIBE user_roles;
+DESCRIBE payment_gateways;
 
-SHOW CREATE TABLE user_roles;
+SHOW CREATE TABLE payment_gateways;

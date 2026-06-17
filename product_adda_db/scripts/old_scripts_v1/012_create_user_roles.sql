@@ -2,48 +2,27 @@
 ===============================================================================
 Table       : user_roles
 Description :
-    Maps users to roles.
-
-    Supports:
-    - One user to many roles
-    - One role to many users
+    Stores user roles.
 ===============================================================================
 */
 
 USE product_adda_db;
 
 -- ============================================================================
--- Drop Table
--- ============================================================================
-
-DROP TABLE IF EXISTS user_roles;
-
--- ============================================================================
 -- Create Table
 -- ============================================================================
 
-CREATE TABLE user_roles
+CREATE TABLE IF NOT EXISTS user_roles
 (
     pk_user_role_id BINARY(16) NOT NULL,
 
-    fk_user_id BINARY(16) NOT NULL,
+    fk_user_id      BINARY(16) NOT NULL,
+    fk_role_id      BINARY(16) NOT NULL,
 
-    fk_role_id BINARY(16) NOT NULL,
-
-    is_active BOOLEAN NOT NULL DEFAULT TRUE,
-
-    created_at_utc TIMESTAMP NOT NULL
-        DEFAULT (UTC_TIMESTAMP()),
-
-    updated_at_utc TIMESTAMP NOT NULL
-        DEFAULT (UTC_TIMESTAMP())
-        ON UPDATE CURRENT_TIMESTAMP,
+    created_at_utc  TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP()),
 
     CONSTRAINT pk_user_roles_user_role_id
         PRIMARY KEY (pk_user_role_id),
-
-    CONSTRAINT uq_user_roles_user_role
-        UNIQUE (fk_user_id, fk_role_id),
 
     CONSTRAINT fk_user_roles_user_id
         FOREIGN KEY (fk_user_id)
@@ -53,21 +32,21 @@ CREATE TABLE user_roles
     CONSTRAINT fk_user_roles_role_id
         FOREIGN KEY (fk_role_id)
         REFERENCES roles(pk_role_id)
-        ON DELETE RESTRICT
+        ON DELETE CASCADE,
+
+    CONSTRAINT uq_user_roles_user_role
+        UNIQUE (fk_user_id, fk_role_id)
 );
 
 -- ============================================================================
 -- Indexes
 -- ============================================================================
 
-CREATE INDEX idx_user_roles_user_id
+CREATE INDEX idx_user_roles_fk_user_id
     ON user_roles(fk_user_id);
 
-CREATE INDEX idx_user_roles_role_id
+CREATE INDEX idx_user_roles_fk_role_id
     ON user_roles(fk_role_id);
-
-CREATE INDEX idx_user_roles_is_active
-    ON user_roles(is_active);
 
 -- ============================================================================
 -- Verification

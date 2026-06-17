@@ -1,12 +1,8 @@
 /*
 ===============================================================================
-Table       : user_roles
+Table : notification_types
 Description :
-    Maps users to roles.
-
-    Supports:
-    - One user to many roles
-    - One role to many users
+Defines notification event types used by notification services.
 ===============================================================================
 */
 
@@ -16,19 +12,19 @@ USE product_adda_db;
 -- Drop Table
 -- ============================================================================
 
-DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS notification_types;
 
 -- ============================================================================
 -- Create Table
 -- ============================================================================
 
-CREATE TABLE user_roles
+CREATE TABLE notification_types
 (
-    pk_user_role_id BINARY(16) NOT NULL,
+    pk_notification_type_id BINARY(16) NOT NULL,
 
-    fk_user_id BINARY(16) NOT NULL,
+    notification_type_name VARCHAR(100) NOT NULL,
 
-    fk_role_id BINARY(16) NOT NULL,
+    description VARCHAR(255) NULL,
 
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
 
@@ -39,40 +35,28 @@ CREATE TABLE user_roles
         DEFAULT (UTC_TIMESTAMP())
         ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT pk_user_roles_user_role_id
-        PRIMARY KEY (pk_user_role_id),
+    CONSTRAINT pk_notification_types_notification_type_id
+        PRIMARY KEY (pk_notification_type_id),
 
-    CONSTRAINT uq_user_roles_user_role
-        UNIQUE (fk_user_id, fk_role_id),
+    CONSTRAINT uq_notification_types_name
+        UNIQUE (notification_type_name)
 
-    CONSTRAINT fk_user_roles_user_id
-        FOREIGN KEY (fk_user_id)
-        REFERENCES users(pk_user_id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT fk_user_roles_role_id
-        FOREIGN KEY (fk_role_id)
-        REFERENCES roles(pk_role_id)
-        ON DELETE RESTRICT
 );
 
 -- ============================================================================
 -- Indexes
 -- ============================================================================
 
-CREATE INDEX idx_user_roles_user_id
-    ON user_roles(fk_user_id);
+CREATE INDEX idx_notification_types_name
+ON notification_types(notification_type_name);
 
-CREATE INDEX idx_user_roles_role_id
-    ON user_roles(fk_role_id);
-
-CREATE INDEX idx_user_roles_is_active
-    ON user_roles(is_active);
+CREATE INDEX idx_notification_types_is_active
+ON notification_types(is_active);
 
 -- ============================================================================
 -- Verification
 -- ============================================================================
 
-DESCRIBE user_roles;
+DESCRIBE notification_types;
 
-SHOW CREATE TABLE user_roles;
+SHOW CREATE TABLE notification_types;

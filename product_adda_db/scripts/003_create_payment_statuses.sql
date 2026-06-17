@@ -1,12 +1,9 @@
 /*
 ===============================================================================
-Table       : user_roles
+Table       : payment_statuses
 Description :
-    Maps users to roles.
-
-    Supports:
-    - One user to many roles
-    - One role to many users
+Stores payment transaction statuses used by payment processing,
+refunds and reporting modules.
 ===============================================================================
 */
 
@@ -16,19 +13,19 @@ USE product_adda_db;
 -- Drop Table
 -- ============================================================================
 
-DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS payment_statuses;
 
 -- ============================================================================
 -- Create Table
 -- ============================================================================
 
-CREATE TABLE user_roles
+CREATE TABLE payment_statuses
 (
-    pk_user_role_id BINARY(16) NOT NULL,
+    pk_status_id BINARY(16) NOT NULL,
 
-    fk_user_id BINARY(16) NOT NULL,
+    status_name VARCHAR(50) NOT NULL,
 
-    fk_role_id BINARY(16) NOT NULL,
+    description VARCHAR(255) NULL,
 
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
 
@@ -39,40 +36,28 @@ CREATE TABLE user_roles
         DEFAULT (UTC_TIMESTAMP())
         ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT pk_user_roles_user_role_id
-        PRIMARY KEY (pk_user_role_id),
+    CONSTRAINT pk_payment_statuses_status_id
+        PRIMARY KEY (pk_status_id),
 
-    CONSTRAINT uq_user_roles_user_role
-        UNIQUE (fk_user_id, fk_role_id),
+    CONSTRAINT uq_payment_statuses_status_name
+        UNIQUE (status_name)
 
-    CONSTRAINT fk_user_roles_user_id
-        FOREIGN KEY (fk_user_id)
-        REFERENCES users(pk_user_id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT fk_user_roles_role_id
-        FOREIGN KEY (fk_role_id)
-        REFERENCES roles(pk_role_id)
-        ON DELETE RESTRICT
 );
 
 -- ============================================================================
 -- Indexes
 -- ============================================================================
 
-CREATE INDEX idx_user_roles_user_id
-    ON user_roles(fk_user_id);
+CREATE INDEX idx_payment_statuses_status_name
+ON payment_statuses(status_name);
 
-CREATE INDEX idx_user_roles_role_id
-    ON user_roles(fk_role_id);
-
-CREATE INDEX idx_user_roles_is_active
-    ON user_roles(is_active);
+CREATE INDEX idx_payment_statuses_is_active
+ON payment_statuses(is_active);
 
 -- ============================================================================
 -- Verification
 -- ============================================================================
 
-DESCRIBE user_roles;
+DESCRIBE payment_statuses;
 
-SHOW CREATE TABLE user_roles;
+SHOW CREATE TABLE payment_statuses;

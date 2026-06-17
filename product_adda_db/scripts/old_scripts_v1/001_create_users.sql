@@ -24,11 +24,17 @@ CREATE TABLE IF NOT EXISTS users
 
     password_hash    VARCHAR(255)    NOT NULL,
 
+    google_id VARCHAR(255) NULL,
+
     email_verified TINYINT(1) NOT NULL DEFAULT 0,
 
     is_active        BOOLEAN         NOT NULL DEFAULT TRUE,
 
+    last_login_at_utc TIMESTAMP NULL
+
     created_at_utc    TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP()),
+
+    updated_at_utc TIMESTAMP NOT NULL DEFAULT (UTC_TIMESTAMP())
 
     CONSTRAINT pk_users_user_id
         PRIMARY KEY (pk_user_id),
@@ -52,6 +58,9 @@ CREATE INDEX idx_users_mobile
 
 CREATE INDEX idx_users_is_active
     ON users(is_active);
+
+CREATE INDEX idx_users_google_id
+ON users(google_id);
 
 -- ============================================================================
 -- Verification

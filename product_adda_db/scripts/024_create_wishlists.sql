@@ -1,34 +1,25 @@
 /*
 ===============================================================================
-Table       : user_roles
+Table       : wishlists
 Description :
-    Maps users to roles.
-
-    Supports:
-    - One user to many roles
-    - One role to many users
+Stores customer wishlist container.
+One customer should have one wishlist.
 ===============================================================================
 */
 
 USE product_adda_db;
 
--- ============================================================================
--- Drop Table
--- ============================================================================
-
-DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS wishlists;
 
 -- ============================================================================
 -- Create Table
 -- ============================================================================
 
-CREATE TABLE user_roles
+CREATE TABLE wishlists
 (
-    pk_user_role_id BINARY(16) NOT NULL,
+    pk_wishlist_id BINARY(16) NOT NULL,
 
     fk_user_id BINARY(16) NOT NULL,
-
-    fk_role_id BINARY(16) NOT NULL,
 
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
 
@@ -39,40 +30,32 @@ CREATE TABLE user_roles
         DEFAULT (UTC_TIMESTAMP())
         ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT pk_user_roles_user_role_id
-        PRIMARY KEY (pk_user_role_id),
+    CONSTRAINT pk_wishlists_wishlist_id
+        PRIMARY KEY (pk_wishlist_id),
 
-    CONSTRAINT uq_user_roles_user_role
-        UNIQUE (fk_user_id, fk_role_id),
+    CONSTRAINT uq_wishlists_user
+        UNIQUE (fk_user_id),
 
-    CONSTRAINT fk_user_roles_user_id
+    CONSTRAINT fk_wishlists_user_id
         FOREIGN KEY (fk_user_id)
         REFERENCES users(pk_user_id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT fk_user_roles_role_id
-        FOREIGN KEY (fk_role_id)
-        REFERENCES roles(pk_role_id)
-        ON DELETE RESTRICT
+        ON DELETE CASCADE
 );
 
 -- ============================================================================
 -- Indexes
 -- ============================================================================
 
-CREATE INDEX idx_user_roles_user_id
-    ON user_roles(fk_user_id);
+CREATE INDEX idx_wishlists_user
+    ON wishlists(fk_user_id);
 
-CREATE INDEX idx_user_roles_role_id
-    ON user_roles(fk_role_id);
-
-CREATE INDEX idx_user_roles_is_active
-    ON user_roles(is_active);
+CREATE INDEX idx_wishlists_is_active
+    ON wishlists(is_active);
 
 -- ============================================================================
 -- Verification
 -- ============================================================================
 
-DESCRIBE user_roles;
+DESCRIBE wishlists;
 
-SHOW CREATE TABLE user_roles;
+SHOW CREATE TABLE wishlists;
