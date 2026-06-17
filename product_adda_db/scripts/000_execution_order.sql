@@ -86,47 +86,47 @@ create in user scope
 
 3. provide proper path
 
-eg: filepath: C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\
+eg: filepath: folderpath
 
 4. user at end `*> $null' to not print in terminal.
 
 ```powershell
-$ScriptFolder = "C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts"
+$ScriptFolder = "folderpath"
 
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\001_create_roles.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\002_create_order_statuses.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\003_create_payment_statuses.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\004_create_review_statuses.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\005_create_payment_gateways.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\006_create_address_types.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\007_create_inventory_transaction_types.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\008_create_notification_types.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\009_create_notification_channels.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\010_create_report_types.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\011_create_users.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\012_create_user_roles.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\013_create_vendors.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\014_create_vendor_bank_details.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\015_create_addresses.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\016_create_brands.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\017_create_categories.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\018_create_products.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\019_create_product_images.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\020_create_inventory.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\021_create_inventory_transactions.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\022_create_carts.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\023_create_cart_items.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\024_create_wishlists.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\025_create_wishlist_items.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\026_create_orders.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\027_create_order_items.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\028_create_payments.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\029_create_reviews.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\030_create_email_verification_tokens.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\031_create_refresh_tokens.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\032_create_password_reset_tokens.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\033_create_notifications.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\scripts\034_create_reports.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\001_create_roles.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\002_create_order_statuses.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\003_create_payment_statuses.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\004_create_review_statuses.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\005_create_payment_gateways.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\006_create_address_types.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\007_create_inventory_transaction_types.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\008_create_notification_types.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\009_create_notification_channels.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\010_create_report_types.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\011_create_users.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\012_create_user_roles.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\013_create_vendors.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\014_create_vendor_bank_details.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\015_create_addresses.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\016_create_brands.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\017_create_categories.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\018_create_products.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\019_create_product_images.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\020_create_inventory.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\021_create_inventory_transactions.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\022_create_carts.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\023_create_cart_items.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\024_create_wishlists.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\025_create_wishlist_items.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\026_create_orders.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\027_create_order_items.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\028_create_payments.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\029_create_reviews.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\030_create_email_verification_tokens.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\031_create_refresh_tokens.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\032_create_password_reset_tokens.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\033_create_notifications.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\034_create_reports.sql"
 
 ```
 */
@@ -137,18 +137,18 @@ mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\D
 
 /*
 ```powershell
-$ScriptFolder = "C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata"
+$ScriptFolder = "folderpath"
 
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\01_category_lookup_tables_seed_data.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\02_category_core_master_tables_seed_data.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\03_category_product_domain_seed_data.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\04_category_inventory_domain_seed_data.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\05_category_cart_wishlist_seed_data.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\06_category_order_payment_seed_data.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\07_category_review_seed_data.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\08_category_auth_security_seed_data.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\09_category_notification_seed_data.sql"
-mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source C:\Users\ADMIN\Downloads\vs-code\product_adda\product_adda_db\seeddata\10_category_reporting_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\01_category_lookup_tables_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\02_category_core_master_tables_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\03_category_product_domain_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\04_category_inventory_domain_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\05_category_cart_wishlist_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\06_category_order_payment_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\07_category_review_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\08_category_auth_security_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\09_category_notification_seed_data.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\10_category_reporting_seed_data.sql"
 ```
 */
 
