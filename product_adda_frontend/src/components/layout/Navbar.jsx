@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";import { NavLink } from "react-router-dom";
-import "./Navbar.css";
+import { NavLink, useNavigate } from "react-router-dom";import "./Navbar.css";
 import logo from "../../assets/logo.png";
-
+import { FaTimes } from "react-icons/fa";
 function Navbar() {
 const [open, setOpen] = useState(false);
 const [search, setSearch] = useState("");
+const clearSearch = () => {
+  setSearch("");
+  navigate("/products");
+};
 const navigate = useNavigate();
 const handleSearch = (e) => {
   e.preventDefault();
@@ -66,21 +69,32 @@ const handleSearch = (e) => {
 
           </ul>
 <form className="d-flex me-3" onSubmit={handleSearch}>
-            <input
-              className="form-control"
-              type="search"
-              placeholder="Search Products"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-              <button
+  <div className="search-box">
+
+    <input
+      className="form-control"
+      type="search"
+      placeholder="Search Products"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+    />
+
+    {search && (
+      <span
+        className="clear-icon"
+        onClick={() => setSearch("")}
+      />
+    )}
+
+  </div>
+
+  <button
     type="submit"
     className="btn btn-primary ms-2"
   >
     Search
   </button>
-          </form>
-
+</form>
 <button className="btn-login me-2">
   Login
 </button>
