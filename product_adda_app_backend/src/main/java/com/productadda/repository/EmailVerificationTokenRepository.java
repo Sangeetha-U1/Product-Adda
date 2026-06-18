@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.productadda.entity.EmailVerificationToken;
 import com.productadda.entity.User;
@@ -18,6 +17,5 @@ public interface EmailVerificationTokenRepository
     Optional<EmailVerificationToken> findByFkUser(User fkUser);
 
     @Modifying
-    @Transactional
-    void deleteByFkUser(User fkUser); // Cleans up stale tokens if they try to register/resend again
+    void deleteByFkUser(User fkUser);
 }

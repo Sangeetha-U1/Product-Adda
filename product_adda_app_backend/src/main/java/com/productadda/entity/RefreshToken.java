@@ -85,6 +85,14 @@ public class RefreshToken {
 
     /*
      * =========================================================
+     * STATUS
+     * =========================================================
+     */
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
+
+    /*
+     * =========================================================
      * AUDIT
      * =========================================================
      */
@@ -94,4 +102,10 @@ public class RefreshToken {
             insertable = false,
             updatable = false)
     private LocalDateTime createdAtUtc;
+
+    @Column(
+            name = "updated_at_utc", 
+            nullable = false, 
+            insertable = false)
+    private LocalDateTime updatedAtUtc;
 }

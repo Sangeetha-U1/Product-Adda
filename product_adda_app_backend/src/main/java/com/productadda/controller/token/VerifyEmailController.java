@@ -1,5 +1,6 @@
 package com.productadda.controller.token;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,12 +28,14 @@ public class VerifyEmailController {
 
         VerifyEmailResponseDto response = emailVerificationService.verifyEmail(requestDto);
 
-        return ResponseEntity.ok(
-                ApiSuccessResponseDto.<VerifyEmailResponseDto>builder()
-                        .success(true)
-                        .message("Email verified successfully")
-                        .data(response)
-                        .build());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        ApiSuccessResponseDto.<VerifyEmailResponseDto>builder()
+                                .success(true)
+                                .message("Email verified successfully")
+                                .data(response)
+                                .build());
     }
 
 }

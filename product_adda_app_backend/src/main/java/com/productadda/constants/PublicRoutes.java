@@ -3,35 +3,37 @@ package com.productadda.constants;
 public class PublicRoutes {
 
     private PublicRoutes() {
+        // Prevents initialization of this structural constant utility class
     }
 
     public static final String[] PUBLIC_URLS = {
 
-            // Helath
+            // Health Diagnostics
             "/api/health/app",
             "/api/health/db",
+            "/api/payment/health",
 
-            // Auth APIs
+            // Authentication Lifecycle APIs
             "/api/auth/register",
             "/api/auth/login",
             "/api/auth/forgot-password",
-            "/api/auth/reset-password",
 
-            // token
+            // Token & Email Verification Lifecycle
             "/api/token/verify-email",
             "/api/token/resend-verification-email",
+            "/api/token/reset-password",
+            "/api/token/refresh-token",
 
-            // Admin Auth APIs
+            // Admin Management Lifecycle
             "/api/admin/auth/register",
             "/api/admin/auth/verify-email",
             "/api/admin/auth/login",
 
-            // Swagger
+            // OpenAPI v3 & Swagger UI Static Assets
             "/swagger-ui.html",
+            "/swagger-ui/index.html",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-
-            // Payments heatlh
-            "/api/payment/health"
+            "/v3/api-docs.yaml"
     };
 }

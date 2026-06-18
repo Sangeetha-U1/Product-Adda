@@ -12,7 +12,6 @@ import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "users")
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -44,39 +43,48 @@ public class User {
     @Column(name = "email", nullable = false, unique = true, length = 255)
     private String email;
 
-    @Column(name = "mobile", length = 20)
+    @Column(name = "mobile", unique = true, length = 20)
     private String mobile;
 
     /*
      * =========================================================
-     * AUTH
+     * AUTH & OAUTH
      * =========================================================
      */
     @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
+
+    @Column(name = "google_id", unique = true, length = 255)
+    private String googleId;
 
     @Column(name = "email_verified", nullable = false)
     private Boolean emailVerified;
 
     /*
      * =========================================================
-     * STATUS
+     * STATUS & LOGINS
      * =========================================================
      */
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
+
+    @Column(name = "last_login_at_utc")
+    private LocalDateTime lastLoginAtUtc;
 
     /*
      * =========================================================
      * AUDIT
      * =========================================================
      */
-    @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
+    @Column(name = "created_at_utc", nullable = false, updatable = false, insertable = false)
     private LocalDateTime createdAtUtc;
+
+    @Column(name = "updated_at_utc", nullable = false, insertable = false)
+    private LocalDateTime updatedAtUtc;
 
     /*
      * =========================================================
-     * ROLES
+     * RELATIONS
      * =========================================================
      */
     @OneToMany(mappedBy = "fkUser", fetch = FetchType.LAZY)

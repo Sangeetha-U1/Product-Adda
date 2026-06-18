@@ -1,5 +1,6 @@
 package com.productadda.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,22 +24,26 @@ public class HealthController {
 
                 HealthResponseDto dto = healthService.getDatabaseHealth();
 
-                return ResponseEntity.ok(
-                                ApiSuccessResponseDto.<HealthResponseDto>builder()
-                                                .success(true)
-                                                .message("Database connection successful")
-                                                .data(dto)
-                                                .build());
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(
+                                                ApiSuccessResponseDto.<HealthResponseDto>builder()
+                                                                .success(true)
+                                                                .message("Database connection successful")
+                                                                .data(dto)
+                                                                .build());
         }
 
         @GetMapping("/app")
         public ResponseEntity<ApiSuccessResponseDto<Object>> appHealth() {
 
-                return ResponseEntity.ok(
-                                ApiSuccessResponseDto.builder()
-                                                .success(true)
-                                                .message("Application is running")
-                                                .data(healthService.getApplicationHealth())
-                                                .build());
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(
+                                                ApiSuccessResponseDto.builder()
+                                                                .success(true)
+                                                                .message("Application is running")
+                                                                .data(healthService.getApplicationHealth())
+                                                                .build());
         }
 }

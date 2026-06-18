@@ -1,84 +1,97 @@
 package com.productadda.security;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.productadda.constants.PublicRoutes;
 
 import lombok.RequiredArgsConstructor;
 
 @Configuration
+@EnableWebSecurity // Explicitly enables the web security filter chain mapping globally
 @RequiredArgsConstructor
 public class SecurityConfig {
-
-        /*
-         * ================================================================
-         * SECURITY CONFIGURATION
-         * ================================================================
-         *
-         * CURRENT PHASE:
-         * - Stateless REST APIs
-         * - Public routes allowed without authentication
-         *
-         * FUTURE PHASE:
-         * - JWT Authentication Filter
-         * - Role based authorization (SUPER_ADMIN / ADMIN / USER / etc)
-         * ================================================================
-         */
 
         private final JwtAuthenticationFilter jwtAuthenticationFilter;
         private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
+        @Value("${app.frontend.base-url}")
+        private String frontendBaseUrl;
+
         @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http)
-                        throws Exception {
-
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
-
                                 /*
                                  * ============================================================
-                                 * CSRF DISABLED
+                                 * CORS & CSRF CONFIGURATION
                                  * ============================================================
-                                 * Reason: REST APIs are stateless (JWT will be used later)
                                  */
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                                 .csrf(csrf -> csrf.disable())
 
                                 /*
                                  * ============================================================
-                                 * SESSION MANAGEMENT
+                                 * EXCEPTION HANDLING & SESSION MANAGEMENT
                                  * ============================================================
-                                 * Stateless because authentication will be token-based (JWT)
                                  */
+                                .exceptionHandling(exception -> exception
+                                                .authenticationEntryPoint(customAuthenticationEntryPoint))
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                                .exceptionHandling(exception -> exception
-                                                .authenticationEntryPoint(customAuthenticationEntryPoint))
-
                                 /*
                                  * ============================================================
-                                 * AUTHORIZATION RULES
+                                 * AUTHORIZATION PATH RULES
                                  * ============================================================
                                  */
                                 .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers(PublicRoutes.PUBLIC_URLS).permitAll()
+                                                .anyRequest().authenticated())
 
-                                                // Public endpoints
-                                                .requestMatchers(PublicRoutes.PUBLIC_URLS)
-                                                .permitAll()
-
-                                                // All other endpoints require authentication
-                                                .anyRequest()
-                                                .authenticated())
-
-                                .addFilterBefore(
-                                                jwtAuthenticationFilter,
+                                /*
+                                 * ============================================================
+                                 * JWT FILTER INTEGRATION
+                                 * ============================================================
+                                 */
+                                .addFilterBefore(jwtAuthenticationFilter,
                                                 UsernamePasswordAuthenticationFilter.class);
 
                 return http.build();
+        }
+
+        /*
+         * ================================================================
+         * CORS CONFIGURATION SOURCE
+         * Description: Prevents browser blocks by letting your specific frontend
+         * base-url
+         * send cross-origin authorization headers and payloads safely.
+         * ================================================================
+         */
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+
+                // Maps security permissions to match your verified frontend source deployment
+                // domain
+                configuration.setAllowedOrigins(List.of(frontendBaseUrl, "http://localhost:5173"));
+                configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+                configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Cache-Control"));
+                configuration.setExposedHeaders(List.of("Authorization"));
+                configuration.setAllowCredentials(true);
+
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
         }
 }

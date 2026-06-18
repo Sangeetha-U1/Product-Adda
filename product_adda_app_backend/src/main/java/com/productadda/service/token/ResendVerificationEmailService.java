@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.productadda.dto.SendEmailRequestDto;
 import com.productadda.dto.token.ResendVerificationEmailRequestDto;
@@ -27,151 +27,127 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ResendVerificationEmailService {
 
-    private final UserRepository userRepository;
+        private final UserRepository userRepository;
+        private final EmailVerificationTokenRepository emailVerificationTokenRepository;
+        private final TokenService verificationTokenService;
+        private final EmailService emailService;
+        private final UuidUtil uuidUtil;
+        private final TransactionTemplate transactionTemplate;
 
-    private final EmailVerificationTokenRepository emailVerificationTokenRepository;
+        @Value("${app.frontend.base-url}")
+        private String frontendBaseUrl;
 
-    private final TokenService verificationTokenService;
+        @Value("${app.frontend.verify-email-path}")
+        private String verifyEmailPath;
 
-    private final EmailService emailService;
+        @Value("${app.jwt.verification-token-expiration-ms}")
+        private long verificationTokenExpiryMs;
 
-    private final UuidUtil uuidUtil;
+        /*
+         * ================================================================
+         * RESEND VERIFICATION EMAIL
+         * Description: Manages single transaction commits for tokens and pushes
+         * external mail notifications out safely post-commit.
+         * ================================================================
+         */
+        public ResendVerificationEmailResponseDto resend(ResendVerificationEmailRequestDto request) {
 
-    /*
-     * =============================================================================
-     * FRONTEND APPLICATION URL CONFIGURATION
-     * =============================================================================
-     */
+                // ==========================================
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
+                if (request == null || request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Email is required");
+                }
 
-    @Value("${app.frontend.base-url}")
-    private String frontendBaseUrl;
+                // ==========================================
+                // 1.2 DATABASE LOOKUP VALIDATION
+                // ==========================================
+                User user = userRepository.findByEmail(request.getEmail())
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
 
-    @Value("${app.frontend.verify-email-path}")
-    private String verifyEmailPath;
+                if (Boolean.TRUE.equals(user.getEmailVerified())) {
+                        throw new ApiException(HttpStatus.CONFLICT, "Email already verified");
+                }
 
-    @Value("${app.jwt.verification-token-expiration-ms}")
-    private long verificationTokenExpiryMs;
+                /*
+                 * ================================================================
+                 * 2. BUSINESS SECTION & DB TRANSACTION
+                 * Description: Synchronizes state transitions atomically inside an execution
+                 * block.
+                 * ================================================================
+                 */
+                TokenService.TokenResult tokenResult = verificationTokenService.generateToken();
+                LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
+                LocalDateTime expiresAtUtc = nowUtc.plus(verificationTokenExpiryMs, ChronoUnit.MILLIS);
 
-    /*
-     * ================================================================
-     * 1. VALIDATION SECTION
-     * Description: Validates resend request and verifies user eligibility.
-     * ================================================================
-     */
+                // Use transactionTemplate to ensure database operations complete and close
+                // connections cleanly
+                transactionTemplate.executeWithoutResult(status -> {
+                        // Evict any old, unconsumed verification tokens
+                        emailVerificationTokenRepository.deleteByFkUser(user);
 
-    @Transactional
-    public ResendVerificationEmailResponseDto resend(
-            ResendVerificationEmailRequestDto request) {
+                        // Synchronize audit records on the parent user container
+                        user.setUpdatedAtUtc(nowUtc);
+                        userRepository.save(user);
 
-        // ==========================================
-        // 1.1 REQUEST VALIDATION
-        // Description: Validates incoming email request.
-        // ==========================================
+                        // Map the fresh token model with all explicit truth attributes
+                        EmailVerificationToken emailTokenEntity = EmailVerificationToken.builder()
+                                        .pkVerificationTokenId(uuidUtil.generateUuidV7())
+                                        .fkUser(user)
+                                        .verificationToken(tokenResult.hashedToken())
+                                        .isUsed(false)
+                                        .isActive(true) // Fixed missing property
+                                        .createdAtUtc(nowUtc) // Fixed missing property
+                                        .updatedAtUtc(nowUtc) // Fixed missing property
+                                        .expiresAtUtc(expiresAtUtc)
+                                        .build();
 
-        if (request.getEmail() == null ||
-                request.getEmail().trim().isEmpty()) {
+                        emailVerificationTokenRepository.save(emailTokenEntity);
+                });
 
-            throw new ApiException(
-                    HttpStatus.BAD_REQUEST,
-                    "Email is required");
+                /*
+                 * ================================================================
+                 * 3. EMAIL NOTIFICATION SECTION (Post-Commit Execution)
+                 * Description: Dispatched safely outside DB locks to protect connection memory
+                 * pools.
+                 * ================================================================
+                 */
+                String verificationUrl = frontendBaseUrl + verifyEmailPath + "?token=" + tokenResult.rawToken();
+
+                SendEmailRequestDto sendEmailRequest = SendEmailRequestDto.builder()
+                                .toEmail(user.getEmail())
+                                .subject("Verify your email")
+                                .body("""
+                                                You requested a new verification email for your Product Adda account.
+
+                                                Please verify your email by clicking the link below:
+
+                                                %s
+
+                                                If you did not request this, please ignore this email.
+                                                """.formatted(verificationUrl))
+                                .build();
+
+                try {
+                        emailService.sendEmail(sendEmailRequest);
+                } catch (Exception e) {
+                        // Prevents standard mail server drops from rolling back structural database
+                        // truth updates
+                        throw new ApiException(
+                                        HttpStatus.INTERNAL_SERVER_ERROR,
+                                        "Token updated, but system failed to transmit email notice. Please retry.");
+                }
+
+                /*
+                 * ================================================================
+                 * 4. RESPONSE SECTION
+                 * ================================================================
+                 */
+                return ResendVerificationEmailResponseDto.builder()
+                                .userId(user.getPkUserId())
+                                .email(user.getEmail())
+                                .emailVerificationRequired(true)
+                                .message("Verification email sent successfully.")
+                                .build();
         }
-
-        // ==========================================
-        // 1.2 DATABASE LOOKUP VALIDATION
-        // Description: Finds user and validates verification state.
-        // ==========================================
-
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new ApiException(
-                        HttpStatus.NOT_FOUND,
-                        "User not found"));
-
-        if (Boolean.TRUE.equals(user.getEmailVerified())) {
-
-            throw new ApiException(
-                    HttpStatus.CONFLICT,
-                    "Email already verified");
-        }
-
-        /*
-         * ================================================================
-         * 2. BUSINESS SECTION
-         * Description: Generates replacement verification token and email payload.
-         * ================================================================
-         */
-
-        emailVerificationTokenRepository
-                .deleteByFkUser(user);
-
-        TokenService.TokenResult tokenResult = verificationTokenService
-                .generateEmailVerificationToken();
-
-        LocalDateTime expiresAtUtc = LocalDateTime.now(ZoneOffset.UTC)
-                .plus(
-                        verificationTokenExpiryMs,
-                        ChronoUnit.MILLIS);
-
-        String verificationUrl = frontendBaseUrl
-                + verifyEmailPath
-                + "?token="
-                + tokenResult.rawToken();
-
-        SendEmailRequestDto sendEmailRequest = SendEmailRequestDto.builder()
-                .toEmail(user.getEmail())
-                .subject("Verify your email")
-                .body("""
-                        You requested a new verification email for your Product Adda account.
-
-                        Please verify your email by clicking below link:
-
-                        %s
-
-                        If you did not request this, please ignore this email.
-                        """.formatted(verificationUrl))
-                .build();
-
-        /*
-         * ================================================================
-         * 3. DB SAVING SECTION
-         * Description: Saves regenerated verification token.
-         * ================================================================
-         */
-
-        EmailVerificationToken emailTokenEntity = EmailVerificationToken.builder()
-                .pkVerificationTokenId(
-                        uuidUtil.generateUuidV7())
-                .fkUser(user)
-                .verificationToken(
-                        tokenResult.hashedToken())
-                .isUsed(false)
-                .expiresAtUtc(expiresAtUtc)
-                .build();
-
-        emailVerificationTokenRepository
-                .save(emailTokenEntity);
-
-        /*
-         * ================================================================
-         * 4. EMAIL NOTIFICATION SECTION
-         * Description: Sends regenerated verification email.
-         * ================================================================
-         */
-
-        emailService.sendEmail(sendEmailRequest);
-
-        /*
-         * ================================================================
-         * 5. RESPONSE SECTION
-         * Description: Returns resend verification response.
-         * ================================================================
-         */
-
-        return ResendVerificationEmailResponseDto.builder()
-                .userId(user.getPkUserId())
-                .email(user.getEmail())
-                .emailVerificationRequired(true)
-                .message("Verification email sent successfully.")
-                .build();
-    }
-
 }

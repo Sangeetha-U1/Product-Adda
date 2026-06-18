@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.productadda.dto.auth.LoginRequestDto;
 import com.productadda.dto.auth.LoginResponseDto;
@@ -46,6 +47,7 @@ public class AuthServiceLogin {
      * LOGIN USER
      * ================================================================
      */
+    @Transactional(readOnly = true)
     public LoginResponseDto login(LoginRequestDto request) {
 
         /*
@@ -84,15 +86,21 @@ public class AuthServiceLogin {
         /*
          * ============================================================
          * 3. ROLE VALIDATION
+         * Description: Loop check across all assigned roles instead of assuming index 0
          * ============================================================
          */
-        String roleName = userRoles.get(0).getFkRole().getRoleName();
+        boolean isAdmin = userRoles.stream()
+                .map(userRole -> userRole.getFkRole().getRoleName())
+                .anyMatch(name -> "SUPER_ADMIN".equals(name) || "ADMIN".equals(name));
 
-        if ("SUPER_ADMIN".equals(roleName) || "ADMIN".equals(roleName)) {
+        if (isAdmin) {
             throw new ApiException(
                     HttpStatus.FORBIDDEN,
                     "Admin portal login is required");
         }
+
+        // Primary role extracted safely for response serialization mapping
+        String primaryRoleName = userRoles.get(0).getFkRole().getRoleName();
 
         /*
          * ============================================================
@@ -137,7 +145,7 @@ public class AuthServiceLogin {
         return LoginResponseDto.builder()
                 .userId(user.getPkUserId())
                 .email(user.getEmail())
-                .roleName(userRoles.get(0).getFkRole().getRoleName())
+                .roleName(primaryRoleName)
                 .token(token)
                 .message("Login successful")
                 .build();

@@ -1,5 +1,6 @@
 package com.productadda.controller.token;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,9 +15,9 @@ import com.productadda.service.token.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/token")
 @RequiredArgsConstructor
-public class RefreshController {
+public class RefreshTokenController {
 
     private final RefreshTokenService refreshTokenService;
 
@@ -26,11 +27,13 @@ public class RefreshController {
 
         RefreshTokenResponseDto response = refreshTokenService.rotateRefreshToken(request);
 
-        return ResponseEntity.ok(
-                ApiSuccessResponseDto.<RefreshTokenResponseDto>builder()
-                        .success(true)
-                        .message("Token refreshed successfully")
-                        .data(response)
-                        .build());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        ApiSuccessResponseDto.<RefreshTokenResponseDto>builder()
+                                .success(true)
+                                .message("Token refreshed successfully")
+                                .data(response)
+                                .build());
     }
 }

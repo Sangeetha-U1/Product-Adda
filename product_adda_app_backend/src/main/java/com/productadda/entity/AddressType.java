@@ -8,10 +8,7 @@ import org.hibernate.type.SqlTypes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,13 +17,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "address_types")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRole {
+public class AddressType {
 
     /*
      * =========================================================
@@ -35,26 +32,19 @@ public class UserRole {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_user_role_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkUserRoleId;
+    @Column(name = "pk_address_type_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkAddressTypeId;
 
     /*
      * =========================================================
-     * FOREIGN KEY → USERS
+     * TYPE INFO
      * =========================================================
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_user_id", nullable = false)
-    private User fkUser;
+    @Column(name = "address_type_name", nullable = false, unique = true, length = 50)
+    private String addressTypeName;
 
-    /*
-     * =========================================================
-     * FOREIGN KEY → ROLES
-     * =========================================================
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_role_id", nullable = false)
-    private Role fkRole;
+    @Column(name = "description", length = 255)
+    private String description;
 
     /*
      * =========================================================

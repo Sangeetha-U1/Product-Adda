@@ -20,13 +20,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "addresses")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRole {
+public class Address {
 
     /*
      * =========================================================
@@ -35,32 +35,56 @@ public class UserRole {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_user_role_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkUserRoleId;
+    @Column(name = "pk_address_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkAddressId;
 
     /*
      * =========================================================
-     * FOREIGN KEY → USERS
+     * RELATIONSHIPS
      * =========================================================
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_user_id", nullable = false)
     private User fkUser;
 
-    /*
-     * =========================================================
-     * FOREIGN KEY → ROLES
-     * =========================================================
-     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_role_id", nullable = false)
-    private Role fkRole;
+    @JoinColumn(name = "fk_address_type_id", nullable = false)
+    private AddressType fkAddressType;
 
     /*
      * =========================================================
-     * STATUS
+     * ADDRESS DETAILS
      * =========================================================
      */
+    @Column(name = "address_line_1", nullable = false, length = 255)
+    private String addressLine1;
+
+    @Column(name = "address_line_2", length = 255)
+    private String addressLine2;
+
+    @Column(name = "landmark", length = 255)
+    private String landmark;
+
+    @Column(name = "city", nullable = false, length = 100)
+    private String city;
+
+    @Column(name = "state", nullable = false, length = 100)
+    private String state;
+
+    @Column(name = "postal_code", nullable = false, length = 20)
+    private String postalCode;
+
+    @Column(name = "country", nullable = false, length = 100)
+    private String country;
+
+    /*
+     * =========================================================
+     * FLAGS & STATUS
+     * =========================================================
+     */
+    @Column(name = "is_default", nullable = false)
+    private Boolean isDefault;
+
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 

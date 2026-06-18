@@ -7,9 +7,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 @Entity
 @Table(name = "orders")
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,41 +25,51 @@ public class Order {
      * =========================================================
      */
     @Id
+    @JdbcTypeCode(SqlTypes.BINARY)
     @Column(name = "pk_order_id", columnDefinition = "BINARY(16)", nullable = false)
     private UUID pkOrderId;
 
     /*
      * =========================================================
-     * FOREIGN KEY → USERS
+     * RELATIONSHIPS
      * =========================================================
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_user_id", nullable = false)
     private User fkUser;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_status_id", nullable = false)
+    private OrderStatus fkStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_address_id", nullable = false)
+    private Address fkAddress;
+
     /*
      * =========================================================
      * ORDER INFO
      * =========================================================
      */
-    /*
-     * =========================================================
-     * FOREIGN KEY → ORDER STATUS LOOKUP
-     * =========================================================
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_status_id", nullable = false)
-    private OrderStatus fkStatus;
-
     @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
+
+    /*
+     * =========================================================
+     * STATUS
+     * =========================================================
+     */
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
     /*
      * ===========================================================================
      * AUDIT
      * ===========================================================================
      */
-
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;
+
+    @Column(name = "updated_at_utc", nullable = false, insertable = false)
+    private LocalDateTime updatedAtUtc;
 }

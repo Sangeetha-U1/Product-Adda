@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,13 +21,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "password_reset_tokens")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRole {
+public class PasswordResetToken {
 
     /*
      * =========================================================
@@ -35,8 +36,8 @@ public class UserRole {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_user_role_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkUserRoleId;
+    @Column(name = "pk_reset_token_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkResetTokenId;
 
     /*
      * =========================================================
@@ -49,18 +50,28 @@ public class UserRole {
 
     /*
      * =========================================================
-     * FOREIGN KEY → ROLES
+     * TOKEN HASH
      * =========================================================
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_role_id", nullable = false)
-    private Role fkRole;
+    @Column(name = "token_hash", nullable = false, unique = true, length = 255)
+    private String tokenHash;
+
+    /*
+     * =========================================================
+     * EXPIRY
+     * =========================================================
+     */
+    @Column(name = "expires_at_utc", nullable = false)
+    private LocalDateTime expiresAtUtc;
 
     /*
      * =========================================================
      * STATUS
      * =========================================================
      */
+    @Column(name = "is_used", nullable = false)
+    private Boolean isUsed;
+
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 

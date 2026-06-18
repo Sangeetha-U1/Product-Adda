@@ -48,9 +48,20 @@ public class Role {
 
     /*
      * =========================================================
+     * STATUS
+     * =========================================================
+     */
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
+
+    /*
+     * =========================================================
      * AUDIT
      * =========================================================
      */
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;
+
+    @Column(name = "updated_at_utc", nullable = false, insertable = false)
+    private LocalDateTime updatedAtUtc;
 }

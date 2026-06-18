@@ -11,7 +11,6 @@ import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "reviews")
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,7 +33,6 @@ public class Review {
      * RELATIONSHIPS
      * =========================================================
      */
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_product_id", nullable = false)
     private Product fkProduct;
@@ -43,24 +41,40 @@ public class Review {
     @JoinColumn(name = "fk_user_id", nullable = false)
     private User fkUser;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_status_id", nullable = false)
+    private ReviewStatus fkReviewStatus;
+
     /*
      * =========================================================
      * REVIEW DATA
      * =========================================================
      */
-
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
+    @Column(name = "review_title", length = 255)
+    private String reviewTitle;
+
     @Column(name = "review_text", columnDefinition = "TEXT")
     private String reviewText;
+
+    /*
+     * =========================================================
+     * STATUS
+     * =========================================================
+     */
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
     /*
      * ===========================================================================
      * AUDIT
      * ===========================================================================
      */
-
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;
+
+    @Column(name = "updated_at_utc", nullable = false, insertable = false)
+    private LocalDateTime updatedAtUtc;
 }

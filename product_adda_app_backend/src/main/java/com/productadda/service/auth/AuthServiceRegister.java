@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.productadda.dto.SendEmailRequestDto;
 import com.productadda.dto.auth.RegisterRequestDto;
@@ -38,11 +39,6 @@ public class AuthServiceRegister {
         private final EmailVerificationTokenRepository emailVerificationTokenRepository;
         private final EmailService emailService;
         private final UuidUtil uuidUtil;
-        /*
-         * =============================================================================
-         * FRONTEND APPLICATION URL CONFIGURATION
-         * =============================================================================
-         */
 
         @Value("${app.frontend.base-url}")
         private String frontendBaseUrl;
@@ -53,6 +49,7 @@ public class AuthServiceRegister {
         @Value("${app.jwt.verification-token-expiration-ms}")
         private long verificationTokenExpiryMs;
 
+        @Transactional
         public RegisterResponseDto register(RegisterRequestDto request) {
 
                 /*
@@ -65,7 +62,6 @@ public class AuthServiceRegister {
 
                 // ==========================================
                 // 1.1 REQUEST VALIDATION
-                // Description: Validates incoming registration payload data fields.
                 // ==========================================
 
                 if (request.getFirstName() == null || request.getFirstName().trim().isEmpty()) {
@@ -86,7 +82,6 @@ public class AuthServiceRegister {
 
                 // ==========================================
                 // 1.2 DATABASE LOOKUP VALIDATION
-                // Description: Verifies uniqueness constraints against existing records.
                 // ==========================================
 
                 if (userRepository.existsByEmail(request.getEmail())) {
@@ -110,7 +105,6 @@ public class AuthServiceRegister {
 
                 // ==========================================
                 // 2.1 ROLE RESOLUTION
-                // Description: Determines which system authority role to assign.
                 // ==========================================
 
                 String requestedRole = request.getRoleName();
@@ -135,9 +129,11 @@ public class AuthServiceRegister {
                                                 HttpStatus.BAD_REQUEST,
                                                 "Invalid role: " + roleName));
 
+                // Capture a unified timestamp record for all persistent row creations
+                LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
+
                 // ==========================================
                 // 2.2 USER ENTITY CREATION
-                // Description: Assembles user entity state and handles password encryption.
                 // ==========================================
 
                 User userInstance = User.builder()
@@ -149,20 +145,18 @@ public class AuthServiceRegister {
                                 .passwordHash(passwordEncoder.encode(request.getPassword()))
                                 .emailVerified(false)
                                 .isActive(false)
+                                .createdAtUtc(nowUtc)
+                                .updatedAtUtc(nowUtc)
                                 .build();
 
                 // ==========================================
                 // 2.3 EMAIL NOTIFICATION AND SECURITY ENGINE
-                // Description: Coordinates verification tokens and external communication.
                 // ==========================================
 
-                emailVerificationTokenRepository.deleteByFkUser(userInstance);
+                TokenService.TokenResult tokenResult = tokenService.generateToken();
 
-                TokenService.TokenResult tokenResult = tokenService
-                                .generateEmailVerificationToken();
-
-                LocalDateTime expiresAtUtc = LocalDateTime.now(ZoneOffset.UTC)
-                                .plus(verificationTokenExpiryMs, java.time.temporal.ChronoUnit.MILLIS);
+                LocalDateTime expiresAtUtc = nowUtc.plus(verificationTokenExpiryMs,
+                                java.time.temporal.ChronoUnit.MILLIS);
 
                 String verificationUrl = frontendBaseUrl
                                 + verifyEmailPath
@@ -193,27 +187,30 @@ public class AuthServiceRegister {
 
                 // ==========================================
                 // 3.1 USER SAVE
-                // Description: Persists core user account record.
                 // ==========================================
 
                 User user = userRepository.save(userInstance);
 
+                // Delete operations executed *after* user has a formal persistent
+                // database tracking state
+                emailVerificationTokenRepository.deleteByFkUser(user);
+
                 // ==========================================
                 // 3.2 USER ROLE SAVE
-                // Description: Links account record to relational system role mapping.
                 // ==========================================
 
                 UserRole userRole = UserRole.builder()
                                 .pkUserRoleId(uuidUtil.generateUuidV7())
                                 .fkUser(user)
                                 .fkRole(role)
+                                .createdAtUtc(nowUtc)
+                                .isActive(true)
                                 .build();
 
                 userRoleRepository.save(userRole);
 
                 // ==========================================
-                // 3.3 SECURITY SECURITY DATA SAVE
-                // Description: Persists hashed verification tokens linked to the user account.
+                // 3.3 SECURITY DATA SAVE
                 // ==========================================
 
                 EmailVerificationToken emailTokenEntity = EmailVerificationToken.builder()
@@ -221,6 +218,8 @@ public class AuthServiceRegister {
                                 .fkUser(user)
                                 .verificationToken(tokenResult.hashedToken())
                                 .isUsed(false)
+                                .isActive(true)
+                                .createdAtUtc(nowUtc)
                                 .expiresAtUtc(expiresAtUtc)
                                 .build();
 
@@ -228,7 +227,6 @@ public class AuthServiceRegister {
 
                 // ==========================================
                 // 4. EMAIL NOTIFICATION
-                // Description: Coordinates verification external communication.
                 // ==========================================
 
                 emailService.sendEmail(sendEmailRequest);
@@ -236,20 +234,19 @@ public class AuthServiceRegister {
                 /*
                  * ================================================================
                  * 5. RESPONSE SECTION
-                 * Description: Maps persisted database state details into the final
-                 * contract payload structure.
                  * ================================================================
                  */
 
                 // ==========================================
                 // 5.1 RESPONSE MAPPING
-                // Description: Compiles output response representation wrapper data objects.
                 // ==========================================
+
+                String assignedRoleName = role.getRoleName();
 
                 return RegisterResponseDto.builder()
                                 .userId(user.getPkUserId())
                                 .email(user.getEmail())
-                                .roleName(role.getRoleName())
+                                .roleName(assignedRoleName)
                                 .emailVerificationRequired(true)
                                 .message("Registration successful. Verification email sent.")
                                 .build();

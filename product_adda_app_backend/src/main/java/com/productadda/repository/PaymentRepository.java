@@ -10,7 +10,7 @@ import com.productadda.entity.Payment;
 public interface PaymentRepository
                 extends JpaRepository<Payment, UUID> {
 
-        Optional<Payment> findByRazorpayOrderId(String razorpayOrderId);
+        Optional<Payment> findByGatewayOrderId(String gatewayOrderId);
 
-        Optional<Payment> findByRazorpayPaymentLinkId(String razorpayPaymentLinkId);
+        Optional<Payment> findByGatewayPaymentLinkId(String gatewayPaymentLinkId);
 }

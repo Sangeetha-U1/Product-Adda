@@ -39,12 +39,8 @@ public class EmailVerificationService {
 
                 // ==========================================
                 // 1.1 REQUEST VALIDATION
-                // Description: Checks if the incoming raw token is present and structured
-                // correctly.
                 // ==========================================
-
                 if (rawToken == null || rawToken.trim().isEmpty()) {
-
                         throw new ApiException(
                                         HttpStatus.BAD_REQUEST,
                                         "Verification token is required");
@@ -52,9 +48,7 @@ public class EmailVerificationService {
 
                 // ==========================================
                 // 1.2 DATABASE LOOKUP VALIDATION
-                // Description: Hashes the raw token and checks its existence in the database.
                 // ==========================================
-
                 String hashedToken = verificationTokenService.hashToken(rawToken);
 
                 EmailVerificationToken emailVerificationToken = emailVerificationTokenRepository
@@ -63,21 +57,21 @@ public class EmailVerificationService {
                                                 HttpStatus.BAD_REQUEST,
                                                 "Invalid verification token"));
 
-                if (Boolean.TRUE.equals(emailVerificationToken.getIsUsed())) {
-
+                if (Boolean.TRUE.equals(emailVerificationToken.getIsUsed())
+                                || !Boolean.TRUE.equals(emailVerificationToken.getIsActive())) {
                         throw new ApiException(
                                         HttpStatus.CONFLICT,
-                                        "Email already verified");
-
+                                        "Email already verified or token has been revoked");
                 }
 
-                if (emailVerificationToken.getExpiresAtUtc()
-                                .isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
+                // Capture a single, consistent clock execution checkpoint for validations and
+                // audits
+                LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
+                if (emailVerificationToken.getExpiresAtUtc().isBefore(nowUtc)) {
                         throw new ApiException(
                                         HttpStatus.GONE,
                                         "Verification token expired");
-
                 }
 
                 /*
@@ -87,11 +81,23 @@ public class EmailVerificationService {
                  * transitions.
                  * ================================================================
                  */
-
                 User user = emailVerificationToken.getFkUser();
+
+                // Guard check preventing relational null pointer faults if structural user
+                // profiles are deleted
+                if (user == null) {
+                        throw new ApiException(
+                                        HttpStatus.NOT_FOUND,
+                                        "The user account associated with this token no longer exists");
+                }
 
                 user.setEmailVerified(true);
                 user.setIsActive(true);
+                user.setUpdatedAtUtc(nowUtc); // Added to sync database audit metadata state checks
+
+                emailVerificationToken.setIsUsed(true);
+                emailVerificationToken.setIsActive(false); // Added to ensure token is completely neutralized from
+                                                           // search queries
 
                 /*
                  * ================================================================
@@ -100,27 +106,19 @@ public class EmailVerificationService {
                  * persistent storage.
                  * ================================================================
                  */
-
                 userRepository.save(user);
-
-                emailVerificationToken.setIsUsed(true);
-
                 emailVerificationTokenRepository.save(emailVerificationToken);
 
                 /*
                  * ================================================================
                  * 4. RESPONSE SECTION
-                 * Description: Completes processing and controls termination mapping.
                  * ================================================================
                  */
-
                 return VerifyEmailResponseDto.builder()
                                 .userId(user.getPkUserId())
                                 .email(user.getEmail())
                                 .emailVerified(user.getEmailVerified())
                                 .isActive(user.getIsActive())
                                 .build();
-
         }
-
 }

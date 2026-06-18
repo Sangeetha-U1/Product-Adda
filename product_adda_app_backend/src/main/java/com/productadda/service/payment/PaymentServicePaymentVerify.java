@@ -40,7 +40,7 @@ public class PaymentServicePaymentVerify {
         private final OrderStatusRepository orderStatusRepository;
         private final PaymentRepository paymentRepository;
         private final PaymentStatusRepository paymentStatusRepository;
-        private final UserRepository userRepository; // Added for isolated database verification
+        private final UserRepository userRepository;
         private final RazorpayConfig razorpayConfig;
 
         @Transactional
@@ -59,13 +59,15 @@ public class PaymentServicePaymentVerify {
                         // 1.1 Read email from Security Context
                         // ==========================================
                         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
                         if (authentication == null || !authentication.isAuthenticated()) {
                                 throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
                         }
 
                         String email;
+
                         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-                                email = userDetails.getUsername(); // Look, no manual casting!
+                                email = userDetails.getUsername();
                         } else {
                                 email = authentication.getPrincipal().toString();
                         }
@@ -81,7 +83,7 @@ public class PaymentServicePaymentVerify {
                         // 1.3 DATABASE LOOKUP VALIDATION (Payment & Order)
                         // ==========================================
                         Payment payment = paymentRepository
-                                        .findByRazorpayPaymentLinkId(requestDto.getRazorpayPaymentLinkId())
+                                        .findByGatewayPaymentLinkId(requestDto.getRazorpayPaymentLinkId())
                                         .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                         "Payment record not found in DB"));
 
@@ -112,7 +114,7 @@ public class PaymentServicePaymentVerify {
                         }
 
                         if (!Objects.equals(
-                                        payment.getRazorpayPaymentLinkId(),
+                                        payment.getGatewayPaymentLinkId(),
                                         requestDto.getRazorpayPaymentLinkId())) {
 
                                 throw new ApiException(
@@ -126,7 +128,7 @@ public class PaymentServicePaymentVerify {
                          * ================================================================
                          */
                         String paymentId = requestDto.getRazorpayPaymentId();
-                        String paymentLinkId = payment.getRazorpayPaymentLinkId();
+                        String paymentLinkId = payment.getGatewayPaymentLinkId();
                         String referenceId = requestDto.getRazorpayPaymentLinkReferenceId();
                         String linkStatus = requestDto.getRazorpayPaymentLinkStatus();
 
@@ -180,11 +182,13 @@ public class PaymentServicePaymentVerify {
                                         .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                                                         "Status PROCESSING not found"));
 
-                        // Update Payment record fields
+                        // Update Payment record fields using generic gateway-agnostic mapping
+                        // properties
                         payment.setFkStatus(successStatus);
-                        payment.setRazorpayPaymentId(paymentId);
-                        payment.setRazorpayOrderId(razorpayFetchedOrderId);
-                        payment.setRazorpaySignature(requestDto.getRazorpaySignature());
+                        payment.setGatewayTransactionId(paymentId);
+                        payment.setGatewayOrderId(razorpayFetchedOrderId);
+                        payment.setGatewaySignature(requestDto.getRazorpaySignature());
+
                         payment.setPaidAtUtc(LocalDateTime.now());
 
                         /*
@@ -195,6 +199,7 @@ public class PaymentServicePaymentVerify {
                         paymentRepository.save(payment);
 
                         order.setFkStatus(processingStatus);
+
                         orderRepository.save(order);
 
                         /*
@@ -206,8 +211,8 @@ public class PaymentServicePaymentVerify {
                                         .verified(true)
                                         .paymentStatus(payment.getFkStatus().getStatusName())
                                         .orderStatus(order.getFkStatus().getStatusName())
-                                        .razorpayOrderId(payment.getRazorpayOrderId())
-                                        .razorpayPaymentId(payment.getRazorpayPaymentId())
+                                        .razorpayOrderId(payment.getGatewayOrderId())
+                                        .razorpayPaymentId(payment.getGatewayTransactionId())
                                         .message("Payment verified and matched successfully!")
                                         .orderId(order.getPkOrderId().toString())
                                         .build();

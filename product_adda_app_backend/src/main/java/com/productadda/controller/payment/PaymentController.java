@@ -1,5 +1,6 @@
 package com.productadda.controller.payment;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,9 @@ public class PaymentController {
                 PaymentGatewayHealthResponseDto paymentGatewayHealth = paymentServicePaymentGatewayHealth
                                 .getGatewayHealth();
 
-                return ResponseEntity.ok(
+                return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
                                 ApiSuccessResponseDto.<PaymentGatewayHealthResponseDto>builder()
                                                 .success(true)
                                                 .message("Payment gateway health verified")
@@ -45,7 +48,9 @@ public class PaymentController {
 
                 PaymentCreateResponseDto paymentCreate = paymentServicePaymentCreate.paymentCreate(requestDto);
 
-                return ResponseEntity.ok(
+                return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
                                 ApiSuccessResponseDto.<PaymentCreateResponseDto>builder()
                                                 .success(true)
                                                 .message("Payment order created")
@@ -59,7 +64,9 @@ public class PaymentController {
 
                 PaymentVerifyResponseDto paymentVerify = paymentServicePaymentVerify.paymentVerify(requestDto);
 
-                return ResponseEntity.ok(
+                return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
                                 ApiSuccessResponseDto.<PaymentVerifyResponseDto>builder()
                                                 .success(true)
                                                 .message("Payment verification completed")

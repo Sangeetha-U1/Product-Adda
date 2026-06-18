@@ -17,36 +17,45 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class CustomAuthenticationEntryPoint
-        implements AuthenticationEntryPoint {
+public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+        private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Override
-    public void commence(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            AuthenticationException authException)
-            throws IOException, ServletException {
+        @Override
+        public void commence(
+                        HttpServletRequest request,
+                        HttpServletResponse response,
+                        AuthenticationException authException)
+                        throws IOException, ServletException {
 
-        Map<String, Object> error = new LinkedHashMap<>();
+                // 1. Check if our Filter passed down a specific JWT exception type/message
+                String errorType = (String) request.getAttribute("jwt_error_type");
+                String errorMessage = (String) request.getAttribute("jwt_error_message");
 
-        error.put("code", HttpStatus.UNAUTHORIZED.value());
-        error.put("type", HttpStatus.UNAUTHORIZED.name());
+                // 2. Fallback to generic defaults if it wasn't a JWT issue (e.g., missing
+                // header altogether)
+                if (errorType == null) {
+                        errorType = HttpStatus.UNAUTHORIZED.name();
+                }
+                if (errorMessage == null) {
+                        errorMessage = "Authentication required";
+                }
 
-        ApiErrorResponseDto responseDto = new ApiErrorResponseDto(
-                false,
-                "Authentication required",
-                error);
+                // 3. Build your existing structured DTO format
+                Map<String, Object> error = new LinkedHashMap<>();
+                error.put("code", HttpStatus.UNAUTHORIZED.value());
+                error.put("type", errorType);
 
-        response.setStatus(
-                HttpStatus.UNAUTHORIZED.value());
+                ApiErrorResponseDto responseDto = new ApiErrorResponseDto(
+                                false,
+                                errorMessage,
+                                error);
 
-        response.setContentType(
-                "application/json");
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                response.setContentType("application/json");
 
-        objectMapper.writeValue(
-                response.getOutputStream(),
-                responseDto);
-    }
+                objectMapper.writeValue(
+                                response.getOutputStream(),
+                                responseDto);
+        }
 }

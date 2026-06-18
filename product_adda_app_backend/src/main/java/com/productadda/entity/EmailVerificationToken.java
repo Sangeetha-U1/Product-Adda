@@ -63,6 +63,9 @@ public class EmailVerificationToken {
     @Column(name = "is_used", nullable = false)
     private Boolean isUsed;
 
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
+
     /*
      * =========================================================
      * EXPIRY
@@ -78,4 +81,7 @@ public class EmailVerificationToken {
      */
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;
+
+    @Column(name = "updated_at_utc", nullable = false, insertable = false)
+    private LocalDateTime updatedAtUtc;
 }

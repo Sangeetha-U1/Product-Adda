@@ -1,5 +1,6 @@
 package com.productadda.controller.token;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,43 +22,20 @@ public class ResendVerificationEmailController {
 
     private final ResendVerificationEmailService resendVerificationEmailService;
 
-    /*
-     * ================================================================
-     * RESEND VERIFICATION EMAIL API
-     * Description:
-     * Generates a new verification token and sends verification email.
-     *
-     * FLOW:
-     *
-     * Request
-     * ↓
-     * Validate email
-     * ↓
-     * Find user
-     * ↓
-     * Check verification status
-     * ↓
-     * Generate new token
-     * ↓
-     * Send email
-     * ↓
-     * Response
-     *
-     * ================================================================
-     */
-
     @PostMapping("/resend-verification-email")
     public ResponseEntity<ApiSuccessResponseDto<ResendVerificationEmailResponseDto>> resendVerificationEmail(
             @Valid @RequestBody ResendVerificationEmailRequestDto requestDto) {
 
         ResendVerificationEmailResponseDto response = resendVerificationEmailService.resend(requestDto);
 
-        return ResponseEntity.ok(
-                ApiSuccessResponseDto.<ResendVerificationEmailResponseDto>builder()
-                        .success(true)
-                        .message("Verification email sent successfully")
-                        .data(response)
-                        .build());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                        ApiSuccessResponseDto.<ResendVerificationEmailResponseDto>builder()
+                                .success(true)
+                                .message("Verification email sent successfully")
+                                .data(response)
+                                .build());
 
     }
 
