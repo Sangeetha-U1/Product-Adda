@@ -3,11 +3,21 @@ import "../styles/OfferBanner.css";
 
 function OfferBanner() {
   return (
-    <div className="offer-banner">
-      <h2>🔥 Mega Sale - Up to 50% OFF</h2>
-      <p>Limited time offer on all categories</p>
-      <button>Grab Deal</button>
-    </div>
+    <section className="offer-banner">
+
+      <h2>
+        Mega Sale Up To 70% OFF
+      </h2>
+
+      <p>
+        Shop your favorite products at amazing prices.
+      </p>
+
+      <button>
+        Shop Now
+      </button>
+
+    </section>
   );
 }
 

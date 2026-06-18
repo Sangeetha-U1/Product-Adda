@@ -1,26 +1,27 @@
 import React from "react";
 
+import Navbar from "../components/Navbar";
 import HeroSection from "../components/HeroSection";
 import Categories from "../components/Categories";
 import FeaturedProducts from "../components/FeaturedProducts";
 import OfferBanner from "../components/OfferBanner";
-import Navbar from "../components/Navbar";
+import TrendingProducts from "../components/TrendingProducts";
+import WhyChooseUs from "../components/WhyChooseUs";
 import Footer from "../components/Footer";
 
-
-
-function Home(){
-
-return(
-<>
-<Navbar/>
-<HeroSection/>
-<Categories/>
-<FeaturedProducts/>
- <OfferBanner />
- <Footer/>
-</>
-);
+function Home() {
+  return (
+    <>
+      <Navbar />
+      <HeroSection />
+      <Categories />
+      <FeaturedProducts />
+      <OfferBanner />
+      <TrendingProducts />
+      <WhyChooseUs />
+      <Footer />
+    </>
+  );
 }
 
 export default Home;
