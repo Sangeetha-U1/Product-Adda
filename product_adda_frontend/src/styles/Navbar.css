@@ -1,208 +1,120 @@
 /* ==========================
-   ProductAdda Design System
+   Navbar Base
 ========================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+.custom-navbar {
+    background: #FFFFFF;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    padding: 10px 0;
 }
 
-body{
-    font-family:'Poppins',sans-serif;
-    background:#F8F9FA;
-    color:#333333;
+/* Container alignment */
+.custom-navbar .container {
+    display: flex;
+    align-items: center;
 }
 
-/* ==========================
-   Navbar
-========================== */
-
-.custom-navbar{
-    background:#FFFFFF;
-    box-shadow:0 2px 10px rgba(0,0,0,0.08);
-    padding:15px 0;
+/* Logo FIX */
+.logo {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
 }
 
-.logo{
-    height:50px;
-    width:auto;
-    object-fit:contain;
-}
-.nav-link{
-    color:#003B95 !important;
-    font-weight:500;
-    margin:0 10px;
-    transition:0.3s;
+/* Nav links */
+.nav-link {
+    color: #003B95 !important;
+    font-weight: 500;
+    margin: 0 10px;
+    transition: 0.3s;
 }
 
-.nav-link:hover{
-    color:#FF006E !important;
+.nav-link:hover {
+    color: #FF006E !important;
 }
 
-.nav-link.active{
-    color:#FF8A00 !important;
-    font-weight:600;
+.nav-link.active {
+    color: #FF8A00 !important;
+    font-weight: 600;
 }
 
 /* ==========================
    Search Box
 ========================== */
-.search-box{
+
+.search-box {
     position: relative;
 }
 
-.search-box input{
+.search-box input {
     padding-right: 35px;
-}
-
-.clear-icon{
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #888;
-    font-size: 14px;
-}
-
-.clear-icon:hover{
-    color: #FF006E;
-}
-.form-control{
-    border:1px solid #E5E7EB;
-    border-radius:8px;
-    min-width:220px;
-    font-family:'Poppins',sans-serif;
-}
-
-.form-control:focus{
-    border-color:#003B95;
-    box-shadow:none;
+    min-width: 220px;
 }
 
 /* ==========================
    Buttons
 ========================== */
 
-.btn-login{
-    background:#003B95;
-    color:white;
-    border:none;
-    border-radius:8px;
-    padding:10px 20px;
-    font-weight:500;
+.btn-login {
+    background: #003B95;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 500;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
 }
 
-.btn-login:hover{
-    background:#FF8A00;
-    color:white;
+.btn-login:hover {
+    background: #FF8A00;
 }
 
-.btn-register{
-    background:linear-gradient(
-        90deg,
-        #FF8A00,
-        #FF006E
-    );
-    color:white;
-    border:none;
-    border-radius:8px;
-    padding:10px 20px;
-    font-weight:500;
+.btn-register {
+    background: linear-gradient(90deg, #FF8A00, #FF006E);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 500;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
 }
 
-.btn-register:hover{
-    opacity:0.9;
-}
-
-/* ==========================
-   Cards
-========================== */
-
-.card{
-    border:none;
-    border-radius:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    overflow:hidden;
-}
-
-.card img{
-    border-radius:10px;
-}
-
-.card-title{
-    color:#003B95;
-    font-weight:600;
-}
-
-.price{
-    color:#FF8A00;
-    font-size:20px;
-    font-weight:700;
+.btn-register:hover {
+    opacity: 0.9;
 }
 
 /* ==========================
-   Section Spacing
+   Mobile Fix
 ========================== */
 
-.section{
-    padding:60px 0;
-}
+@media(max-width:768px) {
 
-.section-title{
-    color:#003B95;
-    font-weight:700;
-    margin-bottom:25px;
-}
-
-/* ==========================
-   Footer
-========================== */
-
-.footer{
-    background:#003B95;
-    color:white;
-    padding:40px 0;
-}
-
-.footer a{
-    color:white;
-    text-decoration:none;
-}
-
-.footer a:hover{
-    color:#FF8A00;
-}
-
-/* ==========================
-   Mobile
-========================== */
-
-@media(max-width:768px){
-
-    .navbar-nav{
-        text-align:center;
-        margin-top:15px;
+    .navbar-nav {
+        text-align: center;
+        margin-top: 15px;
     }
 
-    .form-control{
-        width:100%;
-        margin-bottom:10px;
+    .search-box input {
+        width: 100%;
+        margin-bottom: 10px;
     }
 
     .btn-login,
-    .btn-register{
-        width:100%;
-        margin-top:10px;
+    .btn-register {
+        width: 100%;
+        margin-top: 10px;
     }
 }
 
-
-
-
+/* Toggler */
 .navbar-toggler {
     border: 1px solid #000;
 }

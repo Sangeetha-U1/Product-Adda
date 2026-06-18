@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import "../styles/Login.css";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,18 +16,18 @@ const handleSubmit = (e) => {
   );
 
   if (!savedUser) {
-    alert("No registered user found. Please register first.");
+    toast.error("No registered user found. Please register first.");
     return;
   }
 
-  // ONLY CHECK LOGIN CREDENTIALS
   if (
     email === savedUser.email &&
     password === savedUser.password
   ) {
-    alert("Login Successful");
+toast.success("Login Successful 🎉");
+
   } else {
-    alert("Invalid Email or Password");
+    toast.error("Invalid Email or Password");
   }
 };
   return (

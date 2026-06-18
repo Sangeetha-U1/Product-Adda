@@ -1,17 +1,43 @@
 import React from "react";
 import "../styles/ProductCard.css";
 
-function ProductCard({ image, name, price }) {
+function ProductCard({ product }) {
+  if (!product) return null;
+// ⭐ function to render stars
+  const renderStars = (rating) => {
+    const stars = [];
+
+    for (let i = 1; i <= 5; i++) {
+      if (i <= Math.floor(rating)) {
+        stars.push("⭐"); // full star
+      } else {
+        stars.push("☆"); // empty star
+      }
+    }
+
+    return stars.join(" ");
+  };
   return (
     <div className="product-card">
-      <img src={image} alt={name} />
+      
+      <img
+        src={product?.image}
+        alt={product?.title}
+        className="product-image"
+      />
 
-      <h4>{name}</h4>
-      <p className="price">{price}</p>
+      <div className="product-info">
+        <h3>{product?.title}</h3>
 
-      <div className="rating">⭐⭐⭐⭐⭐</div>
+        <p className="price">₹{product?.price}</p>
 
-      <button className="btn-cart">Add To Cart</button>
+        <p className="category">{product?.category}</p>
+   {/* ⭐ STAR RATING */}
+        <p className="rating">
+          {renderStars(product?.rating)} ({product?.rating})
+        </p>
+      </div>
+
     </div>
   );
 }

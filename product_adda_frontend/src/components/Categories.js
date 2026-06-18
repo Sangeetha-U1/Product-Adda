@@ -2,7 +2,7 @@ import React from "react";
 import CategoryCard from "./CategoryCard";
 import "../styles/Categories.css";
 import "../styles/CategoryCard.css";
-
+import { toast } from "react-toastify";
 function Categories() {
 const categories = [
   {

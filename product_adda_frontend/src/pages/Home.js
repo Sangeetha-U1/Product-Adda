@@ -8,7 +8,7 @@ import OfferBanner from "../components/OfferBanner";
 import TrendingProducts from "../components/TrendingProducts";
 import WhyChooseUs from "../components/WhyChooseUs";
 import Footer from "../components/Footer";
-
+import { toast } from "react-toastify";
 function Home() {
   return (
     <>

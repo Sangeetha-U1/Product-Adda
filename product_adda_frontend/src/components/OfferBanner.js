@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/OfferBanner.css";
-
+import { toast } from "react-toastify";
 function OfferBanner() {
   return (
     <section className="offer-banner">

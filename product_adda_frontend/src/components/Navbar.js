@@ -2,6 +2,8 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";import "../styles/Navbar.css";
 import logo from "../assets/logo.png";
 import { FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
+
 function Navbar() {
 const [open, setOpen] = useState(false);
 const [search, setSearch] = useState("");

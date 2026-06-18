@@ -1,13 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/ForgotPassword.css";
-
+import { toast } from "react-toastify";
 function ForgotPassword() {
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Password reset link sent successfully.");
-  };
+  e.preventDefault();
+
+  toast.success("Reset link sent 📩");
+
+  setTimeout(() => {
+    toast.info("Redirecting to Login...");
+  }, 1000);
+};
 
   return (
     <div className="forgot-page">

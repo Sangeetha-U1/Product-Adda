@@ -1,63 +1,67 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Register.css";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+const navigate = useNavigate();
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    const cleanMobile = mobile.trim();
+  const cleanMobile = mobile.trim();
 
-    // Mobile validation
-    if (cleanMobile.length !== 10) {
-      alert("Mobile number must contain exactly 10 digits");
-      return;
-    }
+  // Mobile validation
+  if (cleanMobile.length !== 10) {
+    toast.error("Mobile number must contain exactly 10 digits");
+    return;
+  }
 
-    // Password validation
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#])[A-Za-z\d@$!%*?&.#]{8,}$/;
+  // Password validation
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#])[A-Za-z\d@$!%*?&.#]{8,}$/;
 
-    if (!passwordRegex.test(password)) {
-      alert(
-        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character."
-      );
-      return;
-    }
-
-    // Confirm password check
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    // Save user data
-    localStorage.setItem(
-      "productAddaUser",
-      JSON.stringify({
-        email: email.trim(),
-        mobile: cleanMobile,
-        password,
-      })
+  if (!passwordRegex.test(password)) {
+    toast.error(
+      "Password must have 8+ chars, uppercase, lowercase, number & special character"
     );
+    return;
+  }
 
-    alert("Registration Successful");
+  // Confirm password check
+  if (password !== confirmPassword) {
+    toast.error("Passwords do not match");
+    return;
+  }
 
-    // Optional: clear form
-    setEmail("");
-    setMobile("");
-    setPassword("");
-    setConfirmPassword("");
-  };
+  // Save user data
+  localStorage.setItem(
+    "productAddaUser",
+    JSON.stringify({
+      email: email.trim(),
+      mobile: cleanMobile,
+      password,
+    })
+  );
 
+  toast.success("Registration Successful 🎉");
+  setTimeout(() => {
+  navigate("/login");
+}, 1500);
+
+  // Clear form
+  setEmail("");
+  setMobile("");
+  setPassword("");
+  setConfirmPassword("");
+};
   return (
     <div className="register-page">
       <div className="register-card">

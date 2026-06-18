@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/HeroSection.css";
+import { toast } from "react-toastify";
 function HeroSection() {
   return (
     <section className="hero">

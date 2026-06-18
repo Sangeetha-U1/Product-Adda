@@ -1,7 +1,7 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import "../styles/ProductCard.css";
-
+import { toast } from "react-toastify";
 function FeaturedProducts(){
 
 const products=[

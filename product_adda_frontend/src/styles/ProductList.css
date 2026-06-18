@@ -1,0 +1,27 @@
+.product-page {
+  padding: 20px;
+}
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* GRID */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* NO PRODUCTS */
+.no-products {
+  text-align: center;
+  font-size: 18px;
+  color: gray;
+  width: 100%;
+}
