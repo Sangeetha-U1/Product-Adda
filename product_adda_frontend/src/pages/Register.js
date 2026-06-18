@@ -64,6 +64,8 @@ function Register() {
 
         {/* LEFT SIDE */}
         <div className="register-left">
+                      <h1>Welcome to Our website</h1>
+
           <h1>Join ProductAdda</h1>
 
           <p>
