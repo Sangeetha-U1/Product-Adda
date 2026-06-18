@@ -1,0 +1,150 @@
+.register-page{
+    min-height:100vh;
+    background:
+    linear-gradient(
+        rgba(0,0,0,.5),
+        rgba(0,0,0,.5)
+    ),
+    url("https://images.unsplash.com/photo-1556742049-0cfed4f6a45d");
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:30px;
+}
+
+.register-card{
+    width:100%;
+    max-width:1200px;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    display:flex;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+.register-left{
+    flex:1;
+    background:
+    linear-gradient(
+        135deg,
+        #003B95,
+        #FF006E
+    );
+
+    color:white;
+
+    padding:60px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.register-left h1{
+    font-size:48px;
+    margin-bottom:20px;
+}
+
+.register-left p{
+    line-height:1.8;
+}
+
+.register-features{
+    margin-top:25px;
+}
+
+.register-right{
+    flex:1;
+    padding:50px;
+}
+
+.register-right h2{
+    color:#003B95;
+    margin-bottom:25px;
+}
+
+.register-right form{
+    display:flex;
+    flex-direction:column;
+}
+
+.register-right label{
+    font-weight:600;
+    margin-bottom:8px;
+    margin-top:10px;
+}
+
+.register-right input{
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+.password-box{
+    position:relative;
+}
+
+.eye-icon{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+
+.register-right button{
+    margin-top:25px;
+    background:#003B95;
+    color:white;
+    border:none;
+    padding:15px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.register-right button:hover{
+    background:
+    linear-gradient(
+        90deg,
+        #FF8A00,
+        #FF006E
+    );
+}
+
+.bottom-link{
+    text-align:center;
+    margin-top:20px;
+}
+
+.bottom-link a{
+    color:#FF006E;
+    text-decoration:none;
+    font-weight:600;
+}
+
+@media(max-width:768px){
+
+.register-card{
+flex-direction:column;
+}
+
+.register-left{
+padding:40px 25px;
+text-align:center;
+}
+
+.register-left h1{
+font-size:34px;
+}
+
+.register-right{
+padding:35px 25px;
+}
+
+}
