@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 0000020B 7478:274D
+Volume serial number is 0000022B 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -18,6 +18,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   ProductaddaApplication.java
 |   |           |   
 |   |           +---config
+|   |           |       GoogleOAuthConfig.java
 |   |           |       OpenApiConfig.java
 |   |           |       PasswordConfig.java
 |   |           |       RazorpayConfig.java
@@ -27,18 +28,26 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       
 |   |           +---controller
 |   |           |   |   HealthController.java
+|   |           |   |   UserController.java
 |   |           |   |   
 |   |           |   +---auth
 |   |           |   |       AuthController.java
 |   |           |   |       
+|   |           |   +---order
+|   |           |   |       OrderController.java
+|   |           |   |       
 |   |           |   +---payment
 |   |           |   |       PaymentController.java
 |   |           |   |       
-|   |           |   \---token
-|   |           |           PasswordResetController.java
-|   |           |           RefreshTokenController.java
-|   |           |           ResendVerificationEmailController.java
-|   |           |           VerifyEmailController.java
+|   |           |   +---token
+|   |           |   |       PasswordResetController.java
+|   |           |   |       RefreshTokenController.java
+|   |           |   |       ResendVerificationEmailController.java
+|   |           |   |       VerifyEmailController.java
+|   |           |   |       
+|   |           |   \---user
+|   |           |           AddressController.java
+|   |           |           WishlistController.java
 |   |           |           
 |   |           +---dto
 |   |           |   |   ApiErrorResponseDto.java
@@ -48,6 +57,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |   SendEmailRequestDto.java
 |   |           |   |   
 |   |           |   +---auth
+|   |           |   |       GoogleLoginRequestDto.java
 |   |           |   |       LoginRequestDto.java
 |   |           |   |       LoginResponseDto.java
 |   |           |   |       LogoutRequestDto.java
@@ -56,6 +66,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       RegisterResponseDto.java
 |   |           |   |       UserProfileResponseDto.java
 |   |           |   |       
+|   |           |   +---order
+|   |           |   |       OrderHistoryResponseDto.java
+|   |           |   |       OrderItemSummaryDto.java
+|   |           |   |       
 |   |           |   +---payment
 |   |           |   |       PaymentCreateRequestDto.java
 |   |           |   |       PaymentCreateResponseDto.java
@@ -63,18 +77,23 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       PaymentVerifyRequestDto.java
 |   |           |   |       PaymentVerifyResponseDto.java
 |   |           |   |       
-|   |           |   \---token
-|   |           |           ForgotPasswordRequestDto.java
-|   |           |           ForgotPasswordResponsetDto.java
-|   |           |           RefreshTokenRequestDto.java
-|   |           |           RefreshTokenResponseDto.java
-|   |           |           ResendVerificationEmailRequestDto.java
-|   |           |           ResendVerificationEmailResponseDto.java
-|   |           |           ResetPasswordRequestDto.java
-|   |           |           ResetPasswordResponseDto.java
-|   |           |           TokenDto.java
-|   |           |           VerifyEmailRequestDto.java
-|   |           |           VerifyEmailResponseDto.java
+|   |           |   +---token
+|   |           |   |       ForgotPasswordRequestDto.java
+|   |           |   |       ForgotPasswordResponsetDto.java
+|   |           |   |       RefreshTokenRequestDto.java
+|   |           |   |       RefreshTokenResponseDto.java
+|   |           |   |       ResendVerificationEmailRequestDto.java
+|   |           |   |       ResendVerificationEmailResponseDto.java
+|   |           |   |       ResetPasswordRequestDto.java
+|   |           |   |       ResetPasswordResponseDto.java
+|   |           |   |       TokenDto.java
+|   |           |   |       VerifyEmailRequestDto.java
+|   |           |   |       VerifyEmailResponseDto.java
+|   |           |   |       
+|   |           |   \---user
+|   |           |           AddressRequestDto.java
+|   |           |           AddressResponseDto.java
+|   |           |           WishlistResponseDto.java
 |   |           |           
 |   |           +---entity
 |   |           |       Address.java
@@ -97,6 +116,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       User.java
 |   |           |       UserRole.java
 |   |           |       Vendor.java
+|   |           |       Wishlist.java
+|   |           |       WishlistItem.java
 |   |           |       
 |   |           +---exception
 |   |           |       ApiException.java
@@ -104,6 +125,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       GlobalExceptionHandler.java
 |   |           |       
 |   |           +---repository
+|   |           |       AddressRepository.java
+|   |           |       AddressTypeRepository.java
 |   |           |       CategoryRepository.java
 |   |           |       EmailVerificationTokenRepository.java
 |   |           |       OrderItemRepository.java
@@ -120,6 +143,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       UserRepository.java
 |   |           |       UserRoleRepository.java
 |   |           |       VendorRepository.java
+|   |           |       WishlistItemRepository.java
+|   |           |       WishlistRepository.java
 |   |           |       
 |   |           +---security
 |   |           |       CustomAuthenticationEntryPoint.java
@@ -132,6 +157,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |   
 |   |           |   +---auth
 |   |           |   |       AuthServiceForgotPassword.java
+|   |           |   |       AuthServiceGoogleLogin.java
 |   |           |   |       AuthServiceLogin.java
 |   |           |   |       AuthServiceLogout.java
 |   |           |   |       AuthServiceMe.java
@@ -141,17 +167,24 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       EmailService.java
 |   |           |   |       MailStartupValidator.java
 |   |           |   |       
+|   |           |   +---order
+|   |           |   |       OrderHistoryService.java
+|   |           |   |       
 |   |           |   +---payment
 |   |           |   |       PaymentServicePaymentCreate.java
 |   |           |   |       PaymentServicePaymentGatewayHealth.java
 |   |           |   |       PaymentServicePaymentVerify.java
 |   |           |   |       
-|   |           |   \---token
-|   |           |           EmailVerificationService.java
-|   |           |           PasswordResetService.java
-|   |           |           RefreshTokenService.java
-|   |           |           ResendVerificationEmailService.java
-|   |           |           TokenProvider.java
+|   |           |   +---token
+|   |           |   |       EmailVerificationService.java
+|   |           |   |       PasswordResetService.java
+|   |           |   |       RefreshTokenService.java
+|   |           |   |       ResendVerificationEmailService.java
+|   |           |   |       TokenProvider.java
+|   |           |   |       
+|   |           |   \---user
+|   |           |           AddressService.java
+|   |           |           WishlistService.java
 |   |           |           
 |   |           \---util
 |   |                   HashUtil.java
@@ -173,7 +206,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
                     
 
 Folder PATH listing
-Volume serial number is 00000242 7478:274D
+Volume serial number is 00000185 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

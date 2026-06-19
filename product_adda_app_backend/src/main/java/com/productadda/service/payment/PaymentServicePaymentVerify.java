@@ -2,6 +2,7 @@ package com.productadda.service.payment;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
@@ -189,7 +190,7 @@ public class PaymentServicePaymentVerify {
                         payment.setGatewayOrderId(razorpayFetchedOrderId);
                         payment.setGatewaySignature(requestDto.getRazorpaySignature());
 
-                        payment.setPaidAtUtc(LocalDateTime.now());
+                        payment.setPaidAtUtc(LocalDateTime.now(ZoneOffset.UTC));
 
                         /*
                          * ================================================================

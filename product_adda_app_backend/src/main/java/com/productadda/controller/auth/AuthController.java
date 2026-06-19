@@ -7,9 +7,11 @@ import com.productadda.service.auth.AuthServiceRegister;
 import jakarta.validation.Valid;
 
 import com.productadda.dto.ApiSuccessResponseDto;
+import com.productadda.dto.auth.GoogleLoginRequestDto;
 import com.productadda.dto.auth.LoginRequestDto;
 import com.productadda.dto.auth.LoginResponseDto;
 import com.productadda.service.auth.AuthServiceForgotPassword;
+import com.productadda.service.auth.AuthServiceGoogleLogin;
 import com.productadda.service.auth.AuthServiceLogin;
 import com.productadda.dto.auth.LogoutRequestDto;
 import com.productadda.dto.auth.LogoutResponseDto;
@@ -35,6 +37,7 @@ public class AuthController {
         private final AuthServiceLogout authServiceLogout;
         private final AuthServiceMe authServiceMe;
         private final AuthServiceForgotPassword authServiceForgotPassword;
+        private final AuthServiceGoogleLogin authServiceGoogleLogin;
 
         @PostMapping("/register")
         public ResponseEntity<ApiSuccessResponseDto<RegisterResponseDto>> register(
@@ -64,6 +67,22 @@ public class AuthController {
                                                 ApiSuccessResponseDto.<LoginResponseDto>builder()
                                                                 .success(true)
                                                                 .message("User authenticated successfully")
+                                                                .data(response)
+                                                                .build());
+        }
+
+        @PostMapping("/google-login")
+        public ResponseEntity<ApiSuccessResponseDto<LoginResponseDto>> googleLogin(
+                        @RequestBody GoogleLoginRequestDto request) {
+
+                LoginResponseDto response = authServiceGoogleLogin.googleLogin(request);
+
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(
+                                                ApiSuccessResponseDto.<LoginResponseDto>builder()
+                                                                .success(true)
+                                                                .message("User authenticated via Google successfully")
                                                                 .data(response)
                                                                 .build());
         }

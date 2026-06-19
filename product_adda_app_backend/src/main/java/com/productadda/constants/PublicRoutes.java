@@ -16,6 +16,7 @@ public class PublicRoutes {
             // Authentication Lifecycle APIs
             "/api/auth/register",
             "/api/auth/login",
+            "/api/auth//google-login",
             "/api/auth/forgot-password",
 
             // Token & Email Verification Lifecycle

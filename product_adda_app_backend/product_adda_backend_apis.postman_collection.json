@@ -297,11 +297,21 @@
         {
           "name": "/api/payment/create",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwb29qYS5zaW5naEB5YWhvby5jb20iLCJpYXQiOjE3ODE2MjA2NjksImV4cCI6MTc4MTYyNDI2OX0.R6qGPdms19-B0ELKgSfWMU6AHReoQWL-NYmKm4lB_3nTD4XMIhfuX7B1TnriMQvw",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"orderId\": \"019ec565-7b22-72eb-89ad-e457eff850b2\"\r\n}",
+              "raw": "{\r\n  \"orderId\": \"019eca82-35e0-7f22-86a2-26caf51cd988\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -309,12 +319,10 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/api/payment/create",
-              "protocol": "http",
+              "raw": "{{baseUrl}}/api/payment/create",
               "host": [
-                "localhost"
+                "{{baseUrl}}"
               ],
-              "port": "8080",
               "path": [
                 "api",
                 "payment",
@@ -562,6 +570,242 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Payment order created\",\n    \"data\": {\n        \"cancelled_at\": 0,\n        \"reminders\": [],\n        \"amount_paid\": 0,\n        \"notes\": null,\n        \"reference_id\": \"019ec565-7b21-790a-88a5-25ee4cd49015\",\n        \"payments\": null,\n        \"created_at\": 1781434547,\n        \"description\": \"Verification Testing for Order 019ec565-7b21-790a-88a5-25ee4cd49015\",\n        \"expired_at\": 0,\n        \"notify\": {\n            \"whatsapp\": false,\n            \"sms\": false,\n            \"email\": false\n        },\n        \"short_url\": \"https://rzp.io/rzp/TBn8un7\",\n        \"callback_url\": \"https://example.com\",\n        \"updated_at\": 1781434547,\n        \"upi_link\": false,\n        \"accept_partial\": false,\n        \"currency\": \"INR\",\n        \"id\": \"plink_T1UBQkrCL64eNm\",\n        \"callback_method\": \"get\",\n        \"payment_plan\": false,\n        \"expire_by\": 0,\n        \"first_min_partial_amount\": 0,\n        \"whatsapp_link\": false,\n        \"amount\": 3059800,\n        \"allow_full_payment\": false,\n        \"reminder_enable\": false,\n        \"user_id\": \"\",\n        \"customer\": [],\n        \"status\": \"created\"\n    }\n}"
+            },
+            {
+              "name": "404 Not Found Authenticated user no longer exists",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"orderId\": \"019ec565-7b22-72eb-89ad-e457eff850b2\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/payment/create",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "payment",
+                    "create"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 14:14:53 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Authenticated user no longer exists\",\n    \"error\": {\n        \"code\": 404,\n        \"type\": \"NOT_FOUND\"\n    }\n}"
+            },
+            {
+              "name": "404 Not Found Order not found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"orderId\": \"019ec565-7b22-72eb-89ad-e457eff850b2\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/payment/create",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payment",
+                    "create"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 14:17:31 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Order not found\",\n    \"error\": {\n        \"code\": 404,\n        \"type\": \"NOT_FOUND\"\n    }\n}"
+            },
+            {
+              "name": "401 Unauthorized Authentication required",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"orderId\": \"019eca82-35e0-75e6-845a-6b05d637592b\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/payment/create",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "payment",
+                    "create"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "96"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 14:35:07 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Authentication required\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
             }
           ]
         },
@@ -857,7 +1101,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"firstName\": \"hrithik\",\r\n  \"lastName\": \"roshan\",\r\n  \"email\": \"tay3u@web-library.net\",\r\n  \"mobile\": \"9999999994\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"USER\"\r\n}",
+              "raw": "{\r\n  \"firstName\": \"sharukh\",\r\n  \"lastName\": \"khan\",\r\n  \"email\": \"tiwovel132@lidugw.com\",\r\n  \"mobile\": \"9999999997\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"CUSTOMER\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1110,120 +1354,13 @@
           ]
         },
         {
-          "name": "/api/token/verify-email",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"token\": \"019ecfc2-b7cc-7024-b424-d10cee636407\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/token/verify-email",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "token",
-                "verify-email"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "200 OK",
-              "originalRequest": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"token\": \"019ecfc2-b7cc-7024-b424-d10cee636407\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{baseUrl}} /api/token/verify-email",
-                  "host": [
-                    "{{baseUrl}} "
-                  ],
-                  "path": [
-                    "api",
-                    "token",
-                    "verify-email"
-                  ]
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "X-Content-Type-Options",
-                  "value": "nosniff"
-                },
-                {
-                  "key": "X-XSS-Protection",
-                  "value": "0"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, no-store, max-age=0, must-revalidate"
-                },
-                {
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "key": "Expires",
-                  "value": "0"
-                },
-                {
-                  "key": "X-Frame-Options",
-                  "value": "DENY"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Transfer-Encoding",
-                  "value": "chunked"
-                },
-                {
-                  "key": "Date",
-                  "value": "Tue, 16 Jun 2026 09:29:20 GMT"
-                },
-                {
-                  "key": "Keep-Alive",
-                  "value": "timeout=60"
-                },
-                {
-                  "key": "Connection",
-                  "value": "keep-alive"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"Email verified successfully\",\n    \"data\": {\n        \"userId\": \"019ecfc2-b6c1-7169-aa2a-5942df457bfe\",\n        \"email\": \"k4ws3dbfg9@wnbaldwy.com\",\n        \"emailVerified\": true,\n        \"isActive\": true\n    }\n}"
-            }
-          ]
-        },
-        {
           "name": "/api/auth/login",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"k4ws3dbfg9@wnbaldwy.com\",\r\n    \"password\": \"Test123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"rahul.verma@gmail.com\",\r\n    \"password\": \"Customer123\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1398,6 +1535,882 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"User authenticated successfully\",\n    \"data\": {\n        \"userId\": \"019ecfc2-b6c1-7169-aa2a-5942df457bfe\",\n        \"email\": \"k4ws3dbfg9@wnbaldwy.com\",\n        \"roleName\": \"VENDOR\",\n        \"token\": {\n            \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJrNHdzM2RiZmc5QHduYmFsZHd5LmNvbSIsImlhdCI6MTc4MTYwMjM5NywiZXhwIjoxNzgxNjA1OTk3fQ.HCB4Ax4BEQ3YCok-OcyhaOSDIk5Ff4ITPhsffDw36T3Mo06l5IrNjwsFlGzRuDoP\",\n            \"refreshToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJrNHdzM2RiZmc5QHduYmFsZHd5LmNvbSIsImlhdCI6MTc4MTYwMjM5OCwiZXhwIjoxNzgxNjg4Nzk4fQ.r2uQEwqfzJGNHZVey_UBWs3V213BIf5gD7wormlXKl6SYekM26_8uv_xPkj7z2AW\"\n        },\n        \"message\": \"Login successful\"\n    }\n}"
+            },
+            {
+              "name": "404 Not Found User not found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"tiwovel132@lidugw.com\",\r\n    \"password\": \"Test123\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 17 Jun 2026 21:21:33 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"User not found\",\n    \"error\": {\n        \"code\": 404,\n        \"type\": \"NOT_FOUND\"\n    }\n}"
+            },
+            {
+              "name": "403 Forbidden Account is inactive",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"tiwovel132@lidugw.com\",\r\n    \"password\": \"Test123\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 17 Jun 2026 21:25:35 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Account is inactive\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            },
+            {
+              "name": "401 Unauthorized Invalid credentials",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"rahul.verma@gmail.com\",\r\n    \"password\": \"Customer123\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 18 Jun 2026 04:48:20 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Invalid credentials\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/auth/logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwb29qYS5zaW5naEB5YWhvby5jb20iLCJpYXQiOjE3ODE2Mjk2NjUsImV4cCI6MTc4MTYzMzI2NX0.7zV53oABMDTsqll2NIMiQpOC3t0POxf3DXPaxDfslk5MlhQ5QbwxFnw0BFrPUFnW",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwb29qYS5zaW5naEB5YWhvby5jb20iLCJpYXQiOjE3ODE2Mjk2NjUsImV4cCI6MTc4MTcxNjA2NX0.ZBMuJK_KOukT5kJXhRKrQReEaBmuSQYkvJh6iRpnNzoJHx70flnyGveuJHt-9XPw\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/auth/forgot-password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"rahul.verma@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "forgot-password"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"pooja.singh@yahoo.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/forgot-password",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "forgot-password"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 18 Jun 2026 04:41:34 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Password reset email sent\",\n    \"data\": {\n        \"email\": \"pooja.singh@yahoo.com\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/auth/me",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODE3NTY5MzksImV4cCI6MTc4MTc2MDUzOX0.jyMpfX7iLB9WCtVQrkGsFqRhqd1mTrS-Srbw7JjDrw24NSHt9oCJtP-93XuAgk5L",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "401 Unauthorized Authentication required",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/me",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "me"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "96"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 17:06:45 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Authentication required\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+            },
+            {
+              "name": "401 Unauthorized TOKEN_EXPIRED",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/me",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "me"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "140"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 18 Jun 2026 04:37:26 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"The provided access token has expired. Please use a refresh token.\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"TOKEN_EXPIRED\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/auth/google-login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"idToken\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/google-login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "google-login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "token",
+      "item": [
+        {
+          "name": "/api/token/refresh-token",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{supabase_service_role_api_key_12fp}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwb29qYS5zaW5naEB5YWhvby5jb20iLCJpYXQiOjE3ODE2MjYzMzUsImV4cCI6MTc4MTcxMjczNX0.GOjx7OQLQh-WQ2Qgh5wLT4YyfiseFMyUkYV80tZYb4yITXwueP_P5L4T3rOGo3n-\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/token/refresh-token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "token",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "401 Unauthorized Refresh token has been revoked",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwb29qYS5zaW5naEB5YWhvby5jb20iLCJpYXQiOjE3ODE2MjU4NzgsImV4cCI6MTc4MTcxMjI3OH0.n7qfLDvJa3fp81R8o2_KOd9u1I2W6WmHfZXUXarSWQ_XZpe6PoPQRkz4muVBiEUA\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/refresh-token",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "refresh-token"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 16:13:47 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Refresh token has been revoked\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/token/reset-password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"token\":\"019ed90e-3f54-77c3-b41d-cf5e2749061e\",\r\n    \"newPassword\":\"Customer123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/token/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "token",
+                "reset-password"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"token\":\"019ed90e-3f54-77c3-b41d-cf5e2749061e\",\r\n    \"newPassword\":\"Customer123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/token/reset-password",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "token",
+                    "reset-password"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 18 Jun 2026 04:48:00 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Password reset successful\",\n    \"data\": {\n        \"email\": \"rahul.verma@gmail.com\"\n    }\n}"
             }
           ]
         },
@@ -1581,6 +2594,416 @@
               "body": "{\n    \"success\": false,\n    \"message\": \"Email already verified\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
             }
           ]
+        },
+        {
+          "name": "/api/token/verify-email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"token\": \"019ecfc2-b7cc-7024-b424-d10cee636407\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/token/verify-email",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "token",
+                "verify-email"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"token\": \"019ecfc2-b7cc-7024-b424-d10cee636407\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}} /api/token/verify-email",
+                  "host": [
+                    "{{baseUrl}} "
+                  ],
+                  "path": [
+                    "api",
+                    "token",
+                    "verify-email"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 16 Jun 2026 09:29:20 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Email verified successfully\",\n    \"data\": {\n        \"userId\": \"019ecfc2-b6c1-7169-aa2a-5942df457bfe\",\n        \"email\": \"k4ws3dbfg9@wnbaldwy.com\",\n        \"emailVerified\": true,\n        \"isActive\": true\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "/api/users/addresses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODE4ODM4ODksImV4cCI6MTc4MTg4NzQ4OX0.lwmGUPTYz1Y_crvLAJnqG6QRU02Gb0f4PJZcm9YwBiH_R9ZXKY5Tgz3xgVtRZVSo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"addressLine1\": \"123 Tech Park Avenue\",\r\n    \"addressLine2\": \"Suite 404, Block B\",\r\n    \"landmark\": \"Opposite Cyber Tower\",\r\n    \"city\": \"Khammam\",\r\n    \"state\": \"Telangana\",\r\n    \"postalCode\": \"507001\",\r\n    \"country\": \"India\",\r\n    \"addressTypeName\": \"HOME\",\r\n    \"isDefault\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/addresses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "addresses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"addressLine1\": \"123 Tech Park Avenue\",\r\n    \"addressLine2\": \"Suite 404, Block B\",\r\n    \"landmark\": \"Opposite Cyber Tower\",\r\n    \"city\": \"Khammam\",\r\n    \"state\": \"Telangana\",\r\n    \"postalCode\": \"507001\",\r\n    \"country\": \"India\",\r\n    \"addressTypeName\": \"HOME\",\r\n    \"isDefault\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/addresses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "addresses"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 19 Jun 2026 15:45:10 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"New address saved successfully\",\n    \"data\": {\n        \"addressId\": \"30e58bb3-b13b-4e2f-ac08-9f43be31a352\",\n        \"addressLine1\": \"123 Tech Park Avenue\",\n        \"addressLine2\": \"Suite 404, Block B\",\n        \"landmark\": \"Opposite Cyber Tower\",\n        \"city\": \"Khammam\",\n        \"state\": \"Telangana\",\n        \"postalCode\": \"507001\",\n        \"country\": \"India\",\n        \"addressTypeName\": \"HOME\",\n        \"isDefault\": true\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/users/addresses",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODE4ODM4ODksImV4cCI6MTc4MTg4NzQ4OX0.lwmGUPTYz1Y_crvLAJnqG6QRU02Gb0f4PJZcm9YwBiH_R9ZXKY5Tgz3xgVtRZVSo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/addresses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "addresses"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "401 Unauthorized -Authentication required",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/addresses",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "addresses"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "96"
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 19 Jun 2026 15:48:01 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Authentication required\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/users/wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODE4ODM4ODksImV4cCI6MTc4MTg4NzQ4OX0.lwmGUPTYz1Y_crvLAJnqG6QRU02Gb0f4PJZcm9YwBiH_R9ZXKY5Tgz3xgVtRZVSo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/wishlist",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/users/orders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODE4ODM4ODksImV4cCI6MTc4MTg4NzQ4OX0.lwmGUPTYz1Y_crvLAJnqG6QRU02Gb0f4PJZcm9YwBiH_R9ZXKY5Tgz3xgVtRZVSo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "orders"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     }
@@ -1588,6 +3011,14 @@
   "variable": [
     {
       "key": "auth_password_0d65",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_02i1",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_12fp",
       "secret": true
     }
   ]

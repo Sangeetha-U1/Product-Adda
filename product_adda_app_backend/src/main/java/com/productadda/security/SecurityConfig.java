@@ -19,7 +19,7 @@ import com.productadda.constants.PublicRoutes;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@EnableWebSecurity // Explicitly enables the web security filter chain mapping globally
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
