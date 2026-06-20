@@ -29,6 +29,9 @@
   color: gold;
   font-size: 18px;
   margin-top: 5px;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
 }
 .add-btn {
   width: 100%;
@@ -43,4 +46,32 @@
 
 .add-btn:hover {
   background: #0056b3;
+}
+.qty-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.qty-box button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #003b95;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-btn {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(90deg, #ff8a00, #ff006e);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  align-items: center;
 }

@@ -5,35 +5,68 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ProductList from "./pages/ProductList";
+import CartPage from "./pages/CartPage";
+import Footer from "./components/Footer";
+
+import Navbar from "./components/Navbar";
+
+import { CartProvider } from "./context/CartContext";
+import { SearchProvider } from "./context/SearchContext";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import ProductDetails from "./pages/ProductDetails";
+import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
+
+import Dashboard from "./pages/Dashboard";
+
+
 function App() {
   return (
-    <>
+    <SearchProvider>
+    <CartProvider>
+      <Navbar />
       <Routes>
+        <Route path="/product/:id" element={<ProductDetails />} />
+
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-                <Route path="/products" element={<ProductList />} />
-
         <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        {/* PRODUCTS */}
+        <Route path="/products" element={<ProductList />} />
+
+        {/* CART */}
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<Checkout />} />
+
+<Route
+  path="/order-success"
+  element={<OrderSuccess />}
+/>
+<Route
+  path="/dashboard"
+  element={<Dashboard />}
+/>
       </Routes>
 
-      {/* ✅ ADD THIS */}
-      <ToastContainer position="top-right" autoClose={2000} />
+      {/* TOAST NOTIFICATION */}
       <ToastContainer
-  position="top-right"
-  autoClose={2000}
-  hideProgressBar={false}
-  newestOnTop
-  closeOnClick
-  pauseOnHover
-  draggable
-  theme="colored"
-/>
-    </>
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
+      <Footer />
+    </CartProvider>
+    </SearchProvider>
   );
 }
 

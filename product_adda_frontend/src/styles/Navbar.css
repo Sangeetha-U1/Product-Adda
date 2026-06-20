@@ -1,20 +1,15 @@
-/* ==========================
-   Navbar Base
-========================== */
+/* ================= NAVBAR ================= */
 
 .custom-navbar {
-    background: #FFFFFF;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    padding: 10px 0;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-/* Container alignment */
-.custom-navbar .container {
-    display: flex;
-    align-items: center;
-}
-
-/* Logo FIX */
+/* LOGO */
 .logo {
     height: 60px;
     width: auto;
@@ -38,29 +33,90 @@
     font-weight: 600;
 }
 
-/* ==========================
-   Search Box
-========================== */
+
+/* ================= SEARCH ================= */
 
 .search-box {
-    position: relative;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 240px;
+  margin: 0 15px;
 }
 
-.search-box input {
-    padding-right: 35px;
-    min-width: 220px;
+.search-input {
+  width: 100%;
+  padding: 8px 35px 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  transition: 0.3s;
 }
 
-/* ==========================
-   Buttons
-========================== */
+.search-input:focus {
+  border-color: #e84545;
+  box-shadow: 0 0 5px rgba(232, 69, 69, 0.3);
+}
+
+/* CLEAR ICON */
+.clear-icon {
+  position: absolute;
+  right: 12px;
+  font-size: 14px;
+  color: #777;
+  cursor: pointer;
+}
+
+.clear-icon:hover {
+  color: #e84545;
+}
+
+/* ================= ICONS ================= */
+
+.icon-group {
+   display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon-btn {
+   background: transparent;
+  border: none;
+  font-size: 22px;
+  position: relative;
+  cursor: pointer;
+  color: #003b95;
+  transition: 0.3s;
+}
+
+.icon-btn:hover {
+  color: #e84545;
+}
+
+/* CART BADGE */
+.cart-badge {
+    position: absolute;
+  top: -8px;
+  right: -10px;
+
+  background: #ff006e;
+  color: white;
+
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* ================= LOGIN ================= */
 
 .btn-login {
-    background: #003B95;
+    background: linear-gradient(90deg, #FF8A00, #FF006E);
     color: white;
     border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
+    padding: 6px 16px;
+  border-radius: 20px;
+  margin-left: 15px;
+  transition: 0.3s;
     font-weight: 500;
 
     display: flex;
@@ -72,53 +128,20 @@
 .btn-login:hover {
     background: #FF8A00;
 }
+/* ================= MOBILE ================= */
 
-.btn-register {
-    background: linear-gradient(90deg, #FF8A00, #FF006E);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    font-weight: 500;
+@media (max-width: 991px) {
+  .search-box {
+    width: 100%;
+    margin: 10px 0;
+  }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 38px;
-}
+  .icon-group {
+    margin-top: 10px;
+  }
 
-.btn-register:hover {
-    opacity: 0.9;
-}
-
-/* ==========================
-   Mobile Fix
-========================== */
-
-@media(max-width:768px) {
-
-    .navbar-nav {
-        text-align: center;
-        margin-top: 15px;
-    }
-
-    .search-box input {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .btn-login,
-    .btn-register {
-        width: 100%;
-        margin-top: 10px;
-    }
-}
-
-/* Toggler */
-.navbar-toggler {
-    border: 1px solid #000;
-}
-
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280,0,0,1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  .btn-login {
+    margin-top: 10px;
+    width: 100%;
+  }
 }

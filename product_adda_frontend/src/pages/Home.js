@@ -12,14 +12,12 @@ import { toast } from "react-toastify";
 function Home() {
   return (
     <>
-      <Navbar />
       <HeroSection />
       <Categories />
       <FeaturedProducts />
       <OfferBanner />
       <TrendingProducts />
       <WhyChooseUs />
-      <Footer />
     </>
   );
 }

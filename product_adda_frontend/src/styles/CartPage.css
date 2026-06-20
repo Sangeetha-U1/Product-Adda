@@ -1,0 +1,32 @@
+.qty-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.qty-box button {
+  width: 35px;
+  height: 35px;
+  border: none;
+  background: #e84545;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.qty-box span {
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.shop-btn {
+  background: #e84545;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin-top: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}

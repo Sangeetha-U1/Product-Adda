@@ -1,43 +1,65 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/ProductCard.css";
 
-function ProductCard({ product }) {
-  if (!product) return null;
-// ⭐ function to render stars
-  const renderStars = (rating) => {
+function ProductCard({ product, addToCart }) {
+  const navigate = useNavigate();
+
+  if (!product) {
+    console.log("ProductCard received:", product);
+    return null;
+  }
+
+  const renderStars = (rating = 0) => {
     const stars = [];
 
     for (let i = 1; i <= 5; i++) {
-      if (i <= Math.floor(rating)) {
-        stars.push("⭐"); // full star
-      } else {
-        stars.push("☆"); // empty star
-      }
+      stars.push(
+        <span
+          key={i}
+          style={{
+            color: i <= Math.floor(rating)
+              ? "#ffb400"
+              : "#ddd",
+            fontSize: "16px",
+          }}
+        >
+          ★
+        </span>
+      );
     }
 
-    return stars.join(" ");
+    return stars;
   };
+
   return (
     <div className="product-card">
-      
       <img
-        src={product?.image}
-        alt={product?.title}
-        className="product-image"
+        src={product.image}
+        alt={product.title}
+        onClick={() =>
+          navigate(`/product/${product.id}`)
+        }
       />
 
-      <div className="product-info">
-        <h3>{product?.title}</h3>
+      <h3
+        onClick={() =>
+          navigate(`/product/${product.id}`)
+        }
+      >
+        {product.title}
+      </h3>
 
-        <p className="price">₹{product?.price}</p>
+      <p className="price">₹ {product.price}</p>
 
-        <p className="category">{product?.category}</p>
-   {/* ⭐ STAR RATING */}
-        <p className="rating">
-          {renderStars(product?.rating)} ({product?.rating})
-        </p>
+      <div className="rating">
+        {renderStars(product.rating)}
+        <span> ({product.rating})</span>
       </div>
 
+      <button onClick={() => addToCart(product)}>
+        Add To Cart
+      </button>
     </div>
   );
 }

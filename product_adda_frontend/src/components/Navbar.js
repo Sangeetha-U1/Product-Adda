@@ -1,111 +1,112 @@
-import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";import "../styles/Navbar.css";
+import { useState, useContext } from "react";
+import { NavLink, useNavigate, Link } from "react-router-dom";
+import { FaShoppingCart, FaUserCircle, FaTimes } from "react-icons/fa";
+import "../styles/Navbar.css";
 import logo from "../assets/logo.png";
-import { FaTimes } from "react-icons/fa";
-import { toast } from "react-toastify";
+
+import { CartContext } from "../context/CartContext";
+import { SearchContext } from "../context/SearchContext";
+import CartModal from "./CartModal";
 
 function Navbar() {
-const [open, setOpen] = useState(false);
-const [search, setSearch] = useState("");
-const clearSearch = () => {
-  setSearch("");
-  navigate("/products");
-};
-const navigate = useNavigate();
-const handleSearch = (e) => {
-  e.preventDefault();
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
-  if (search.trim() !== "") {
-    navigate(`/products?search=${search}`);
-  }
-};
+  const { cart } = useContext(CartContext);
+  const { searchQuery, setSearchQuery } = useContext(SearchContext);
+
+  const navigate = useNavigate();
+
+  const clearSearch = () => setSearchQuery("");
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/products?search=${searchQuery}`);
+      setIsNavbarOpen(false);
+    }
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light custom-navbar">
+    <nav className="navbar navbar-expand-lg custom-navbar">
       <div className="container">
 
+        {/* LOGO */}
         <NavLink className="navbar-brand" to="/">
-          <img src={logo} alt="ProductAdda Logo" className="logo" />
+          <img src={logo} alt="logo" className="logo" />
         </NavLink>
 
+        {/* TOGGLER */}
         <button
           className="navbar-toggler"
-          type="button"
-          onClick={() => setOpen(!open)}
+          onClick={() => setIsNavbarOpen(!isNavbarOpen)}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className={`collapse navbar-collapse ${open ? "show" : ""}`}>
+        {/* MENU */}
+        <div className={`collapse navbar-collapse ${isNavbarOpen ? "show" : ""}`}>
 
+          {/* LINKS */}
           <ul className="navbar-nav mx-auto">
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/" onClick={() => setOpen(false)}>
-                Home
-              </NavLink>
-            </li>
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/products" onClick={() => setOpen(false)}>
-                Products
-              </NavLink>
-            </li>
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/categories" onClick={() => setOpen(false)}>
-                Categories
-              </NavLink>
-            </li>
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/cart" onClick={() => setOpen(false)}>
-                Cart
-              </NavLink>
-            </li>
-
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/contact" onClick={() => setOpen(false)}>
-                Contact
-              </NavLink>
-            </li>
-
+            <li><NavLink className="nav-link" to="/">Home</NavLink></li>
+            <li><NavLink className="nav-link" to="/products">Products</NavLink></li>
+            <li><NavLink className="nav-link" to="/categories">Categories</NavLink></li>
+            <li><NavLink className="nav-link" to="/contact">Contact</NavLink></li>
           </ul>
-<form className="d-flex me-3" onSubmit={handleSearch}>
-  <div className="search-box">
 
-    <input
-      className="form-control"
-      type="search"
-      placeholder="Search Products"
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
+          {/* SEARCH */}
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearch}
+              className="search-input"
+            />
 
-    {search && (
-      <span
-        className="clear-icon"
-        onClick={() => setSearch("")}
-      />
-    )}
+            {searchQuery && (
+              <FaTimes
+                className="clear-icon"
+                onClick={clearSearch}
+              />
+            )}
+          </div>
 
-  </div>
+          {/* ICONS */}
+          <div className="icon-group">
 
-  <button
-    type="submit"
-    className="btn btn-primary ms-2"
-  >
-    Search
-  </button>
-</form>
-<button className="btn-login me-2" onClick={() => navigate("/login")}>
-  Login
-</button>
+            {/* CART */}
+            <button
+              className="icon-btn"
+              onClick={() => setIsCartOpen(true)}
+            >
+              <FaShoppingCart />
+              {cart?.length > 0 && (
+                <span className="cart-badge">{cart.length}</span>
+              )}
+            </button>
 
-<button className="btn-register" onClick={() => navigate("/register")}>
-  Register
-</button>
+            {/* PROFILE */}
+            <Link to="/dashboard" className="icon-btn">
+  <FaUserCircle />
+</Link>
+
+          </div>
+
+          {/* LOGIN */}
+          <button
+            className="btn-login"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </button>
+
         </div>
       </div>
+
+      {/* CART MODAL */}
+      <CartModal isOpen={isCartOpen} setIsOpen={setIsCartOpen} />
     </nav>
   );
 }

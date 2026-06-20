@@ -4,10 +4,11 @@
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.5)
     ),
-    url("https://images.unsplash.com/photo-1472851294608-062f824d29cc");
+    url("https://images.unsplash.com/photo-1508615039623-a25605d2b022");
 
   background-size: cover;
   background-position: center;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,11 +20,10 @@
   max-width: 1100px;
   background: white;
   border-radius: 20px;
-  overflow: hidden;
   display: flex;
+  overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
-
 /* LEFT SIDE */
 .login-left {
   flex: 1;
@@ -92,16 +92,7 @@
 }
 
 /* EYE ICON FIX */
-.eye-icon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  user-select: none;
-  font-size: 18px;
-  color: #555;
-}
+
 
 /* FORGOT PASSWORD */
 .forgot-link {
