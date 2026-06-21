@@ -1,7 +1,11 @@
 import React from "react";
 import "../styles/HeroSection.css";
 import { toast } from "react-toastify";
+import { NavLink, useNavigate, Link } from "react-router-dom";
+
 function HeroSection() {
+    const navigate = useNavigate();
+
   return (
     <section className="hero">
       <div className="hero-content">
@@ -20,15 +24,14 @@ function HeroSection() {
         </p>
   
         <div className="hero-buttons">
-          <button className="shop-btn">
-            Shop Now
-          </button>
+  <Link to="/products" className="shop-btn">
+    Shop Now
+  </Link>
 
-          <button className="explore-btn">
-            Explore Products
-          </button>
-          
-        </div>
+  <Link to="/products" className="explore-btn">
+    Explore Products
+  </Link>
+</div>
  <img 
             src="https://img.freepik.com/free-vector/online-shopping-concept-illustration_114360-1084.jpg"
             alt="Online Shopping"

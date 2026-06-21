@@ -1,30 +1,32 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import "../styles/ProductCard.css";
+import "../styles/FeaturedProducts.css";
+
 import { toast } from "react-toastify";
 function FeaturedProducts(){
 
 const products=[
 {
-name:"iPhone 16",
+title:"iPhone 16",
 price:"₹89,999",
 image:"https://images.unsplash.com/photo-1592899677977-9c10ca588bbd"
 },
 
 {
-name:"Laptop",
+title:"Laptop",
 price:"₹59,999",
 image:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
 },
 
 {
-name:"Smart Watch",
+title:"Smart Watch",
 price:"₹5,999",
 image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30"
 },
 
 {
-name:"Shoes",
+title:"Shoes",
 price:"₹2,499",
 image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff"
 }
@@ -46,14 +48,17 @@ Featured Products
 <div className="product-grid">
 
 {
-products.map((item,index)=>(
-
-<ProductCard
-key={index}
-image={item.image}
-name={item.name}
-price={item.price}
-/>
+products.map((item, index) => (
+  <ProductCard
+    key={index}
+    product={{
+      id: index,
+      title: item.title,   // ✅ FIXED
+      price: item.price,
+      image: item.image,
+      rating: 4.5,
+    }}
+  />
 
 ))
 }

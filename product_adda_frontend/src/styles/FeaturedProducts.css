@@ -1,0 +1,23 @@
+/* Featured Products Section */
+
+
+.section-title {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 700;
+  color: #003b95;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+ 
+
+  .section-title {
+    font-size: 38px;
+  }
+
+  
+}

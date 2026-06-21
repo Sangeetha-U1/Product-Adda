@@ -48,7 +48,6 @@
     margin-bottom: 35px;
 }
 
-/* Buttons */
 .hero-buttons {
     display: flex;
     gap: 20px;
@@ -58,16 +57,20 @@
 .explore-btn {
     padding: 15px 35px;
     border-radius: 35px;
-    border: none;
     font-size: 17px;
     font-weight: 600;
     cursor: pointer;
     transition: 0.4s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .shop-btn {
     background: #003B95;
     color: white;
+    border: 2px solid white;
 }
 
 .explore-btn {
@@ -83,14 +86,11 @@
     transform: translateY(-5px);
     border-color: transparent;
     box-shadow: 0 10px 25px rgba(255, 80, 80, 0.5);
+
 }
 
 
-    .shop-btn,
-    .explore-btn {
-        width: 220px;
-        padding: 14px 20px;
-    }
+    
     /* Hide mobile image in desktop */
 .mobile-hero-image {
     display: none;
@@ -132,11 +132,15 @@
     }
 
     .shop-btn {
+            cursor: pointer;
+
         width: 220px;
     }
 
     .explore-btn {
         width: 220px;
+            cursor: pointer;
+
         color: #003B95;
         border-color: #003B95;
     }
