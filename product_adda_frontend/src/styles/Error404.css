@@ -1,0 +1,25 @@
+.error-page{
+  min-height:80vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.error-page h1{
+  font-size:120px;
+  color:#e84545;
+}
+
+.error-page h2{
+  margin-bottom:10px;
+}
+
+.home-btn{
+  margin-top:20px;
+  padding:12px 25px;
+  background:#e84545;
+  color:white;
+  text-decoration:none;
+  border-radius:8px;
+}

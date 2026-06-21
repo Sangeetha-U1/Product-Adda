@@ -22,6 +22,8 @@ import OrderSuccess from "./pages/OrderSuccess";
 
 import Dashboard from "./pages/Dashboard";
 
+import VendorDashboard from "./pages/VendorDashboard";
+import Error404 from "./pages/Error404";
 
 function App() {
   return (
@@ -51,6 +53,11 @@ function App() {
   path="/dashboard"
   element={<Dashboard />}
 />
+<Route
+  path="/vendor-dashboard"
+  element={<VendorDashboard />}
+/>
+<Route path="*" element={<Error404 />} />
       </Routes>
 
       {/* TOAST NOTIFICATION */}

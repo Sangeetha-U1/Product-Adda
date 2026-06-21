@@ -5,8 +5,9 @@ import {
   FaMapMarkerAlt,
   FaUser,
 } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 function ProfileSection() {
+  const navigate = useNavigate();
   return (
     <div className="dashboard-section">
 
@@ -62,10 +63,29 @@ function ProfileSection() {
             <h4>Hyderabad, Telangana, India</h4>
           </div>
         </div>
-
       </div>
+<div className="vendor-panel-section">
+
+  <h3>Seller Account</h3>
+
+  <p>
+    Want to manage products, orders and
+    business details? Open Vendor Dashboard.
+  </p>
+
+  <button
+    className="vendor-panel-btn"
+    onClick={() =>
+      navigate("/vendor-dashboard")
+    }
+  >
+    Open Vendor Dashboard
+  </button>
+
+</div>
 
     </div>
+    
   );
 }
 
