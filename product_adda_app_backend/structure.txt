@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 0000022B 7478:274D
+Volume serial number is 00000242 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -28,7 +28,6 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       
 |   |           +---controller
 |   |           |   |   HealthController.java
-|   |           |   |   UserController.java
 |   |           |   |   
 |   |           |   +---auth
 |   |           |   |       AuthController.java
@@ -45,9 +44,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       ResendVerificationEmailController.java
 |   |           |   |       VerifyEmailController.java
 |   |           |   |       
-|   |           |   \---user
-|   |           |           AddressController.java
-|   |           |           WishlistController.java
+|   |           |   +---user
+|   |           |   |       AddressController.java
+|   |           |   |       WishlistController.java
+|   |           |   |       
+|   |           |   \---vendor
+|   |           |           VendorController.java
 |   |           |           
 |   |           +---dto
 |   |           |   |   ApiErrorResponseDto.java
@@ -90,10 +92,14 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       VerifyEmailRequestDto.java
 |   |           |   |       VerifyEmailResponseDto.java
 |   |           |   |       
-|   |           |   \---user
-|   |           |           AddressRequestDto.java
-|   |           |           AddressResponseDto.java
-|   |           |           WishlistResponseDto.java
+|   |           |   +---user
+|   |           |   |       AddressRequestDto.java
+|   |           |   |       AddressResponseDto.java
+|   |           |   |       WishlistResponseDto.java
+|   |           |   |       
+|   |           |   \---vendor
+|   |           |           VendorProfileResponseDto.java
+|   |           |           VendorRegisterRequestDto.java
 |   |           |           
 |   |           +---entity
 |   |           |       Address.java
@@ -182,9 +188,13 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       ResendVerificationEmailService.java
 |   |           |   |       TokenProvider.java
 |   |           |   |       
-|   |           |   \---user
-|   |           |           AddressService.java
-|   |           |           WishlistService.java
+|   |           |   +---user
+|   |           |   |       AddressService.java
+|   |           |   |       WishlistService.java
+|   |           |   |       
+|   |           |   \---vendor
+|   |           |           VendorProfileService.java
+|   |           |           VendorRegisterService.java
 |   |           |           
 |   |           \---util
 |   |                   HashUtil.java
@@ -206,7 +216,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
                     
 
 Folder PATH listing
-Volume serial number is 00000185 7478:274D
+Volume serial number is 00000215 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

@@ -1360,7 +1360,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"rahul.verma@gmail.com\",\r\n    \"password\": \"Customer123\"\r\n}\r\n",
+              "raw": "{\r\n    \"email\": \"vikram.m@gmail.com\",\r\n    \"password\": \"User@123\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1816,7 +1816,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwb29qYS5zaW5naEB5YWhvby5jb20iLCJpYXQiOjE3ODE2Mjk2NjUsImV4cCI6MTc4MTYzMzI2NX0.7zV53oABMDTsqll2NIMiQpOC3t0POxf3DXPaxDfslk5MlhQ5QbwxFnw0BFrPUFnW",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODIwNDg4MjUsImV4cCI6MTc4MjA1MjQyNX0.lKnuDSNM3_pbL7TWfFvojAX3-8vE5Cxczu0a5EB31GEgFh0C1Dtihrf-3O5Pf_XM",
                   "type": "string"
                 }
               ]
@@ -1825,7 +1825,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwb29qYS5zaW5naEB5YWhvby5jb20iLCJpYXQiOjE3ODE2Mjk2NjUsImV4cCI6MTc4MTcxNjA2NX0.ZBMuJK_KOukT5kJXhRKrQReEaBmuSQYkvJh6iRpnNzoJHx70flnyGveuJHt-9XPw\"\r\n}",
+              "raw": "{\r\n    \"refreshToken\": \"019eea63-21dd-7b1d-9e87-375ca63994d9\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1844,7 +1844,98 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"refreshToken\": \"019eea63-21dd-7b1d-9e87-375ca63994d9\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/logout",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 21 Jun 2026 13:43:49 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Logout successful\",\n    \"data\": {\n        \"email\": \"rahul.verma@gmail.com\"\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/auth/forgot-password",
@@ -2186,7 +2277,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{supabase_service_role_api_key_12fp}}",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODIwNDMzMjEsImV4cCI6MTc4MjA0NjkyMX0.Ae-pGRPB2iNGWd_tusFE78a0MXgv5By4VCwDc6hdnIkl_vgW3qBbr2jOyxt7w5pp",
                   "type": "string"
                 }
               ]
@@ -2195,7 +2286,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwb29qYS5zaW5naEB5YWhvby5jb20iLCJpYXQiOjE3ODE2MjYzMzUsImV4cCI6MTc4MTcxMjczNX0.GOjx7OQLQh-WQ2Qgh5wLT4YyfiseFMyUkYV80tZYb4yITXwueP_P5L4T3rOGo3n-\"\r\n}\r\n",
+              "raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODIwNDMzMjIsImV4cCI6MTc4MjEyOTcyMn0.MLvzcqKdbFPxOapNx1TFbAHMY2uPRR6mpPPFMVjqIz2Jx4egTRivl3pljR6YF9Rn\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2292,6 +2383,96 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": false,\n    \"message\": \"Refresh token has been revoked\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+            },
+            {
+              "name": "401 Unauthorized Invalid refresh token",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODIwNDMzMjIsImV4cCI6MTc4MjEyOTcyMn0.MLvzcqKdbFPxOapNx1TFbAHMY2uPRR6mpPPFMVjqIz2Jx4egTRivl3pljR6YF9Rn\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/token/refresh-token",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "token",
+                    "refresh-token"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 21 Jun 2026 13:05:00 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Invalid refresh token\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
             }
           ]
         },
@@ -3004,6 +3185,594 @@
             }
           },
           "response": []
+        }
+      ]
+    },
+    {
+      "name": "vendor",
+      "item": [
+        {
+          "name": "/api/vendors/register",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ2aWtyYW0ubUBnbWFpbC5jb20iLCJpYXQiOjE3ODIwNDk1MTQsImV4cCI6MTc4MjA1MzExNH0.iTXaPuGR9EM3858OYMiR2FNDaidIb5XPmM8AE6EX49GxbLI3Vzib5zrhfJlXt2cy",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"businessName\": \"Apex Retail India Ltd Second Attempt\",\r\n  \"storeName\": \"Apex Digital Hub Two\",\r\n  \"gstNumber\": \"22AAAAA9999A1Z9\",\r\n  \"businessDescription\": \"Attempting to onboard an account that is already a vendor.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/vendors/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vendors",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "401 Unauthorized Authentication required",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/vendors/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "vendors",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "96"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 21 Jun 2026 12:00:31 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Authentication required\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+            },
+            {
+              "name": "500 Internal Server Error Required request body is missing",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"businessName\": \"Failure Corp\",\r\n  \"storeName\": \"Failure Store\",\r\n  \"gstNumber\": \"22AAAAA0000A1Z5\",\r\n  \"businessDescription\": \"Should not work without a valid active session token.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/vendors/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "vendors",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 21 Jun 2026 12:02:17 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Required request body is missing: public org.springframework.http.ResponseEntity<com.productadda.dto.ApiSuccessResponseDto<com.productadda.dto.vendor.VendorProfileResponseDto>> com.productadda.controller.vendor.VendorController.registerVendor(com.productadda.dto.vendor.VendorRegisterRequestDto,java.security.Principal)\",\n    \"error\": {\n        \"code\": 500,\n        \"type\": \"INTERNAL_SERVER_ERROR\"\n    }\n}"
+            },
+            {
+              "name": "403 Forbidden Accounts with CUSTOMER roles cannot be promoted to a vendor.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"businessName\": \"Apex Retail India Ltd\",\r\n  \"storeName\": \"Apex Digital Hub\",\r\n  \"gstNumber\": \"22AAAAA1111A1Z0\",\r\n  \"businessDescription\": \"Premium electronics distributor specializing in verified marketplace items.\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/vendors/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "vendors",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 21 Jun 2026 13:34:11 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Accounts with CUSTOMER roles cannot be promoted to a vendor.\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"businessName\": \"Apex Retail India Ltd\",\r\n  \"storeName\": \"Apex Digital Hub\",\r\n  \"gstNumber\": \"22AAAAA1111A1Z0\",\r\n  \"businessDescription\": \"Premium electronics distributor specializing in verified marketplace items.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/vendors/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "vendors",
+                    "register"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 21 Jun 2026 13:50:52 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Vendor application processed and active role assigned successfully\",\n    \"data\": {\n        \"vendorId\": \"019eea72-ca83-7dd5-a275-35f7412d2779\",\n        \"userId\": \"019ed70e-d8f7-70e8-8293-1ff762bc1b92\",\n        \"businessName\": \"Apex Retail India Ltd\",\n        \"storeName\": \"Apex Digital Hub\",\n        \"gstNumber\": \"22AAAAA1111A1Z0\",\n        \"businessDescription\": \"Premium electronics distributor specializing in verified marketplace items.\",\n        \"isActive\": true\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request User account is already registered as a vendor",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"businessName\": \"Apex Retail India Ltd Second Attempt\",\r\n  \"storeName\": \"Apex Digital Hub Two\",\r\n  \"gstNumber\": \"22AAAAA9999A1Z9\",\r\n  \"businessDescription\": \"Attempting to onboard an account that is already a vendor.\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/vendors/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "vendors",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 21 Jun 2026 13:53:04 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"User account is already registered as a vendor\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/vendors/profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ2aWtyYW0ubUBnbWFpbC5jb20iLCJpYXQiOjE3ODIwNDk1MTQsImV4cCI6MTc4MjA1MzExNH0.iTXaPuGR9EM3858OYMiR2FNDaidIb5XPmM8AE6EX49GxbLI3Vzib5zrhfJlXt2cy",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/vendors/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vendors",
+                "profile"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/vendors/profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "vendors",
+                    "profile"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 21 Jun 2026 13:57:05 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Merchant profile fetched successfully\",\n    \"data\": {\n        \"vendorId\": \"019eea72-ca83-7dd5-a275-35f7412d2779\",\n        \"userId\": \"019ed70e-d8f7-70e8-8293-1ff762bc1b92\",\n        \"businessName\": \"Apex Retail India Ltd\",\n        \"storeName\": \"Apex Digital Hub\",\n        \"gstNumber\": \"22AAAAA1111A1Z0\",\n        \"businessDescription\": \"Premium electronics distributor specializing in verified marketplace items.\",\n        \"isActive\": true\n    }\n}"
+            }
+          ]
         }
       ]
     }

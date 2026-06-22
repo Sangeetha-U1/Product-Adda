@@ -107,22 +107,7 @@ public class AuthServiceRegister {
                 // 2.1 ROLE RESOLUTION
                 // ==========================================
 
-                String requestedRole = request.getRoleName();
-                String roleName;
-
-                if (requestedRole == null || requestedRole.isBlank()) {
-                        roleName = "USER";
-                } else {
-                        requestedRole = requestedRole.toUpperCase();
-
-                        if (requestedRole.equals("ADMIN") || requestedRole.equals("SUPER_ADMIN")) {
-                                throw new ApiException(
-                                                HttpStatus.FORBIDDEN,
-                                                "You are not allowed to assign ADMIN or SUPER_ADMIN roles");
-                        }
-
-                        roleName = requestedRole;
-                }
+                String roleName = "USER";
 
                 Role role = roleRepository.findByRoleName(roleName)
                                 .orElseThrow(() -> new ApiException(

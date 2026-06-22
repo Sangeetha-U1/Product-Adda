@@ -52,8 +52,10 @@ public class RefreshTokenService {
                  * 2. BUSINESS SECTION
                  * ================================================================
                  */
-                String rawRefreshToken = jwtService.generateRefreshToken(user.getEmail());
-                String hashedRefreshToken = tokenService.hashToken(rawRefreshToken);
+                // CHANGED: Use the opaque token service instead of generating a cryptographically signed JWT string
+                TokenProvider.TokenService.TokenResult tokenResult = tokenService.generateToken();
+                String rawRefreshToken = tokenResult.rawToken();
+                String hashedRefreshToken = tokenResult.hashedToken();
 
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
@@ -67,9 +69,9 @@ public class RefreshTokenService {
                                 .fkUser(user)
                                 .tokenHash(hashedRefreshToken)
                                 .expiresAtUtc(jwtService.getRefreshTokenExpiryDate())
-                                .createdAtUtc(nowUtc) // Synchronized structural audit field
-                                .updatedAtUtc(nowUtc) // Synchronized structural audit field
-                                .isActive(true) // Live initialization flag
+                                .createdAtUtc(nowUtc) 
+                                .updatedAtUtc(nowUtc) 
+                                .isActive(true) 
                                 .revokedAtUtc(null)
                                 .build();
 
@@ -104,37 +106,50 @@ public class RefreshTokenService {
                 if (rawRefreshToken == null || rawRefreshToken.isBlank()) {
                         throw new ApiException(
                                         HttpStatus.BAD_REQUEST,
-                                        "Refresh token is required");
+                                        "Refresh token value is missing or empty in the request payload");
                 }
 
                 // ==========================================
-                // 1.2 DATABASE LOOKUP VALIDATION
+                // 1.2 SIGNATURE VALIDATION
                 // ==========================================
-                if (!jwtService.isTokenValid(rawRefreshToken)) {
-                        throw new ApiException(
-                                        HttpStatus.UNAUTHORIZED,
-                                        "Invalid refresh token signature");
-                }
+                // REMOVED: jwtService.isTokenValid() validation block has been omitted here 
+                // because opaque tokens are random database strings, not cryptographic JWT tokens.
 
+                // ==========================================
+                // 1.3 DATABASE RECORD LOOKUP
+                // ==========================================
                 String tokenHash = tokenService.hashToken(rawRefreshToken);
 
                 RefreshToken refreshToken = refreshTokenRepository
                                 .findByTokenHash(tokenHash)
                                 .orElseThrow(() -> new ApiException(
                                                 HttpStatus.UNAUTHORIZED,
-                                                "Invalid refresh token"));
+                                                "No active session found matching this refresh token hash. The token may not be stored in the database."));
 
-                if (refreshToken.getRevokedAtUtc() != null || !Boolean.TRUE.equals(refreshToken.getIsActive())) {
+                // ==========================================
+                // 1.4 REVOCATION STATUS VALIDATION
+                // ==========================================
+                if (refreshToken.getRevokedAtUtc() != null) {
                         throw new ApiException(
                                         HttpStatus.UNAUTHORIZED,
-                                        "Refresh token has been revoked");
+                                        "Refresh token is invalid because it was explicitly revoked at: "
+                                                        + refreshToken.getRevokedAtUtc());
                 }
 
-                // CRITICAL FIX: Forces time validation evaluation exclusively against UTC
+                if (!Boolean.TRUE.equals(refreshToken.getIsActive())) {
+                        throw new ApiException(
+                                        HttpStatus.UNAUTHORIZED,
+                                        "Refresh token is invalid because its operational status is set to inactive");
+                }
+
+                // ==========================================
+                // 1.5 TEMPORAL EXPIRATION VALIDATION
+                // ==========================================
                 if (refreshToken.getExpiresAtUtc().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
                         throw new ApiException(
                                         HttpStatus.UNAUTHORIZED,
-                                        "Refresh token has expired");
+                                        "Refresh token session has expired temporally at: "
+                                                        + refreshToken.getExpiresAtUtc() + " UTC");
                 }
 
                 /*
@@ -162,8 +177,8 @@ public class RefreshTokenService {
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
                 refreshToken.setRevokedAtUtc(nowUtc);
-                refreshToken.setUpdatedAtUtc(nowUtc); // Track structural entity mutations
-                refreshToken.setIsActive(false); // Drop token status from active scans
+                refreshToken.setUpdatedAtUtc(nowUtc); 
+                refreshToken.setIsActive(false); 
 
                 /*
                  * ================================================================

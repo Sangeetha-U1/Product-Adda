@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.productadda.entity.User;
 import com.productadda.entity.UserRole;
+import com.productadda.entity.Role;
 
 public interface UserRoleRepository
         extends JpaRepository<UserRole, UUID> {
 
-    List<UserRole> findByFkUser(User user);
+    boolean existsByFkUserAndFkRole(User fkUser, Role fkRole);
 
+    boolean existsByFkUserAndFkRole_RoleName(User fkUser, String roleName);
+
+    List<UserRole> findByFkUser(User user);
 }

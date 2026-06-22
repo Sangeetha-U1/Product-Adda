@@ -25,6 +25,9 @@ public class PublicRoutes {
             "/api/token/reset-password",
             "/api/token/refresh-token",
 
+            // Vendor
+            
+
             // Admin Management Lifecycle
             "/api/admin/auth/register",
             "/api/admin/auth/verify-email",

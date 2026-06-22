@@ -47,7 +47,7 @@ public class AuthServiceLogin {
      * LOGIN USER
      * ================================================================
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public LoginResponseDto login(LoginRequestDto request) {
 
         /*
