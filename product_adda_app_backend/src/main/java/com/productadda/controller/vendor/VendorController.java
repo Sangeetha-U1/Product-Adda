@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,36 +25,53 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VendorController {
 
-    private final VendorRegisterService vendorRegisterService;
-    private final VendorProfileService vendorProfileService;
+        private final VendorRegisterService vendorRegisterService;
+        private final VendorProfileService vendorProfileService;
 
-    @PostMapping("/register")
-    public ResponseEntity<ApiSuccessResponseDto<VendorProfileResponseDto>> registerVendor(
-            @Valid @RequestBody VendorRegisterRequestDto request, Principal principal) {
+        @PostMapping("/register")
+        public ResponseEntity<ApiSuccessResponseDto<VendorProfileResponseDto>> registerVendor(
+                        @Valid @RequestBody VendorRegisterRequestDto request, Principal principal) {
 
-        VendorProfileResponseDto responseDataInstance = vendorRegisterService.registerVendor(request,
-                principal.getName());
+                VendorProfileResponseDto responseDataInstance = vendorRegisterService.registerVendor(request,
+                                principal.getName());
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ApiSuccessResponseDto.<VendorProfileResponseDto>builder()
-                        .success(true)
-                        .message("Vendor application processed and active role assigned successfully")
-                        .data(responseDataInstance)
-                        .build());
-    }
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<VendorProfileResponseDto>builder()
+                                                .success(true)
+                                                .message("Vendor application processed and active role assigned successfully")
+                                                .data(responseDataInstance)
+                                                .build());
+        }
 
-    @GetMapping("/profile")
-    public ResponseEntity<ApiSuccessResponseDto<VendorProfileResponseDto>> getVendorProfile(Principal principal) {
+        @GetMapping("/profile")
+        public ResponseEntity<ApiSuccessResponseDto<VendorProfileResponseDto>> getVendorProfile(Principal principal) {
 
-        VendorProfileResponseDto responseDataInstance = vendorProfileService.getVendorProfile(principal.getName());
+                VendorProfileResponseDto responseDataInstance = vendorProfileService
+                                .getVendorProfile(principal.getName());
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ApiSuccessResponseDto.<VendorProfileResponseDto>builder()
-                        .success(true)
-                        .message("Merchant profile fetched successfully")
-                        .data(responseDataInstance)
-                        .build());
-    }
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<VendorProfileResponseDto>builder()
+                                                .success(true)
+                                                .message("Merchant profile fetched successfully")
+                                                .data(responseDataInstance)
+                                                .build());
+        }
+
+        @PutMapping("/profile")
+        public ResponseEntity<ApiSuccessResponseDto<VendorProfileResponseDto>> updateVendorProfile(
+                        @Valid @RequestBody VendorRegisterRequestDto request, Principal principal) {
+
+                VendorProfileResponseDto responseDataInstance = vendorProfileService.updateVendorProfile(request,
+                                principal.getName());
+
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<VendorProfileResponseDto>builder()
+                                                .success(true)
+                                                .message("Merchant profile updated successfully")
+                                                .data(responseDataInstance)
+                                                .build());
+        }
 }

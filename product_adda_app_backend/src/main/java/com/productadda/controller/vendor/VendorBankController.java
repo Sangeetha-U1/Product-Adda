@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,37 +24,54 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VendorBankController {
 
-    private final VendorBankService vendorBankService;
+        private final VendorBankService vendorBankService;
 
-    @PostMapping
-    public ResponseEntity<ApiSuccessResponseDto<BankAccountResponseDto>> registerBankAccount(
-            @Valid @RequestBody BankAccountRequestDto requestDto, Principal principal) {
+        @PostMapping
+        public ResponseEntity<ApiSuccessResponseDto<BankAccountResponseDto>> registerBankAccount(
+                        @Valid @RequestBody BankAccountRequestDto requestDto, Principal principal) {
 
-        BankAccountResponseDto responseDataInstance = vendorBankService.registerBankAccount(
-                requestDto, 
-                principal.getName()
-        );
+                BankAccountResponseDto responseDataInstance = vendorBankService.registerBankAccount(
+                                requestDto,
+                                principal.getName());
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ApiSuccessResponseDto.<BankAccountResponseDto>builder()
-                        .success(true)
-                        .message("Commercial settlement bank account linked completely")
-                        .data(responseDataInstance)
-                        .build());
-    }
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<BankAccountResponseDto>builder()
+                                                .success(true)
+                                                .message("Commercial settlement bank account linked completely")
+                                                .data(responseDataInstance)
+                                                .build());
+        }
 
-    @GetMapping
-    public ResponseEntity<ApiSuccessResponseDto<BankAccountResponseDto>> getBankAccountDetails(Principal principal) {
+        @GetMapping
+        public ResponseEntity<ApiSuccessResponseDto<BankAccountResponseDto>> getBankAccountDetails(
+                        Principal principal) {
 
-        BankAccountResponseDto responseDataInstance = vendorBankService.getBankAccountDetails(principal.getName());
+                BankAccountResponseDto responseDataInstance = vendorBankService
+                                .getBankAccountDetails(principal.getName());
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ApiSuccessResponseDto.<BankAccountResponseDto>builder()
-                        .success(true)
-                        .message("Secure data verification masked account lookup complete")
-                        .data(responseDataInstance)
-                        .build());
-    }
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<BankAccountResponseDto>builder()
+                                                .success(true)
+                                                .message("Secure data verification masked account lookup complete")
+                                                .data(responseDataInstance)
+                                                .build());
+        }
+
+        @PutMapping
+        public ResponseEntity<ApiSuccessResponseDto<BankAccountResponseDto>> updateBankAccountDetails(
+                        @Valid @RequestBody BankAccountRequestDto requestDto, Principal principal) {
+
+                BankAccountResponseDto responseDataInstance = vendorBankService.updateBankAccountDetails(requestDto,
+                                principal.getName());
+
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<BankAccountResponseDto>builder()
+                                                .success(true)
+                                                .message("Commercial settlement details overhauled completely")
+                                                .data(responseDataInstance)
+                                                .build());
+        }
 }

@@ -136,4 +136,58 @@ public class VendorBankService {
                                 .isActive(details.isActive())
                                 .build();
         }
+
+        @Transactional
+        public BankAccountResponseDto updateBankAccountDetails(BankAccountRequestDto requestDto,
+                        String currentUserEmail) {
+                /*
+                 * ================================================================
+                 * 1. SECURE PRINCIPAL LOOKUP RESOLUTION
+                 * ================================================================
+                 */
+                User userInstance = userRepository.findByEmail(currentUserEmail)
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
+                                                "Authenticated user profile not found"));
+
+                Vendor targetedVendorProfile = vendorRepository.findByFkUser(userInstance)
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
+                                                "No associated vendor profile found for this user account"));
+
+                VendorBankDetail bankDetail = bankDetailRepository.findByFkVendor(targetedVendorProfile)
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
+                                                "No pre-existing settlement record discovered to overwrite"));
+
+                /*
+                 * ================================================================
+                 * 2. ROUTING STRUCTURAL VALIDATIONS
+                 * ================================================================
+                 */
+                if (!IFSC_PATTERN.matcher(requestDto.getIfscCode()).matches()) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid IFSC code routing signature format");
+                }
+
+                if (requestDto.getAccountNumber().length() < 9 || requestDto.getAccountNumber().length() > 18) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Account number layout violation: must span between 9 and 18 positions");
+                }
+
+                /*
+                 * ================================================================
+                 * 3. RISK CONTAINMENT OVERWRITE SEQUENCE
+                 * ================================================================
+                 */
+                bankDetail.setAccountHolderName(requestDto.getAccountHolderName());
+                bankDetail.setBankName(requestDto.getBankName());
+                bankDetail.setAccountNumber(requestDto.getAccountNumber());
+                bankDetail.setIfscCode(requestDto.getIfscCode());
+                bankDetail.setBranchName(requestDto.getBranchName());
+
+                // RISK PROTOCOL: Reset confirmation flags back to false to trigger
+                // re-verification steps
+                bankDetail.setActive(false);
+
+                VendorBankDetail updatedBankDetail = bankDetailRepository.save(bankDetail);
+
+                return mapToResponseDto(updatedBankDetail);
+        }
 }

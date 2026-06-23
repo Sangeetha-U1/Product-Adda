@@ -16,4 +16,6 @@ public interface VendorRepository
     boolean existsByGstNumber(String gstNumber);
 
     Optional<Vendor> findByFkUser(User fkUser);
+
+    boolean existsByBusinessNameAndPkVendorIdNot(String businessName, UUID vendorId);
 }

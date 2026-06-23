@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.productadda.dto.vendor.VendorProfileResponseDto;
+import com.productadda.dto.vendor.VendorRegisterRequestDto;
 import com.productadda.entity.User;
 import com.productadda.entity.Vendor;
 import com.productadda.exception.ApiException;
@@ -62,6 +63,57 @@ public class VendorProfileService {
                                 .gstNumber(targetedVendorProfile.getGstNumber())
                                 .businessDescription(targetedVendorProfile.getBusinessDescription())
                                 .isActive(targetedVendorProfile.getIsActive())
+                                .build();
+        }
+
+        @Transactional
+        public VendorProfileResponseDto updateVendorProfile(VendorRegisterRequestDto requestDto,
+                        String currentUserEmail) {
+                /*
+                 * ================================================================
+                 * 1. IDENTIFICATION LOOKUP BOUNDARIES
+                 * ================================================================
+                 */
+                User userInstance = userRepository.findByEmail(currentUserEmail)
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
+                                                "Authenticated user profile not found"));
+
+                Vendor vendor = vendorRepository.findByFkUser(userInstance)
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
+                                                "No associated vendor profile found for this user account"));
+
+                /*
+                 * ================================================================
+                 * 2. CONFLICT GUARD MECHANISMS
+                 * ================================================================
+                 */
+                if (vendorRepository.existsByBusinessNameAndPkVendorIdNot(requestDto.getBusinessName(),
+                                vendor.getPkVendorId())) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Business name is already registered by another vendor listing");
+                }
+
+                /*
+                 * ================================================================
+                 * 3. STATE MUTATION & PERSISTENCE
+                 * ================================================================
+                 */
+                vendor.setBusinessName(requestDto.getBusinessName());
+                vendor.setStoreName(requestDto.getStoreName());
+                vendor.setBusinessDescription(requestDto.getBusinessDescription());
+                // NOTE: Audit column updated_at_utc will trigger automatically via ON UPDATE
+                // CURRENT_TIMESTAMP in DB
+
+                Vendor updatedVendor = vendorRepository.save(vendor);
+
+                return VendorProfileResponseDto.builder()
+                                .vendorId(updatedVendor.getPkVendorId())
+                                .userId(userInstance.getPkUserId())
+                                .businessName(updatedVendor.getBusinessName())
+                                .storeName(updatedVendor.getStoreName())
+                                .gstNumber(updatedVendor.getGstNumber()) // Unmodified as per audit constraints
+                                .businessDescription(updatedVendor.getBusinessDescription())
+                                .isActive(updatedVendor.getIsActive())
                                 .build();
         }
 }
