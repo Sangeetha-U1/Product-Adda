@@ -25,7 +25,7 @@ admin@productadda.com      --> Admin@123
 rajesh@techsolutions.com   --> Vendor@123
 anita@fashionhub.com       --> Vendor@123
 
-rahul.verma@gmail.com      --> Customer@123
+rahul.verma@gmail.com      --> Customer@123 to new Customer123
 pooja.singh@yahoo.com      --> Customer@123
 
 vikram.m@gmail.com         --> User@123
