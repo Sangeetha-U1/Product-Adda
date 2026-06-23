@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 00000242 7478:274D
+Volume serial number is 00000282 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -49,6 +49,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       WishlistController.java
 |   |           |   |       
 |   |           |   \---vendor
+|   |           |           VendorBankController.java
 |   |           |           VendorController.java
 |   |           |           
 |   |           +---dto
@@ -98,6 +99,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       WishlistResponseDto.java
 |   |           |   |       
 |   |           |   \---vendor
+|   |           |           BankAccountRequestDto.java
+|   |           |           BankAccountResponseDto.java
 |   |           |           VendorProfileResponseDto.java
 |   |           |           VendorRegisterRequestDto.java
 |   |           |           
@@ -122,6 +125,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       User.java
 |   |           |       UserRole.java
 |   |           |       Vendor.java
+|   |           |       VendorBankDetail.java
 |   |           |       Wishlist.java
 |   |           |       WishlistItem.java
 |   |           |       
@@ -148,6 +152,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       RoleRepository.java
 |   |           |       UserRepository.java
 |   |           |       UserRoleRepository.java
+|   |           |       VendorBankDetailRepository.java
 |   |           |       VendorRepository.java
 |   |           |       WishlistItemRepository.java
 |   |           |       WishlistRepository.java
@@ -193,6 +198,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       WishlistService.java
 |   |           |   |       
 |   |           |   \---vendor
+|   |           |           VendorBankService.java
 |   |           |           VendorProfileService.java
 |   |           |           VendorRegisterService.java
 |   |           |           
@@ -216,7 +222,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
                     
 
 Folder PATH listing
-Volume serial number is 00000215 7478:274D
+Volume serial number is 00000228 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

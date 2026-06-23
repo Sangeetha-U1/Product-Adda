@@ -1101,7 +1101,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"firstName\": \"sharukh\",\r\n  \"lastName\": \"khan\",\r\n  \"email\": \"tiwovel132@lidugw.com\",\r\n  \"mobile\": \"9999999997\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"CUSTOMER\"\r\n}",
+              "raw": "{\r\n  \"firstName\": \"Donald\",\r\n  \"lastName\": \"trump\",\r\n  \"email\": \"jigob58138@fishnone.com\",\r\n  \"mobile\": \"9999999996\",\r\n  \"password\": \"Test123\",\r\n  \"roleName\": \"USER\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1816,7 +1816,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODIwNDg4MjUsImV4cCI6MTc4MjA1MjQyNX0.lKnuDSNM3_pbL7TWfFvojAX3-8vE5Cxczu0a5EB31GEgFh0C1Dtihrf-3O5Pf_XM",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsImlhdCI6MTc4MjIxNzkzMSwiZXhwIjoxNzgyMjIxNTMxfQ.X4t-UuNks_1VcDQNb2GIF9218U1ouc4SsLmTfY4OeHPCbNLEVlz5GaZH0sCXlked",
                   "type": "string"
                 }
               ]
@@ -1825,7 +1825,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\": \"019eea63-21dd-7b1d-9e87-375ca63994d9\"\r\n}",
+              "raw": "{\r\n    \"refreshToken\": \"019ef477-7a25-758e-81a6-b79c8bf3a17b\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2286,7 +2286,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODIwNDMzMjIsImV4cCI6MTc4MjEyOTcyMn0.MLvzcqKdbFPxOapNx1TFbAHMY2uPRR6mpPPFMVjqIz2Jx4egTRivl3pljR6YF9Rn\"\r\n}\r\n",
+              "raw": "{\r\n    \"refreshToken\" : \"019ef46e-af4b-7229-b563-ce5d841d1ecc\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2783,7 +2783,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"token\": \"019ecfc2-b7cc-7024-b424-d10cee636407\"\r\n}",
+              "raw": "{\r\n    \"token\": \"019ef46d-9e82-71d6-a051-3cb648904b2f\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -3771,6 +3771,434 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Merchant profile fetched successfully\",\n    \"data\": {\n        \"vendorId\": \"019eea72-ca83-7dd5-a275-35f7412d2779\",\n        \"userId\": \"019ed70e-d8f7-70e8-8293-1ff762bc1b92\",\n        \"businessName\": \"Apex Retail India Ltd\",\n        \"storeName\": \"Apex Digital Hub\",\n        \"gstNumber\": \"22AAAAA1111A1Z0\",\n        \"businessDescription\": \"Premium electronics distributor specializing in verified marketplace items.\",\n        \"isActive\": true\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/vendors/bank-account",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ2aWtyYW0ubUBnbWFpbC5jb20iLCJpYXQiOjE3ODIyMTgwMzAsImV4cCI6MTc4MjIyMTYzMH0.j80AOEII5fK_w4wozGccWz_L42cu7LdDWrBlL7Tiegh8RfBdBIYS9GZQeWqV96fq",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"accountHolderName\": \"Jane Smith\",\r\n  \"bankName\": \"Axis Bank\",\r\n  \"accountNumber\": \"912010023456789\",\r\n  \"ifscCode\": \"UTIB0000054\",\r\n  \"branchName\": \"Kondapur\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/vendors/bank-account",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "vendors",
+                "bank-account"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "404 Not Found No associated vendor profile found for this user account",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"accountHolderName\": \"John Doe\",\r\n  \"bankName\": \"State Bank of India\",\r\n  \"accountNumber\": \"30123456789\",\r\n  \"ifscCode\": \"SBIN0001234\",\r\n  \"branchName\": \"Bearer token of a clean user account that does not have an associated profile in the vendors table, should not work\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/vendors/bank-account",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "vendors",
+                    "bank-account"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 23 Jun 2026 12:24:20 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"No associated vendor profile found for this user account\",\n    \"error\": {\n        \"code\": 404,\n        \"type\": \"NOT_FOUND\"\n    }\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"accountHolderName\": \"Jane Smith\",\r\n  \"bankName\": \"HDFC Bank Ltd\",\r\n  \"accountNumber\": \"50100234567891\",\r\n  \"ifscCode\": \"HDFC0000123\",\r\n  \"branchName\": \"Gachibowli Tech Park\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/vendors/bank-account",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "vendors",
+                    "bank-account"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 23 Jun 2026 12:37:44 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Commercial settlement bank account linked completely\",\n    \"data\": {\n        \"vendorBankDetailId\": \"019ef47c-8dc1-7605-8ccc-a6409fb14f2b\",\n        \"vendorId\": \"019eea72-ca83-7dd5-a275-35f7412d2779\",\n        \"accountHolderName\": \"Jane Smith\",\n        \"bankName\": \"HDFC Bank Ltd\",\n        \"maskedAccountNumber\": \"XXXXXXXXXX7891\",\n        \"ifscCode\": \"HDFC0000123\",\n        \"branchName\": \"Gachibowli Tech Park\",\n        \"isActive\": true\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request Account holder name is required",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"accountHolderName\": \"\",\r\n  \"bankName\": \"ICICI Bank\",\r\n  \"accountNumber\": \"12345\",\r\n  \"ifscCode\": \"Missing account holder name, malformed IFSC code lowercase check, and short account length digits)\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/vendors/bank-account",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "vendors",
+                    "bank-account"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 23 Jun 2026 12:46:29 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Account holder name is required\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/vendors/bank-account",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ2aWtyYW0ubUBnbWFpbC5jb20iLCJpYXQiOjE3ODIyMTgwMzAsImV4cCI6MTc4MjIyMTYzMH0.j80AOEII5fK_w4wozGccWz_L42cu7LdDWrBlL7Tiegh8RfBdBIYS9GZQeWqV96fq",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/vendors/bank-account",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "vendors",
+                "bank-account"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/api/vendors/bank-account",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "vendors",
+                    "bank-account"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 23 Jun 2026 12:50:05 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Secure data verification masked account lookup complete\",\n    \"data\": {\n        \"vendorBankDetailId\": \"019ef47c-8dc1-7605-8ccc-a6409fb14f2b\",\n        \"vendorId\": \"019eea72-ca83-7dd5-a275-35f7412d2779\",\n        \"accountHolderName\": \"Jane Smith\",\n        \"bankName\": \"HDFC Bank Ltd\",\n        \"maskedAccountNumber\": \"XXXXXXXXXX7891\",\n        \"ifscCode\": \"HDFC0000123\",\n        \"branchName\": \"Gachibowli Tech Park\",\n        \"isActive\": true\n    }\n}"
             }
           ]
         }
