@@ -1,8 +1,7 @@
 function Card({ title, description }) {
   return (
-    <div className="card shadow p-3">
-      <h4>{title}</h4>
-
+    <div className="card p-3">
+      <h3>{title}</h3>
       <p>{description}</p>
     </div>
   );

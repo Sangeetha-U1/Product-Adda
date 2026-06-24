@@ -6,25 +6,26 @@ import Footer from "./components/layout/Footer";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Categories from "./pages/Categories";
-import Cart from "./pages/Cart";
-import Contact from "./pages/Contact";
+import CategoryDetails from "./pages/CategoryDetails";
 
 function App() {
   return (
     <BrowserRouter>
-
       <Navbar />
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/categories" element={<Categories />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/contact" element={<Contact />} />
+
+        {/* Week 4 Day 4 */}
+        <Route
+          path="/categories/:name"
+          element={<CategoryDetails />}
+        />
       </Routes>
 
       <Footer />
-
     </BrowserRouter>
   );
 }
