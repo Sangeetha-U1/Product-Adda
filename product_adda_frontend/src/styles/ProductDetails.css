@@ -15,14 +15,27 @@
 
 .image-section {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .image-section img {
   width: 100%;
-  max-width: 450px;
-  border-radius: 10px;
+  max-width: 500px;
+  height: 500px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
 }
 
+.image-section img:hover {
+  transform: scale(1.02);
+}
 .info-section {
   flex: 1;
 }
