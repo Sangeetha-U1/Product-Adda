@@ -32,7 +32,20 @@ public class OrderHistoryService {
     @Transactional(readOnly = true)
     public List<OrderHistoryResponseDto> getMyOrderHistory() {
 
-        // 1. Context Authentication Extraction
+        /*
+         * ================================================================
+         * 1. VALIDATION SECTION
+         * ================================================================
+         */
+
+        // ==========================================
+        // 1.1 REQUEST VALIDATION
+        // ==========================================
+        // Note: Parameterless methodology tracking. No request variables to assert.
+
+        // ==========================================
+        // 1.2 CONTEXT AUTHENTICATION
+        // ==========================================
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
@@ -42,17 +55,34 @@ public class OrderHistoryService {
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
             email = userDetails.getUsername();
         } else {
-            email = authentication.getPrincipal().toString();
+            email = authentication.getName();
         }
 
-        // 2. Strict User Isolation Verification
+        // ==========================================
+        // 1.3 DATABASE LOOKUP VALIDATION
+        // ==========================================
         User currentUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user no longer exists"));
 
-        // 3. Chronological Order Fetching
+        /*
+         * ================================================================
+         * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+         * ================================================================
+         */
         List<Order> userOrders = orderRepository.findByFkUserAndIsActiveTrueOrderByCreatedAtUtcDesc(currentUser);
 
-        // 4. Data Transformation Pipeline
+        /*
+         * ================================================================
+         * 3. DB SAVING SECTION
+         * Note: Read-only query execution profile context.
+         * ================================================================
+         */
+
+        /*
+         * ================================================================
+         * 4. RESPONSE MAPPING
+         * ================================================================
+         */
         return userOrders.stream().map(order -> {
 
             List<OrderItemSummaryDto> itemSummaries = orderItemRepository.findByFkOrderAndIsActiveTrue(order)

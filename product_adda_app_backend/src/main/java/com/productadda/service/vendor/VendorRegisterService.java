@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,59 +33,69 @@ public class VendorRegisterService {
     private final VendorRepository vendorRepository;
     private final UuidUtil uuidUtil;
 
+    /*
+     * ================================================================
+     * REGISTER VENDOR
+     * Description: Processes merchant applications, updates user authority sets,
+     * and links a new merchant profile with unified temporal tracking points.
+     * ================================================================
+     */
     @Transactional
-    public VendorProfileResponseDto registerVendor(VendorRegisterRequestDto request, String currentUserEmail) {
+    public VendorProfileResponseDto registerVendor(VendorRegisterRequestDto request) {
 
         /*
          * ================================================================
          * 1. VALIDATION SECTION
-         * Description: Manually inspects string constraints and verifies
-         * unique business database dependencies.
          * ================================================================
          */
 
         // ==========================================
         // 1.1 REQUEST INPUT VALIDATION
         // ==========================================
+        if (request == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Registration data request body cannot be null");
+        }
         if (request.getBusinessName() == null || request.getBusinessName().trim().isEmpty()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Business name is required");
         }
-
         if (request.getStoreName() == null || request.getStoreName().trim().isEmpty()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Store name is required");
         }
-
         if (request.getGstNumber() == null || request.getGstNumber().trim().isEmpty()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "GST number is required");
         }
-
         if (request.getBusinessDescription() == null || request.getBusinessDescription().trim().isEmpty()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Business description is required");
         }
 
         // ==========================================
-        // 1.2 PRINCIPAL RESOLUTION AND VALIDATION
+        // 1.2 CONTEXT AUTHENTICATION
+        // ==========================================
+        if (SecurityContextHolder.getContext().getAuthentication() == null ||
+                SecurityContextHolder.getContext().getAuthentication().getName() == null ||
+                SecurityContextHolder.getContext().getAuthentication().getName().trim().isEmpty()) {
+            throw new ApiException(HttpStatus.UNAUTHORIZED, "Principal system execution identity missing");
+        }
+        String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // ==========================================
+        // 1.3 DATABASE LOOKUP VALIDATION
         // ==========================================
         User userInstance = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user profile not found"));
 
-        // NEW EXPLICIT BUSINESS ROLE VALIDATIONS:
-        boolean hasUserRole = userRoleRepository.existsByFkUserAndFkRole_RoleName(userInstance, "USER");
         boolean hasCustomerRole = userRoleRepository.existsByFkUserAndFkRole_RoleName(userInstance, "CUSTOMER");
-
         if (hasCustomerRole) {
             throw new ApiException(HttpStatus.FORBIDDEN,
                     "Accounts with CUSTOMER roles cannot be promoted to a vendor.");
         }
 
+        boolean hasUserRole = userRoleRepository.existsByFkUserAndFkRole_RoleName(userInstance, "USER");
         if (!hasUserRole) {
             throw new ApiException(HttpStatus.FORBIDDEN,
                     "Only standard base USER accounts are authorized to register as a vendor.");
         }
 
-        // ==========================================
-        // 1.3 DATABASE DUPLICATION LOOKUPS
-        // ==========================================
         if (vendorRepository.existsByFkUser(userInstance)) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "User account is already registered as a vendor");
         }
@@ -95,27 +106,15 @@ public class VendorRegisterService {
 
         /*
          * ================================================================
-         * 2. BUSINESS SECTION
-         * Description: Resolves security authorizations and instantiates
-         * atomic entities with unified temporal fields.
+         * 2. BUSINESS RULES & PROCESSING / WORKFLOW
          * ================================================================
          */
-
-        // ==========================================
-        // 2.1 ROLE RESOLUTION
-        // ==========================================
-        String targetedRoleName = "VENDOR";
-        Role vendorRoleInstance = roleRepository.findByRoleName(targetedRoleName)
+        Role vendorRoleInstance = roleRepository.findByRoleName("VENDOR")
                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                         "System configuration error: VENDOR role not instantiated"));
 
-        // Single explicit timestamp instance declared right before data persistence
-        // sequences
         LocalDateTime synchronousNowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
-        // ==========================================
-        // 2.2 VENDOR DATA INSTANTIATION
-        // ==========================================
         Vendor dynamicVendor = Vendor.builder()
                 .pkVendorId(uuidUtil.generateUuidV7())
                 .fkUser(userInstance)
@@ -128,9 +127,6 @@ public class VendorRegisterService {
                 .updatedAtUtc(synchronousNowUtc)
                 .build();
 
-        // ==========================================
-        // 2.3 AUTHORIZATION CROSS-REFERENCE INSTANTIATION
-        // ==========================================
         UserRole additionalUserRoleMapping = UserRole.builder()
                 .pkUserRoleId(uuidUtil.generateUuidV7())
                 .fkUser(userInstance)
@@ -143,10 +139,8 @@ public class VendorRegisterService {
         /*
          * ================================================================
          * 3. DB SAVING SECTION
-         * Description: Persists operational mutations to underlying tables.
          * ================================================================
          */
-
         Vendor persistedVendor = vendorRepository.save(dynamicVendor);
 
         if (!userRoleRepository.existsByFkUserAndFkRole(userInstance, vendorRoleInstance)) {
@@ -155,11 +149,9 @@ public class VendorRegisterService {
 
         /*
          * ================================================================
-         * 4. RESPONSE SECTION
-         * Description: Maps the finalized entities to clean response DTO objects.
+         * 4. RESPONSE MAPPING
          * ================================================================
          */
-
         return VendorProfileResponseDto.builder()
                 .vendorId(persistedVendor.getPkVendorId())
                 .userId(userInstance.getPkUserId())

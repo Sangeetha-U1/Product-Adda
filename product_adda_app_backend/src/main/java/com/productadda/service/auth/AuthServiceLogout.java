@@ -31,8 +31,7 @@ public class AuthServiceLogout {
          * ================================================================
          */
         @Transactional
-        public LogoutResponseDto logout(
-                        LogoutRequestDto request) {
+        public LogoutResponseDto logout(LogoutRequestDto request) {
 
                 /*
                  * ================================================================
@@ -43,18 +42,22 @@ public class AuthServiceLogout {
 
                 // ==========================================
                 // 1.1 REQUEST VALIDATION
-                // Description: Extracts identities out of the security framework context.
                 // ==========================================
-                Authentication authentication = SecurityContextHolder
-                                .getContext()
-                                .getAuthentication();
+                if (request == null || request.getRefreshToken() == null
+                                || request.getRefreshToken().trim().isEmpty()) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Refresh token parameter must not be null or empty");
+                }
 
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 if (authentication == null || !authentication.isAuthenticated()) {
                         throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
                 }
 
                 String email;
-
                 if (authentication.getPrincipal() instanceof UserDetails userDetails) {
                         email = userDetails.getUsername();
                 } else {
@@ -62,27 +65,25 @@ public class AuthServiceLogout {
                 }
 
                 // ==========================================
-                // 1.2 DATABASE LOOKUP VALIDATION
-                // Description: Cross-checks persistent data stores and verifies token
-                // ownership.
+                // 1.3 DATABASE LOOKUP VALIDATION
                 // ==========================================
                 User user = userRepository.findByEmail(email)
-                                .orElseThrow(() -> new ApiException(
-                                                HttpStatus.NOT_FOUND,
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "Authenticated user no longer exists"));
 
-                RefreshToken refreshToken = refreshTokenService
-                                .validateRefreshToken(
-                                                request.getRefreshToken());
+                RefreshToken refreshToken = refreshTokenService.validateRefreshToken(request.getRefreshToken());
 
-                if (!refreshToken.getFkUser()
-                                .getPkUserId()
-                                .equals(user.getPkUserId())) {
-
-                        throw new ApiException(
-                                        HttpStatus.FORBIDDEN,
+                if (!refreshToken.getFkUser().getPkUserId().equals(user.getPkUserId())) {
+                        throw new ApiException(HttpStatus.FORBIDDEN,
                                         "Refresh token does not belong to authenticated user");
                 }
+
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
+                // Note: Security context teardown is executed post persistence invalidation.
 
                 /*
                  * ================================================================
@@ -91,17 +92,16 @@ public class AuthServiceLogout {
                  * storages.
                  * ================================================================
                  */
-                refreshTokenService.revokeRefreshToken(
-                                refreshToken);
+                refreshTokenService.revokeRefreshToken(refreshToken);
 
                 // Clear the Security Context explicitly to immediately strip credentials from
                 // the local thread context
+                // TODO: Are we sure this clear context is correct? because clearing will delete all users context?
                 SecurityContextHolder.clearContext();
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE SECTION
-                 * Description: Constructs the outbound transfer contracts.
+                 * 4. RESPONSE MAPPING
                  * ================================================================
                  */
                 return LogoutResponseDto.builder()

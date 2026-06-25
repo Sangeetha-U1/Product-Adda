@@ -53,40 +53,33 @@ public class AuthServiceForgotPassword {
 
                 // ==========================================
                 // 1.1 REQUEST VALIDATION
-                // Description: Validates incoming email request.
                 // ==========================================
-
-                if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+                if (request == null || request.getEmail() == null || request.getEmail().trim().isEmpty()) {
                         throw new ApiException(HttpStatus.BAD_REQUEST, "Email must not be null or empty");
                 }
 
                 // ==========================================
-                // 1.2 DATABASE LOOKUP VALIDATION
-                // Description: Finds user and validates verification state.
+                // 1.2 CONTEXT AUTHENTICATION
                 // ==========================================
+                // Note: Public anonymous forgot-password endpoint. No pre-existing security
+                // context criteria applies.
 
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
                 User user = userRepository.findByEmail(request.getEmail())
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
 
                 /*
                  * ================================================================
-                 * 2. BUSINESS SECTION
-                 * Description: Generates replacement verification token and email payload.
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                  * ================================================================
                  */
-
-                // TODO: Later, change to just mark it in active some sort not hard delete.
-                passwordResetTokenRepository
-                                .deleteByFkUser(user);
-
                 TokenService.TokenResult tokenResult = tokenService.generateToken();
-
                 String rawToken = tokenResult.rawToken();
-
                 String tokenHash = tokenResult.hashedToken();
 
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
-
                 LocalDateTime expiresAtUtc = nowUtc.plus(passwordResetTokenExpiryMs,
                                 java.time.temporal.ChronoUnit.MILLIS);
 
@@ -98,33 +91,33 @@ public class AuthServiceForgotPassword {
                 SendEmailRequestDto sendEmailRequest = SendEmailRequestDto.builder()
                                 .toEmail(user.getEmail())
                                 .subject("Password Reset Request")
-                                .body(
-                                                """
-                                                                Hello,
+                                .body("""
+                                                Hello,
 
-                                                                You requested a password reset.
+                                                You requested a password reset.
 
-                                                                Reset your password using this link:
+                                                Reset your password using this link:
 
-                                                                %s
+                                                %s
 
-                                                                This link expires in 30 minutes.
+                                                This link expires in 30 minutes.
 
-                                                                If you did not request this,
-                                                                ignore this email.
-                                                                """
-                                                                .formatted(resetPasswordUrl))
+                                                If you did not request this, ignore this email.
+                                                """.formatted(resetPasswordUrl))
                                 .build();
 
                 /*
                  * ================================================================
                  * 3. DB SAVING SECTION
-                 * Description: Saves regenerated password reset token.
+                 * Description: Secures the state mutation lifecycle updates within the
+                 * underlying engine data stores.
                  * ================================================================
                  */
+                // TODO: Later, change to just mark it inactive or some sort, not hard delete.
+                passwordResetTokenRepository.deleteByFkUser(user);
+
                 PasswordResetToken passwordResetToken = PasswordResetToken.builder()
-                                .pkResetTokenId(
-                                                uuidUtil.generateUuidV7())
+                                .pkResetTokenId(uuidUtil.generateUuidV7())
                                 .fkUser(user)
                                 .tokenHash(tokenHash)
                                 .createdAtUtc(nowUtc)
@@ -133,22 +126,14 @@ public class AuthServiceForgotPassword {
                                 .isActive(true)
                                 .build();
 
-                passwordResetTokenRepository.save(
-                                passwordResetToken);
+                passwordResetTokenRepository.save(passwordResetToken);
 
-                /*
-                 * ================================================================
-                 * 4. EMAIL NOTIFICATION SECTION
-                 * Description: Sends regenerated password reset email.
-                 * ================================================================
-                 */
-
+                // Executed directly inside downstream storage section framework context limits
                 emailService.sendEmail(sendEmailRequest);
 
                 /*
                  * ================================================================
-                 * 5. RESPONSE SECTION
-                 * Description: Returns resend password reset response.
+                 * 4. RESPONSE MAPPING
                  * ================================================================
                  */
                 return ForgotPasswordResponsetDto.builder()

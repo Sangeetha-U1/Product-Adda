@@ -3,6 +3,7 @@ package com.productadda.service.vendor;
 import java.util.regex.Pattern;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,15 +33,47 @@ public class VendorBankService {
 
         /*
          * ================================================================
-         * 1. BANK ACCOUNT REGISTRATION LINKAGE
-         * Description: Attaches commercial settlement bank data to a vendor
+         * REGISTER BANK ACCOUNT
+         * Description: Validates and configures a new primary financial settlement
+         * container for a verified merchant profile context.
          * ================================================================
          */
         @Transactional
-        public BankAccountResponseDto registerBankAccount(BankAccountRequestDto requestDto, String currentUserEmail) {
+        public BankAccountResponseDto registerBankAccount(BankAccountRequestDto requestDto) {
+
+                /*
+                 * ================================================================
+                 * 1. VALIDATION SECTION
+                 * ================================================================
+                 */
 
                 // ==========================================
-                // 1.1 PRINCIPAL AND IDENTITY VERIFICATION
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
+                if (requestDto == null) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Bank account request body cannot be null");
+                }
+                if (requestDto.getIfscCode() == null || !IFSC_PATTERN.matcher(requestDto.getIfscCode()).matches()) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid IFSC code routing signature format");
+                }
+                if (requestDto.getAccountNumber() == null || requestDto.getAccountNumber().length() < 9
+                                || requestDto.getAccountNumber().length() > 18) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Account number layout violation: must span between 9 and 18 positions");
+                }
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                if (SecurityContextHolder.getContext().getAuthentication() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName().trim().isEmpty()) {
+                        throw new ApiException(HttpStatus.UNAUTHORIZED, "Principal system execution identity missing");
+                }
+                String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
                 // ==========================================
                 User userInstance = userRepository.findByEmail(currentUserEmail)
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
@@ -55,21 +88,11 @@ public class VendorBankService {
                                         "Settlement bank account details already registered for this vendor profile");
                 }
 
-                // ==========================================
-                // 1.2 ROUTING STRUCTURAL VALIDATIONS
-                // ==========================================
-                if (!IFSC_PATTERN.matcher(requestDto.getIfscCode()).matches()) {
-                        throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid IFSC code routing signature format");
-                }
-
-                if (requestDto.getAccountNumber().length() < 9 || requestDto.getAccountNumber().length() > 18) {
-                        throw new ApiException(HttpStatus.BAD_REQUEST,
-                                        "Account number layout violation: must span between 9 and 18 positions");
-                }
-
-                // ==========================================
-                // 1.3 ATOMIC PERSISTENCE LAYER CONVERSION
-                // ==========================================
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
                 VendorBankDetail bankDetail = VendorBankDetail.builder()
                                 .pkVendorBankDetailId(uuidUtil.generateUuidV7())
                                 .fkVendor(targetedVendorProfile)
@@ -81,22 +104,76 @@ public class VendorBankService {
                                 .isActive(true)
                                 .build();
 
+                /*
+                 * ================================================================
+                 * 3. DB SAVING SECTION
+                 * ================================================================
+                 */
                 VendorBankDetail savedDetails = bankDetailRepository.save(bankDetail);
 
-                return mapToResponseDto(savedDetails);
+                /*
+                 * ================================================================
+                 * 4 POST-SAVING DATA SANITIZATION & MASKING
+                 * ================================================================
+                 */
+                String rawAccount = savedDetails.getAccountNumber();
+                String maskedAccount = rawAccount;
+
+                if (rawAccount != null && rawAccount.length() >= 4) {
+                        String visiblePortion = rawAccount.substring(rawAccount.length() - 4);
+                        maskedAccount = "X".repeat(rawAccount.length() - 4) + visiblePortion;
+                }
+
+                /*
+                 * ================================================================
+                 * 5. RESPONSE MAPPING
+                 * ================================================================
+                 */
+                return BankAccountResponseDto.builder()
+                                .vendorBankDetailId(savedDetails.getPkVendorBankDetailId())
+                                .vendorId(savedDetails.getFkVendor().getPkVendorId())
+                                .accountHolderName(savedDetails.getAccountHolderName())
+                                .bankName(savedDetails.getBankName())
+                                .maskedAccountNumber(maskedAccount)
+                                .ifscCode(savedDetails.getIfscCode())
+                                .branchName(savedDetails.getBranchName())
+                                .isActive(savedDetails.isActive())
+                                .build();
         }
 
         /*
          * ================================================================
-         * 2. PROTECTED ACCOUNT LEDGER DISCOVERY
-         * Description: Reads active financial ledger details securely with masking
+         * GET BANK ACCOUNT DETAILS
+         * Description: Securely fetches individual active settlement settings for the
+         * contextual merchant principal, applying response data masking filters.
          * ================================================================
          */
         @Transactional(readOnly = true)
-        public BankAccountResponseDto getBankAccountDetails(String currentUserEmail) {
+        public BankAccountResponseDto getBankAccountDetails() {
+
+                /*
+                 * ================================================================
+                 * 1. VALIDATION SECTION
+                 * ================================================================
+                 */
 
                 // ==========================================
-                // 2.1 SECURITY PARSING LOOKUPS
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
+                // No input payload coordinates; purely read-only structural query context.
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                if (SecurityContextHolder.getContext().getAuthentication() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName().trim().isEmpty()) {
+                        throw new ApiException(HttpStatus.UNAUTHORIZED, "Principal system execution identity missing");
+                }
+                String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
                 // ==========================================
                 User userInstance = userRepository.findByEmail(currentUserEmail)
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
@@ -110,14 +187,12 @@ public class VendorBankService {
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "No bank settlement parameters linked to this merchant container"));
 
-                return mapToResponseDto(bankDetail);
-        }
-
-        // ==========================================
-        // PRIVATE COMPLIANCE MASKING HELPERS
-        // ==========================================
-        private BankAccountResponseDto mapToResponseDto(VendorBankDetail details) {
-                String rawAccount = details.getAccountNumber();
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
+                String rawAccount = bankDetail.getAccountNumber();
                 String maskedAccount = rawAccount;
 
                 if (rawAccount != null && rawAccount.length() >= 4) {
@@ -125,26 +200,67 @@ public class VendorBankService {
                         maskedAccount = "X".repeat(rawAccount.length() - 4) + visiblePortion;
                 }
 
+                /*
+                 * ================================================================
+                 * 4. RESPONSE MAPPING
+                 * ================================================================
+                 */
                 return BankAccountResponseDto.builder()
-                                .vendorBankDetailId(details.getPkVendorBankDetailId())
-                                .vendorId(details.getFkVendor().getPkVendorId())
-                                .accountHolderName(details.getAccountHolderName())
-                                .bankName(details.getBankName())
+                                .vendorBankDetailId(bankDetail.getPkVendorBankDetailId())
+                                .vendorId(bankDetail.getFkVendor().getPkVendorId())
+                                .accountHolderName(bankDetail.getAccountHolderName())
+                                .bankName(bankDetail.getBankName())
                                 .maskedAccountNumber(maskedAccount)
-                                .ifscCode(details.getIfscCode())
-                                .branchName(details.getBranchName())
-                                .isActive(details.isActive())
+                                .ifscCode(bankDetail.getIfscCode())
+                                .branchName(bankDetail.getBranchName())
+                                .isActive(bankDetail.isActive())
                                 .build();
         }
 
+        /*
+         * ================================================================
+         * UPDATE BANK ACCOUNT DETAILS
+         * Description: Enforces systematic overrides on previous configurations while
+         * triggering compliance-driven profile status modifications.
+         * ================================================================
+         */
         @Transactional
-        public BankAccountResponseDto updateBankAccountDetails(BankAccountRequestDto requestDto,
-                        String currentUserEmail) {
+        public BankAccountResponseDto updateBankAccountDetails(BankAccountRequestDto requestDto) {
+
                 /*
                  * ================================================================
-                 * 1. SECURE PRINCIPAL LOOKUP RESOLUTION
+                 * 1. VALIDATION SECTION
                  * ================================================================
                  */
+
+                // ==========================================
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
+                if (requestDto == null) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Bank account request body cannot be null");
+                }
+                if (requestDto.getIfscCode() == null || !IFSC_PATTERN.matcher(requestDto.getIfscCode()).matches()) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid IFSC code routing signature format");
+                }
+                if (requestDto.getAccountNumber() == null || requestDto.getAccountNumber().length() < 9
+                                || requestDto.getAccountNumber().length() > 18) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Account number layout violation: must span between 9 and 18 positions");
+                }
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                if (SecurityContextHolder.getContext().getAuthentication() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName().trim().isEmpty()) {
+                        throw new ApiException(HttpStatus.UNAUTHORIZED, "Principal system execution identity missing");
+                }
+                String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
                 User userInstance = userRepository.findByEmail(currentUserEmail)
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "Authenticated user profile not found"));
@@ -159,21 +275,7 @@ public class VendorBankService {
 
                 /*
                  * ================================================================
-                 * 2. ROUTING STRUCTURAL VALIDATIONS
-                 * ================================================================
-                 */
-                if (!IFSC_PATTERN.matcher(requestDto.getIfscCode()).matches()) {
-                        throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid IFSC code routing signature format");
-                }
-
-                if (requestDto.getAccountNumber().length() < 9 || requestDto.getAccountNumber().length() > 18) {
-                        throw new ApiException(HttpStatus.BAD_REQUEST,
-                                        "Account number layout violation: must span between 9 and 18 positions");
-                }
-
-                /*
-                 * ================================================================
-                 * 3. RISK CONTAINMENT OVERWRITE SEQUENCE
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                  * ================================================================
                  */
                 bankDetail.setAccountHolderName(requestDto.getAccountHolderName());
@@ -186,8 +288,40 @@ public class VendorBankService {
                 // re-verification steps
                 bankDetail.setActive(false);
 
+                /*
+                 * ================================================================
+                 * 3. DB SAVING SECTION
+                 * ================================================================
+                 */
                 VendorBankDetail updatedBankDetail = bankDetailRepository.save(bankDetail);
 
-                return mapToResponseDto(updatedBankDetail);
+                /*
+                 * ================================================================
+                 * 4 POST-SAVING DATA SANITIZATION & MASKING
+                 * ================================================================
+                 */
+                String rawAccount = updatedBankDetail.getAccountNumber();
+                String maskedAccount = rawAccount;
+
+                if (rawAccount != null && rawAccount.length() >= 4) {
+                        String visiblePortion = rawAccount.substring(rawAccount.length() - 4);
+                        maskedAccount = "X".repeat(rawAccount.length() - 4) + visiblePortion;
+                }
+
+                /*
+                 * ================================================================
+                 * 5. RESPONSE MAPPING
+                 * ================================================================
+                 */
+                return BankAccountResponseDto.builder()
+                                .vendorBankDetailId(updatedBankDetail.getPkVendorBankDetailId())
+                                .vendorId(updatedBankDetail.getFkVendor().getPkVendorId())
+                                .accountHolderName(updatedBankDetail.getAccountHolderName())
+                                .bankName(updatedBankDetail.getBankName())
+                                .maskedAccountNumber(maskedAccount)
+                                .ifscCode(updatedBankDetail.getIfscCode())
+                                .branchName(updatedBankDetail.getBranchName())
+                                .isActive(updatedBankDetail.isActive())
+                                .build();
         }
 }

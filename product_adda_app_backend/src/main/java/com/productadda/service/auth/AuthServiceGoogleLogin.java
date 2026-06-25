@@ -59,19 +59,16 @@ public class AuthServiceGoogleLogin {
         // ==========================================
         // 1.1 REQUEST VALIDATION
         // ==========================================
-        if (request.getIdToken() == null || request.getIdToken().trim().isEmpty()) {
+        if (request == null || request.getIdToken() == null || request.getIdToken().trim().isEmpty()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Google ID Token must not be null or empty");
         }
 
         // ==========================================
-        // 1.2 OAUTH TOKEN VERIFICATION
+        // 1.2 CONTEXT AUTHENTICATION / TOKEN VERIFICATION
         // ==========================================
         GoogleIdToken idToken;
-
         try {
-
             idToken = googleTokenVerifier.verify(request.getIdToken());
-
         } catch (Exception e) {
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Google token parsing failed");
         }
@@ -81,36 +78,35 @@ public class AuthServiceGoogleLogin {
         }
 
         GoogleIdToken.Payload payload = idToken.getPayload();
-
         String email = payload.getEmail();
-
         String googleId = payload.getSubject();
 
         // Extract naming metadata cleanly into final variables to maintain thread
         // safety and lambda boundaries
         String rawFirstName = (String) payload.get("given_name");
-
         final String finalFirstName = (rawFirstName != null && !rawFirstName.trim().isEmpty())
                 ? rawFirstName
                 : (String) payload.get("name");
 
         String rawLastName = (String) payload.get("family_name");
-
         final String finalLastName = (rawLastName != null) ? rawLastName : "";
+
+        // ==========================================
+        // 1.3 DATABASE LOOKUP VALIDATION
+        // ==========================================
+        // Evaluated on runtime branch inside business workflow processing block below.
 
         /*
          * ================================================================
-         * 2. DATABASE LOOKUP & AUTO-PROVISIONING
+         * 2. BUSINESS RULES & PROCESSING / WORKFLOW
          * ================================================================
          */
         LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
         User user;
 
+        // 2.1 Conditional Auto-Provisioning Pipeline Check
         if (!userRepository.existsByEmail(email)) {
 
-            // ==========================================
-            // 2.1 AUTO-PROVISION USER
-            // ==========================================
             User newUserInstance = User.builder()
                     .pkUserId(uuidUtil.generateUuidV7())
                     .firstName(finalFirstName)
@@ -139,22 +135,12 @@ public class AuthServiceGoogleLogin {
                     .build();
 
             userRoleRepository.save(newUserRoleMapping);
-
         } else {
-            // ==========================================
-            // 2.2 FETCH EXISTING USER
-            // ==========================================
             user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User mapping not found"));
         }
 
-        /*
-         * ================================================================
-         * 3. ROLE VALIDATION & EXTRACTION
-         * Description: Map and compile all assigned multi-role records into a clean
-         * string collection array
-         * ================================================================
-         */
+        // 2.2 Role Resolution And Security Mapping Extraction
         List<UserRole> userRoles = userRoleRepository.findByFkUser(user);
         if (userRoles.isEmpty()) {
             throw new ApiException(HttpStatus.NOT_FOUND, "User role mapping not found");
@@ -171,22 +157,13 @@ public class AuthServiceGoogleLogin {
             throw new ApiException(HttpStatus.FORBIDDEN, "Admin portal login is required");
         }
 
-        /*
-         * ================================================================
-         * 4. SECURITY & BUSINESS CONSTRAINTS VALIDATION
-         * ================================================================
-         */
+        // 2.3 Account Lifecycle Constraints Guards
         if (!Boolean.TRUE.equals(user.getIsActive())) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Account is inactive");
         }
 
-        /*
-         * ================================================================
-         * 5. AUTHENTICATION & BUSINESS WORKFLOW SECTION
-         * ================================================================
-         */
+        // 2.4 Token Generation Pipeline Engine
         String accessToken = jwtService.generateAccessToken(user.getEmail());
-
         String refreshToken = refreshTokenService.createRefreshToken(user);
 
         TokenDto token = TokenDto.builder()
@@ -196,7 +173,15 @@ public class AuthServiceGoogleLogin {
 
         /*
          * ================================================================
-         * 6. RESPONSE SECTION
+         * 3. DB SAVING SECTION
+         * Note: Handled implicitly downstream within RefreshTokenService transaction
+         * lifecycle boundary.
+         * ================================================================
+         */
+
+        /*
+         * ================================================================
+         * 4. RESPONSE MAPPING
          * ================================================================
          */
         return LoginResponseDto.builder()

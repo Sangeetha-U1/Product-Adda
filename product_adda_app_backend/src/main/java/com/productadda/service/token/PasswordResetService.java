@@ -73,44 +73,42 @@ public class PasswordResetService {
                 String tokenHash = tokenService.hashToken(request.getToken());
 
                 // ==========================================
-                // 1.2 DATABASE LOOKUP VALIDATION
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                // Note: Public unauthenticated checkpoint. Verification relies strictly on the
+                // incoming security token hash.
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
                 // ==========================================
                 PasswordResetToken resetToken = passwordResetTokenRepository
                                 .findByTokenHash(tokenHash)
-                                .orElseThrow(() -> new ApiException(
-                                                HttpStatus.UNAUTHORIZED,
-                                                "Invalid reset token"));
+                                .orElseThrow(() -> new ApiException(HttpStatus.UNAUTHORIZED, "Invalid reset token"));
 
                 if (Boolean.TRUE.equals(resetToken.getIsUsed()) || !Boolean.TRUE.equals(resetToken.getIsActive())) {
                         throw new ApiException(HttpStatus.UNAUTHORIZED, "Reset token already used or deactivated");
                 }
 
-                // Establish a single atomic point in time for validation and tracking
-                // modifications
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
                 if (resetToken.getExpiresAtUtc().isBefore(nowUtc)) {
                         throw new ApiException(HttpStatus.UNAUTHORIZED, "Reset token expired");
                 }
 
-                /*
-                 * ================================================================
-                 * 2. BUSINESS SECTION
-                 * ================================================================
-                 */
                 User user = resetToken.getFkUser();
-
-                // Structural relationship safety guard
                 if (user == null) {
                         throw new ApiException(HttpStatus.NOT_FOUND,
                                         "User associated with this token no longer exists");
                 }
 
-                // Encrypt password and record modification audit trail
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
                 user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
                 user.setUpdatedAtUtc(nowUtc);
 
-                // Neutralize the token immediately to prevent replay attacks
                 resetToken.setIsUsed(true);
                 resetToken.setIsActive(false);
                 resetToken.setUpdatedAtUtc(nowUtc);
@@ -122,20 +120,15 @@ public class PasswordResetService {
                  */
                 userRepository.save(user);
                 passwordResetTokenRepository.save(resetToken);
-
-                // Important Security Measure: Drop all current active logged-in sessions
-                // everywhere
                 refreshTokenRepository.deleteByFkUser(user);
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE SECTION
+                 * 4. RESPONSE MAPPING
                  * ================================================================
                  */
-                String userEmail = user.getEmail();
-
                 return ResetPasswordResponseDto.builder()
-                                .email(userEmail)
+                                .email(user.getEmail())
                                 .build();
         }
 }

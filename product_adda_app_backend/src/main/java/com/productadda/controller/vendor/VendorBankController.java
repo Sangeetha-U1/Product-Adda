@@ -1,7 +1,5 @@
 package com.productadda.controller.vendor;
 
-import java.security.Principal;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,11 +26,9 @@ public class VendorBankController {
 
         @PostMapping
         public ResponseEntity<ApiSuccessResponseDto<BankAccountResponseDto>> registerBankAccount(
-                        @Valid @RequestBody BankAccountRequestDto requestDto, Principal principal) {
+                        @Valid @RequestBody BankAccountRequestDto requestDto) {
 
-                BankAccountResponseDto responseDataInstance = vendorBankService.registerBankAccount(
-                                requestDto,
-                                principal.getName());
+                BankAccountResponseDto responseDataInstance = vendorBankService.registerBankAccount(requestDto);
 
                 return ResponseEntity
                                 .status(HttpStatus.OK)
@@ -44,11 +40,9 @@ public class VendorBankController {
         }
 
         @GetMapping
-        public ResponseEntity<ApiSuccessResponseDto<BankAccountResponseDto>> getBankAccountDetails(
-                        Principal principal) {
+        public ResponseEntity<ApiSuccessResponseDto<BankAccountResponseDto>> getBankAccountDetails() {
 
-                BankAccountResponseDto responseDataInstance = vendorBankService
-                                .getBankAccountDetails(principal.getName());
+                BankAccountResponseDto responseDataInstance = vendorBankService.getBankAccountDetails();
 
                 return ResponseEntity
                                 .status(HttpStatus.OK)
@@ -61,10 +55,9 @@ public class VendorBankController {
 
         @PutMapping
         public ResponseEntity<ApiSuccessResponseDto<BankAccountResponseDto>> updateBankAccountDetails(
-                        @Valid @RequestBody BankAccountRequestDto requestDto, Principal principal) {
+                        @Valid @RequestBody BankAccountRequestDto requestDto) {
 
-                BankAccountResponseDto responseDataInstance = vendorBankService.updateBankAccountDetails(requestDto,
-                                principal.getName());
+                BankAccountResponseDto responseDataInstance = vendorBankService.updateBankAccountDetails(requestDto);
 
                 return ResponseEntity
                                 .status(HttpStatus.OK)

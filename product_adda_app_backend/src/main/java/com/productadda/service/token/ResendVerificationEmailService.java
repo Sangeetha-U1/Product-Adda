@@ -52,6 +52,12 @@ public class ResendVerificationEmailService {
          */
         public ResendVerificationEmailResponseDto resend(ResendVerificationEmailRequestDto request) {
 
+                /*
+                 * ================================================================
+                 * 1. VALIDATION SECTION
+                 * ================================================================
+                 */
+
                 // ==========================================
                 // 1.1 REQUEST VALIDATION
                 // ==========================================
@@ -60,7 +66,12 @@ public class ResendVerificationEmailService {
                 }
 
                 // ==========================================
-                // 1.2 DATABASE LOOKUP VALIDATION
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                // Note: Public unauthenticated routing checkpoint.
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
                 // ==========================================
                 User user = userRepository.findByEmail(request.getEmail())
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
@@ -71,47 +82,39 @@ public class ResendVerificationEmailService {
 
                 /*
                  * ================================================================
-                 * 2. BUSINESS SECTION & DB TRANSACTION
-                 * Description: Synchronizes state transitions atomically inside an execution
-                 * block.
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                  * ================================================================
                  */
                 TokenService.TokenResult tokenResult = verificationTokenService.generateToken();
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
                 LocalDateTime expiresAtUtc = nowUtc.plus(verificationTokenExpiryMs, ChronoUnit.MILLIS);
 
-                // Use transactionTemplate to ensure database operations complete and close
-                // connections cleanly
+                /*
+                 * ================================================================
+                 * 3. DB SAVING SECTION
+                 * ================================================================
+                 */
                 transactionTemplate.executeWithoutResult(status -> {
-                        // Evict any old, unconsumed verification tokens
                         emailVerificationTokenRepository.deleteByFkUser(user);
 
-                        // Synchronize audit records on the parent user container
                         user.setUpdatedAtUtc(nowUtc);
                         userRepository.save(user);
 
-                        // Map the fresh token model with all explicit truth attributes
                         EmailVerificationToken emailTokenEntity = EmailVerificationToken.builder()
                                         .pkVerificationTokenId(uuidUtil.generateUuidV7())
                                         .fkUser(user)
                                         .verificationToken(tokenResult.hashedToken())
                                         .isUsed(false)
-                                        .isActive(true) // Fixed missing property
-                                        .createdAtUtc(nowUtc) // Fixed missing property
-                                        .updatedAtUtc(nowUtc) // Fixed missing property
+                                        .isActive(true)
+                                        .createdAtUtc(nowUtc)
+                                        .updatedAtUtc(nowUtc)
                                         .expiresAtUtc(expiresAtUtc)
                                         .build();
 
                         emailVerificationTokenRepository.save(emailTokenEntity);
                 });
 
-                /*
-                 * ================================================================
-                 * 3. EMAIL NOTIFICATION SECTION (Post-Commit Execution)
-                 * Description: Dispatched safely outside DB locks to protect connection memory
-                 * pools.
-                 * ================================================================
-                 */
+                // Post-Commit Async External Network Notification Dispatches
                 String verificationUrl = frontendBaseUrl + verifyEmailPath + "?token=" + tokenResult.rawToken();
 
                 SendEmailRequestDto sendEmailRequest = SendEmailRequestDto.builder()
@@ -131,8 +134,6 @@ public class ResendVerificationEmailService {
                 try {
                         emailService.sendEmail(sendEmailRequest);
                 } catch (Exception e) {
-                        // Prevents standard mail server drops from rolling back structural database
-                        // truth updates
                         throw new ApiException(
                                         HttpStatus.INTERNAL_SERVER_ERROR,
                                         "Token updated, but system failed to transmit email notice. Please retry.");
@@ -140,7 +141,7 @@ public class ResendVerificationEmailService {
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE SECTION
+                 * 4. RESPONSE MAPPING
                  * ================================================================
                  */
                 return ResendVerificationEmailResponseDto.builder()

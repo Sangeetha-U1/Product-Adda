@@ -45,23 +45,24 @@ public class WishlistService {
         /*
          * ================================================================
          * 1. VALIDATION SECTION
-         * Description: Extracts context security principals and asserts user status.
          * ================================================================
          */
 
         // ==========================================
         // 1.1 REQUEST VALIDATION
         // ==========================================
-        Authentication authentication = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
+        // Structural context retrieval. No explicit body parameters are validated.
+
+        // ==========================================
+        // 1.2 CONTEXT AUTHENTICATION
+        // ==========================================
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
         }
 
         String email;
-
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
             email = userDetails.getUsername();
         } else {
@@ -69,13 +70,16 @@ public class WishlistService {
         }
 
         // ==========================================
-        // 1.2 DATABASE LOOKUP VALIDATION
+        // 1.3 DATABASE LOOKUP VALIDATION
         // ==========================================
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ApiException(
-                        HttpStatus.NOT_FOUND,
-                        "Authenticated user no longer exists"));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user no longer exists"));
 
+        /*
+         * ================================================================
+         * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+         * ================================================================
+         */
         Optional<Wishlist> wishlistOpt = wishlistRepository.findByFkUser(user);
 
         if (wishlistOpt.isEmpty()) {
@@ -86,9 +90,7 @@ public class WishlistService {
 
         /*
          * ================================================================
-         * 4. RESPONSE SECTION
-         * Description: Transforms domain model records into public transport
-         * representations.
+         * 4. RESPONSE MAPPING
          * ================================================================
          */
         List<WishlistResponseDto> responseList = new ArrayList<>();

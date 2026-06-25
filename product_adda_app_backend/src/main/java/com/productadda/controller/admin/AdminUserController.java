@@ -3,7 +3,6 @@ package com.productadda.controller.admin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +26,9 @@ public class AdminUserController {
     @PostMapping("/users")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<ApiSuccessResponseDto<AdminUserCreateResponseDto>> createAdminUser(
-            @Valid @RequestBody AdminUserCreateRequestDto request,
-            Authentication authentication) {
+            @Valid @RequestBody AdminUserCreateRequestDto request) {
 
-        AdminUserCreateResponseDto responseData = adminUserCreateService.createAdminUser(request, authentication);
+        AdminUserCreateResponseDto responseData = adminUserCreateService.createAdminUser(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

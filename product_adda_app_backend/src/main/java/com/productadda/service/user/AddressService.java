@@ -44,23 +44,24 @@ public class AddressService {
                 /*
                  * ================================================================
                  * 1. VALIDATION SECTION
-                 * Description: Extracts context security principals and asserts user status.
                  * ================================================================
                  */
 
                 // ==========================================
                 // 1.1 REQUEST VALIDATION
                 // ==========================================
-                Authentication authentication = SecurityContextHolder
-                                .getContext()
-                                .getAuthentication();
+                // Dynamic listing context. No static payload parameter validations needed.
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
                 if (authentication == null || !authentication.isAuthenticated()) {
                         throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
                 }
 
                 String email;
-
                 if (authentication.getPrincipal() instanceof UserDetails userDetails) {
                         email = userDetails.getUsername();
                 } else {
@@ -68,20 +69,22 @@ public class AddressService {
                 }
 
                 // ==========================================
-                // 1.2 DATABASE LOOKUP VALIDATION
+                // 1.3 DATABASE LOOKUP VALIDATION
                 // ==========================================
                 User user = userRepository.findByEmail(email)
-                                .orElseThrow(() -> new ApiException(
-                                                HttpStatus.NOT_FOUND,
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "Authenticated user no longer exists"));
 
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
                 List<Address> addresses = addressRepository.findByFkUserAndIsActiveTrue(user);
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE SECTION
-                 * Description: Transforms domain model records into public transport
-                 * representations.
+                 * 4. RESPONSE MAPPING
                  * ================================================================
                  */
                 return addresses.stream()
@@ -115,23 +118,26 @@ public class AddressService {
                 /*
                  * ================================================================
                  * 1. VALIDATION SECTION
-                 * Description: Extracts session profile context and verifies input parameters.
                  * ================================================================
                  */
 
                 // ==========================================
                 // 1.1 REQUEST VALIDATION
                 // ==========================================
-                Authentication authentication = SecurityContextHolder
-                                .getContext()
-                                .getAuthentication();
+                if (request == null) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Address body data payload cannot be null");
+                }
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
                 if (authentication == null || !authentication.isAuthenticated()) {
                         throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
                 }
 
                 String email;
-
                 if (authentication.getPrincipal() instanceof UserDetails userDetails) {
                         email = userDetails.getUsername();
                 } else {
@@ -139,20 +145,23 @@ public class AddressService {
                 }
 
                 // ==========================================
-                // 1.2 DATABASE LOOKUP VALIDATION
+                // 1.3 DATABASE LOOKUP VALIDATION
                 // ==========================================
                 User user = userRepository.findByEmail(email)
-                                .orElseThrow(() -> new ApiException(
-                                                HttpStatus.NOT_FOUND,
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "Authenticated user no longer exists"));
 
                 AddressType addressType = addressTypeRepository
                                 .findByAddressTypeNameIgnoreCase(request.getAddressTypeName())
-                                .orElseThrow(() -> new ApiException(
-                                                HttpStatus.NOT_FOUND,
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "Address type '" + request.getAddressTypeName()
                                                                 + "' is not supported by the system configuration"));
 
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
                 Address newAddress = Address.builder()
                                 .pkAddressId(UUID.randomUUID())
                                 .fkUser(user)
@@ -168,13 +177,16 @@ public class AddressService {
                                 .isActive(true)
                                 .build();
 
+                /*
+                 * ================================================================
+                 * 3. DB SAVING SECTION
+                 * ================================================================
+                 */
                 Address savedAddress = addressRepository.save(newAddress);
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE SECTION
-                 * Description: Transforms domain model records into public transport
-                 * representations.
+                 * 4. RESPONSE MAPPING
                  * ================================================================
                  */
                 return AddressResponseDto.builder()

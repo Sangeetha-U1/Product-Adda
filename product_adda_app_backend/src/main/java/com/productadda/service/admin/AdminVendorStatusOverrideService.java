@@ -5,6 +5,8 @@ import java.time.ZoneOffset;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,30 +40,40 @@ public class AdminVendorStatusOverrideService {
     public VendorStatusOverrideResponseDto overrideStatus(UUID vendorId, VendorStatusOverrideRequestDto request) {
 
         /*
-         * ============================================================
+         * ================================================================
          * 1. VALIDATION SECTION
-         * ============================================================
+         * ================================================================
          */
+
+        // ==========================================
+        // 1.1 REQUEST VALIDATION
+        // ==========================================
         if (vendorId == null) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Vendor identification index parameter must not be null");
         }
 
-        if (request.getIsActive() == null) {
+        if (request == null || request.getIsActive() == null) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Operational visibility target flag must not be null");
         }
 
-        /*
-         * ============================================================
-         * 2. DATABASE LOOKUP
-         * ============================================================
-         */
+        // ==========================================
+        // 1.2 CONTEXT AUTHENTICATION
+        // ==========================================
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new ApiException(HttpStatus.UNAUTHORIZED, "Security context is missing raw authentication data");
+        }
+
+        // ==========================================
+        // 1.3 DATABASE LOOKUP VALIDATION
+        // ==========================================
         Vendor vendor = vendorRepository.findById(vendorId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Target vendor record not found"));
 
         /*
-         * ============================================================
-         * 3. BUSINESS WORKFLOW & SESSION EVICTION SECTION
-         * ============================================================
+         * ================================================================
+         * 2. BUSINESS WORKFLOW & SESSION EVICTION SECTION
+         * ================================================================
          */
         LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
@@ -75,16 +87,16 @@ public class AdminVendorStatusOverrideService {
         }
 
         /*
-         * ============================================================
-         * 4. DB SAVING SECTION
-         * ============================================================
+         * ================================================================
+         * 3. DB SAVING SECTION
+         * ================================================================
          */
         vendorRepository.save(vendor);
 
         /*
-         * ============================================================
-         * 5. RESPONSE
-         * ============================================================
+         * ================================================================
+         * 4. RESPONSE MAPPING
+         * ================================================================
          */
         return VendorStatusOverrideResponseDto.builder()
                 .vendorId(vendor.getPkVendorId())

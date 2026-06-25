@@ -41,30 +41,37 @@ public class RefreshTokenService {
                  * 1. VALIDATION SECTION
                  * ================================================================
                  */
+
+                // ==========================================
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
                 if (user == null) {
-                        throw new ApiException(
-                                        HttpStatus.UNAUTHORIZED,
+                        throw new ApiException(HttpStatus.UNAUTHORIZED,
                                         "User authentication failed or user does not exist");
                 }
 
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                // Note: Security parameters inherited implicitly from the parameter signature
+                // invocation.
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
+                // No supplemental lookup validations required.
+
                 /*
                  * ================================================================
-                 * 2. BUSINESS SECTION
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                  * ================================================================
                  */
-                // CHANGED: Use the opaque token service instead of generating a
-                // cryptographically signed JWT string
                 TokenProvider.TokenService.TokenResult tokenResult = tokenService.generateToken();
                 String rawRefreshToken = tokenResult.rawToken();
                 String hashedRefreshToken = tokenResult.hashedToken();
 
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
-                /*
-                 * ================================================================
-                 * 3. DB SAVING SECTION
-                 * ================================================================
-                 */
                 RefreshToken refreshToken = RefreshToken.builder()
                                 .pkRefreshTokenId(uuidUtil.generateUuidV7())
                                 .fkUser(user)
@@ -76,11 +83,16 @@ public class RefreshTokenService {
                                 .revokedAtUtc(null)
                                 .build();
 
+                /*
+                 * ================================================================
+                 * 3. DB SAVING SECTION
+                 * ================================================================
+                 */
                 refreshTokenRepository.save(refreshToken);
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE SECTION
+                 * 4. RESPONSE MAPPING
                  * ================================================================
                  */
                 return rawRefreshToken;
@@ -105,58 +117,51 @@ public class RefreshTokenService {
                 // 1.1 REQUEST VALIDATION
                 // ==========================================
                 if (rawRefreshToken == null || rawRefreshToken.isBlank()) {
-                        throw new ApiException(
-                                        HttpStatus.BAD_REQUEST,
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
                                         "Refresh token value is missing or empty in the request payload");
                 }
 
                 // ==========================================
-                // 1.2 SIGNATURE VALIDATION
+                // 1.2 CONTEXT AUTHENTICATION
                 // ==========================================
-                // REMOVED: jwtService.isTokenValid() validation block has been omitted here
-                // because opaque tokens are random database strings, not cryptographic JWT
-                // tokens.
+                // Note: Open authorization validation routing checkpoint.
 
                 // ==========================================
-                // 1.3 DATABASE RECORD LOOKUP
+                // 1.3 DATABASE LOOKUP VALIDATION
                 // ==========================================
                 String tokenHash = tokenService.hashToken(rawRefreshToken);
 
-                RefreshToken refreshToken = refreshTokenRepository
-                                .findByTokenHash(tokenHash)
-                                .orElseThrow(() -> new ApiException(
-                                                HttpStatus.UNAUTHORIZED,
+                RefreshToken refreshToken = refreshTokenRepository.findByTokenHash(tokenHash)
+                                .orElseThrow(() -> new ApiException(HttpStatus.UNAUTHORIZED,
                                                 "No active session found matching this refresh token hash. The token may not be stored in the database."));
 
-                // ==========================================
-                // 1.4 REVOCATION STATUS VALIDATION
-                // ==========================================
                 if (refreshToken.getRevokedAtUtc() != null) {
-                        throw new ApiException(
-                                        HttpStatus.UNAUTHORIZED,
+                        throw new ApiException(HttpStatus.UNAUTHORIZED,
                                         "Refresh token is invalid because it was explicitly revoked at: "
                                                         + refreshToken.getRevokedAtUtc());
                 }
 
                 if (!Boolean.TRUE.equals(refreshToken.getIsActive())) {
-                        throw new ApiException(
-                                        HttpStatus.UNAUTHORIZED,
+                        throw new ApiException(HttpStatus.UNAUTHORIZED,
                                         "Refresh token is invalid because its operational status is set to inactive");
                 }
 
-                // ==========================================
-                // 1.5 TEMPORAL EXPIRATION VALIDATION
-                // ==========================================
                 if (refreshToken.getExpiresAtUtc().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
-                        throw new ApiException(
-                                        HttpStatus.UNAUTHORIZED,
+                        throw new ApiException(HttpStatus.UNAUTHORIZED,
                                         "Refresh token session has expired temporally at: "
                                                         + refreshToken.getExpiresAtUtc() + " UTC");
                 }
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE SECTION
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
+                // Read-only structural tracking method. No business transitions applied.
+
+                /*
+                 * ================================================================
+                 * 4. RESPONSE MAPPING
                  * ================================================================
                  */
                 return refreshToken;
@@ -173,7 +178,30 @@ public class RefreshTokenService {
 
                 /*
                  * ================================================================
-                 * 2. BUSINESS SECTION
+                 * 1. VALIDATION SECTION
+                 * ================================================================
+                 */
+
+                // ==========================================
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
+                if (refreshToken == null) {
+                        return;
+                }
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                // Note: System-facing modification routine.
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
+                // No localized lookup evaluation required.
+
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                  * ================================================================
                  */
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
@@ -199,28 +227,43 @@ public class RefreshTokenService {
         @Transactional
         public RefreshTokenResponseDto rotateRefreshToken(RefreshTokenRequestDto request) {
 
-                String rawRefreshToken = request.getRefreshToken();
-
                 /*
                  * ================================================================
                  * 1. VALIDATION SECTION
                  * ================================================================
                  */
+
+                // ==========================================
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
+                if (request == null) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Rotation data body payload cannot be null");
+                }
+
+                String rawRefreshToken = request.getRefreshToken();
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                // Note: Opaque verification checkpoint. Validation handled down-funnel inside
+                // token processing layer.
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
                 RefreshToken refreshToken = validateRefreshToken(rawRefreshToken);
 
-                /*
-                 * ================================================================
-                 * 2. BUSINESS SECTION
-                 * ================================================================
-                 */
                 User user = refreshToken.getFkUser();
-
                 if (user == null) {
-                        throw new ApiException(
-                                        HttpStatus.UNAUTHORIZED,
+                        throw new ApiException(HttpStatus.UNAUTHORIZED,
                                         "User context associated with this session token is missing");
                 }
 
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
                 String accessToken = jwtService.generateAccessToken(user.getEmail());
                 String newRefreshToken = createRefreshToken(user);
 
@@ -233,7 +276,7 @@ public class RefreshTokenService {
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE SECTION
+                 * 4. RESPONSE MAPPING
                  * ================================================================
                  */
                 TokenDto token = TokenDto.builder()
@@ -254,13 +297,43 @@ public class RefreshTokenService {
          */
         @Transactional
         public void evictAllUserSessions(User user) {
+
+                /*
+                 * ================================================================
+                 * 1. VALIDATION SECTION
+                 * ================================================================
+                 */
+
+                // ==========================================
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
                 if (user == null) {
                         return;
                 }
 
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                // Note: Domain lifecycle hook.
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
+                // Dynamic collections evaluated dynamically on execution pipeline inside the
+                // business step.
+
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
-                // Modifying any active records matching this entity boundary
+                /*
+                 * ================================================================
+                 * 3. DB SAVING SECTION
+                 * ================================================================
+                 */
                 refreshTokenRepository.findAllByFkUserAndIsActiveTrue(user)
                                 .forEach(token -> {
                                         token.setRevokedAtUtc(nowUtc);

@@ -6,18 +6,16 @@ import java.time.ZoneOffset;
 import java.util.UUID;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
-
-import com.productadda.config.RazorpayConfig;
 import com.productadda.dto.payment.PaymentCreateRequestDto;
 import com.productadda.dto.payment.PaymentCreateResponseDto;
 import com.productadda.entity.Order;
@@ -44,7 +42,7 @@ public class PaymentServicePaymentCreate {
     private final PaymentStatusRepository paymentStatusRepository;
     private final PaymentGatewayRepository paymentGatewayRepository;
     private final UserRepository userRepository;
-    private final RazorpayConfig razorpayConfig;
+    private final RazorpayClient razorpayClient;
     private final UuidUtil uuidUtil;
     private final TransactionTemplate transactionTemplate;
 
@@ -59,10 +57,24 @@ public class PaymentServicePaymentCreate {
              * ================================================================
              */
 
-            // FIX: Removed the redundant @SuppressWarnings statement that triggered
-            // diagnostic 1102
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            // ==========================================
+            // 1.1 REQUEST VALIDATION
+            // ==========================================
+            if (requestDto == null || requestDto.getOrderId() == null || requestDto.getOrderId().trim().isEmpty()) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Order ID identifier must not be null or empty");
+            }
 
+            UUID orderId;
+            try {
+                orderId = UUID.fromString(requestDto.getOrderId());
+            } catch (IllegalArgumentException e) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Provided Order ID layout string is invalid");
+            }
+
+            // ==========================================
+            // 1.2 CONTEXT AUTHENTICATION
+            // ==========================================
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication == null || !authentication.isAuthenticated()) {
                 throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
             }
@@ -71,13 +83,14 @@ public class PaymentServicePaymentCreate {
             if (authentication.getPrincipal() instanceof UserDetails userDetails) {
                 email = userDetails.getUsername();
             } else {
-                email = authentication.getPrincipal().toString();
+                email = authentication.getName();
             }
 
+            // ==========================================
+            // 1.3 DATABASE LOOKUP VALIDATION
+            // ==========================================
             User currentUser = userRepository.findByEmail(email)
                     .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user no longer exists"));
-
-            UUID orderId = UUID.fromString(requestDto.getOrderId());
 
             Order order = orderRepository.findById(orderId)
                     .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Order not found"));
@@ -97,12 +110,11 @@ public class PaymentServicePaymentCreate {
 
             /*
              * ================================================================
-             * 2. BUSINESS SECTION (Razorpay Network Request)
+             * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+             * Description: Generates remote order link tokens externally on the Razorpay
+             * network.
              * ================================================================
              */
-            RazorpayClient razorpayClient = new RazorpayClient(razorpayConfig.getKeyId(),
-                    razorpayConfig.getKeySecret());
-
             long amountInPaise = order.getTotalAmount().multiply(BigDecimal.valueOf(100)).longValue();
 
             JSONObject linkOptions = new JSONObject();
@@ -113,13 +125,15 @@ public class PaymentServicePaymentCreate {
             linkOptions.put("callback_url", frontendBaseUrl);
             linkOptions.put("callback_method", "get");
 
-            // External web callout executed safely outside database transaction locks
+            // External gateway communication safely isolated outside local DB locks
             com.razorpay.PaymentLink paymentLink = razorpayClient.paymentLink.create(linkOptions);
             String razorpayPaymentLinkId = paymentLink.get("id");
 
             /*
              * ================================================================
-             * 3. DB SAVING SECTION (Programmatic Transaction Block)
+             * 3. DB SAVING SECTION
+             * Description: Mounts the generated link state in the system using programmatic
+             * isolation hooks.
              * ================================================================
              */
             LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
@@ -129,7 +143,7 @@ public class PaymentServicePaymentCreate {
                         .pkPaymentId(uuidUtil.generateUuidV7())
                         .fkOrder(order)
                         .fkGateway(razorpayGateway)
-                        // TODO: Create lookoup table for payment methods
+                        // TODO: Create lookup table for payment methods
                         .paymentMethod("RAZORPAY")
                         .fkStatus(pendingStatus)
                         .amountPaid(order.getTotalAmount())
@@ -148,7 +162,7 @@ public class PaymentServicePaymentCreate {
 
             /*
              * ================================================================
-             * 4. RESPONSE SECTION
+             * 4. RESPONSE MAPPING
              * ================================================================
              */
             return PaymentCreateResponseDto.builder()
@@ -158,9 +172,7 @@ public class PaymentServicePaymentCreate {
         } catch (ApiException ex) {
             throw ex;
         } catch (RazorpayException ex) {
-            throw new ApiException(
-                    HttpStatus.BAD_REQUEST,
-                    "Razorpay Integration Failure: " + ex.getMessage());
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Razorpay Integration Failure: " + ex.getMessage());
         } catch (Exception ex) {
             throw new ApiException(HttpStatus.BAD_GATEWAY, "Failed to initialize payment process");
         }

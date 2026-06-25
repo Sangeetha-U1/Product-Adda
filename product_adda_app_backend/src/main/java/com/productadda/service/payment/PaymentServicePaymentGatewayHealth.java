@@ -1,7 +1,5 @@
 package com.productadda.service.payment;
 
-import jakarta.annotation.PostConstruct;
-
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,38 +9,18 @@ import org.springframework.stereotype.Service;
 import com.razorpay.RazorpayClient;
 import com.productadda.dto.payment.PaymentGatewayHealthResponseDto;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class PaymentServicePaymentGatewayHealth {
 
         private static final Logger log = LoggerFactory.getLogger(PaymentServicePaymentGatewayHealth.class);
 
-        @Value("${razorpay.key-id}")
-        private String apiKey;
-
-        @Value("${razorpay.key-secret}")
-        private String apiSecret;
+        private final RazorpayClient razorpayClient;
 
         @Value("${payment.razorpay.mode:TEST}")
         private String gatewayMode;
-
-        private RazorpayClient razorpayClient;
-
-        /*
-         * ================================================================
-         * LIFECYCLE INITIALIZATION
-         * Description: Initializes the SDK client once on container startup
-         * instead of thrashing memory allocations per API call.
-         * ================================================================
-         */
-        @PostConstruct
-        public void init() {
-                try {
-                        this.razorpayClient = new RazorpayClient(apiKey, apiSecret);
-                } catch (Exception e) {
-                        log.error("Fatal: Failed to initialize RazorpayClient bean configuration. Check credentials.",
-                                        e);
-                }
-        }
 
         /*
          * ================================================================
@@ -51,28 +29,61 @@ public class PaymentServicePaymentGatewayHealth {
          * ================================================================
          */
         public PaymentGatewayHealthResponseDto getGatewayHealth() {
-                String status;
 
-                if (this.razorpayClient == null) {
-                        return PaymentGatewayHealthResponseDto.builder()
-                                        .gateway("RAZORPAY")
-                                        .status("DOWN")
-                                        .mode(gatewayMode)
-                                        .build();
-                }
+                /*
+                 * ================================================================
+                 * 1. VALIDATION SECTION
+                 * ================================================================
+                 */
+
+                // ==========================================
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
+                // Note: Parameterless tracking endpoint methodology context.
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                // Note: Public or multi-role diagnostic request trace line. No runtime context
+                // validation required.
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
+                // Note: Direct external infrastructure telemetry ping. No local storage
+                // verification needed.
+
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * ================================================================
+                 */
+                String status;
 
                 try {
                         JSONObject query = new JSONObject();
                         query.put("count", 1);
 
+                        // Ping Razorpay API using the injected singleton bean
                         this.razorpayClient.orders.fetchAll(query);
-
                         status = "CONNECTED";
                 } catch (Exception e) {
                         log.warn("Razorpay external health connectivity validation check failed: {}", e.getMessage());
                         status = "DOWN";
                 }
 
+                /*
+                 * ================================================================
+                 * 3. DB SAVING SECTION
+                 * Note: Non-mutating telemetry monitoring execution pipeline.
+                 * ================================================================
+                 */
+
+                /*
+                 * ================================================================
+                 * 4. RESPONSE MAPPING
+                 * ================================================================
+                 */
                 return PaymentGatewayHealthResponseDto.builder()
                                 .gateway("RAZORPAY")
                                 .status(status)

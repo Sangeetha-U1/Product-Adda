@@ -45,16 +45,17 @@ public class AuthServiceMe {
         // ==========================================
         // 1.1 REQUEST VALIDATION
         // ==========================================
-        Authentication authentication = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
+        // Note: No parameter criteria passed in method signature to validate.
 
+        // ==========================================
+        // 1.2 CONTEXT AUTHENTICATION
+        // ==========================================
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
         }
 
         String email;
-
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
             email = userDetails.getUsername();
         } else {
@@ -62,15 +63,12 @@ public class AuthServiceMe {
         }
 
         // ==========================================
-        // 1.2 DATABASE LOOKUP VALIDATION
+        // 1.3 DATABASE LOOKUP VALIDATION
         // ==========================================
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ApiException(
-                        HttpStatus.NOT_FOUND,
-                        "Authenticated user no longer exists"));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user no longer exists"));
 
         List<UserRole> userRoles = userRoleRepository.findByFkUser(user);
-
         if (userRoles == null || userRoles.isEmpty()) {
             throw new ApiException(HttpStatus.NOT_FOUND, "No roles assigned to this user profile");
         }
@@ -82,13 +80,23 @@ public class AuthServiceMe {
                     "User role configuration is broken or missing data");
         }
 
+        /*
+         * ================================================================
+         * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+         * ================================================================
+         */
         String assignedRoleName = primaryUserRole.getFkRole().getRoleName();
 
         /*
          * ================================================================
-         * 4. RESPONSE SECTION
-         * Description: Transforms domain model records into public transport
-         * representations.
+         * 3. DB SAVING SECTION
+         * Note: Read-only query method context execution.
+         * ================================================================
+         */
+
+        /*
+         * ================================================================
+         * 4. RESPONSE MAPPING
          * ================================================================
          */
         return UserProfileResponseDto.builder()

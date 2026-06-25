@@ -12,10 +12,9 @@ import com.productadda.dto.auth.LoginRequestDto;
 import com.productadda.dto.auth.LoginResponseDto;
 import com.productadda.dto.token.TokenDto;
 import com.productadda.entity.User;
+import com.productadda.entity.UserRole;
 import com.productadda.exception.ApiException;
 import com.productadda.repository.UserRepository;
-
-import com.productadda.entity.UserRole;
 import com.productadda.repository.UserRoleRepository;
 import com.productadda.service.token.RefreshTokenService;
 import com.productadda.service.token.TokenProvider;
@@ -52,15 +51,15 @@ public class AuthServiceLogin {
     public LoginResponseDto login(LoginRequestDto request) {
 
         /*
-         * ============================================================
+         * ================================================================
          * 1. VALIDATION SECTION
-         * ============================================================
+         * ================================================================
          */
+
         // ==========================================
         // 1.1 REQUEST VALIDATION
         // ==========================================
-
-        if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+        if (request == null || request.getEmail() == null || request.getEmail().trim().isEmpty()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Email must not be null or empty");
         }
 
@@ -68,29 +67,30 @@ public class AuthServiceLogin {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Password must not be null or empty");
         }
 
-        /*
-         * ============================================================
-         * 2. DATABASE LOOKUP
-         * ============================================================
-         */
+        // ==========================================
+        // 1.2 CONTEXT AUTHENTICATION
+        // ==========================================
+        // Note: Public anonymous authentication endpoint. No pre-existing security
+        // context criteria applies.
+
+        // ==========================================
+        // 1.3 DATABASE LOOKUP VALIDATION
+        // ==========================================
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
 
         List<UserRole> userRoles = userRoleRepository.findByFkUser(user);
-
         if (userRoles.isEmpty()) {
-            throw new ApiException(
-                    HttpStatus.NOT_FOUND,
-                    "User role not found");
+            throw new ApiException(HttpStatus.NOT_FOUND, "User role not found");
         }
 
         /*
-         * ============================================================
-         * 3. ROLE VALIDATION & EXTRACTION
-         * Description: Map and compile all assigned multi-role records into a clean
-         * string collection array
-         * ============================================================
+         * ================================================================
+         * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+         * ================================================================
          */
+
+        // 2.1 Role Validation Guard Criteria
         List<String> assignedRoles = userRoles.stream()
                 .map(userRole -> userRole.getFkRole().getRoleName())
                 .collect(Collectors.toList());
@@ -99,17 +99,10 @@ public class AuthServiceLogin {
                 .anyMatch(name -> "SUPER_ADMIN".equals(name) || "ADMIN".equals(name));
 
         if (isAdmin) {
-            throw new ApiException(
-                    HttpStatus.FORBIDDEN,
-                    "Admin portal login is required");
+            throw new ApiException(HttpStatus.FORBIDDEN, "Admin portal login is required");
         }
 
-        /*
-         * ============================================================
-         * 4. BUSINESS VALIDATION
-         * ============================================================
-         */
-
+        // 2.2 Profile Lifecycle and Credential Verifications
         if (!Boolean.TRUE.equals(user.getIsActive())) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Account is inactive");
         }
@@ -122,17 +115,10 @@ public class AuthServiceLogin {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
 
-        /*
-         * ============================================================
-         * 5. BUSINESS SECTION
-         * Description: Generate JWT access and refresh tokens.
-         * ============================================================
-         */
-        String accessToken = jwtService.generateAccessToken(
-                user.getEmail());
+        // 2.3 Cryptographic Token Production Engine
+        String accessToken = jwtService.generateAccessToken(user.getEmail());
 
-        String refreshToken = refreshTokenService.createRefreshToken(
-                user);
+        String refreshToken = refreshTokenService.createRefreshToken(user);
 
         TokenDto token = TokenDto.builder()
                 .accessToken(accessToken)
@@ -140,9 +126,17 @@ public class AuthServiceLogin {
                 .build();
 
         /*
-         * ============================================================
-         * 6. RESPONSE
-         * ============================================================
+         * ================================================================
+         * 3. DB SAVING SECTION
+         * Note: Handled implicitly downstream within RefreshTokenService transaction
+         * lifecycle boundary.
+         * ================================================================
+         */
+
+        /*
+         * ================================================================
+         * 4. RESPONSE MAPPING
+         * ================================================================
          */
         return LoginResponseDto.builder()
                 .userId(user.getPkUserId())

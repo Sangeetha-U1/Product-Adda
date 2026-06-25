@@ -1,6 +1,7 @@
 package com.productadda.service.vendor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,28 +22,43 @@ public class VendorProfileService {
         private final UserRepository userRepository;
         private final VendorRepository vendorRepository;
 
-        // perfectly safe there because that method only runs SELECT queries.
+        /*
+         * ================================================================
+         * GET VENDOR PROFILE
+         * Description: Locates and compiles core registration data for the
+         * authenticated vendor session principal.
+         * ================================================================
+         */
         @Transactional(readOnly = true)
-        public VendorProfileResponseDto getVendorProfile(String currentUserEmail) {
+        public VendorProfileResponseDto getVendorProfile() {
 
                 /*
                  * ================================================================
                  * 1. VALIDATION SECTION
-                 * Description: Resolves the active caller security context and asserts
-                 * matching target vendor database linkages exist.
                  * ================================================================
                  */
 
+                // ==========================================
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
+                // Pure contextual database lookup read stream. No payload attributes to filter.
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                if (SecurityContextHolder.getContext().getAuthentication() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName().trim().isEmpty()) {
+                        throw new ApiException(HttpStatus.UNAUTHORIZED, "Principal system execution identity missing");
+                }
+                String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
                 User userInstance = userRepository.findByEmail(currentUserEmail)
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "Authenticated user profile not found"));
-
-                /*
-                 * ================================================================
-                 * 2. BUSINESS SECTION / 3. DB SAVING SECTION (Read-Only)
-                 * Description: Performs index lookup to pull operational row states.
-                 * ================================================================
-                 */
 
                 Vendor targetedVendorProfile = vendorRepository.findByFkUser(userInstance)
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
@@ -50,11 +66,17 @@ public class VendorProfileService {
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE SECTION
-                 * Description: Maps target properties seamlessly into a clean return object.
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                  * ================================================================
                  */
+                // Structural state validation verified successfully. Proceeding to direct view
+                // conversion.
 
+                /*
+                 * ================================================================
+                 * 4. RESPONSE MAPPING
+                 * ================================================================
+                 */
                 return VendorProfileResponseDto.builder()
                                 .vendorId(targetedVendorProfile.getPkVendorId())
                                 .userId(userInstance.getPkUserId())
@@ -66,14 +88,50 @@ public class VendorProfileService {
                                 .build();
         }
 
+        /*
+         * ================================================================
+         * UPDATE VENDOR PROFILE
+         * Description: Enforces conflict checks against shared brand labels and mutates
+         * underlying merchant metadata properties.
+         * ================================================================
+         */
         @Transactional
-        public VendorProfileResponseDto updateVendorProfile(VendorRegisterRequestDto requestDto,
-                        String currentUserEmail) {
+        public VendorProfileResponseDto updateVendorProfile(VendorRegisterRequestDto requestDto) {
+
                 /*
                  * ================================================================
-                 * 1. IDENTIFICATION LOOKUP BOUNDARIES
+                 * 1. VALIDATION SECTION
                  * ================================================================
                  */
+
+                // ==========================================
+                // 1.1 REQUEST VALIDATION
+                // ==========================================
+                if (requestDto == null) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Profile mutation modification body cannot be null");
+                }
+                if (requestDto.getBusinessName() == null || requestDto.getBusinessName().trim().isEmpty()) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Business name cannot be blank");
+                }
+                if (requestDto.getStoreName() == null || requestDto.getStoreName().trim().isEmpty()) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Store storefront identifier label cannot be blank");
+                }
+
+                // ==========================================
+                // 1.2 CONTEXT AUTHENTICATION
+                // ==========================================
+                if (SecurityContextHolder.getContext().getAuthentication() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName() == null ||
+                                SecurityContextHolder.getContext().getAuthentication().getName().trim().isEmpty()) {
+                        throw new ApiException(HttpStatus.UNAUTHORIZED, "Principal system execution identity missing");
+                }
+                String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
                 User userInstance = userRepository.findByEmail(currentUserEmail)
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "Authenticated user profile not found"));
@@ -82,12 +140,7 @@ public class VendorProfileService {
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "No associated vendor profile found for this user account"));
 
-                /*
-                 * ================================================================
-                 * 2. CONFLICT GUARD MECHANISMS
-                 * ================================================================
-                 */
-                if (vendorRepository.existsByBusinessNameAndPkVendorIdNot(requestDto.getBusinessName(),
+                if (vendorRepository.existsByBusinessNameAndPkVendorIdNot(requestDto.getBusinessName().trim(),
                                 vendor.getPkVendorId())) {
                         throw new ApiException(HttpStatus.BAD_REQUEST,
                                         "Business name is already registered by another vendor listing");
@@ -95,23 +148,33 @@ public class VendorProfileService {
 
                 /*
                  * ================================================================
-                 * 3. STATE MUTATION & PERSISTENCE
+                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                  * ================================================================
                  */
-                vendor.setBusinessName(requestDto.getBusinessName());
-                vendor.setStoreName(requestDto.getStoreName());
-                vendor.setBusinessDescription(requestDto.getBusinessDescription());
-                // NOTE: Audit column updated_at_utc will trigger automatically via ON UPDATE
-                // CURRENT_TIMESTAMP in DB
+                vendor.setBusinessName(requestDto.getBusinessName().trim());
+                vendor.setStoreName(requestDto.getStoreName().trim());
+                if (requestDto.getBusinessDescription() != null) {
+                        vendor.setBusinessDescription(requestDto.getBusinessDescription().trim());
+                }
 
+                /*
+                 * ================================================================
+                 * 3. DB SAVING SECTION
+                 * ================================================================
+                 */
                 Vendor updatedVendor = vendorRepository.save(vendor);
 
+                /*
+                 * ================================================================
+                 * 4. RESPONSE MAPPING
+                 * ================================================================
+                 */
                 return VendorProfileResponseDto.builder()
                                 .vendorId(updatedVendor.getPkVendorId())
                                 .userId(userInstance.getPkUserId())
                                 .businessName(updatedVendor.getBusinessName())
                                 .storeName(updatedVendor.getStoreName())
-                                .gstNumber(updatedVendor.getGstNumber()) // Unmodified as per audit constraints
+                                .gstNumber(updatedVendor.getGstNumber())
                                 .businessDescription(updatedVendor.getBusinessDescription())
                                 .isActive(updatedVendor.getIsActive())
                                 .build();

@@ -33,13 +33,13 @@ public class PaymentController {
                                 .getGatewayHealth();
 
                 return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(
-                                ApiSuccessResponseDto.<PaymentGatewayHealthResponseDto>builder()
-                                                .success(true)
-                                                .message("Payment gateway health verified")
-                                                .data(paymentGatewayHealth)
-                                                .build());
+                                .status(HttpStatus.OK)
+                                .body(
+                                                ApiSuccessResponseDto.<PaymentGatewayHealthResponseDto>builder()
+                                                                .success(true)
+                                                                .message("Payment gateway health verified")
+                                                                .data(paymentGatewayHealth)
+                                                                .build());
         }
 
         @PostMapping("/create")
@@ -49,13 +49,13 @@ public class PaymentController {
                 PaymentCreateResponseDto paymentCreate = paymentServicePaymentCreate.paymentCreate(requestDto);
 
                 return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(
-                                ApiSuccessResponseDto.<PaymentCreateResponseDto>builder()
-                                                .success(true)
-                                                .message("Payment order created")
-                                                .data(paymentCreate)
-                                                .build());
+                                .status(HttpStatus.OK)
+                                .body(
+                                                ApiSuccessResponseDto.<PaymentCreateResponseDto>builder()
+                                                                .success(true)
+                                                                .message("Payment order created")
+                                                                .data(paymentCreate)
+                                                                .build());
         }
 
         @PostMapping("/verify")
@@ -65,12 +65,12 @@ public class PaymentController {
                 PaymentVerifyResponseDto paymentVerify = paymentServicePaymentVerify.paymentVerify(requestDto);
 
                 return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(
-                                ApiSuccessResponseDto.<PaymentVerifyResponseDto>builder()
-                                                .success(true)
-                                                .message("Payment verification completed")
-                                                .data(paymentVerify)
-                                                .build());
+                                .status(HttpStatus.OK)
+                                .body(
+                                                ApiSuccessResponseDto.<PaymentVerifyResponseDto>builder()
+                                                                .success(true)
+                                                                .message("Payment verification completed")
+                                                                .data(paymentVerify)
+                                                                .build());
         }
 }

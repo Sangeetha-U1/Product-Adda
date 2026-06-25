@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 import com.razorpay.Utils;
-
 import com.productadda.config.RazorpayConfig;
 import com.productadda.dto.payment.PaymentVerifyRequestDto;
 import com.productadda.dto.payment.PaymentVerifyResponseDto;
@@ -42,47 +41,63 @@ public class PaymentServicePaymentVerify {
         private final PaymentRepository paymentRepository;
         private final PaymentStatusRepository paymentStatusRepository;
         private final UserRepository userRepository;
+        private final RazorpayClient razorpayClient;
         private final RazorpayConfig razorpayConfig;
 
         @Transactional
         public PaymentVerifyResponseDto paymentVerify(PaymentVerifyRequestDto requestDto) {
                 try {
-
                         /*
                          * ================================================================
-                         * 1. ISOLATED SECURITY & VALIDATION SECTION
-                         * Description: Independent database verification. Even if upstream layers are
-                         * bypassed, this block guarantees session data integrity and strict ownership.
+                         * 1. VALIDATION SECTION
                          * ================================================================
                          */
 
                         // ==========================================
-                        // 1.1 Read email from Security Context
+                        // 1.1 REQUEST VALIDATION
+                        // ==========================================
+                        if (requestDto == null) {
+                                throw new ApiException(HttpStatus.BAD_REQUEST,
+                                                "Verification request body must not be null");
+                        }
+                        if (requestDto.getRazorpayPaymentLinkId() == null
+                                        || requestDto.getRazorpayPaymentLinkId().trim().isEmpty()) {
+                                throw new ApiException(HttpStatus.BAD_REQUEST,
+                                                "Razorpay Payment Link ID missing from payload");
+                        }
+                        if (requestDto.getRazorpayPaymentId() == null
+                                        || requestDto.getRazorpayPaymentId().trim().isEmpty()) {
+                                throw new ApiException(HttpStatus.BAD_REQUEST,
+                                                "Razorpay Payment ID missing from payload");
+                        }
+                        if (requestDto.getRazorpaySignature() == null
+                                        || requestDto.getRazorpaySignature().trim().isEmpty()) {
+                                throw new ApiException(HttpStatus.BAD_REQUEST,
+                                                "Razorpay Signature string missing from payload");
+                        }
+
+                        // ==========================================
+                        // 1.2 CONTEXT AUTHENTICATION
                         // ==========================================
                         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
                         if (authentication == null || !authentication.isAuthenticated()) {
                                 throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
                         }
 
                         String email;
-
                         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
                                 email = userDetails.getUsername();
                         } else {
-                                email = authentication.getPrincipal().toString();
+                                email = authentication.getName();
                         }
 
                         // ==========================================
-                        // 1.2 Isolated Database Check: Fetch fresher user record directly from DB
+                        // 1.3 DATABASE LOOKUP VALIDATION
                         // ==========================================
                         User currentUser = userRepository.findByEmail(email)
                                         .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                         "Authenticated user no longer exists"));
 
-                        // ==========================================
-                        // 1.3 DATABASE LOOKUP VALIDATION (Payment & Order)
-                        // ==========================================
                         Payment payment = paymentRepository
                                         .findByGatewayPaymentLinkId(requestDto.getRazorpayPaymentLinkId())
                                         .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
@@ -94,38 +109,24 @@ public class PaymentServicePaymentVerify {
                                                 "Payment association order link broken");
                         }
 
-                        // ==========================================
-                        // 1.4 Strict Ownership Validation: Check if the payment/order belongs to
-                        // current user
-                        // ==========================================
                         if (order.getFkUser() == null
                                         || !order.getFkUser().getPkUserId().equals(currentUser.getPkUserId())) {
                                 throw new ApiException(HttpStatus.FORBIDDEN,
                                                 "Access denied: You do not own the order linked to this payment link");
                         }
 
-                        // ==========================================
-                        // 1.5 PAYMENT STATUS STATE INTEGRITY CHECKS
-                        // ==========================================
                         PaymentStatus status = payment.getFkStatus();
                         if (status != null && "SUCCESS".equals(status.getStatusName())) {
-                                throw new ApiException(
-                                                HttpStatus.BAD_REQUEST,
-                                                "Payment already verified");
+                                throw new ApiException(HttpStatus.BAD_REQUEST, "Payment already verified");
                         }
 
-                        if (!Objects.equals(
-                                        payment.getGatewayPaymentLinkId(),
-                                        requestDto.getRazorpayPaymentLinkId())) {
-
-                                throw new ApiException(
-                                                HttpStatus.BAD_REQUEST,
-                                                "Payment Link ID mismatch");
+                        if (!Objects.equals(payment.getGatewayPaymentLinkId(), requestDto.getRazorpayPaymentLinkId())) {
+                                throw new ApiException(HttpStatus.BAD_REQUEST, "Payment Link ID mismatch");
                         }
 
                         /*
                          * ================================================================
-                         * 2. BUSINESS SECTION (Signature verification & Razorpay capture check)
+                         * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                          * ================================================================
                          */
                         String paymentId = requestDto.getRazorpayPaymentId();
@@ -142,37 +143,25 @@ public class PaymentServicePaymentVerify {
 
                         if (!signatureValid) {
                                 throw new ApiException(HttpStatus.BAD_REQUEST,
-                                                "Invalid Razorpay signature");
+                                                "Invalid Razorpay signature signature verification mismatch");
                         }
 
-                        RazorpayClient razorpayClient = new RazorpayClient(
-                                        razorpayConfig.getKeyId(),
-                                        razorpayConfig.getKeySecret());
-
-                        // API call to Razorpay to get payment details
+                        // API call out using single shared Client dependency bean mapping
                         com.razorpay.Payment razorpayPayment = razorpayClient.payments.fetch(paymentId);
-
                         String razorpayStatus = razorpayPayment.get("status");
 
                         if (!"captured".equalsIgnoreCase(razorpayStatus)) {
-                                throw new ApiException(
-                                                HttpStatus.BAD_REQUEST,
-                                                "Payment not captured by Razorpay");
+                                throw new ApiException(HttpStatus.BAD_REQUEST,
+                                                "Payment not captured by Razorpay infrastructure");
                         }
 
-                        // Extract the real order ID generated dynamically by Razorpay's link checkout
                         String razorpayFetchedOrderId = razorpayPayment.get("order_id");
-
                         long razorpayAmountInPaise = ((Number) razorpayPayment.get("amount")).longValue();
-
-                        long dbAmountInPaise = payment.getAmountPaid()
-                                        .multiply(BigDecimal.valueOf(100))
-                                        .longValue();
+                        long dbAmountInPaise = payment.getAmountPaid().multiply(BigDecimal.valueOf(100)).longValue();
 
                         if (dbAmountInPaise != razorpayAmountInPaise) {
-                                throw new ApiException(
-                                                HttpStatus.BAD_REQUEST,
-                                                "Razorpay order amount mismatch");
+                                throw new ApiException(HttpStatus.BAD_REQUEST,
+                                                "Razorpay order amount mismatch validation failure");
                         }
 
                         PaymentStatus successStatus = paymentStatusRepository.findByStatusName("SUCCESS")
@@ -183,14 +172,12 @@ public class PaymentServicePaymentVerify {
                                         .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                                                         "Status PROCESSING not found"));
 
-                        // Update Payment record fields using generic gateway-agnostic mapping
-                        // properties
                         payment.setFkStatus(successStatus);
                         payment.setGatewayTransactionId(paymentId);
                         payment.setGatewayOrderId(razorpayFetchedOrderId);
                         payment.setGatewaySignature(requestDto.getRazorpaySignature());
-
                         payment.setPaidAtUtc(LocalDateTime.now(ZoneOffset.UTC));
+                        order.setFkStatus(processingStatus);
 
                         /*
                          * ================================================================
@@ -198,14 +185,11 @@ public class PaymentServicePaymentVerify {
                          * ================================================================
                          */
                         paymentRepository.save(payment);
-
-                        order.setFkStatus(processingStatus);
-
                         orderRepository.save(order);
 
                         /*
                          * ================================================================
-                         * 4. RESPONSE SECTION
+                         * 4. RESPONSE MAPPING
                          * ================================================================
                          */
                         return PaymentVerifyResponseDto.builder()
@@ -221,13 +205,11 @@ public class PaymentServicePaymentVerify {
                 } catch (ApiException ex) {
                         throw ex;
                 } catch (RazorpayException ex) {
-                        String razorpayErrorMessage = ex.getMessage();
-                        throw new ApiException(
-                                        HttpStatus.BAD_REQUEST,
-                                        "Razorpay Integration Failure: " + razorpayErrorMessage);
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Razorpay Integration Failure: " + ex.getMessage());
                 } catch (Exception ex) {
-                        ex.printStackTrace();
-                        throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Verification processing failed");
+                        throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
+                                        "Verification processing structural validation loop failed");
                 }
         }
 }

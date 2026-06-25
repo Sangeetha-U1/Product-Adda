@@ -63,7 +63,6 @@ public class AuthServiceRegister {
                 // ==========================================
                 // 1.1 REQUEST VALIDATION
                 // ==========================================
-
                 if (request.getFirstName() == null || request.getFirstName().trim().isEmpty()) {
                         throw new ApiException(HttpStatus.BAD_REQUEST, "First name is required");
                 }
@@ -81,9 +80,13 @@ public class AuthServiceRegister {
                 }
 
                 // ==========================================
-                // 1.2 DATABASE LOOKUP VALIDATION
+                // 1.2 CONTEXT AUTHENTICATION
                 // ==========================================
+                // Note: Public registration endpoint. No security context criteria applies.
 
+                // ==========================================
+                // 1.3 DATABASE LOOKUP VALIDATION
+                // ==========================================
                 if (userRepository.existsByEmail(request.getEmail())) {
                         throw new ApiException(HttpStatus.BAD_REQUEST, "Email already exists");
                 }
@@ -91,7 +94,6 @@ public class AuthServiceRegister {
                 if (request.getMobile() != null
                                 && !request.getMobile().trim().isEmpty()
                                 && userRepository.existsByMobile(request.getMobile())) {
-
                         throw new ApiException(HttpStatus.BAD_REQUEST, "Mobile already exists");
                 }
 
@@ -106,7 +108,6 @@ public class AuthServiceRegister {
                 // ==========================================
                 // 2.1 ROLE RESOLUTION
                 // ==========================================
-
                 String roleName = "USER";
 
                 Role role = roleRepository.findByRoleName(roleName)
@@ -120,7 +121,6 @@ public class AuthServiceRegister {
                 // ==========================================
                 // 2.2 USER ENTITY CREATION
                 // ==========================================
-
                 User userInstance = User.builder()
                                 .pkUserId(uuidUtil.generateUuidV7())
                                 .firstName(request.getFirstName())
@@ -137,7 +137,6 @@ public class AuthServiceRegister {
                 // ==========================================
                 // 2.3 EMAIL NOTIFICATION AND SECURITY ENGINE
                 // ==========================================
-
                 TokenService.TokenResult tokenResult = tokenService.generateToken();
 
                 LocalDateTime expiresAtUtc = nowUtc.plus(verificationTokenExpiryMs,
@@ -173,17 +172,15 @@ public class AuthServiceRegister {
                 // ==========================================
                 // 3.1 USER SAVE
                 // ==========================================
-
                 User user = userRepository.save(userInstance);
 
-                // Delete operations executed *after* user has a formal persistent
-                // database tracking state
+                // Delete operations executed *after* user has a formal persistent database
+                // tracking state
                 emailVerificationTokenRepository.deleteByFkUser(user);
 
                 // ==========================================
                 // 3.2 USER ROLE SAVE
                 // ==========================================
-
                 UserRole userRole = UserRole.builder()
                                 .pkUserRoleId(uuidUtil.generateUuidV7())
                                 .fkUser(user)
@@ -197,7 +194,6 @@ public class AuthServiceRegister {
                 // ==========================================
                 // 3.3 SECURITY DATA SAVE
                 // ==========================================
-
                 EmailVerificationToken emailTokenEntity = EmailVerificationToken.builder()
                                 .pkVerificationTokenId(uuidUtil.generateUuidV7())
                                 .fkUser(user)
@@ -213,7 +209,6 @@ public class AuthServiceRegister {
                 // ==========================================
                 // 4. EMAIL NOTIFICATION
                 // ==========================================
-
                 emailService.sendEmail(sendEmailRequest);
 
                 /*
@@ -225,7 +220,6 @@ public class AuthServiceRegister {
                 // ==========================================
                 // 5.1 RESPONSE MAPPING
                 // ==========================================
-
                 String assignedRoleName = role.getRoleName();
 
                 return RegisterResponseDto.builder()
