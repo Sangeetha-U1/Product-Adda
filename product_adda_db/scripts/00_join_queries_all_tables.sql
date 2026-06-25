@@ -259,3 +259,65 @@ SELECT
 FROM reports
 INNER JOIN report_types ON reports.fk_report_type_id = report_types.pk_report_type_id
 INNER JOIN users ON reports.fk_user_id = users.pk_user_id;
+
+-- ==============================================================
+-- 14. VENDOR-PRODUCT ORDER MATCHING: vendors + products + order_items + orders + users + roles
+-- Description: Comprehensive tracking linking vendors to ordered products and user roles.
+-- ==============================================================
+SELECT
+    -- --- VENDORS ---
+    BIN_TO_UUID(vendors.pk_vendor_id) AS pk_vendor_id,
+    vendors.business_name,
+    vendors.store_name,
+    
+    -- --- PRODUCTS ---
+    BIN_TO_UUID(products.pk_product_id) AS pk_product_id,
+    products.title AS product_title,
+    products.sku AS product_sku,
+    products.price AS current_product_price,
+    
+    -- --- ORDER ITEMS (The Bridge) ---
+    BIN_TO_UUID(order_items.pk_order_item_id) AS pk_order_item_id,
+    order_items.product_name_snapshot,
+    order_items.quantity AS ordered_quantity,
+    order_items.unit_price AS purchased_unit_price,
+    
+    -- --- ORDERS ---
+    BIN_TO_UUID(orders.pk_order_id) AS pk_order_id,
+    orders.total_amount AS order_total_amount,
+    order_statuses.status_name AS order_status,
+    orders.created_at_utc AS order_created_at_utc,
+    CONVERT_TZ(orders.created_at_utc, '+00:00', '+05:30') AS order_created_at_ist,
+    
+    -- --- CUSTOMER (The Buyer) ---
+    BIN_TO_UUID(buyer.pk_user_id) AS buyer_user_id,
+    buyer.first_name AS buyer_first_name,
+    buyer.last_name AS buyer_last_name,
+    buyer.email AS buyer_email,
+    buyer_roles.role_name AS buyer_system_role,
+    
+    -- --- VENDOR OWNER (The Seller) ---
+    BIN_TO_UUID(vendor_owner.pk_user_id) AS vendor_owner_user_id,
+    vendor_owner.first_name AS seller_first_name,
+    vendor_owner.last_name AS seller_last_name,
+    vendor_owner.email AS seller_email,
+    vendor_roles.role_name AS seller_system_role
+
+FROM order_items
+-- 1. Link order items back to their parent products and the vendors who own them
+INNER JOIN products ON order_items.fk_product_id = products.pk_product_id
+INNER JOIN vendors ON products.fk_vendor_id = vendors.pk_vendor_id
+
+-- 2. Link order items to the main order record and its status
+INNER JOIN orders ON order_items.fk_order_id = orders.pk_order_id
+INNER JOIN order_statuses ON orders.fk_status_id = order_statuses.pk_status_id
+
+-- 3. Link the buyer (the user who placed the order) and their role profile
+INNER JOIN users AS buyer ON orders.fk_user_id = buyer.pk_user_id
+INNER JOIN user_roles AS buyer_ur ON buyer.pk_user_id = buyer_ur.fk_user_id
+INNER JOIN roles AS buyer_roles ON buyer_ur.fk_role_id = buyer_roles.pk_role_id
+
+-- 4. Link the seller/owner of the business entity (vendor account) and their role profile
+INNER JOIN users AS vendor_owner ON vendors.fk_user_id = vendor_owner.pk_user_id
+INNER JOIN user_roles AS vendor_ur ON vendor_owner.pk_user_id = vendor_ur.fk_user_id
+INNER JOIN roles AS vendor_roles ON vendor_ur.fk_role_id = vendor_roles.pk_role_id;
