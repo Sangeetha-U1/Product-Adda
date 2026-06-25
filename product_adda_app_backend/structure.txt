@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 0000015E 7478:274D
+Volume serial number is 00000186 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -29,6 +29,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           +---controller
 |   |           |   |   HealthController.java
 |   |           |   |   
+|   |           |   +---admin
+|   |           |   |       AdminAuthController.java
+|   |           |   |       AdminUserController.java
+|   |           |   |       AdminVendorManagementController.java
+|   |           |   |       
 |   |           |   +---auth
 |   |           |   |       AuthController.java
 |   |           |   |       
@@ -59,6 +64,15 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |   HealthResponseDto.java
 |   |           |   |   SendEmailRequestDto.java
 |   |           |   |   
+|   |           |   +---admin
+|   |           |   |       AdminLoginRequestDto.java
+|   |           |   |       AdminLoginResponseDto.java
+|   |           |   |       AdminUserCreateRequestDto.java
+|   |           |   |       AdminUserCreateResponseDto.java
+|   |           |   |       VendorAdminSummaryResponseDto.java
+|   |           |   |       VendorStatusOverrideRequestDto.java
+|   |           |   |       VendorStatusOverrideResponseDto.java
+|   |           |   |       
 |   |           |   +---auth
 |   |           |   |       GoogleLoginRequestDto.java
 |   |           |   |       LoginRequestDto.java
@@ -166,6 +180,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           +---service
 |   |           |   |   HealthService.java
 |   |           |   |   
+|   |           |   +---admin
+|   |           |   |       AdminLoginService.java
+|   |           |   |       AdminUserCreateService.java
+|   |           |   |       AdminVendorListService.java
+|   |           |   |       AdminVendorStatusOverrideService.java
+|   |           |   |       
 |   |           |   +---auth
 |   |           |   |       AuthServiceForgotPassword.java
 |   |           |   |       AuthServiceGoogleLogin.java
@@ -222,7 +242,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
                     
 
 Folder PATH listing
-Volume serial number is 00000270 7478:274D
+Volume serial number is 000001C8 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

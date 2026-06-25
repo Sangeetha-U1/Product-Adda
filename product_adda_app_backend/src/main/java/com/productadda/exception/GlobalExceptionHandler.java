@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.ErrorResponse;
+import org.springframework.web.ErrorResponseException;
 
 import com.productadda.dto.ApiErrorResponseDto;
-
-import org.springframework.web.ErrorResponseException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -149,6 +150,39 @@ public class GlobalExceptionHandler {
                 ApiErrorResponseDto response = new ApiErrorResponseDto(
                                 false,
                                 message,
+                                error);
+
+                return ResponseEntity
+                                .status(statusCode)
+                                .body(response);
+        }
+
+        @ExceptionHandler(AccessDeniedException.class)
+        public ResponseEntity<ApiErrorResponseDto> handleAccessDeniedException(AccessDeniedException exception) {
+
+                Map<String, Object> error = new LinkedHashMap<>();
+
+                // Default fallbacks in case it's a raw security exception
+                int statusCode = HttpStatus.FORBIDDEN.value();
+                String statusType = HttpStatus.FORBIDDEN.name();
+                String detailMessage = exception.getMessage();
+
+                // If it implements Spring's ErrorResponse interface, extract everything
+                // dynamically
+                if (exception instanceof ErrorResponse errorResponse) {
+                        statusCode = errorResponse.getStatusCode().value();
+                        statusType = errorResponse.getStatusCode().toString();
+                        if (errorResponse.getBody().getDetail() != null) {
+                                detailMessage = errorResponse.getBody().getDetail();
+                        }
+                }
+
+                error.put("code", statusCode);
+                error.put("type", statusType);
+
+                ApiErrorResponseDto response = new ApiErrorResponseDto(
+                                false,
+                                detailMessage,
                                 error);
 
                 return ResponseEntity

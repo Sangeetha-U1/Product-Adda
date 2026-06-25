@@ -3,6 +3,7 @@ package com.productadda.service.auth;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -149,31 +150,39 @@ public class AuthServiceGoogleLogin {
 
         /*
          * ================================================================
-         * 3. SECURITY & BUSINESS CONSTRAINTS VALIDATION
+         * 3. ROLE VALIDATION & EXTRACTION
+         * Description: Map and compile all assigned multi-role records into a clean
+         * string collection array
          * ================================================================
          */
-        if (!Boolean.TRUE.equals(user.getIsActive())) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "Account is inactive");
-        }
-
         List<UserRole> userRoles = userRoleRepository.findByFkUser(user);
         if (userRoles.isEmpty()) {
             throw new ApiException(HttpStatus.NOT_FOUND, "User role mapping not found");
         }
 
-        boolean isAdmin = userRoles.stream()
+        List<String> assignedRoles = userRoles.stream()
                 .map(userRole -> userRole.getFkRole().getRoleName())
+                .collect(Collectors.toList());
+
+        boolean isAdmin = assignedRoles.stream()
                 .anyMatch(name -> "SUPER_ADMIN".equals(name) || "ADMIN".equals(name));
 
         if (isAdmin) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Admin portal login is required");
         }
 
-        String primaryRoleName = userRoles.get(0).getFkRole().getRoleName();
+        /*
+         * ================================================================
+         * 4. SECURITY & BUSINESS CONSTRAINTS VALIDATION
+         * ================================================================
+         */
+        if (!Boolean.TRUE.equals(user.getIsActive())) {
+            throw new ApiException(HttpStatus.FORBIDDEN, "Account is inactive");
+        }
 
         /*
          * ================================================================
-         * 4. AUTHENTICATION & BUSINESS WORKFLOW SECTION
+         * 5. AUTHENTICATION & BUSINESS WORKFLOW SECTION
          * ================================================================
          */
         String accessToken = jwtService.generateAccessToken(user.getEmail());
@@ -187,13 +196,13 @@ public class AuthServiceGoogleLogin {
 
         /*
          * ================================================================
-         * 5. RESPONSE SECTION
+         * 6. RESPONSE SECTION
          * ================================================================
          */
         return LoginResponseDto.builder()
                 .userId(user.getPkUserId())
                 .email(user.getEmail())
-                .roleName(primaryRoleName)
+                .roles(assignedRoles)
                 .token(token)
                 .message("Google login successful")
                 .build();

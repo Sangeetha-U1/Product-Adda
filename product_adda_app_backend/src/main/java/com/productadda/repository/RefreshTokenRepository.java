@@ -1,5 +1,6 @@
 package com.productadda.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,4 +21,6 @@ public interface RefreshTokenRepository
     @Modifying
     @Transactional
     void deleteByFkUser(User fkUser);
+
+    List<RefreshToken> findAllByFkUserAndIsActiveTrue(User fkUser);
 }

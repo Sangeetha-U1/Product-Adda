@@ -1,4 +1,4 @@
-package com.productadda.service.auth;
+package com.productadda.service.admin;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,14 +8,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.auth.LoginRequestDto;
-import com.productadda.dto.auth.LoginResponseDto;
+import com.productadda.dto.admin.AdminLoginRequestDto;
+import com.productadda.dto.admin.AdminLoginResponseDto;
 import com.productadda.dto.token.TokenDto;
 import com.productadda.entity.User;
+import com.productadda.entity.UserRole;
 import com.productadda.exception.ApiException;
 import com.productadda.repository.UserRepository;
-
-import com.productadda.entity.UserRole;
 import com.productadda.repository.UserRoleRepository;
 import com.productadda.service.token.RefreshTokenService;
 import com.productadda.service.token.TokenProvider;
@@ -24,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceLogin {
+public class AdminLoginService {
 
     /*
      * ================================================================
@@ -45,11 +44,11 @@ public class AuthServiceLogin {
 
     /*
      * ================================================================
-     * LOGIN USER
+     * LOGIN ADMIN
      * ================================================================
      */
     @Transactional
-    public LoginResponseDto login(LoginRequestDto request) {
+    public AdminLoginResponseDto login(AdminLoginRequestDto request) {
 
         /*
          * ============================================================
@@ -95,13 +94,13 @@ public class AuthServiceLogin {
                 .map(userRole -> userRole.getFkRole().getRoleName())
                 .collect(Collectors.toList());
 
-        boolean isAdmin = assignedRoles.stream()
+        boolean hasAdminPrivileges = assignedRoles.stream()
                 .anyMatch(name -> "SUPER_ADMIN".equals(name) || "ADMIN".equals(name));
 
-        if (isAdmin) {
+        if (!hasAdminPrivileges) {
             throw new ApiException(
                     HttpStatus.FORBIDDEN,
-                    "Admin portal login is required");
+                    "Access denied: Insufficient administrative privileges to access this console");
         }
 
         /*
@@ -144,12 +143,12 @@ public class AuthServiceLogin {
          * 6. RESPONSE
          * ============================================================
          */
-        return LoginResponseDto.builder()
+        return AdminLoginResponseDto.builder()
                 .userId(user.getPkUserId())
                 .email(user.getEmail())
                 .roles(assignedRoles)
                 .token(token)
-                .message("Login successful")
+                .message("Administrative context authenticated successfully")
                 .build();
     }
 }

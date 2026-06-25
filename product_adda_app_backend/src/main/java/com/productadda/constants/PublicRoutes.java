@@ -29,9 +29,8 @@ public class PublicRoutes {
             
 
             // Admin Management Lifecycle
-            "/api/admin/auth/register",
-            "/api/admin/auth/verify-email",
-            "/api/admin/auth/login",
+            "/api/auth/admin/auth/register",
+            "/api/auth/admin/login",
 
             // OpenAPI v3 & Swagger UI Static Assets
             "/swagger-ui.html",

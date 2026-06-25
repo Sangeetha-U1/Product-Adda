@@ -52,7 +52,8 @@ public class RefreshTokenService {
                  * 2. BUSINESS SECTION
                  * ================================================================
                  */
-                // CHANGED: Use the opaque token service instead of generating a cryptographically signed JWT string
+                // CHANGED: Use the opaque token service instead of generating a
+                // cryptographically signed JWT string
                 TokenProvider.TokenService.TokenResult tokenResult = tokenService.generateToken();
                 String rawRefreshToken = tokenResult.rawToken();
                 String hashedRefreshToken = tokenResult.hashedToken();
@@ -69,9 +70,9 @@ public class RefreshTokenService {
                                 .fkUser(user)
                                 .tokenHash(hashedRefreshToken)
                                 .expiresAtUtc(jwtService.getRefreshTokenExpiryDate())
-                                .createdAtUtc(nowUtc) 
-                                .updatedAtUtc(nowUtc) 
-                                .isActive(true) 
+                                .createdAtUtc(nowUtc)
+                                .updatedAtUtc(nowUtc)
+                                .isActive(true)
                                 .revokedAtUtc(null)
                                 .build();
 
@@ -112,8 +113,9 @@ public class RefreshTokenService {
                 // ==========================================
                 // 1.2 SIGNATURE VALIDATION
                 // ==========================================
-                // REMOVED: jwtService.isTokenValid() validation block has been omitted here 
-                // because opaque tokens are random database strings, not cryptographic JWT tokens.
+                // REMOVED: jwtService.isTokenValid() validation block has been omitted here
+                // because opaque tokens are random database strings, not cryptographic JWT
+                // tokens.
 
                 // ==========================================
                 // 1.3 DATABASE RECORD LOOKUP
@@ -177,8 +179,8 @@ public class RefreshTokenService {
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
                 refreshToken.setRevokedAtUtc(nowUtc);
-                refreshToken.setUpdatedAtUtc(nowUtc); 
-                refreshToken.setIsActive(false); 
+                refreshToken.setUpdatedAtUtc(nowUtc);
+                refreshToken.setIsActive(false);
 
                 /*
                  * ================================================================
@@ -242,5 +244,29 @@ public class RefreshTokenService {
                 return RefreshTokenResponseDto.builder()
                                 .token(token)
                                 .build();
+        }
+
+        /*
+         * ================================================================
+         * EVICT ALL ACTIVE USER SESSIONS
+         * Description: Systematically terminates all active sessions for a target user.
+         * ================================================================
+         */
+        @Transactional
+        public void evictAllUserSessions(User user) {
+                if (user == null) {
+                        return;
+                }
+
+                LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
+
+                // Modifying any active records matching this entity boundary
+                refreshTokenRepository.findAllByFkUserAndIsActiveTrue(user)
+                                .forEach(token -> {
+                                        token.setRevokedAtUtc(nowUtc);
+                                        token.setUpdatedAtUtc(nowUtc);
+                                        token.setIsActive(false);
+                                        refreshTokenRepository.save(token);
+                                });
         }
 }
