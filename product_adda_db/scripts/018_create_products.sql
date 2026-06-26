@@ -15,6 +15,12 @@ Description :
     - Wishlist
     - Orders
     - Inventory
+
+    Adds `status` VARCHAR column to the `products` table to track product
+    lifecycle state. References `product_status_lookup.status_code`.
+
+    Stored as plain VARCHAR string (Zero Enum Rule).
+    Default value set to 'APPROVED' for all pre-existing seed data products.
 ===============================================================================
 */
 
@@ -58,6 +64,8 @@ CREATE TABLE products
 
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
 
+    fk_status_id BINARY(16) NOT NULL;
+
     created_at_utc TIMESTAMP NOT NULL
         DEFAULT (UTC_TIMESTAMP()),
 
@@ -85,6 +93,12 @@ CREATE TABLE products
         FOREIGN KEY (fk_brand_id)
         REFERENCES brands(pk_brand_id)
         ON DELETE RESTRICT
+    
+    CONSTRAINT fk_products_status_lookup
+        FOREIGN KEY (fk_status_id)
+        REFERENCES product_status_lookup(pk_status_id)
+        ON DELETE RESTRICT;
+
 );
 
 -- ============================================================================
@@ -115,6 +129,9 @@ CREATE INDEX idx_products_average_rating
 CREATE INDEX idx_products_is_active
     ON products(is_active);
 
+CREATE INDEX idx_products_fk_status_id
+    ON products(fk_status_id);
+    
 -- ============================================================================
 -- Verification
 -- ============================================================================

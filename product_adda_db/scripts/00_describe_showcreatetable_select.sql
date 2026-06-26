@@ -22,29 +22,39 @@ DESCRIBE inventory_transaction_types;
 DESCRIBE notification_types;
 DESCRIBE notification_channels;
 DESCRIBE report_types;
+DESCRIBE product_status_lookup;
+
 DESCRIBE users;
 DESCRIBE user_roles;
 DESCRIBE vendors;
 DESCRIBE vendor_bank_details;
 DESCRIBE addresses;
+
 DESCRIBE brands;
 DESCRIBE categories;
 DESCRIBE products;
 DESCRIBE product_images;
+
 DESCRIBE inventory;
 DESCRIBE inventory_transactions;
+
 DESCRIBE carts;
 DESCRIBE cart_items;
 DESCRIBE wishlists;
 DESCRIBE wishlist_items;
+
 DESCRIBE orders;
 DESCRIBE order_items;
 DESCRIBE payments;
+
 DESCRIBE reviews;
+
 DESCRIBE email_verification_tokens;
 DESCRIBE refresh_tokens;
 DESCRIBE password_reset_tokens;
+
 DESCRIBE notifications;
+
 DESCRIBE reports;
 
 
@@ -62,6 +72,7 @@ SHOW CREATE TABLE inventory_transaction_types;
 SHOW CREATE TABLE notification_types;
 SHOW CREATE TABLE notification_channels;
 SHOW CREATE TABLE report_types;
+SHOW CREATE TABLE product_status_lookup;
 
 SHOW CREATE TABLE users;
 SHOW CREATE TABLE user_roles;
@@ -111,6 +122,7 @@ SELECT * FROM inventory_transaction_types;
 SELECT * FROM notification_types;
 SELECT * FROM notification_channels;
 SELECT * FROM report_types;
+SELECT * FROM product_status_lookup;
 
 SELECT * FROM users;
 SELECT * FROM user_roles;
@@ -288,6 +300,21 @@ SELECT
     report_types.updated_at_utc,
     CONVERT_TZ(report_types.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
 FROM report_types;
+
+-- ==============================================================
+-- 35. product_status_lookup
+-- ==============================================================
+SELECT
+    BIN_TO_UUID(product_status_lookup.pk_status_id), 
+    product_status_lookup.status_code, 
+    product_status_lookup.status_label, 
+    product_status_lookup.display_order, 
+    product_status_lookup.is_active, 
+    product_status_lookup.created_at_utc,
+    CONVERT_TZ(product_status_lookup.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    product_status_lookup.updated_at_utc,
+    CONVERT_TZ(product_status_lookup.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM product_status_lookup;
 
 -- ==============================================================
 -- 11. users

@@ -157,3 +157,16 @@ INSERT INTO report_types (pk_report_type_id, report_type_name, description, is_a
 (UUID_V7(), 'ORDERS', 'Orders report', TRUE, '2026-02-11 09:30:00'),
 (UUID_V7(), 'REVENUE', 'Revenue report', TRUE, '2026-03-01 11:15:00'),
 (UUID_V7(), 'VENDOR_PERFORMANCE', 'Vendor performance report', TRUE, '2026-06-17 16:45:22');
+
+-- ============================================================================
+-- 035. SEED DATA FOR: product_status_lookup
+-- ============================================================================
+
+INSERT INTO product_status_lookup
+    (pk_status_id, status_code, status_label, display_order, is_active)
+VALUES
+    (UUID_V7(),       'DRAFT',            'Draft',            1, TRUE),
+    (UUID_V7(),       'PENDING_APPROVAL', 'Pending Approval',  2, TRUE),
+    (UUID_V7(),       'APPROVED',         'Approved',          3, TRUE),
+    (UUID_V7(),       'REJECTED',         'Rejected',          4, TRUE),
+    (UUID_V7(),       'ARCHIVED',         'Archived',          5, TRUE);

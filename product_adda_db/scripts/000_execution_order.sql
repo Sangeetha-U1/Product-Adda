@@ -28,6 +28,7 @@ Description :
 008_create_notification_types.sql
 009_create_notification_channels.sql
 010_create_report_types.sql
+035_create_product_status_lookup.sql
 
 011_create_users.sql
 012_create_user_roles.sql
@@ -103,6 +104,7 @@ mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\00
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\008_create_notification_types.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\009_create_notification_channels.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\010_create_report_types.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\035_create_product_status_lookup.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\011_create_users.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\012_create_user_roles.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\013_create_vendors.sql"
