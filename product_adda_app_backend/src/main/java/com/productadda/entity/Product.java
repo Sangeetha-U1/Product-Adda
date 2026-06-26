@@ -83,6 +83,10 @@ public class Product {
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_status_id", nullable = false)
+    private ProductStatusLookup fkStatus;
+
     /*
      * ===========================================================================
      * AUDIT
