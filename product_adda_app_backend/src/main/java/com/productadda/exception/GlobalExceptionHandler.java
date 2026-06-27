@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.security.access.AccessDeniedException;
@@ -170,6 +171,38 @@ public class GlobalExceptionHandler {
                 // If it implements Spring's ErrorResponse interface, extract everything
                 // dynamically
                 if (exception instanceof ErrorResponse errorResponse) {
+                        statusCode = errorResponse.getStatusCode().value();
+                        statusType = errorResponse.getStatusCode().toString();
+                        if (errorResponse.getBody().getDetail() != null) {
+                                detailMessage = errorResponse.getBody().getDetail();
+                        }
+                }
+
+                error.put("code", statusCode);
+                error.put("type", statusType);
+
+                ApiErrorResponseDto response = new ApiErrorResponseDto(
+                                false,
+                                detailMessage,
+                                error);
+
+                return ResponseEntity
+                                .status(statusCode)
+                                .body(response);
+        }
+
+        @ExceptionHandler(MaxUploadSizeExceededException.class)
+        public ResponseEntity<ApiErrorResponseDto> handleMaxSizeException(MaxUploadSizeExceededException exception) {
+
+                Map<String, Object> error = new LinkedHashMap<>();
+
+                // Standard properties for file size violations
+                int statusCode = HttpStatus.BAD_REQUEST.value();
+                String statusType = HttpStatus.BAD_REQUEST.name();
+                String detailMessage = "Upload failed: File size exceeds the allowed limit (Max: 5MB per file / 25MB total payload)";
+
+                // Fallback extraction check if Spring attaches specific ErrorResponse metadata
+                if (exception instanceof org.springframework.web.ErrorResponse errorResponse) {
                         statusCode = errorResponse.getStatusCode().value();
                         statusType = errorResponse.getStatusCode().toString();
                         if (errorResponse.getBody().getDetail() != null) {

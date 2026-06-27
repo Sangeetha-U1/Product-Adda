@@ -63,5 +63,20 @@
     "name": "google.client.id",
     "type": "java.lang.String",
     "description": "A description for 'google.client.id'"
+  },
+  {
+    "name": "app.upload.dir",
+    "type": "java.lang.String",
+    "description": "A description for 'app.upload.dir'"
+  },
+  {
+    "name": "app.image.max-size",
+    "type": "java.lang.String",
+    "description": "A description for 'app.image.max-size'"
+  },
+  {
+    "name": "app.image.allowed-types",
+    "type": "java.lang.String",
+    "description": "A description for 'app.image.allowed-types'"
   }
 ]}

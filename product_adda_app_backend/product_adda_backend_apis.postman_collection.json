@@ -1360,7 +1360,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\"email\": \"pooja.singh@yahoo.com\",\r\n\"password\": \"Test123\"\r\n}",
+              "raw": "{\r\n\"email\": \"vikram.m@gmail.com\",\r\n\"password\": \"Test123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1816,7 +1816,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJwb29qYS5zaW5naEB5YWhvby5jb20iLCJpYXQiOjE3ODI0OTkwMjksImV4cCI6MTc4MjUwMjYyOX0.I08Cf7jov3LoL-XvSpYM6gINPfSL4DlLp_qMGwNKnybWZclEhsj7KV_NuPMrSGcJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ2aWtyYW0ubUBnbWFpbC5jb20iLCJpYXQiOjE3ODI1Nzg0OTUsImV4cCI6MTc4MjU4MjA5NX0.mjrCnItaGsXNgg0XsKLOh8-I0dLshtOILeanGwoP8QWl_bpuQyWaeGPoryaJNUCJ",
                   "type": "string"
                 }
               ]
@@ -1825,7 +1825,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\": \"019f0538-b330-740c-afe6-18c29b4b597e\"\r\n}",
+              "raw": "{\r\n    \"refreshToken\": \"019f09f5-3f26-7b8e-8362-143df6968673\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1934,6 +1934,96 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Logout successful\",\n    \"data\": {\n        \"email\": \"rahul.verma@gmail.com\"\n    }\n}"
+            },
+            {
+              "name": "401 Unauthorized TOKEN_EXPIRED",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"refreshToken\": \"019f0538-b330-740c-afe6-18c29b4b597e\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/logout",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "140"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 11:07:02 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"The provided access token has expired. Please use a refresh token.\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"TOKEN_EXPIRED\"\n    }\n}"
             }
           ]
         },
@@ -2277,7 +2367,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODIwNDMzMjEsImV4cCI6MTc4MjA0NjkyMX0.Ae-pGRPB2iNGWd_tusFE78a0MXgv5By4VCwDc6hdnIkl_vgW3qBbr2jOyxt7w5pp",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJpYXQiOjE3ODI1NzMxNzksImV4cCI6MTc4MjU3Njc3OX0.L-V07omuFExigYFaA0Fpf8pZ_mpuUuejsjEPLkkfqThIO3RWOrIcgCpMoOQdCivv",
                   "type": "string"
                 }
               ]
@@ -2286,7 +2376,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\" : \"019ef46e-af4b-7229-b563-ce5d841d1ecc\"\r\n}\r\n",
+              "raw": "{\r\n    \"refreshToken\" : \"019f09a4-25cd-772a-b644-5145d8e3dd8d\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -6788,6 +6878,1179 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": false,\n    \"message\": \"Product SKU code 'WBH-001-BLK' already exists. SKU codes must be unique\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/products/{productId}",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ2aWtyYW0ubUBnbWFpbC5jb20iLCJpYXQiOjE3ODI1Nzg0OTUsImV4cCI6MTc4MjU4MjA5NX0.mjrCnItaGsXNgg0XsKLOh8-I0dLshtOILeanGwoP8QWl_bpuQyWaeGPoryaJNUCJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"productName\": \"Trying to update someone else's product\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/products/019f094b-13b4-73ff-ac5e-ba77676ad886",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "019f094b-13b4-73ff-ac5e-ba77676ad886"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "401 Unauthorized Authentication required",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productName\": \"Updated Headphones\",\r\n    \"price\": 5999\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "96"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 12:48:17 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Authentication required\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "  {\r\n    \"discountPrice\": 399\r\n  }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 12:56:55 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Product updated successfully\",\n    \"data\": {\n        \"product\": {\n            \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n            \"vendorId\": \"019ed70e-d90f-74f9-b2bb-84253cb5ba52\",\n            \"productName\": \"Wireless Bluetooth Headphones\",\n            \"description\": \"High-quality noise-cancelling headphones with 30-hour battery life\",\n            \"skuCode\": \"WBH-001-BLK\",\n            \"categoryId\": \"019ed714-ddaa-7038-86ce-07e6fce0d4d9\",\n            \"brandId\": \"019ed714-dd9f-750e-86cc-d77d30fbdb7a\",\n            \"price\": 4999,\n            \"discountPrice\": 399,\n            \"stockQuantity\": 0,\n            \"status\": \"PENDING_APPROVAL\",\n            \"createdAtUtc\": \"2026-06-27T12:56:55.190747600Z\"\n        },\n        \"updatedFields\": {\n            \"discountPrice\": 399\n        }\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request Product price must be a positive value",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"price\": -1000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 13:02:18 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Product price must be a positive value\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            },
+            {
+              "name": "404 Not Found Product not found with ID: {productId}",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productName\": \"Valid Name\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019ed714-ddaa-7038-86ce-07e6fce0d4d9",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019ed714-ddaa-7038-86ce-07e6fce0d4d9"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 13:05:08 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Product not found with ID: 019ed714-ddaa-7038-86ce-07e6fce0d4d9\",\n    \"error\": {\n        \"code\": 404,\n        \"type\": \"NOT_FOUND\"\n    }\n}"
+            },
+            {
+              "name": "403 Forbidden Access Denied: Vendor account is inactive",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productName\": \"Trying to update someone else's product\"\r\n} ",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019ed714-ddaa-7038-86ce-07e6fce0d4d9",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019ed714-ddaa-7038-86ce-07e6fce0d4d9"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 16:40:13 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Access Denied: Vendor account is inactive\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            },
+            {
+              "name": "403 Forbidden Access Denied: You can only update your own products",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productName\": \"Trying to update someone else's product\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f094b-13b4-73ff-ac5e-ba77676ad886",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f094b-13b4-73ff-ac5e-ba77676ad886"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 16:43:33 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Access Denied: You can only update your own products\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/products/{productId}",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJpYXQiOjE3ODI1NjQ5MjMsImV4cCI6MTc4MjU2ODUyM30.t3TftvJdx_edbz160reTT-71Z_u2s3egmD6bVwkukejhbQMHMDix9eFMsC1_6eez",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/019f094b-13b4-73ff-ac5e-ba77676ad886",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "019f094b-13b4-73ff-ac5e-ba77676ad886"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "401 Unauthorized Authentication required",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f094b-13b4-73ff-ac5e-ba77676ad886",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f094b-13b4-73ff-ac5e-ba77676ad886"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "96"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 13:39:06 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Authentication required\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f094b-13b4-73ff-ac5e-ba77676ad886",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f094b-13b4-73ff-ac5e-ba77676ad886"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 13:41:28 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Product deleted successfully and marked as ARCHIVED\",\n    \"data\": {\n        \"productId\": \"019f094b-13b4-73ff-ac5e-ba77676ad886\",\n        \"vendorId\": \"019ed70e-d90f-74f9-b2bb-84253cb5ba52\",\n        \"productName\": \"Dummy Product For Lazy Delete Testing\",\n        \"description\": null,\n        \"skuCode\": null,\n        \"categoryId\": null,\n        \"brandId\": null,\n        \"price\": null,\n        \"discountPrice\": null,\n        \"stockQuantity\": null,\n        \"status\": \"DELETED\",\n        \"createdAtUtc\": \"2026-06-27T13:41:28.533237900Z\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/products/{productId}/images",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJpYXQiOjE3ODI1NzcyMzIsImV4cCI6MTc4MjU4MDgzMn0.gDxKCWrQ2U5DSoRPw3mCF_h8nXsbLoJMMJpmc4lpxz_2WPtQXShpwLa2SIQIpNMM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                  "src": "/C:/Users/ADMIN/Downloads/BlackMarble_2016_1200m_australia_labeled.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                "images"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "401 Unauthorized TOKEN_EXPIRED",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                      "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "images"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "140"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 15:09:44 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"The provided access token has expired. Please use a refresh token.\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"TOKEN_EXPIRED\"\n    }\n}"
+            },
+            {
+              "name": "500 Internal Server Error Required part 'image' is not present.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                      "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "images"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 15:13:31 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Required part 'image' is not present.\",\n    \"error\": {\n        \"code\": 500,\n        \"type\": \"INTERNAL_SERVER_ERROR\"\n    }\n}"
+            },
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                      "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "images"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 15:48:16 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Product image uploaded successfully\",\n    \"data\": {\n        \"imageId\": \"019f09c4-6e33-72a4-a211-a49cb8a6eb22\",\n        \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n        \"imageUrl\": \"/uploads/products/019f09c4-6e33-72a4-a211-a49cb8a6eb22.png\",\n        \"displayOrder\": 1,\n        \"altText\": \"Wireless Bluetooth Headphones image 1\",\n        \"uploadedAtUtc\": \"2026-06-27T15:48:16.257731800Z\"\n    }\n}"
+            },
+            {
+              "name": "413 Request Entity Too Large Maximum upload size exceeded",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                      "src": "/C:/Users/ADMIN/Downloads/BlackMarble_2016_1200m_australia_labeled.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "images"
+                  ]
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 16:33:20 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Maximum upload size exceeded\",\n    \"error\": {\n        \"code\": 413,\n        \"type\": \"413 PAYLOAD_TOO_LARGE\"\n    }\n}"
             }
           ]
         }
