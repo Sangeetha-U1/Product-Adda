@@ -169,4 +169,5 @@ VALUES
     (UUID_V7(),       'PENDING_APPROVAL', 'Pending Approval',  2, TRUE),
     (UUID_V7(),       'APPROVED',         'Approved',          3, TRUE),
     (UUID_V7(),       'REJECTED',         'Rejected',          4, TRUE),
-    (UUID_V7(),       'ARCHIVED',         'Archived',          5, TRUE);
+    (UUID_V7(),       'ARCHIVED',         'Archived',          5, TRUE),
+    (UUID_V7(),       'DELETED',          'Deleted',           6, TRUE);
