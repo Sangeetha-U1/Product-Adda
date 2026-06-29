@@ -1,29 +1,34 @@
 package com.productadda.security;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.productadda.service.token.TokenProvider.JwtService;
+
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         private final JwtService jwtService;
-        private final UserDetailsService userDetailsService;
 
         @Override
         protected void doFilterInternal(
@@ -42,21 +47,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 try {
                         jwt = authHeader.substring(7);
-                        userEmail = jwtService.extractEmailFromToken(jwt); // Throws exception if expired/invalid
+                        userEmail = jwtService.extractEmailFromToken(jwt);
 
                         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
                                 if (jwtService.isTokenValid(jwt)) {
+                                        // 1. Extract multi-roles array from verified token claims
+                                        List<String> roles = jwtService.extractRolesFromToken(jwt);
+
+                                        // 2. Map cleanly to GrantedAuthorities for your guard clauses
+                                        List<SimpleGrantedAuthority> authorities = roles.stream()
+                                                        .map(role -> new SimpleGrantedAuthority(role.toUpperCase()))
+                                                        .collect(Collectors.toList());
+
+                                        // 3. Populate Context Authentication with your claims data
                                         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                                                        userDetails, null, userDetails.getAuthorities());
+                                                        userEmail, null, authorities);
+
                                         authToken.setDetails(
                                                         new WebAuthenticationDetailsSource().buildDetails(request));
+
                                         SecurityContextHolder.getContext().setAuthentication(authToken);
                                 }
                         }
                 } catch (ExpiredJwtException e) {
-                        // Set attributes so the EntryPoint can pick them up dynamically
                         request.setAttribute("jwt_error_type", "TOKEN_EXPIRED");
                         request.setAttribute("jwt_error_message",
                                         "The provided access token has expired. Please use a refresh token.");

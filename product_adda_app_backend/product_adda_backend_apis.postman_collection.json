@@ -1360,7 +1360,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\"email\": \"vikram.m@gmail.com\",\r\n\"password\": \"Test123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"rajesh@techsolutions.com\",\r\n    \"password\": \"Test123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2367,7 +2367,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJpYXQiOjE3ODI1NzMxNzksImV4cCI6MTc4MjU3Njc3OX0.L-V07omuFExigYFaA0Fpf8pZ_mpuUuejsjEPLkkfqThIO3RWOrIcgCpMoOQdCivv",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJpYXQiOjE3ODI3Mzg3NzYsImV4cCI6MTc4Mjc0MjM3Nn0.q78Z4P8iaNgzZDxMR2-Vs0trGSwAMm3F_brSEmGBdAdy3vcFMwSYclxFCZAn0Anh",
                   "type": "string"
                 }
               ]
@@ -2376,7 +2376,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\" : \"019f09a4-25cd-772a-b644-5145d8e3dd8d\"\r\n}\r\n",
+              "raw": "{\r\n    \"refreshToken\" : \"019f1382-f407-7baa-8fe1-741520b6315e\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -8051,6 +8051,711 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": false,\n    \"message\": \"Maximum upload size exceeded\",\n    \"error\": {\n        \"code\": 413,\n        \"type\": \"413 PAYLOAD_TOO_LARGE\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/products/{productId}/inventory",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJpYXQiOjE3ODI3Mzg3NzYsImV4cCI6MTc4Mjc0MjM3Nn0.q78Z4P8iaNgzZDxMR2-Vs0trGSwAMm3F_brSEmGBdAdy3vcFMwSYclxFCZAn0Anh",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"currentStock\": 100,\r\n    \"reorderLevel\": 20,\r\n    \"maxStock\": 500\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/products/019ed714-ddc1-7ea4-98f3-18cd77171761/inventory",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "019ed714-ddc1-7ea4-98f3-18cd77171761",
+                "inventory"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "400 Bad Request Invalid value '{productId}' provided for parameter 'productId'. Expected format: UUID.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/{productId}/inventory",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "{productId}",
+                    "inventory"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 12:59:00 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Invalid value '{productId}' provided for parameter 'productId'. Expected format: UUID.\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request Required request body is entirely missing. Please provide the required JSON payload properties.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/inventory",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "inventory"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 13:08:08 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Required request body is entirely missing. Please provide the required JSON payload properties.\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            },
+            {
+              "name": "403 Forbidden Access Denied",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "  {\r\n    \"currentStock\": 100,\r\n    \"reorderLevel\": 20,\r\n    \"maxStock\": 500\r\n  }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/inventory",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "inventory"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 13:10:19 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Access Denied\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request Inventory already initialized for this product. Use update endpoint.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "  {\r\n    \"currentStock\": 100,\r\n    \"reorderLevel\": 20,\r\n    \"maxStock\": 500\r\n  }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/inventory",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "inventory"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 14:03:00 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Inventory already initialized for this product. Use update endpoint.\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request Maximum stock is required and must be positive",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "  {\r\n    \"currentStock\": 100,\r\n    \"reorderLevel\": 20\r\n  }\r\n ",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/inventory",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "inventory"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 14:03:34 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Maximum stock is required and must be positive\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/products/{productId}/inventory",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJpYXQiOjE3ODI3Mzg3NzYsImV4cCI6MTc4Mjc0MjM3Nn0.q78Z4P8iaNgzZDxMR2-Vs0trGSwAMm3F_brSEmGBdAdy3vcFMwSYclxFCZAn0Anh",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"currentStock\": 150,\r\n    \"reorderLevel\": 25\r\n    // \"maxStock\": 600\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/inventory",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                "inventory"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"currentStock\": 150,\r\n    \"reorderLevel\": 25\r\n    // \"maxStock\": 600\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/inventory",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "inventory"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 14:10:24 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Product inventory updated successfully\",\n    \"data\": {\n        \"inventory\": {\n            \"inventoryId\": \"019f052f-e3aa-7ad5-8b4b-c6f40dd20b13\",\n            \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n            \"currentStock\": 150,\n            \"reorderLevel\": 25,\n            \"maxStock\": 1000,\n            \"isLowStock\": false,\n            \"availableForSale\": true,\n            \"createdAtUtc\": \"2026-06-29T14:10:24.1746017Z\",\n            \"updatedAtUtc\": \"2026-06-29T14:10:24.1746017Z\"\n        },\n        \"updatedFields\": {\n            \"reorderLevel\": 25,\n            \"currentStock\": 150\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/products/{productId}/inventory",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzgyNzUxOTE3LCJleHAiOjE3ODI3NTU1MTd9.YairuarEd4lhhk5hisKvwNGKmoo8JFqHR2Cjvxi3XylgBOe2_-ZJNk056CzIjRGX",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/inventory",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                "inventory"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/inventory",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "inventory"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 29 Jun 2026 16:52:45 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Product inventory retrieved successfully\",\n    \"data\": {\n        \"inventoryId\": \"019f052f-e3aa-7ad5-8b4b-c6f40dd20b13\",\n        \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n        \"currentStock\": 150,\n        \"reorderLevel\": 25,\n        \"maxStock\": 1000,\n        \"isLowStock\": false,\n        \"availableForSale\": true,\n        \"createdAtUtc\": \"2026-06-29T16:52:45.65748Z\",\n        \"updatedAtUtc\": \"2026-06-29T16:52:45.65748Z\"\n    }\n}"
             }
           ]
         }

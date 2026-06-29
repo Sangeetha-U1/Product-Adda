@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+
 import com.productadda.dto.auth.GoogleLoginRequestDto;
 import com.productadda.dto.auth.LoginResponseDto;
 import com.productadda.dto.token.TokenDto;
@@ -163,7 +164,11 @@ public class AuthServiceGoogleLogin {
         }
 
         // 2.4 Token Generation Pipeline Engine
-        String accessToken = jwtService.generateAccessToken(user.getEmail());
+        String accessToken = jwtService.generateAccessToken(
+                user.getPkUserId(),
+                user.getEmail(),
+                assignedRoles);
+
         String refreshToken = refreshTokenService.createRefreshToken(user);
 
         TokenDto token = TokenDto.builder()

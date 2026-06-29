@@ -115,8 +115,14 @@ public class AuthServiceLogin {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
 
+        // ==========================================
         // 2.3 Cryptographic Token Production Engine
-        String accessToken = jwtService.generateAccessToken(user.getEmail());
+        // ==========================================
+        // Pass user details and verified roles directly from your trusty DB source
+        String accessToken = jwtService.generateAccessToken(
+                user.getPkUserId(),
+                user.getEmail(),
+                assignedRoles);
 
         String refreshToken = refreshTokenService.createRefreshToken(user);
 

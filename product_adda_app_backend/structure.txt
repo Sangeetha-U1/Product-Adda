@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 0000016E 7478:274D
+Volume serial number is 0000027C 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -43,6 +43,9 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       
 |   |           |   +---payment
 |   |           |   |       PaymentController.java
+|   |           |   |       
+|   |           |   +---product
+|   |           |   |       ProductInventoryController.java
 |   |           |   |       
 |   |           |   +---token
 |   |           |   |       PasswordResetController.java
@@ -99,7 +102,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---product
 |   |           |   |       ProductCreateRequestDto.java
 |   |           |   |       ProductImageDto.java
+|   |           |   |       ProductInventoryRequestDto.java
+|   |           |   |       ProductInventoryResponseDto.java
 |   |           |   |       ProductResponseDto.java
+|   |           |   |       ProductUpdateInventoryRequestDto.java
+|   |           |   |       ProductUpdateInventoryResponseDto.java
 |   |           |   |       ProductUpdateRequestDto.java
 |   |           |   |       ProductUpdateResponseDto.java
 |   |           |   |       
@@ -230,6 +237,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       ProductCreateService.java
 |   |           |   |       ProductDeleteService.java
 |   |           |   |       ProductImageService.java
+|   |           |   |       ProductInventoryService.java
 |   |           |   |       ProductRetrievalService.java
 |   |           |   |       ProductUpdateService.java
 |   |           |   |       
@@ -272,12 +280,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 0000024E 7478:274D
+Volume serial number is 00000129 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 0000022D 7478:274D
+Volume serial number is 00000280 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

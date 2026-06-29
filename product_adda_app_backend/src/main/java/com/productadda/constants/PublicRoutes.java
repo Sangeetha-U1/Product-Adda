@@ -16,7 +16,7 @@ public class PublicRoutes {
             // Authentication Lifecycle APIs
             "/api/auth/register",
             "/api/auth/login",
-            "/api/auth//google-login",
+            "/api/auth/google-login",
             "/api/auth/forgot-password",
 
             // Token & Email Verification Lifecycle
@@ -25,8 +25,8 @@ public class PublicRoutes {
             "/api/token/reset-password",
             "/api/token/refresh-token",
 
-            // Vendor
-            
+            // Product & Inventory Catalog Lifecycle
+            "/api/products/*/inventory",
 
             // Admin Management Lifecycle
             "/api/auth/admin/auth/register",

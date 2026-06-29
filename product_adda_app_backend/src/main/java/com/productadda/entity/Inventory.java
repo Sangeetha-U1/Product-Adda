@@ -56,6 +56,9 @@ public class Inventory {
     @Column(name = "low_stock_threshold", nullable = false)
     private Integer lowStockThreshold;
 
+    @Column(name = "max_stock", nullable = false)
+    private Integer maxStock;
+
     /*
      * =========================================================
      * STATUS

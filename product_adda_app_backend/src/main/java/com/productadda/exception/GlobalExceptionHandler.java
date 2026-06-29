@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,56 +14,60 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.ErrorResponseException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import com.productadda.dto.ApiErrorResponseDto;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-        @ExceptionHandler(ApiException.class)
-        public ResponseEntity<ApiErrorResponseDto> handleApiException(
-                        ApiException exception) {
-
+        /**
+         * Dynamic internal helper to construct uniform error map payloads
+         * directly from Spring HttpStatusCode/HttpStatus sources.
+         */
+        private Map<String, Object> createDynamicErrorDetails(HttpStatusCode statusCode) {
                 Map<String, Object> error = new LinkedHashMap<>();
+                error.put("code", statusCode.value());
+                if (statusCode instanceof HttpStatus status) {
+                        error.put("type", status.name());
+                } else {
+                        error.put("type", statusCode.toString());
+                }
+                return error;
+        }
 
-                // Safe to use directly now because Lombok's @NonNull guarantees it's not null
+        @ExceptionHandler(ApiException.class)
+        public ResponseEntity<ApiErrorResponseDto> handleApiException(ApiException exception) {
                 HttpStatus status = exception.getStatus();
+                Map<String, Object> error = createDynamicErrorDetails(status);
 
-                error.put("code", status.value());
-                error.put("type", status.name());
-
-                // Using your Lombok-powered DTO constructor
                 ApiErrorResponseDto response = new ApiErrorResponseDto(
                                 false,
                                 exception.getMessage(),
                                 error);
 
-                return ResponseEntity
-                                .status(status)
-                                .body(response);
+                return ResponseEntity.status(status).body(response);
         }
 
         @ExceptionHandler(NoResourceFoundException.class)
-        public ResponseEntity<ApiErrorResponseDto> handleNoResourceFoundException(
-                        NoResourceFoundException exception) {
-
-                Map<String, Object> error = new LinkedHashMap<>();
-                error.put("code", 404);
-                error.put("type", "NOT_FOUND");
+        public ResponseEntity<ApiErrorResponseDto> handleNoResourceFoundException(NoResourceFoundException exception) {
+                HttpStatusCode statusCode = exception.getStatusCode();
+                Map<String, Object> error = createDynamicErrorDetails(statusCode);
 
                 ApiErrorResponseDto response = new ApiErrorResponseDto(
                                 false,
-                                "Route not found",
+                                "Route not found: " + exception.getResourcePath(),
                                 error);
 
-                return ResponseEntity
-                                .status(HttpStatus.NOT_FOUND)
-                                .body(response);
+                return ResponseEntity.status(statusCode).body(response);
         }
 
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<ApiErrorResponseDto> handleMethodArgumentNotValidException(
                         MethodArgumentNotValidException exception) {
+                HttpStatusCode statusCode = exception.getStatusCode();
+                Map<String, Object> error = createDynamicErrorDetails(statusCode);
 
                 String message = exception.getBindingResult()
                                 .getFieldErrors()
@@ -71,30 +76,19 @@ public class GlobalExceptionHandler {
                                 .map(fieldError -> fieldError.getDefaultMessage())
                                 .orElse("Validation failed");
 
-                Map<String, Object> error = new LinkedHashMap<>();
-                error.put("code", 400);
-                error.put("type", "BAD_REQUEST");
-
                 ApiErrorResponseDto response = new ApiErrorResponseDto(
                                 false,
                                 message,
                                 error);
 
-                return ResponseEntity
-                                .badRequest()
-                                .body(response);
+                return ResponseEntity.status(statusCode).body(response);
         }
 
         @ExceptionHandler(ErrorResponseException.class)
-        public ResponseEntity<ApiErrorResponseDto> handleErrorResponseException(
-                        ErrorResponseException exception) {
+        public ResponseEntity<ApiErrorResponseDto> handleErrorResponseException(ErrorResponseException exception) {
+                HttpStatusCode statusCode = exception.getStatusCode();
+                Map<String, Object> error = createDynamicErrorDetails(statusCode);
 
-                Map<String, Object> error = new LinkedHashMap<>();
-                error.put("code", exception.getStatusCode().value());
-                error.put("type", exception.getStatusCode().toString());
-
-                // Fixed: Local variable assignment protects against potential null pointer
-                // warnings
                 String detailMessage = "An error occurred";
                 var body = exception.getBody();
                 if (body != null && body.getDetail() != null) {
@@ -106,120 +100,120 @@ public class GlobalExceptionHandler {
                                 detailMessage,
                                 error);
 
-                return ResponseEntity
-                                .status(exception.getStatusCode())
-                                .body(response);
+                return ResponseEntity.status(statusCode).body(response);
         }
 
-        @ExceptionHandler(Exception.class)
-        public ResponseEntity<ApiErrorResponseDto> handleGenericException(
-                        Exception exception) {
+        @ExceptionHandler(AccessDeniedException.class)
+        public ResponseEntity<ApiErrorResponseDto> handleAccessDeniedException(AccessDeniedException exception) {
+                HttpStatusCode statusCode = HttpStatus.FORBIDDEN;
+                String detailMessage = exception.getMessage();
 
-                int statusCode = 500;
-                String statusType = "INTERNAL_SERVER_ERROR";
-                String message = "Internal server error";
-
-                if (exception instanceof ErrorResponseException ex) {
-                        statusCode = ex.getStatusCode().value();
-                        statusType = ex.getStatusCode().toString();
-
-                        // Fixed: Keeps the compiler happy for Spring's internal methods
-                        var body = ex.getBody();
-                        if (body != null) {
-                                String detail = body.getDetail();
-                                if (detail != null && !detail.isBlank()) {
-                                        message = detail;
-                                }
+                if (exception instanceof ErrorResponse errorResponse) {
+                        statusCode = errorResponse.getStatusCode();
+                        if (errorResponse.getBody().getDetail() != null) {
+                                detailMessage = errorResponse.getBody().getDetail();
                         }
                 }
 
-                else if (exception instanceof ApiException ex) {
-                        statusCode = ex.getStatus().value();
-                        statusType = ex.getStatus().name();
-                        message = ex.getMessage();
+                Map<String, Object> error = createDynamicErrorDetails(statusCode);
+                ApiErrorResponseDto response = new ApiErrorResponseDto(
+                                false,
+                                detailMessage,
+                                error);
+
+                return ResponseEntity.status(statusCode).body(response);
+        }
+
+        @ExceptionHandler(MaxUploadSizeExceededException.class)
+        public ResponseEntity<ApiErrorResponseDto> handleMaxSizeException(MaxUploadSizeExceededException exception) {
+                HttpStatusCode statusCode = HttpStatus.BAD_REQUEST;
+                String detailMessage = "Upload failed: File size exceeds the allowed limit (Max: 5MB per file / 25MB total payload)";
+
+                if (exception instanceof ErrorResponse errorResponse) {
+                        statusCode = errorResponse.getStatusCode();
+                        if (errorResponse.getBody().getDetail() != null) {
+                                detailMessage = errorResponse.getBody().getDetail();
+                        }
                 }
 
-                else if (exception.getMessage() != null
-                                && !exception.getMessage().isBlank()) {
+                Map<String, Object> error = createDynamicErrorDetails(statusCode);
+                ApiErrorResponseDto response = new ApiErrorResponseDto(
+                                false,
+                                detailMessage,
+                                error);
+
+                return ResponseEntity.status(statusCode).body(response);
+        }
+
+        @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+        public ResponseEntity<ApiErrorResponseDto> handleMethodArgumentTypeMismatchException(
+                        MethodArgumentTypeMismatchException exception) {
+                // Spring sets bad request status directly inside ErrorResponse capabilities
+                // since v6
+                HttpStatusCode statusCode = HttpStatus.BAD_REQUEST;
+
+                String parameterName = exception.getName();
+                String invalidValue = exception.getValue() != null ? exception.getValue().toString() : "null";
+                String requiredType = exception.getRequiredType() != null ? exception.getRequiredType().getSimpleName()
+                                : "required type";
+
+                String cleanMessage = String.format(
+                                "Invalid value '%s' provided for parameter '%s'. Expected format: %s.",
+                                invalidValue, parameterName, requiredType);
+
+                Map<String, Object> error = createDynamicErrorDetails(statusCode);
+                ApiErrorResponseDto response = new ApiErrorResponseDto(
+                                false,
+                                cleanMessage,
+                                error);
+
+                return ResponseEntity.status(statusCode).body(response);
+        }
+
+        @ExceptionHandler(HttpMessageNotReadableException.class)
+        public ResponseEntity<ApiErrorResponseDto> handleHttpMessageNotReadableException(
+                        HttpMessageNotReadableException exception) {
+                HttpStatusCode statusCode = HttpStatus.BAD_REQUEST;
+                String cleanMessage = "Required request body is missing or malformed. Please provide a valid JSON payload.";
+
+                if (exception.getMessage() != null
+                                && exception.getMessage().contains("Required request body is missing")) {
+                        cleanMessage = "Required request body is entirely missing. Please provide the required JSON payload properties.";
+                }
+
+                Map<String, Object> error = createDynamicErrorDetails(statusCode);
+                ApiErrorResponseDto response = new ApiErrorResponseDto(
+                                false,
+                                cleanMessage,
+                                error);
+
+                return ResponseEntity.status(statusCode).body(response);
+        }
+
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<ApiErrorResponseDto> handleGenericException(Exception exception) {
+                HttpStatusCode statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+                String message = "Internal server error";
+
+                if (exception instanceof ErrorResponse ex) {
+                        statusCode = ex.getStatusCode();
+                        var body = ex.getBody();
+                        if (body != null && body.getDetail() != null && !body.getDetail().isBlank()) {
+                                message = body.getDetail();
+                        }
+                } else if (exception instanceof ApiException ex) {
+                        statusCode = ex.getStatus();
+                        message = ex.getMessage();
+                } else if (exception.getMessage() != null && !exception.getMessage().isBlank()) {
                         message = exception.getMessage();
                 }
 
-                Map<String, Object> error = new LinkedHashMap<>();
-                error.put("code", statusCode);
-                error.put("type", statusType);
-
+                Map<String, Object> error = createDynamicErrorDetails(statusCode);
                 ApiErrorResponseDto response = new ApiErrorResponseDto(
                                 false,
                                 message,
                                 error);
 
-                return ResponseEntity
-                                .status(statusCode)
-                                .body(response);
-        }
-
-        @ExceptionHandler(AccessDeniedException.class)
-        public ResponseEntity<ApiErrorResponseDto> handleAccessDeniedException(AccessDeniedException exception) {
-
-                Map<String, Object> error = new LinkedHashMap<>();
-
-                // Default fallbacks in case it's a raw security exception
-                int statusCode = HttpStatus.FORBIDDEN.value();
-                String statusType = HttpStatus.FORBIDDEN.name();
-                String detailMessage = exception.getMessage();
-
-                // If it implements Spring's ErrorResponse interface, extract everything
-                // dynamically
-                if (exception instanceof ErrorResponse errorResponse) {
-                        statusCode = errorResponse.getStatusCode().value();
-                        statusType = errorResponse.getStatusCode().toString();
-                        if (errorResponse.getBody().getDetail() != null) {
-                                detailMessage = errorResponse.getBody().getDetail();
-                        }
-                }
-
-                error.put("code", statusCode);
-                error.put("type", statusType);
-
-                ApiErrorResponseDto response = new ApiErrorResponseDto(
-                                false,
-                                detailMessage,
-                                error);
-
-                return ResponseEntity
-                                .status(statusCode)
-                                .body(response);
-        }
-
-        @ExceptionHandler(MaxUploadSizeExceededException.class)
-        public ResponseEntity<ApiErrorResponseDto> handleMaxSizeException(MaxUploadSizeExceededException exception) {
-
-                Map<String, Object> error = new LinkedHashMap<>();
-
-                // Standard properties for file size violations
-                int statusCode = HttpStatus.BAD_REQUEST.value();
-                String statusType = HttpStatus.BAD_REQUEST.name();
-                String detailMessage = "Upload failed: File size exceeds the allowed limit (Max: 5MB per file / 25MB total payload)";
-
-                // Fallback extraction check if Spring attaches specific ErrorResponse metadata
-                if (exception instanceof org.springframework.web.ErrorResponse errorResponse) {
-                        statusCode = errorResponse.getStatusCode().value();
-                        statusType = errorResponse.getStatusCode().toString();
-                        if (errorResponse.getBody().getDetail() != null) {
-                                detailMessage = errorResponse.getBody().getDetail();
-                        }
-                }
-
-                error.put("code", statusCode);
-                error.put("type", statusType);
-
-                ApiErrorResponseDto response = new ApiErrorResponseDto(
-                                false,
-                                detailMessage,
-                                error);
-
-                return ResponseEntity
-                                .status(statusCode)
-                                .body(response);
+                return ResponseEntity.status(statusCode).body(response);
         }
 }

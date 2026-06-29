@@ -128,7 +128,9 @@ public class AdminLoginService {
          * ============================================================
          */
         String accessToken = jwtService.generateAccessToken(
-                user.getEmail());
+                user.getPkUserId(),
+                user.getEmail(),
+                assignedRoles);
 
         String refreshToken = refreshTokenService.createRefreshToken(
                 user);

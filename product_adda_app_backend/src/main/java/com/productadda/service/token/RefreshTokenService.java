@@ -6,12 +6,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.stream.Collectors;
+import java.util.List;
 
 import com.productadda.repository.RefreshTokenRepository;
+import com.productadda.repository.UserRoleRepository;
+
 import com.productadda.util.UuidUtil;
-import com.productadda.entity.RefreshToken;
 import com.productadda.exception.ApiException;
+
+import com.productadda.entity.RefreshToken;
 import com.productadda.entity.User;
+import com.productadda.entity.UserRole;
+
 import com.productadda.dto.token.RefreshTokenRequestDto;
 import com.productadda.dto.token.RefreshTokenResponseDto;
 import com.productadda.dto.token.TokenDto;
@@ -23,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class RefreshTokenService {
 
         private final RefreshTokenRepository refreshTokenRepository;
+        private final UserRoleRepository userRoleRepository;
         private final TokenProvider.JwtService jwtService;
         private final TokenProvider.TokenService tokenService;
         private final UuidUtil uuidUtil;
@@ -259,12 +267,24 @@ public class RefreshTokenService {
                                         "User context associated with this session token is missing");
                 }
 
+                List<UserRole> userRoles = userRoleRepository.findByFkUser(user);
+                if (userRoles.isEmpty()) {
+                        throw new ApiException(HttpStatus.NOT_FOUND, "User role mapping not found");
+                }
+
+                List<String> assignedRoles = userRoles.stream()
+                                .map(userRole -> userRole.getFkRole().getRoleName())
+                                .collect(Collectors.toList());
+
                 /*
                  * ================================================================
                  * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                  * ================================================================
                  */
-                String accessToken = jwtService.generateAccessToken(user.getEmail());
+                String accessToken = jwtService.generateAccessToken(
+                                user.getPkUserId(),
+                                user.getEmail(),
+                                assignedRoles);
                 String newRefreshToken = createRefreshToken(user);
 
                 /*

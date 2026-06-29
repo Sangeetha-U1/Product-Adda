@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 import javax.crypto.SecretKey;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,7 @@ import com.productadda.util.HashUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+
 import lombok.RequiredArgsConstructor;
 
 public class TokenProvider {
@@ -22,7 +25,8 @@ public class TokenProvider {
         /*
          * ============================================================================
          * 1. JWT SERVICE
-         * Description: Handles cryptographic calculations, token construction, and claims verification.
+         * Description: Handles cryptographic calculations, token construction, and
+         * claims verification.
          * ============================================================================
          */
         @Service
@@ -41,10 +45,14 @@ public class TokenProvider {
                         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
                 }
 
-                public String generateAccessToken(String email) {
+                // Multi-claim method baking trusty DB metadata directly into the JWT
+                // token
+                public String generateAccessToken(UUID userId, String email, List<String> roles) {
                         long nowMs = System.currentTimeMillis();
                         return Jwts.builder()
                                         .subject(email)
+                                        .claim("userId", userId.toString())
+                                        .claim("roles", roles)
                                         .issuedAt(new Date(nowMs))
                                         .expiration(new Date(nowMs + accessTokenExpiryMs))
                                         .signWith(getSigningKey())
@@ -61,9 +69,27 @@ public class TokenProvider {
                                         .compact();
                 }
 
+                // ==========================================
+                // EXTRACTION UTILITIES
+                // ==========================================
+
                 public String extractEmailFromToken(String token) {
                         return extractAllClaims(token).getSubject();
                 }
+
+                public UUID extractUserIdFromToken(String token) {
+                        String userIdStr = extractAllClaims(token).get("userId", String.class);
+                        return userIdStr != null ? UUID.fromString(userIdStr) : null;
+                }
+
+                @SuppressWarnings("unchecked")
+                public List<String> extractRolesFromToken(String token) {
+                        return extractAllClaims(token).get("roles", List.class);
+                }
+
+                // ==========================================
+                // VALIDATION & PARSING
+                // ==========================================
 
                 public boolean isTokenExpired(String token) {
                         try {
@@ -71,7 +97,6 @@ public class TokenProvider {
                                                 .getExpiration()
                                                 .before(new Date());
                         } catch (Exception e) {
-                                // If token signature parsing fails fundamentally, treat it as expired instantly
                                 return true;
                         }
                 }
@@ -84,8 +109,7 @@ public class TokenProvider {
                         }
                 }
 
-             private Claims extractAllClaims(String token) {
-                        // FIX: Modern JJWT (0.12+) fluent builder chain syntax
+                private Claims extractAllClaims(String token) {
                         return Jwts.parser()
                                         .verifyWith(getSigningKey())
                                         .build()
@@ -94,7 +118,6 @@ public class TokenProvider {
                 }
 
                 public LocalDateTime getRefreshTokenExpiryDate() {
-                        // FIX: Forces chronological calculations to adhere to the uniform UTC baseline
                         return LocalDateTime.now(ZoneOffset.UTC)
                                         .plusSeconds(refreshTokenExpiryMs / 1000);
                 }
@@ -103,7 +126,8 @@ public class TokenProvider {
         /*
          * ============================================================================
          * 2. TOKEN SERVICE
-         * Description: Generates, packages, and hashes opaque database verification tokens.
+         * Description: Generates, packages, and hashes opaque database verification
+         * tokens.
          * ============================================================================
          */
         @Service
@@ -113,7 +137,8 @@ public class TokenProvider {
                 private final UuidUtil uuidUtil;
                 private final HashUtil hashUtil;
 
-                public record TokenResult(String rawToken, String hashedToken) {}
+                public record TokenResult(String rawToken, String hashedToken) {
+                }
 
                 /**
                  * Generates a raw UUIDv7 token, hashes it, and returns both values.
