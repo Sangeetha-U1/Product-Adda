@@ -38,6 +38,8 @@ CREATE TABLE inventory
 
     low_stock_threshold INT NOT NULL DEFAULT 10,
 
+    max_stock INT NOT NULL DEFAULT 1000,
+
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
 
     created_at_utc TIMESTAMP NOT NULL
