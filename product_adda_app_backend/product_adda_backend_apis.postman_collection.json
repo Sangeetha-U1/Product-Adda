@@ -6496,6 +6496,718 @@
       "name": "product",
       "item": [
         {
+          "name": "search",
+          "item": [
+            {
+              "name": "/api/products/search?keyword=headphones&page=0&size=10",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/search?keyword=T-Shirt&page=0&size=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "keyword",
+                      "value": "T-Shirt"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/search?keyword=T-Shirt&page=0&size=10",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "key": "keyword",
+                          "value": "T-Shirt"
+                        },
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 30 Jun 2026 15:41:50 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Products found matching keyword 'T-Shirt'\",\n    \"data\": {\n        \"products\": [\n            {\n                \"productId\": \"019ed714-ddc1-7ea4-98f3-18cd77171761\",\n                \"productName\": \"Nike Sports T-Shirt\",\n                \"description\": \"Breathable sports t-shirt\",\n                \"categoryName\": \"Men Clothing\",\n                \"brandName\": \"Nike\",\n                \"price\": 1999,\n                \"status\": \"APPROVED\",\n                \"stock\": 100\n            }\n        ],\n        \"totalProducts\": 1,\n        \"currentPage\": 0,\n        \"pageSize\": 10\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/products/search?keyword=nonexistent&page=0&size=10",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/search?keyword=nonexistent&page=0&size=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "keyword",
+                      "value": "nonexistent"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/search?keyword=nonexistent&page=0&size=10",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "key": "keyword",
+                          "value": "nonexistent"
+                        },
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 30 Jun 2026 15:44:58 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"No products found matching keyword 'nonexistent'\",\n    \"data\": {\n        \"products\": [],\n        \"totalProducts\": 0,\n        \"currentPage\": 0,\n        \"pageSize\": 10\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/products/search?keyword=a&page=0&size=10",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/search?keyword=a&page=0&size=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "keyword",
+                      "value": "a"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "/api/products/search?keyword=a&page=0&size=10",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/search?keyword=a&page=0&size=10",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "key": "keyword",
+                          "value": "a"
+                        },
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 30 Jun 2026 16:59:31 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": false,\n    \"message\": \"Search keyword must be at least 2 characters long\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "filter",
+          "item": [
+            {
+              "name": "/api/products/filter?categoryId=019ed714-ddaa-7038-86ce-07e6fce0d4d9&minPrice=1000&maxPrice=5000&page=0&size=10",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/filter?categoryId=019ed714-ddb2-74ad-bef0-e177d38403b7&minPrice=1000&maxPrice=5000&page=0&size=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "filter"
+                  ],
+                  "query": [
+                    {
+                      "key": "categoryId",
+                      "value": "019ed714-ddb2-74ad-bef0-e177d38403b7"
+                    },
+                    {
+                      "key": "minPrice",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "maxPrice",
+                      "value": "5000"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/filter?categoryId=019ed714-ddb2-74ad-bef0-e177d38403b7&minPrice=1000&maxPrice=5000&page=0&size=10",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        "filter"
+                      ],
+                      "query": [
+                        {
+                          "key": "categoryId",
+                          "value": "019ed714-ddb2-74ad-bef0-e177d38403b7"
+                        },
+                        {
+                          "key": "minPrice",
+                          "value": "1000"
+                        },
+                        {
+                          "key": "maxPrice",
+                          "value": "5000"
+                        },
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 30 Jun 2026 17:24:09 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Products filtered successfully\",\n    \"data\": {\n        \"products\": [\n            {\n                \"productId\": \"019ed714-ddc1-7ea4-98f3-18cd77171761\",\n                \"productName\": \"Nike Sports T-Shirt\",\n                \"description\": \"Breathable sports t-shirt\",\n                \"categoryName\": \"Men Clothing\",\n                \"brandName\": \"Nike\",\n                \"price\": 1999,\n                \"status\": \"APPROVED\",\n                \"stock\": 100\n            }\n        ],\n        \"totalProducts\": 1,\n        \"currentPage\": 0,\n        \"pageSize\": 10\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/products/filter?categoryId=019ed714-ddb2-74ad-bef0-e177d38403b7&brandId=019ed714-dd9f-757d-9d34-9dcd0078bf3e&page=0&size=10",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/filter?categoryId=019ed714-ddb2-74ad-bef0-e177d38403b7&brandId=019ed714-dd9f-757d-9d34-9dcd0078bf3e&page=0&size=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "filter"
+                  ],
+                  "query": [
+                    {
+                      "key": "categoryId",
+                      "value": "019ed714-ddb2-74ad-bef0-e177d38403b7"
+                    },
+                    {
+                      "key": "brandId",
+                      "value": "019ed714-dd9f-757d-9d34-9dcd0078bf3e"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/filter?categoryId=019ed714-ddb2-74ad-bef0-e177d38403b7&brandId=019ed714-dd9f-757d-9d34-9dcd0078bf3e&page=0&size=10",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "products",
+                        "filter"
+                      ],
+                      "query": [
+                        {
+                          "key": "categoryId",
+                          "value": "019ed714-ddb2-74ad-bef0-e177d38403b7"
+                        },
+                        {
+                          "key": "brandId",
+                          "value": "019ed714-dd9f-757d-9d34-9dcd0078bf3e"
+                        },
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Tue, 30 Jun 2026 17:25:40 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Products filtered successfully\",\n    \"data\": {\n        \"products\": [\n            {\n                \"productId\": \"019ed714-ddc1-7ea4-98f3-18cd77171761\",\n                \"productName\": \"Nike Sports T-Shirt\",\n                \"description\": \"Breathable sports t-shirt\",\n                \"categoryName\": \"Men Clothing\",\n                \"brandName\": \"Nike\",\n                \"price\": 1999,\n                \"status\": \"APPROVED\",\n                \"stock\": 100\n            }\n        ],\n        \"totalProducts\": 1,\n        \"currentPage\": 0,\n        \"pageSize\": 10\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/products/filter?minPrice=5000&maxPrice=1000&page=0&size=10",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/filter?minPrice=5000&maxPrice=1000&page=0&size=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "filter"
+                  ],
+                  "query": [
+                    {
+                      "key": "minPrice",
+                      "value": "5000"
+                    },
+                    {
+                      "key": "maxPrice",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
           "name": "/api/products",
           "request": {
             "auth": {
@@ -8756,6 +9468,208 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Product inventory retrieved successfully\",\n    \"data\": {\n        \"inventoryId\": \"019f052f-e3aa-7ad5-8b4b-c6f40dd20b13\",\n        \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n        \"currentStock\": 150,\n        \"reorderLevel\": 25,\n        \"maxStock\": 1000,\n        \"isLowStock\": false,\n        \"availableForSale\": true,\n        \"createdAtUtc\": \"2026-06-29T16:52:45.65748Z\",\n        \"updatedAtUtc\": \"2026-06-29T16:52:45.65748Z\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/products/categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/categories",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "categories"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 30 Jun 2026 13:04:59 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Product categories retrieved successfully\",\n    \"data\": {\n        \"totalCategories\": 13,\n        \"categories\": [\n            {\n                \"categoryId\": \"019ed714-ddaa-7038-86ce-07e6fce0d4d9\",\n                \"categoryName\": \"Electronics\",\n                \"description\": \"Electronic devices and accessories\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddaa-7384-b223-cc9eeb98e762\",\n                \"categoryName\": \"Beauty\",\n                \"description\": \"Beauty and personal care products\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddaa-7bec-8aad-9035b67c4fbf\",\n                \"categoryName\": \"Home & Kitchen\",\n                \"description\": \"Home and kitchen essentials\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddaa-7ec8-8730-18c333e41f79\",\n                \"categoryName\": \"Sports\",\n                \"description\": \"Sports and fitness products\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddaa-7f57-9635-705c53f38570\",\n                \"categoryName\": \"Fashion\",\n                \"description\": \"Fashion and lifestyle products\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddaa-7f8c-974c-e2d9a2fec333\",\n                \"categoryName\": \"Books\",\n                \"description\": \"Books and educational materials\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddb0-7901-a7df-943b87850381\",\n                \"categoryName\": \"Mobile Phones\",\n                \"description\": \"Smartphones and accessories\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddb1-7489-bf57-e9bd0d58766b\",\n                \"categoryName\": \"Laptops\",\n                \"description\": \"Laptops and notebooks\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddb2-71c4-9b1d-c247b03bb130\",\n                \"categoryName\": \"Women Clothing\",\n                \"description\": \"Fashion products for women\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddb2-74ad-bef0-e177d38403b7\",\n                \"categoryName\": \"Men Clothing\",\n                \"description\": \"Fashion products for men\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddb2-7ab1-b119-b1709496ec46\",\n                \"categoryName\": \"Televisions\",\n                \"description\": \"Smart TVs and accessories\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddb3-734b-9a8c-35dc04741337\",\n                \"categoryName\": \"Kitchen Appliances\",\n                \"description\": \"Kitchen appliances and accessories\"\n            },\n            {\n                \"categoryId\": \"019ed714-ddb4-7ac5-bdb3-630572be5531\",\n                \"categoryName\": \"Fitness Equipment\",\n                \"description\": \"Fitness and gym equipment\"\n            }\n        ]\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/products/brands",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/brands",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "brands"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/brands",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "brands"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 30 Jun 2026 13:07:24 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Brands retrieved successfully\",\n    \"data\": {\n        \"totalBrands\": 10,\n        \"brands\": [\n            {\n                \"brandId\": \"019ed714-dd9e-7dc9-ab06-fbe369b7bcbf\",\n                \"brandName\": \"Apple\",\n                \"logoUrl\": null\n            },\n            {\n                \"brandId\": \"019ed714-dd9f-732d-bbe6-83825cf9abca\",\n                \"brandName\": \"Lenovo\",\n                \"logoUrl\": null\n            },\n            {\n                \"brandId\": \"019ed714-dd9f-73a8-984f-12ebf3aaaa61\",\n                \"brandName\": \"LG\",\n                \"logoUrl\": null\n            },\n            {\n                \"brandId\": \"019ed714-dd9f-750e-86cc-d77d30fbdb7a\",\n                \"brandName\": \"Sony\",\n                \"logoUrl\": null\n            },\n            {\n                \"brandId\": \"019ed714-dd9f-755e-82cf-1d1e1d33a9fc\",\n                \"brandName\": \"Samsung\",\n                \"logoUrl\": null\n            },\n            {\n                \"brandId\": \"019ed714-dd9f-757d-9d34-9dcd0078bf3e\",\n                \"brandName\": \"Nike\",\n                \"logoUrl\": null\n            },\n            {\n                \"brandId\": \"019ed714-dd9f-7842-8c80-24474b3e72e8\",\n                \"brandName\": \"HP\",\n                \"logoUrl\": null\n            },\n            {\n                \"brandId\": \"019ed714-dd9f-7d04-8c7e-12e870c9aa3a\",\n                \"brandName\": \"Dell\",\n                \"logoUrl\": null\n            },\n            {\n                \"brandId\": \"019ed714-dda0-7025-96d1-119a047ddcb0\",\n                \"brandName\": \"Puma\",\n                \"logoUrl\": null\n            },\n            {\n                \"brandId\": \"019ed714-dda0-7981-bdc6-bbd9a7699744\",\n                \"brandName\": \"Adidas\",\n                \"logoUrl\": null\n            }\n        ]\n    }\n}"
             }
           ]
         }

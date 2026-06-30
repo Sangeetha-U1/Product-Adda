@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -54,12 +55,23 @@ public class SecurityConfig {
 
                                 /*
                                  * ============================================================
-                                 * AUTHORIZATION PATH RULES
+                                 * AUTHORIZATION PATH RULES (Dynamic Registry Loop)
                                  * ============================================================
                                  */
-                                .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers(PublicRoutes.PUBLIC_URLS).permitAll()
-                                                .anyRequest().authenticated())
+                                .authorizeHttpRequests(auth -> {
+                                        // Dynamically unpacks and registers paths alongside their explicit HttpMethods
+                                        for (PublicRoutes.PublicConfig route : PublicRoutes.CONFIGS) {
+                                                if (route.allowsAllMethods()) {
+                                                        auth.requestMatchers(route.getPattern()).permitAll();
+                                                } else {
+                                                        for (HttpMethod method : route.getMethods()) {
+                                                                auth.requestMatchers(method, route.getPattern()).permitAll();
+                                                        }
+                                                }
+                                        }
+                                        // All non-registered method paths require valid credentials
+                                        auth.anyRequest().authenticated();
+                                })
 
                                 /*
                                  * ============================================================
@@ -75,17 +87,12 @@ public class SecurityConfig {
         /*
          * ================================================================
          * CORS CONFIGURATION SOURCE
-         * Description: Prevents browser blocks by letting your specific frontend
-         * base-url
-         * send cross-origin authorization headers and payloads safely.
          * ================================================================
          */
         @Bean
         public CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
 
-                // Maps security permissions to match your verified frontend source deployment
-                // domain
                 configuration.setAllowedOrigins(List.of(frontendBaseUrl, "http://localhost:5173"));
                 configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                 configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Cache-Control"));

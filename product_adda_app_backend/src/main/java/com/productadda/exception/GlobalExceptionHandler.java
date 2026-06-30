@@ -126,14 +126,17 @@ public class GlobalExceptionHandler {
 
         @ExceptionHandler(MaxUploadSizeExceededException.class)
         public ResponseEntity<ApiErrorResponseDto> handleMaxSizeException(MaxUploadSizeExceededException exception) {
-                HttpStatusCode statusCode = HttpStatus.BAD_REQUEST;
+                // 1. Get the status code directly from the exception (it implements
+                // ErrorResponse now!)
+                HttpStatusCode statusCode = exception.getStatusCode();
+
+                // 2. Set your custom fallback message
                 String detailMessage = "Upload failed: File size exceeds the allowed limit (Max: 5MB per file / 25MB total payload)";
 
-                if (exception instanceof ErrorResponse errorResponse) {
-                        statusCode = errorResponse.getStatusCode();
-                        if (errorResponse.getBody().getDetail() != null) {
-                                detailMessage = errorResponse.getBody().getDetail();
-                        }
+                // 3. If Spring has a more specific detail message attached to the exception,
+                // use it
+                if (exception.getBody().getDetail() != null) {
+                        detailMessage = exception.getBody().getDetail();
                 }
 
                 Map<String, Object> error = createDynamicErrorDetails(statusCode);
