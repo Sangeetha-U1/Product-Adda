@@ -78,5 +78,10 @@
     "name": "app.image.allowed-types",
     "type": "java.lang.String",
     "description": "A description for 'app.image.allowed-types'"
+  },
+  {
+    "name": "management.endpoint.mappings.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'management.endpoint.mappings.enabled'"
   }
 ]}

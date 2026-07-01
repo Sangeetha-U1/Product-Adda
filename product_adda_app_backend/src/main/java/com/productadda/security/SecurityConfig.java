@@ -65,7 +65,8 @@ public class SecurityConfig {
                                                         auth.requestMatchers(route.getPattern()).permitAll();
                                                 } else {
                                                         for (HttpMethod method : route.getMethods()) {
-                                                                auth.requestMatchers(method, route.getPattern()).permitAll();
+                                                                auth.requestMatchers(method, route.getPattern())
+                                                                                .permitAll();
                                                         }
                                                 }
                                         }

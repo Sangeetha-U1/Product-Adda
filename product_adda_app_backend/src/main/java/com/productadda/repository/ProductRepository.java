@@ -3,6 +3,7 @@ package com.productadda.repository;
 import java.util.UUID;
 import java.util.List;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -87,4 +88,31 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
                         "AND (:maxPrice IS NULL OR p.price <= :maxPrice)", nativeQuery = true)
         long countFilterApprovedOnly(@Param("categoryId") UUID categoryId, @Param("brandId") UUID brandId,
                         @Param("minPrice") BigDecimal minPrice, @Param("maxPrice") BigDecimal maxPrice);
+
+        // =========================================================================
+        // ADMINISTRATIVE GOVERNANCE & MODERATION PIPELINES
+        // =========================================================================
+        @Query(value = "SELECT p.* FROM products p " +
+                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "WHERE s.status_code IN (:statusCodes) " +
+                        "ORDER BY p.created_at_utc DESC", countQuery = "SELECT COUNT(*) FROM products p " +
+                                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                                        "WHERE s.status_code IN (:statusCodes)", nativeQuery = true)
+        Page<Product> findByStatusCodeInNative(@Param("statusCodes") List<String> statusCodes, Pageable pageable);
+
+        @Query(value = "SELECT COUNT(*) FROM products p " +
+                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "WHERE s.status_code = :statusCode", nativeQuery = true)
+        long countByStatusCodeNative(@Param("statusCode") String statusCode);
+
+        @Query(value = "SELECT COUNT(*) FROM products p " +
+                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "WHERE s.status_code = :statusCode AND p.updated_at_utc >= :dateTime", nativeQuery = true)
+        long countByStatusCodeAndUpdatedAtGreaterNative(@Param("statusCode") String statusCode,
+                        @Param("dateTime") LocalDateTime dateTime);
+
+        @Query(value = "SELECT COUNT(DISTINCT p.fk_vendor_id) FROM products p " +
+                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "WHERE s.status_code = :statusCode", nativeQuery = true)
+        long countDistinctVendorsByStatusCodeNative(@Param("statusCode") String statusCode);
 }

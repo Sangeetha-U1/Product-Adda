@@ -1816,7 +1816,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ2aWtyYW0ubUBnbWFpbC5jb20iLCJpYXQiOjE3ODI1Nzg0OTUsImV4cCI6MTc4MjU4MjA5NX0.mjrCnItaGsXNgg0XsKLOh8-I0dLshtOILeanGwoP8QWl_bpuQyWaeGPoryaJNUCJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBwcm9kdWN0YWRkYS5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdiZTktOWQwYS00OWUxOTViYjQ5Y2MiLCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3ODI5MzE4NTUsImV4cCI6MTc4MjkzNTQ1NX0.RvKzx2hyy5RuLA8WixbxkooqBuIpGRcVV5T_P2pc8MyOghy-SP2tCcAoqSUY8_t_",
                   "type": "string"
                 }
               ]
@@ -1825,7 +1825,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\": \"019f09f5-3f26-7b8e-8362-143df6968673\"\r\n}",
+              "raw": "{\r\n    \"refreshToken\": \"019f1f05-1a97-776f-82a1-090300e38eda\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -5534,7 +5534,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\"email\": \"narendramodi@productadda.com\",\r\n\"password\": \"Test123\"\r\n}",
+              "raw": "{\r\n\"email\": \"admin@productadda.com\",\r\n\"password\": \"Test123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -7200,6 +7200,921 @@
                       "key": "size",
                       "value": "10"
                     }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "admin",
+          "item": [
+            {
+              "name": "/api/admin/products/pending?page=0&size=10",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBwcm9kdWN0YWRkYS5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdiZTktOWQwYS00OWUxOTViYjQ5Y2MiLCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3ODI5MzE4NTUsImV4cCI6MTc4MjkzNTQ1NX0.RvKzx2hyy5RuLA8WixbxkooqBuIpGRcVV5T_P2pc8MyOghy-SP2tCcAoqSUY8_t_",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/products/pending?page=0&size=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "products",
+                    "pending"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "401 Unauthorized Authentication required",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/admin/products/pending?page=0&size=10",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "admin",
+                        "products",
+                        "pending"
+                      ],
+                      "query": [
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "96"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 01 Jul 2026 18:19:10 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": false,\n    \"message\": \"Authentication required\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+                },
+                {
+                  "name": "403 Forbidden Access Denied: Only admins can access moderation endpoints",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/admin/products/pending?page=0&size=10",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "admin",
+                        "products",
+                        "pending"
+                      ],
+                      "query": [
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 01 Jul 2026 18:44:02 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": false,\n    \"message\": \"Access Denied: Only admins can access moderation endpoints\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+                },
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/admin/products/pending?page=0&size=10",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "admin",
+                        "products",
+                        "pending"
+                      ],
+                      "query": [
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 01 Jul 2026 18:58:52 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Pending products retrieved successfully\",\n    \"data\": {\n        \"products\": [\n            {\n                \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n                \"productName\": \"Wireless Bluetooth Headphones\",\n                \"description\": \"High-quality noise-cancelling headphones with 30-hour battery life\",\n                \"vendorId\": \"019ed70e-d90f-74f9-b2bb-84253cb5ba52\",\n                \"vendorName\": \"Tech Solutions Private Limited\",\n                \"categoryName\": \"Electronics\",\n                \"brandName\": \"Sony\",\n                \"price\": 4999,\n                \"status\": \"PENDING_APPROVAL\",\n                \"createdAtUtc\": \"2026-06-26T23:57:32\"\n            }\n        ],\n        \"totalPendingProducts\": 1,\n        \"currentPage\": 0,\n        \"pageSize\": 10\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/admin/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/approve",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBwcm9kdWN0YWRkYS5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdiZTktOWQwYS00OWUxOTViYjQ5Y2MiLCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3ODI5MzE4NTUsImV4cCI6MTc4MjkzNTQ1NX0.RvKzx2hyy5RuLA8WixbxkooqBuIpGRcVV5T_P2pc8MyOghy-SP2tCcAoqSUY8_t_",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/approve",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "approve"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/admin/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/approve",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "admin",
+                        "products",
+                        "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                        "approve"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 01 Jul 2026 19:02:49 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Product approved successfully\",\n    \"data\": {\n        \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n        \"productName\": \"Wireless Bluetooth Headphones\",\n        \"status\": \"APPROVED\",\n        \"approvedAtUtc\": \"2026-07-01T19:02:49.054726600\",\n        \"approvedByAdmin\": \"admin@productadda.com\",\n        \"rejectionReason\": null,\n        \"rejectedAtUtc\": null,\n        \"rejectedByAdmin\": null\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/admin/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/reject",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBwcm9kdWN0YWRkYS5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdiZTktOWQwYS00OWUxOTViYjQ5Y2MiLCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3ODI5MzE4NTUsImV4cCI6MTc4MjkzNTQ1NX0.RvKzx2hyy5RuLA8WixbxkooqBuIpGRcVV5T_P2pc8MyOghy-SP2tCcAoqSUY8_t_",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "  {\r\n   \r\n  }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/reject",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "reject"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "  {\r\n    \"rejectionReason\": \"Product images do not meet quality standards. Please provide high-resolution product images (min 1024x1024 pixels)\"\r\n  }",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/admin/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/reject",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "admin",
+                        "products",
+                        "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                        "reject"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 01 Jul 2026 19:09:25 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": true,\n    \"message\": \"Product rejected successfully\",\n    \"data\": {\n        \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n        \"productName\": \"Wireless Bluetooth Headphones\",\n        \"status\": \"REJECTED\",\n        \"approvedAtUtc\": null,\n        \"approvedByAdmin\": null,\n        \"rejectionReason\": \"Product images do not meet quality standards. Please provide high-resolution product images (min 1024x1024 pixels)\",\n        \"rejectedAtUtc\": \"2026-07-01T19:09:25.163592400\",\n        \"rejectedByAdmin\": \"admin@productadda.com\"\n    }\n}"
+                },
+                {
+                  "name": "400 Bad Request Rejection reason is required and cannot be blank",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "  {\r\n   \r\n  }",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/admin/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/reject",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "admin",
+                        "products",
+                        "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                        "reject"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 01 Jul 2026 19:15:58 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": false,\n    \"message\": \"Rejection reason is required and cannot be blank\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/admin/products/00000000-0000-0000-0000-000000000000/approve",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBwcm9kdWN0YWRkYS5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdiZTktOWQwYS00OWUxOTViYjQ5Y2MiLCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3ODI5MzE4NTUsImV4cCI6MTc4MjkzNTQ1NX0.RvKzx2hyy5RuLA8WixbxkooqBuIpGRcVV5T_P2pc8MyOghy-SP2tCcAoqSUY8_t_",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/products/00000000-0000-0000-0000-000000000000/approve",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "products",
+                    "00000000-0000-0000-0000-000000000000",
+                    "approve"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "404 Not Found Product not found with ID: 00000000-0000-0000-0000-000000000000",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/admin/products/00000000-0000-0000-0000-000000000000/approve",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "admin",
+                        "products",
+                        "00000000-0000-0000-0000-000000000000",
+                        "approve"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 01 Jul 2026 19:10:49 GMT"
+                    },
+                    {
+                      "key": "Keep-Alive",
+                      "value": "timeout=60"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": false,\n    \"message\": \"Product not found with ID: 00000000-0000-0000-0000-000000000000\",\n    \"error\": {\n        \"code\": 404,\n        \"type\": \"NOT_FOUND\"\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/admin/products/019ed714-ddbf-7364-8528-7407e10a7da1/approve",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBwcm9kdWN0YWRkYS5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdiZTktOWQwYS00OWUxOTViYjQ5Y2MiLCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3ODI5MzE4NTUsImV4cCI6MTc4MjkzNTQ1NX0.RvKzx2hyy5RuLA8WixbxkooqBuIpGRcVV5T_P2pc8MyOghy-SP2tCcAoqSUY8_t_",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/products/019ed714-ddbf-7364-8528-7407e10a7da1/approve",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "products",
+                    "019ed714-ddbf-7364-8528-7407e10a7da1",
+                    "approve"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "400 Bad Request Product is already in APPROVED status and cannot be approved again",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/admin/products/019ed714-ddbf-7364-8528-7407e10a7da1/approve",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "admin",
+                        "products",
+                        "019ed714-ddbf-7364-8528-7407e10a7da1",
+                        "approve"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": null,
+                  "header": [
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Method"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Access-Control-Request-Headers"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-XSS-Protection",
+                      "value": "0"
+                    },
+                    {
+                      "key": "Cache-Control",
+                      "value": "no-cache, no-store, max-age=0, must-revalidate"
+                    },
+                    {
+                      "key": "Pragma",
+                      "value": "no-cache"
+                    },
+                    {
+                      "key": "Expires",
+                      "value": "0"
+                    },
+                    {
+                      "key": "X-Frame-Options",
+                      "value": "DENY"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Transfer-Encoding",
+                      "value": "chunked"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Wed, 01 Jul 2026 19:13:30 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n    \"success\": false,\n    \"message\": \"Product is already in APPROVED status and cannot be approved again\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+                }
+              ]
+            },
+            {
+              "name": "/api/admin/products/moderation/stats",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBwcm9kdWN0YWRkYS5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdiZTktOWQwYS00OWUxOTViYjQ5Y2MiLCJyb2xlcyI6WyJBRE1JTiJdLCJpYXQiOjE3ODI5MzE4NTUsImV4cCI6MTc4MjkzNTQ1NX0.RvKzx2hyy5RuLA8WixbxkooqBuIpGRcVV5T_P2pc8MyOghy-SP2tCcAoqSUY8_t_",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/products/moderation/stats",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "products",
+                    "moderation",
+                    "stats"
                   ]
                 }
               },

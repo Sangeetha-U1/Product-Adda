@@ -2,6 +2,7 @@ package com.productadda.exception;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.lang.reflect.Method;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -10,12 +11,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.ErrorResponseException;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.productadda.dto.ApiErrorResponseDto;
 
@@ -104,22 +110,47 @@ public class GlobalExceptionHandler {
         }
 
         @ExceptionHandler(AccessDeniedException.class)
-        public ResponseEntity<ApiErrorResponseDto> handleAccessDeniedException(AccessDeniedException exception) {
+        public ResponseEntity<ApiErrorResponseDto> handleAccessDeniedException(AccessDeniedException exception,
+                        HttpServletRequest request) {
                 HttpStatusCode statusCode = HttpStatus.FORBIDDEN;
-                String detailMessage = exception.getMessage();
 
+                // Default fallback message
+                String detailMessage = "Access Denied";
+
+                // 1. Inspect the method metadata directly (Zero URL path hardcoding)
+                Object handler = request.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE);
+                if (handler instanceof HandlerMethod handlerMethod) {
+                        Method method = handlerMethod.getMethod();
+
+                        if (method.isAnnotationPresent(PreAuthorize.class)) {
+                                PreAuthorize preAuthorize = method.getAnnotation(PreAuthorize.class);
+                                String expression = preAuthorize.value();
+
+                                // Match metadata rule parameters and override detailMessage string contextually
+                                if (expression.contains("ADMIN") || expression.contains("SUPER_ADMIN")) {
+                                        detailMessage = "Access Denied: Only admins can access moderation endpoints";
+                                } else if (expression.contains("VENDOR")) {
+                                        detailMessage = "Access Denied: Commercial vendor authorization required";
+                                }
+                        }
+                }
+
+                // 2. Fallback check for standard error types
                 if (exception instanceof ErrorResponse errorResponse) {
                         statusCode = errorResponse.getStatusCode();
-                        if (errorResponse.getBody().getDetail() != null) {
+                        if (errorResponse.getBody().getDetail() != null && "Access Denied".equals(detailMessage)) {
                                 detailMessage = errorResponse.getBody().getDetail();
                         }
                 }
 
-                Map<String, Object> error = createDynamicErrorDetails(statusCode);
+                // 3. Dynamically construct your structural object using your exact target shape
+                // helper
+                Map<String, Object> errorDetails = createDynamicErrorDetails(statusCode);
+
                 ApiErrorResponseDto response = new ApiErrorResponseDto(
                                 false,
                                 detailMessage,
-                                error);
+                                errorDetails);
 
                 return ResponseEntity.status(statusCode).body(response);
         }

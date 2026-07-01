@@ -9,7 +9,7 @@ public class PublicRoutes {
     }
 
     /**
-     * Immutable configuration mapping an exact route pattern 
+     * Immutable configuration mapping an exact route pattern
      * to its allowed HTTP methods using Java Varargs.
      */
     public static class PublicConfig {
@@ -21,13 +21,22 @@ public class PublicRoutes {
             this.methods = methods;
         }
 
-        public String getPattern() { return pattern; }
-        public HttpMethod[] getMethods() { return methods; }
-        public boolean allowsAllMethods() { return methods == null || methods.length == 0; }
+        public String getPattern() {
+            return pattern;
+        }
+
+        public HttpMethod[] getMethods() {
+            return methods;
+        }
+
+        public boolean allowsAllMethods() {
+            return methods == null || methods.length == 0;
+        }
     }
 
     /**
-     * Unified Registry defining explicitly allowed actions per endpoint pattern route.
+     * Unified Registry defining explicitly allowed actions per endpoint pattern
+     * route.
      * To allow multiple methods, simply separate them with commas.
      */
     public static final PublicConfig[] CONFIGS = {
@@ -59,11 +68,12 @@ public class PublicRoutes {
             new PublicConfig("/api/auth/admin/auth/register", HttpMethod.POST),
             new PublicConfig("/api/auth/admin/login", HttpMethod.POST),
 
-            // OpenAPI v3 & Swagger UI Static Assets (Empty methods array allows all methods)
+            // OpenAPI v3 & Swagger UI Static Assets (Empty methods array allows all
+            // methods)
             new PublicConfig("/swagger-ui.html"),
             new PublicConfig("/swagger-ui/index.html"),
             new PublicConfig("/swagger-ui/**"),
             new PublicConfig("/v3/api-docs/**"),
-            new PublicConfig("/v3/api-docs.yaml")
+            new PublicConfig("/v3/api-docs.yaml"),
     };
 }

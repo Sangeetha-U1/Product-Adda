@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 00000297 7478:274D
+Volume serial number is 00000295 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -45,6 +45,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       PaymentController.java
 |   |           |   |       
 |   |           |   +---product
+|   |           |   |       AdminProductController.java
 |   |           |   |       ProductInventoryController.java
 |   |           |   |       ProductSearchController.java
 |   |           |   |       
@@ -101,6 +102,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       PaymentVerifyResponseDto.java
 |   |           |   |       
 |   |           |   +---product
+|   |           |   |       AdminModerationStatsResponseDto.java
+|   |           |   |       AdminProductApprovalResponseDto.java
+|   |           |   |       AdminProductPendingDataWrapper.java
+|   |           |   |       AdminProductPendingListResponseDto.java
+|   |           |   |       AdminProductRejectionRequestDto.java
 |   |           |   |       BrandResponseDto.java
 |   |           |   |       CategoryResponseDto.java
 |   |           |   |       ProductCreateRequestDto.java
@@ -239,6 +245,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       PaymentServicePaymentVerify.java
 |   |           |   |       
 |   |           |   +---product
+|   |           |   |       AdminProductApprovalService.java
+|   |           |   |       AdminProductModerationService.java
 |   |           |   |       ProductCreateService.java
 |   |           |   |       ProductDeleteService.java
 |   |           |   |       ProductImageService.java
@@ -286,12 +294,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 0000022C 7478:274D
+Volume serial number is 00000234 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 000001C0 7478:274D
+Volume serial number is 00000248 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties
