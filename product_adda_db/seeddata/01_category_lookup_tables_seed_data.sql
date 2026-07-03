@@ -41,6 +41,10 @@ CATEGORY 01 - LOOKUP TABLES
 ==============================================================*/
 SET FOREIGN_KEY_CHECKS = 0;
 
+TRUNCATE TABLE `coupon_discount_types`;
+TRUNCATE TABLE `coupon_statuses`;
+TRUNCATE TABLE `cart_statuses`;
+TRUNCATE TABLE `product_status_lookup`;
 TRUNCATE TABLE `report_types`;
 TRUNCATE TABLE `notification_channels`;
 TRUNCATE TABLE `notification_types`;
@@ -158,9 +162,11 @@ INSERT INTO report_types (pk_report_type_id, report_type_name, description, is_a
 (UUID_V7(), 'REVENUE', 'Revenue report', TRUE, '2026-03-01 11:15:00'),
 (UUID_V7(), 'VENDOR_PERFORMANCE', 'Vendor performance report', TRUE, '2026-06-17 16:45:22');
 
--- ============================================================================
--- 035. SEED DATA FOR: product_status_lookup
--- ============================================================================
+/*==============================================================
+035. SEED DATA FOR: product_status_lookup
+TODO: Add description column to this table and update the insert values below
+==============================================================*/
+
 
 INSERT INTO product_status_lookup
     (pk_status_id, status_code, status_label, display_order, is_active)
@@ -171,3 +177,38 @@ VALUES
     (UUID_V7(),       'REJECTED',         'Rejected',          4, TRUE),
     (UUID_V7(),       'ARCHIVED',         'Archived',          5, TRUE),
     (UUID_V7(),       'DELETED',          'Deleted',           6, TRUE);
+
+/*==============================================================
+036. SEED DATA FOR: cart_statuses
+TODO: Add description column to this table and update the insert values below
+==============================================================*/
+
+INSERT INTO cart_statuses (pk_status_id,status_code,status_label,display_order,is_active)
+VALUES
+    (UUID_V7(), 'ACTIVE',     'Active',     1, TRUE),
+    (UUID_V7(), 'COMPLETED',  'Completed',  2, TRUE),
+    (UUID_V7(), 'ABANDONED',  'Abandoned',  3, TRUE),
+    (UUID_V7(), 'EXPIRED',    'Expired',    4, TRUE);
+
+/*==============================================================
+037. SEED DATA FOR: coupon_statuses
+TODO: Add description column to this table and update the insert values below
+==============================================================*/
+
+INSERT INTO coupon_statuses (pk_status_id,status_code,status_label,display_order,is_active)
+VALUES
+    (UUID_V7(), 'ACTIVE',   'Active',   1, TRUE),
+    (UUID_V7(), 'INACTIVE', 'Inactive', 2, TRUE),
+    (UUID_V7(), 'EXPIRED',  'Expired',  3, TRUE);
+
+/*==============================================================
+038. SEED DATA FOR: coupon_discount_types
+TODO: Add description column to this table and update the insert values below
+==============================================================*/
+
+INSERT INTO coupon_discount_types (pk_discount_type_id, discount_type_code, discount_type_label, display_order, is_active)
+VALUES
+    (UUID_V7(), 'FIXED',      'Fixed Amount', 1, TRUE),
+    (UUID_V7(), 'PERCENTAGE', 'Percentage',   2, TRUE);
+
+    

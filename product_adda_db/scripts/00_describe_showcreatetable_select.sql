@@ -23,6 +23,9 @@ DESCRIBE notification_types;
 DESCRIBE notification_channels;
 DESCRIBE report_types;
 DESCRIBE product_status_lookup;
+DESCRIBE cart_statuses;
+DESCRIBE coupon_statuses;
+DESCRIBE coupon_discount_types;
 
 DESCRIBE users;
 DESCRIBE user_roles;
@@ -37,15 +40,21 @@ DESCRIBE product_images;
 
 DESCRIBE inventory;
 DESCRIBE inventory_transactions;
+DESCRIBE inventory_reservations;
 
 DESCRIBE carts;
 DESCRIBE cart_items;
 DESCRIBE wishlists;
 DESCRIBE wishlist_items;
+DESCRIBE wishlist_price_history;
 
 DESCRIBE orders;
 DESCRIBE order_items;
 DESCRIBE payments;
+DESCRIBE coupons;
+DESCRIBE coupon_usage_history;
+DESCRIBE shipping_methods;
+DESCRIBE tax_configurations;
 
 DESCRIBE reviews;
 
@@ -73,6 +82,9 @@ SHOW CREATE TABLE notification_types;
 SHOW CREATE TABLE notification_channels;
 SHOW CREATE TABLE report_types;
 SHOW CREATE TABLE product_status_lookup;
+SHOW CREATE TABLE cart_statuses;
+SHOW CREATE TABLE coupon_statuses;
+SHOW CREATE TABLE coupon_discount_types;
 
 SHOW CREATE TABLE users;
 SHOW CREATE TABLE user_roles;
@@ -87,15 +99,21 @@ SHOW CREATE TABLE product_images;
 
 SHOW CREATE TABLE inventory;
 SHOW CREATE TABLE inventory_transactions;
+SHOW CREATE TABLE inventory_reservations;
 
 SHOW CREATE TABLE carts;
 SHOW CREATE TABLE cart_items;
 SHOW CREATE TABLE wishlists;
 SHOW CREATE TABLE wishlist_items;
+SHOW CREATE TABLE wishlist_price_history;
 
 SHOW CREATE TABLE orders;
 SHOW CREATE TABLE order_items;
 SHOW CREATE TABLE payments;
+SHOW CREATE TABLE coupons;
+SHOW CREATE TABLE coupon_usage_history;
+SHOW CREATE TABLE shipping_methods;
+SHOW CREATE TABLE tax_configurations;
 
 SHOW CREATE TABLE reviews;
 
@@ -123,6 +141,9 @@ SELECT * FROM notification_types;
 SELECT * FROM notification_channels;
 SELECT * FROM report_types;
 SELECT * FROM product_status_lookup;
+SELECT * FROM cart_statuses;
+SELECT * FROM coupon_statuses;
+SELECT * FROM coupon_discount_types;
 
 SELECT * FROM users;
 SELECT * FROM user_roles;
@@ -137,15 +158,21 @@ SELECT * FROM product_images;
 
 SELECT * FROM inventory;
 SELECT * FROM inventory_transactions;
+SELECT * FROM inventory_reservations;
 
 SELECT * FROM carts;
 SELECT * FROM cart_items;
 SELECT * FROM wishlists;
 SELECT * FROM wishlist_items;
+SELECT * FROM wishlist_price_history;
 
 SELECT * FROM orders;
 SELECT * FROM order_items;
 SELECT * FROM payments;
+SELECT * FROM coupons;
+SELECT * FROM coupon_usage_history;
+SELECT * FROM shipping_methods;
+SELECT * FROM tax_configurations;
 
 SELECT * FROM reviews;
 
@@ -165,7 +192,7 @@ SELECT * FROM reports;
 -- 1. roles
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(roles.pk_role_id) AS pk_role_id,
+    roles.pk_role_id,
     roles.role_name,
     roles.description,
     roles.is_active,
@@ -179,7 +206,7 @@ FROM roles;
 -- 2. order_statuses
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(order_statuses.pk_status_id) AS pk_status_id,
+    order_statuses.pk_status_id,
     order_statuses.status_name,
     order_statuses.description,
     order_statuses.is_active,
@@ -193,7 +220,7 @@ FROM order_statuses;
 -- 3. payment_statuses
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(payment_statuses.pk_status_id) AS pk_status_id,
+    payment_statuses.pk_status_id,
     payment_statuses.status_name,
     payment_statuses.description,
     payment_statuses.is_active,
@@ -207,7 +234,7 @@ FROM payment_statuses;
 -- 4. review_statuses
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(review_statuses.pk_status_id) AS pk_status_id,
+    review_statuses.pk_status_id,
     review_statuses.status_name,
     review_statuses.description,
     review_statuses.is_active,
@@ -221,7 +248,7 @@ FROM review_statuses;
 -- 5. payment_gateways
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(payment_gateways.pk_gateway_id) AS pk_gateway_id,
+    payment_gateways.pk_gateway_id,
     payment_gateways.gateway_name,
     payment_gateways.description,
     payment_gateways.is_active,
@@ -235,7 +262,7 @@ FROM payment_gateways;
 -- 6. address_types
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(address_types.pk_address_type_id) AS pk_address_type_id,
+    address_types.pk_address_type_id,
     address_types.address_type_name,
     address_types.description,
     address_types.is_active,
@@ -249,7 +276,7 @@ FROM address_types;
 -- 7. inventory_transaction_types
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(inventory_transaction_types.pk_transaction_type_id) AS pk_transaction_type_id,
+    inventory_transaction_types.pk_transaction_type_id,
     inventory_transaction_types.transaction_type_name,
     inventory_transaction_types.description,
     inventory_transaction_types.is_active,
@@ -263,7 +290,7 @@ FROM inventory_transaction_types;
 -- 8. notification_types
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(notification_types.pk_notification_type_id) AS pk_notification_type_id,
+    notification_types.pk_notification_type_id,
     notification_types.notification_type_name,
     notification_types.description,
     notification_types.is_active,
@@ -277,7 +304,7 @@ FROM notification_types;
 -- 9. notification_channels
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(notification_channels.pk_channel_id) AS pk_channel_id,
+    notification_channels.pk_channel_id,
     notification_channels.channel_name,
     notification_channels.description,
     notification_channels.is_active,
@@ -291,7 +318,7 @@ FROM notification_channels;
 -- 10. report_types
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(report_types.pk_report_type_id) AS pk_report_type_id,
+    report_types.pk_report_type_id,
     report_types.report_type_name,
     report_types.description,
     report_types.is_active,
@@ -305,7 +332,7 @@ FROM report_types;
 -- 35. product_status_lookup
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(product_status_lookup.pk_status_id), 
+    product_status_lookup.pk_status_id,
     product_status_lookup.status_code, 
     product_status_lookup.status_label, 
     product_status_lookup.display_order, 
@@ -317,10 +344,55 @@ SELECT
 FROM product_status_lookup;
 
 -- ==============================================================
+-- 036. SEED DATA FOR: cart_statuses
+-- ==============================================================
+SELECT
+    cart_statuses.pk_status_id,
+    cart_statuses.status_code, 
+    cart_statuses.status_label, 
+    cart_statuses.display_order, 
+    cart_statuses.is_active, 
+    cart_statuses.created_at_utc,
+    CONVERT_TZ(cart_statuses.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    cart_statuses.updated_at_utc,
+    CONVERT_TZ(cart_statuses.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM cart_statuses;
+
+-- ==============================================================
+-- 037. SEED DATA FOR: coupon_statuses
+-- ==============================================================
+SELECT
+    coupon_statuses.pk_status_id,
+    coupon_statuses.status_code, 
+    coupon_statuses.status_label, 
+    coupon_statuses.display_order, 
+    coupon_statuses.is_active, 
+    coupon_statuses.created_at_utc,
+    CONVERT_TZ(coupon_statuses.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    coupon_statuses.updated_at_utc,
+    CONVERT_TZ(coupon_statuses.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM coupon_statuses;
+
+-- ==============================================================
+-- 038. SEED DATA FOR: coupon_discount_types
+-- ==============================================================
+SELECT
+    coupon_discount_types.pk_discount_type_id,
+    coupon_discount_types.discount_type_code, 
+    coupon_discount_types.discount_type_label, 
+    coupon_discount_types.display_order, 
+    coupon_discount_types.is_active, 
+    coupon_discount_types.created_at_utc,
+    CONVERT_TZ(coupon_discount_types.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    coupon_discount_types.updated_at_utc,
+    CONVERT_TZ(coupon_discount_types.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM coupon_discount_types;
+
+-- ==============================================================
 -- 11. users
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(users.pk_user_id) AS pk_user_id,
+    users.pk_user_id,
     users.first_name,
     users.last_name,
     users.email,
@@ -341,9 +413,9 @@ FROM users;
 -- 12. user_roles
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(user_roles.pk_user_role_id) AS pk_user_role_id,
-    BIN_TO_UUID(user_roles.fk_user_id) AS fk_user_id,
-    BIN_TO_UUID(user_roles.fk_role_id) AS fk_role_id,
+    user_roles.pk_user_role_id,
+    user_roles.fk_user_id,
+    user_roles.fk_role_id,
     user_roles.is_active,
     user_roles.created_at_utc,
     CONVERT_TZ(user_roles.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
@@ -355,8 +427,8 @@ FROM user_roles;
 -- 13. vendors
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(vendors.pk_vendor_id) AS pk_vendor_id,
-    BIN_TO_UUID(vendors.fk_user_id) AS fk_user_id,
+    vendors.pk_vendor_id,
+    vendors.fk_user_id,
     vendors.business_name,
     vendors.store_name,
     vendors.gst_number,
@@ -372,8 +444,8 @@ FROM vendors;
 -- 14. vendor_bank_details
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(vendor_bank_details.pk_vendor_bank_detail_id) AS pk_vendor_bank_detail_id,
-    BIN_TO_UUID(vendor_bank_details.fk_vendor_id) AS fk_vendor_id,
+    vendor_bank_details.pk_vendor_bank_detail_id,
+    vendor_bank_details.fk_vendor_id,
     vendor_bank_details.account_holder_name,
     vendor_bank_details.bank_name,
     vendor_bank_details.account_number,
@@ -390,9 +462,9 @@ FROM vendor_bank_details;
 -- 15. addresses
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(addresses.pk_address_id) AS pk_address_id,
-    BIN_TO_UUID(addresses.fk_user_id) AS fk_user_id,
-    BIN_TO_UUID(addresses.fk_address_type_id) AS fk_address_type_id,
+    addresses.pk_address_id,
+    addresses.fk_user_id,
+    addresses.fk_address_type_id,
     addresses.address_line_1,
     addresses.address_line_2,
     addresses.landmark,
@@ -412,7 +484,7 @@ FROM addresses;
 -- 16. brands
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(brands.pk_brand_id) AS pk_brand_id,
+    brands.pk_brand_id,
     brands.brand_name,
     brands.brand_description,
     brands.is_active,
@@ -426,8 +498,8 @@ FROM brands;
 -- 17. categories
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(categories.pk_category_id) AS pk_category_id,
-    BIN_TO_UUID(categories.fk_parent_category_id) AS fk_parent_category_id,
+    categories.pk_category_id,
+    categories.fk_parent_category_id,
     categories.category_name,
     categories.category_description,
     categories.display_order,
@@ -442,10 +514,10 @@ FROM categories;
 -- 18. products
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(products.pk_product_id) AS pk_product_id,
-    BIN_TO_UUID(products.fk_vendor_id) AS fk_vendor_id,
-    BIN_TO_UUID(products.fk_category_id) AS fk_category_id,
-    BIN_TO_UUID(products.fk_brand_id) AS fk_brand_id,
+    products.pk_product_id,
+    products.fk_vendor_id,
+    products.fk_category_id,
+    products.fk_brand_id,
     products.title,
     products.description,
     products.sku,
@@ -465,8 +537,8 @@ FROM products;
 -- 19. product_images
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(product_images.pk_product_image_id) AS pk_product_image_id,
-    BIN_TO_UUID(product_images.fk_product_id) AS fk_product_id,
+    product_images.pk_product_image_id,
+    product_images.fk_product_id,
     product_images.image_url,
     product_images.image_data,
     product_images.file_name,
@@ -488,8 +560,8 @@ FROM product_images;
 -- 20. inventory
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(inventory.pk_inventory_id) AS pk_inventory_id,
-    BIN_TO_UUID(inventory.fk_product_id) AS fk_product_id,
+    inventory.pk_inventory_id,
+    inventory.fk_product_id,
     inventory.available_quantity,
     inventory.reserved_quantity,
     inventory.low_stock_threshold,
@@ -504,12 +576,12 @@ FROM inventory;
 -- 21. inventory_transactions
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(inventory_transactions.pk_inventory_transaction_id) AS pk_inventory_transaction_id,
-    BIN_TO_UUID(inventory_transactions.fk_product_id) AS fk_product_id,
-    BIN_TO_UUID(inventory_transactions.fk_transaction_type_id) AS fk_transaction_type_id,
+    inventory_transactions.pk_inventory_transaction_id,
+    inventory_transactions.fk_product_id,
+    inventory_transactions.fk_transaction_type_id,
     inventory_transactions.quantity,
     inventory_transactions.reference_type,
-    BIN_TO_UUID(inventory_transactions.reference_id) AS reference_id,
+    inventory_transactions.reference_id) AS reference_id,
     inventory_transactions.remarks,
     inventory_transactions.is_active,
     inventory_transactions.created_at_utc,
@@ -519,11 +591,29 @@ SELECT
 FROM inventory_transactions;
 
 -- ==============================================================
+-- 39. inventory_reservations
+-- ==============================================================
+SELECT
+    inventory_reservations.pk_reservation_id,
+    inventory_reservations.fk_product_id,
+    inventory_reservations.fk_cart_id,
+    inventory_reservations.fk_cart_item_id,
+    inventory_reservations.reserved_quantity,
+    inventory_reservations.expires_at_utc,
+    CONVERT_TZ(inventory_reservations.expires_at_utc, '+00:00', '+05:30') AS expires_at_ist,
+    inventory_reservations.is_active,
+    inventory_reservations.created_at_utc,
+    CONVERT_TZ(inventory_reservations.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    inventory_reservations.updated_at_utc,
+    CONVERT_TZ(inventory_reservations.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM inventory_reservations;
+
+-- ==============================================================
 -- 22. carts
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(carts.pk_cart_id) AS pk_cart_id,
-    BIN_TO_UUID(carts.fk_user_id) AS fk_user_id,
+    carts.pk_cart_id,
+    carts.fk_user_id,
     carts.is_active,
     carts.created_at_utc,
     CONVERT_TZ(carts.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
@@ -535,9 +625,9 @@ FROM carts;
 -- 23. cart_items
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(cart_items.pk_cart_item_id) AS pk_cart_item_id,
-    BIN_TO_UUID(cart_items.fk_cart_id) AS fk_cart_id,
-    BIN_TO_UUID(cart_items.fk_product_id) AS fk_product_id,
+    cart_items.pk_cart_item_id,
+    cart_items.fk_cart_id,
+    cart_items.fk_product_id,
     cart_items.quantity,
     cart_items.is_saved_for_later,
     cart_items.is_active,
@@ -551,8 +641,8 @@ FROM cart_items;
 -- 24. wishlists
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(wishlists.pk_wishlist_id) AS pk_wishlist_id,
-    BIN_TO_UUID(wishlists.fk_user_id) AS fk_user_id,
+    wishlists.pk_wishlist_id,
+    wishlists.fk_user_id,
     wishlists.is_active,
     wishlists.created_at_utc,
     CONVERT_TZ(wishlists.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
@@ -564,9 +654,9 @@ FROM wishlists;
 -- 25. wishlist_items
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(wishlist_items.pk_wishlist_item_id) AS pk_wishlist_item_id,
-    BIN_TO_UUID(wishlist_items.fk_wishlist_id) AS fk_wishlist_id,
-    BIN_TO_UUID(wishlist_items.fk_product_id) AS fk_product_id,
+    wishlist_items.pk_wishlist_item_id,
+    wishlist_items.fk_wishlist_id,
+    wishlist_items.fk_product_id,
     wishlist_items.is_active,
     wishlist_items.created_at_utc,
     CONVERT_TZ(wishlist_items.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
@@ -575,13 +665,30 @@ SELECT
 FROM wishlist_items;
 
 -- ==============================================================
+-- 40. wishlist_price_history
+-- ==============================================================
+SELECT
+    wishlist_price_history.pk_history_id,
+    wishlist_price_history.fk_wishlist_item_id,
+    wishlist_price_history.price_snapshot,
+    wishlist_price_history.price_drop_percentage,
+    wishlist_price_history.snapshot_at_utc,
+    CONVERT_TZ(wishlist_price_history.snapshot_at_utc, '+00:00', '+05:30') AS snapshot_at_ist,
+    wishlist_price_history.is_active,
+    wishlist_price_history.created_at_utc,
+    CONVERT_TZ(wishlist_price_history.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    wishlist_price_history.updated_at_utc,
+    CONVERT_TZ(wishlist_price_history.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM wishlist_price_history;
+
+-- ==============================================================
 -- 26. orders
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(orders.pk_order_id) AS pk_order_id,
-    BIN_TO_UUID(orders.fk_user_id) AS fk_user_id,
-    BIN_TO_UUID(orders.fk_status_id) AS fk_status_id,
-    BIN_TO_UUID(orders.fk_address_id) AS fk_address_id,
+    orders.pk_order_id,
+    orders.fk_user_id,
+    orders.fk_status_id,
+    orders.fk_address_id,
     orders.total_amount,
     orders.is_active,
     orders.created_at_utc,
@@ -594,9 +701,9 @@ FROM orders;
 -- 27. order_items
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(order_items.pk_order_item_id) AS pk_order_item_id,
-    BIN_TO_UUID(order_items.fk_order_id) AS fk_order_id,
-    BIN_TO_UUID(order_items.fk_product_id) AS fk_product_id,
+    order_items.pk_order_item_id,
+    order_items.fk_order_id,
+    order_items.fk_product_id,
     order_items.product_name_snapshot,
     order_items.quantity,
     order_items.unit_price,
@@ -611,10 +718,10 @@ FROM order_items;
 -- 28. payments
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(payments.pk_payment_id) AS pk_payment_id,
-    BIN_TO_UUID(payments.fk_order_id) AS fk_order_id,
-    BIN_TO_UUID(payments.fk_status_id) AS fk_status_id,
-    BIN_TO_UUID(payments.fk_gateway_id) AS fk_gateway_id,
+    payments.pk_payment_id,
+    payments.fk_order_id,
+    payments.fk_status_id,
+    payments.fk_gateway_id,
     payments.payment_method,
     payments.gateway_transaction_id,
     payments.gateway_order_id,
@@ -631,13 +738,92 @@ SELECT
 FROM payments;
 
 -- ==============================================================
+-- 41. coupons
+-- ==============================================================
+SELECT
+    coupons.pk_coupon_id,
+    coupons.coupon_code,
+    coupons.description,
+    coupons.fk_discount_type_id,
+    coupons.fk_coupon_status_id,
+    coupons.discount_value,
+    coupons.maximum_discount_amount,
+    coupons.minimum_purchase_amount,
+    coupons.maximum_global_usage,
+    coupons.maximum_user_usage,
+    coupons.usage_count,
+    coupons.is_one_time,
+    coupons.starts_at_utc,
+    CONVERT_TZ(coupons.starts_at_utc, '+00:00', '+05:30') AS starts_at_ist,
+    coupons.expires_at_utc,
+    CONVERT_TZ(coupons.expires_at_utc, '+00:00', '+05:30') AS expires_at_ist,
+    coupons.is_active,
+    coupons.created_at_utc,
+    CONVERT_TZ(coupons.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    coupons.updated_at_utc,
+    CONVERT_TZ(coupons.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM coupons;
+
+-- ==============================================================
+-- 42. coupon_usage_history
+-- ==============================================================
+SELECT
+    coupon_usage_history.pk_coupon_usage_id,
+    coupon_usage_history.fk_coupon_id,
+    coupon_usage_history.fk_user_id,
+    coupon_usage_history.fk_cart_id,
+    coupon_usage_history.fk_order_id,
+    coupon_usage_history.discount_amount,
+    coupon_usage_history.used_at_utc,
+    CONVERT_TZ(coupon_usage_history.used_at_utc, '+00:00', '+05:30') AS used_at_ist,
+    coupon_usage_history.is_active,
+    coupon_usage_history.created_at_utc,
+    CONVERT_TZ(coupon_usage_history.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    coupon_usage_history.updated_at_utc,
+    CONVERT_TZ(coupon_usage_history.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM coupon_usage_history;
+
+-- ==============================================================
+-- 44. shipping_methods
+-- ==============================================================
+SELECT
+    shipping_methods.pk_shipping_method_id,
+    shipping_methods.shipping_method_name,
+    shipping_methods.description,
+    shipping_methods.base_cost,
+    shipping_methods.cost_per_kg,
+    shipping_methods.estimated_delivery_days,
+    shipping_methods.is_active,
+    shipping_methods.created_at_utc,
+    CONVERT_TZ(shipping_methods.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    shipping_methods.updated_at_utc,
+    CONVERT_TZ(shipping_methods.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM shipping_methods;
+
+-- ==============================================================
+-- 44. tax_configurations
+-- ==============================================================
+SELECT
+    tax_configurations.pk_tax_configuration_id,
+    tax_configurations.region_name,
+    tax_configurations.tax_percentage,
+    tax_configurations.effective_from,
+    tax_configurations.effective_to,
+    tax_configurations.is_active,
+    tax_configurations.created_at_utc,
+    CONVERT_TZ(tax_configurations.created_at_utc, '+00:00', '+05:30') AS created_at_ist,
+    tax_configurations.updated_at_utc,
+    CONVERT_TZ(tax_configurations.updated_at_utc, '+00:00', '+05:30') AS updated_at_ist
+FROM tax_configurations;
+
+-- ==============================================================
 -- 29. reviews
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(reviews.pk_review_id) AS pk_review_id,
-    BIN_TO_UUID(reviews.fk_product_id) AS fk_product_id,
-    BIN_TO_UUID(reviews.fk_user_id) AS fk_user_id,
-    BIN_TO_UUID(reviews.fk_status_id) AS fk_status_id,
+    reviews.pk_review_id,
+    reviews.fk_product_id,
+    reviews.fk_user_id,
+    reviews.fk_status_id,
     reviews.rating,
     reviews.review_title,
     reviews.review_text,
@@ -652,8 +838,8 @@ FROM reviews;
 -- 30. email_verification_tokens
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(email_verification_tokens.pk_verification_token_id) AS pk_verification_token_id,
-    BIN_TO_UUID(email_verification_tokens.fk_user_id) AS fk_user_id,
+    email_verification_tokens.pk_verification_token_id,
+    email_verification_tokens.fk_user_id,
     email_verification_tokens.verification_token,
     email_verification_tokens.expires_at_utc,
     CONVERT_TZ(email_verification_tokens.expires_at_utc, '+00:00', '+05:30') AS expires_at_ist,
@@ -669,8 +855,8 @@ FROM email_verification_tokens;
 -- 31. refresh_tokens
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(refresh_tokens.pk_refresh_token_id) AS pk_refresh_token_id,
-    BIN_TO_UUID(refresh_tokens.fk_user_id) AS fk_user_id,
+    refresh_tokens.pk_refresh_token_id,
+    refresh_tokens.fk_user_id,
     refresh_tokens.token_hash,
     refresh_tokens.expires_at_utc,
     CONVERT_TZ(refresh_tokens.expires_at_utc, '+00:00', '+05:30') AS expires_at_ist,
@@ -687,8 +873,8 @@ FROM refresh_tokens;
 -- 32. password_reset_tokens
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(password_reset_tokens.pk_reset_token_id) AS pk_reset_token_id,
-    BIN_TO_UUID(password_reset_tokens.fk_user_id) AS fk_user_id,
+    password_reset_tokens.pk_reset_token_id,
+    password_reset_tokens.fk_user_id,
     password_reset_tokens.token_hash,
     password_reset_tokens.expires_at_utc,
     CONVERT_TZ(password_reset_tokens.expires_at_utc, '+00:00', '+05:30') AS expires_at_ist,
@@ -704,10 +890,10 @@ FROM password_reset_tokens;
 -- 33. notifications
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(notifications.pk_notification_id) AS pk_notification_id,
-    BIN_TO_UUID(notifications.fk_user_id) AS fk_user_id,
-    BIN_TO_UUID(notifications.fk_type_id) AS fk_type_id,
-    BIN_TO_UUID(notifications.fk_channel_id) AS fk_channel_id,
+    notifications.pk_notification_id,
+    notifications.fk_user_id,
+    notifications.fk_type_id,
+    notifications.fk_channel_i,
     notifications.title,
     notifications.message,
     notifications.is_read,
@@ -724,9 +910,9 @@ FROM notifications;
 -- 34. reports
 -- ==============================================================
 SELECT
-    BIN_TO_UUID(reports.pk_report_id) AS pk_report_id,
-    BIN_TO_UUID(reports.fk_user_id) AS fk_user_id,
-    BIN_TO_UUID(reports.fk_report_type_id) AS fk_report_type_id,
+    reports.pk_report_id,
+    reports.fk_user_id,
+    reports.fk_report_type_id,
     reports.report_name,
     reports.file_url,
     reports.generated_at_utc,

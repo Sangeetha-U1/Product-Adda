@@ -29,6 +29,9 @@ Description :
 009_create_notification_channels.sql
 010_create_report_types.sql
 035_create_product_status_lookup.sql
+036_create_cart_statuses.sql
+037_create_coupon_statuses.sql
+038_create_coupon_discount_types.sql
 
 011_create_users.sql
 012_create_user_roles.sql
@@ -43,15 +46,21 @@ Description :
 
 020_create_inventory.sql
 021_create_inventory_transactions.sql
+039_create_inventory_reservations.sql
 
 022_create_carts.sql
 023_create_cart_items.sql
 024_create_wishlists.sql
 025_create_wishlist_items.sql
+040_create_wishlist_price_history.sql
 
 026_create_orders.sql
 027_create_order_items.sql
 028_create_payments.sql
+041_create_coupons.sql
+042_create_coupon_usage_history.sql
+043_create_shipping_methods.sql
+044_create_tax_configurations.sql
 
 029_create_reviews.sql
 
@@ -105,6 +114,9 @@ mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\00
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\009_create_notification_channels.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\010_create_report_types.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\035_create_product_status_lookup.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\036_create_cart_statuses.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\037_create_coupon_statuses.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\038_create_coupon_discount_types.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\011_create_users.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\012_create_user_roles.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\013_create_vendors.sql"
@@ -116,13 +128,19 @@ mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\01
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\019_create_product_images.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\020_create_inventory.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\021_create_inventory_transactions.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\039_create_inventory_reservations.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\022_create_carts.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\023_create_cart_items.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\024_create_wishlists.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\025_create_wishlist_items.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\040_create_wishlist_price_history.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\026_create_orders.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\027_create_order_items.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\028_create_payments.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\041_create_coupons.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\042_create_coupon_usage_history.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\043_create_shipping_methods.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\044_create_tax_configurations.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\029_create_reviews.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\030_create_email_verification_tokens.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\031_create_refresh_tokens.sql"
@@ -165,13 +183,18 @@ TRUNCATE TABLE `password_reset_tokens`;
 TRUNCATE TABLE `refresh_tokens`;
 TRUNCATE TABLE `email_verification_tokens`;
 TRUNCATE TABLE `reviews`;
+TRUNCATE TABLE `tax_configurations`;
+TRUNCATE TABLE `shipping_methods`;
+TRUNCATE TABLE `coupons`;
 TRUNCATE TABLE `payments`;
 TRUNCATE TABLE `order_items`;
 TRUNCATE TABLE `orders`;
+TRUNCATE TABLE `wishlist_price_history`;
 TRUNCATE TABLE `wishlist_items`;
 TRUNCATE TABLE `wishlists`;
 TRUNCATE TABLE `cart_items`;
 TRUNCATE TABLE `carts`;
+TRUNCATE TABLE `inventory_reservations`;
 TRUNCATE TABLE `inventory_transactions`;
 TRUNCATE TABLE `inventory`;
 TRUNCATE TABLE `product_images`;
@@ -183,6 +206,10 @@ TRUNCATE TABLE `vendor_bank_details`;
 TRUNCATE TABLE `vendors`;
 TRUNCATE TABLE `user_roles`;
 TRUNCATE TABLE `users`;
+TRUNCATE TABLE `coupon_discount_types`;
+TRUNCATE TABLE `coupon_statuses`;
+TRUNCATE TABLE `cart_statuses`;
+TRUNCATE TABLE `product_status_lookup`;
 TRUNCATE TABLE `report_types`;
 TRUNCATE TABLE `notification_channels`;
 TRUNCATE TABLE `notification_types`;
@@ -213,19 +240,25 @@ DROP TABLE IF EXISTS `password_reset_tokens`;
 DROP TABLE IF EXISTS `refresh_tokens`;
 DROP TABLE IF EXISTS `email_verification_tokens`;
 
--- 3. Order / Transactional Tables
 DROP TABLE IF EXISTS `reviews`;
+
+-- 3. Order / Transactional Tables
+DROP TABLE IF EXISTS `tax_configurations`;
+DROP TABLE IF EXISTS `shipping_methods`;
+DROP TABLE IF EXISTS `coupons`;
 DROP TABLE IF EXISTS `payments`;
 DROP TABLE IF EXISTS `order_items`;
 DROP TABLE IF EXISTS `orders`;
 
 -- 4. Cart / Wishlist Tables
+DROP TABLE IF EXISTS `wishlist_price_history`;
 DROP TABLE IF EXISTS `wishlist_items`;
 DROP TABLE IF EXISTS `wishlists`;
 DROP TABLE IF EXISTS `cart_items`;
 DROP TABLE IF EXISTS `carts`;
 
 -- 5. Inventory Tables
+DROP TABLE IF EXISTS `inventory_reservations`;
 DROP TABLE IF EXISTS `inventory_transactions`;
 DROP TABLE IF EXISTS `inventory`;
 
@@ -243,6 +276,10 @@ DROP TABLE IF EXISTS `user_roles`;
 DROP TABLE IF EXISTS `users`;
 
 -- 8. Master Lookup Tables
+DROP TABLE IF EXISTS `coupon_discount_types`;
+DROP TABLE IF EXISTS `coupon_statuses`;
+DROP TABLE IF EXISTS `cart_statuses`;
+DROP TABLE IF EXISTS `product_status_lookup`;
 DROP TABLE IF EXISTS `report_types`;
 DROP TABLE IF EXISTS `notification_channels`;
 DROP TABLE IF EXISTS `notification_types`;

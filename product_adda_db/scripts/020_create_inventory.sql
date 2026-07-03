@@ -58,7 +58,19 @@ CREATE TABLE inventory
     CONSTRAINT fk_inventory_product_id
         FOREIGN KEY (fk_product_id)
         REFERENCES products(pk_product_id)
-        ON DELETE RESTRICT
+        ON DELETE RESTRICT,
+
+    CONSTRAINT chk_inventory_available_quantity
+        CHECK (available_quantity >= 0),
+
+    CONSTRAINT chk_inventory_reserved_quantity
+        CHECK (reserved_quantity >= 0),
+
+    CONSTRAINT chk_inventory_low_stock_threshold
+        CHECK (low_stock_threshold >= 0),
+        
+    CONSTRAINT chk_inventory_max_stock
+        CHECK (max_stock > 0);
 );
 
 -- ============================================================================
