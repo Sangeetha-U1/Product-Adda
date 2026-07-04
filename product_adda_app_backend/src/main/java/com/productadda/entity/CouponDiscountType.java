@@ -3,7 +3,6 @@ package com.productadda.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,13 +10,13 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "wishlist_items")
+@Table(name = "coupon_discount_types")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class WishlistItem {
+public class CouponDiscountType {
 
     /*
      * =========================================================
@@ -26,43 +25,35 @@ public class WishlistItem {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_wishlist_item_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkWishlistItemId;
+    @Column(name = "pk_discount_type_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkDiscountTypeId;
 
     /*
      * =========================================================
-     * RELATIONSHIPS
+     * DISCOUNT TYPE DETAILS
      * =========================================================
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_wishlist_id", nullable = false)
-    private Wishlist fkWishlist;
+    @Column(name = "discount_type_code", nullable = false, unique = true, length = 50)
+    private String discountTypeCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_product_id", nullable = false)
-    private Product fkProduct;
+    @Column(name = "discount_type_label", nullable = false, length = 100)
+    private String discountTypeLabel;
+
+    @Column(name = "display_order", nullable = false, unique = true)
+    private Integer displayOrder;
 
     /*
      * =========================================================
-     * WISHLIST ITEM DETAILS
+     * STATUS
      * =========================================================
      */
-    @Column(name = "price_at_add", nullable = false, precision = 10, scale = 2)
-    private BigDecimal priceAtAdd;
-
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    @Column(name = "is_deleted", nullable = false)
-    private Boolean isDeleted;
-
-    @Column(name = "expires_at_utc")
-    private LocalDateTime expiresAtUtc;
-
     /*
-     * =========================================================
+     * ===========================================================================
      * AUDIT
-     * =========================================================
+     * ===========================================================================
      */
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;

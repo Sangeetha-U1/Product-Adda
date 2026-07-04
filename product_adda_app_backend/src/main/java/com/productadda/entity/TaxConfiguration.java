@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,13 +12,16 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "wishlist_items")
+@Table(name = "tax_configurations", uniqueConstraints = {
+        @UniqueConstraint(name = "uq_tax_configurations_region_effective_from", columnNames = { "region_name",
+                "effective_from" })
+})
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class WishlistItem {
+public class TaxConfiguration {
 
     /*
      * =========================================================
@@ -26,43 +30,38 @@ public class WishlistItem {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_wishlist_item_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkWishlistItemId;
+    @Column(name = "pk_tax_configuration_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkTaxConfigurationId;
 
     /*
      * =========================================================
-     * RELATIONSHIPS
+     * TAX CONFIGURATION DETAILS
      * =========================================================
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_wishlist_id", nullable = false)
-    private Wishlist fkWishlist;
+    @Column(name = "region_name", nullable = false, length = 100)
+    private String regionName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_product_id", nullable = false)
-    private Product fkProduct;
+    @Column(name = "tax_percentage", nullable = false, precision = 5, scale = 2)
+    private BigDecimal taxPercentage;
+
+    @Column(name = "effective_from", nullable = false)
+    private LocalDate effectiveFrom;
+
+    @Column(name = "effective_to")
+    private LocalDate effectiveTo;
 
     /*
      * =========================================================
-     * WISHLIST ITEM DETAILS
+     * STATUS
      * =========================================================
      */
-    @Column(name = "price_at_add", nullable = false, precision = 10, scale = 2)
-    private BigDecimal priceAtAdd;
-
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    @Column(name = "is_deleted", nullable = false)
-    private Boolean isDeleted;
-
-    @Column(name = "expires_at_utc")
-    private LocalDateTime expiresAtUtc;
-
     /*
-     * =========================================================
+     * ===========================================================================
      * AUDIT
-     * =========================================================
+     * ===========================================================================
      */
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;

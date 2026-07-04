@@ -15,4 +15,5 @@ public class OrderItemSummaryDto {
     private String productNameSnapshot;
     private Integer quantity;
     private BigDecimal unitPrice;
+    private BigDecimal lineTotal;
 }

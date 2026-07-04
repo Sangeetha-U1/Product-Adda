@@ -1,4 +1,4 @@
-package com.productadda.controller.user;
+package com.productadda.controller.address;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.productadda.dto.ApiSuccessResponseDto;
 import com.productadda.dto.user.AddressRequestDto;
 import com.productadda.dto.user.AddressResponseDto;
-import com.productadda.service.user.AddressService;
+import com.productadda.service.address.AddressService;
 
 @RestController
 @RequestMapping("/api/users/addresses")

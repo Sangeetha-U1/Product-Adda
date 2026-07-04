@@ -78,7 +78,7 @@ public class VendorDashboardMetricsService {
                  * ================================================================
                  */
                 long totalProducts = productRepository.countByFkVendor(vendorInstance);
-                long totalOrderItems = orderItemRepository.countByFkProductFkVendor(vendorInstance);
+                long totalOrderItems = orderItemRepository.countByFkVendor(vendorInstance);
                 long totalDistinctOrders = orderItemRepository.countDistinctOrdersByVendor(vendorInstance);
 
                 /*

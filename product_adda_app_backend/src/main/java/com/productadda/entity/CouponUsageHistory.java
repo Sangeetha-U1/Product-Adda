@@ -11,13 +11,13 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "coupon_usage_history")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Order {
+public class CouponUsageHistory {
 
     /*
      * =========================================================
@@ -26,14 +26,18 @@ public class Order {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_order_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkOrderId;
+    @Column(name = "pk_coupon_usage_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkCouponUsageId;
 
     /*
      * =========================================================
      * RELATIONSHIPS
      * =========================================================
      */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_coupon_id", nullable = false)
+    private Coupon fkCoupon;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_user_id", nullable = false)
     private User fkUser;
@@ -43,43 +47,19 @@ public class Order {
     private Cart fkCart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_status_id", nullable = false)
-    private OrderStatus fkStatus;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_address_id", nullable = false)
-    private Address fkAddress;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_coupon_id")
-    private Coupon fkCoupon;
+    @JoinColumn(name = "fk_order_id")
+    private Order fkOrder;
 
     /*
      * =========================================================
-     * ORDER INFO
+     * USAGE DETAILS
      * =========================================================
      */
-    @Column(name = "order_number", nullable = false, unique = true, length = 50)
-    private String orderNumber;
+    @Column(name = "discount_amount", nullable = false, precision = 10, scale = 2)
+    private BigDecimal discountAmount;
 
-    @Column(name = "subtotal", nullable = false, precision = 10, scale = 2)
-    private BigDecimal subtotal;
-
-    @Column(name = "coupon_discount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal couponDiscount;
-
-    @Column(name = "shipping_cost", nullable = false, precision = 10, scale = 2)
-    private BigDecimal shippingCost;
-
-    @Column(name = "tax_amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal taxAmount;
-
-    @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "idempotency_key", columnDefinition = "BINARY(16)", nullable = false, unique = true)
-    private UUID idempotencyKey;
-
-    @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal totalAmount;
+    @Column(name = "used_at_utc", nullable = false)
+    private LocalDateTime usedAtUtc;
 
     /*
      * =========================================================

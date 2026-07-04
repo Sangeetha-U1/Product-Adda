@@ -34,8 +34,8 @@ public class Payment {
      * RELATIONSHIPS
      * =========================================================
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_order_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_order_id", nullable = false, unique = true)
     private Order fkOrder;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -65,6 +65,10 @@ public class Payment {
 
     @Column(name = "gateway_signature", length = 500)
     private String gatewaySignature;
+
+    @Lob
+    @Column(name = "error_message", columnDefinition = "TEXT")
+    private String errorMessage;
 
     @Column(name = "amount_paid", nullable = false, precision = 10, scale = 2)
     private BigDecimal amountPaid;

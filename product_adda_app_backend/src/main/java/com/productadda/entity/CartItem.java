@@ -11,13 +11,15 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "cart_items", uniqueConstraints = {
+        @UniqueConstraint(name = "uq_cart_product", columnNames = { "fk_cart_id", "fk_product_id" })
+})
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Order {
+public class CartItem {
 
     /*
      * =========================================================
@@ -26,8 +28,8 @@ public class Order {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_order_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkOrderId;
+    @Column(name = "pk_cart_item_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkCartItemId;
 
     /*
      * =========================================================
@@ -35,51 +37,29 @@ public class Order {
      * =========================================================
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_user_id", nullable = false)
-    private User fkUser;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_cart_id")
+    @JoinColumn(name = "fk_cart_id", nullable = false)
     private Cart fkCart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_status_id", nullable = false)
-    private OrderStatus fkStatus;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_address_id", nullable = false)
-    private Address fkAddress;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_coupon_id")
-    private Coupon fkCoupon;
+    @JoinColumn(name = "fk_product_id", nullable = false)
+    private Product fkProduct;
 
     /*
      * =========================================================
-     * ORDER INFO
+     * ITEM DETAILS
      * =========================================================
      */
-    @Column(name = "order_number", nullable = false, unique = true, length = 50)
-    private String orderNumber;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
-    @Column(name = "subtotal", nullable = false, precision = 10, scale = 2)
-    private BigDecimal subtotal;
+    @Column(name = "price_at_add", nullable = false, precision = 10, scale = 2)
+    private BigDecimal priceAtAdd;
 
-    @Column(name = "coupon_discount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal couponDiscount;
+    @Column(name = "added_at_utc", nullable = false)
+    private LocalDateTime addedAtUtc;
 
-    @Column(name = "shipping_cost", nullable = false, precision = 10, scale = 2)
-    private BigDecimal shippingCost;
-
-    @Column(name = "tax_amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal taxAmount;
-
-    @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "idempotency_key", columnDefinition = "BINARY(16)", nullable = false, unique = true)
-    private UUID idempotencyKey;
-
-    @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal totalAmount;
+    @Column(name = "is_saved_for_later", nullable = false)
+    private Boolean isSavedForLater;
 
     /*
      * =========================================================

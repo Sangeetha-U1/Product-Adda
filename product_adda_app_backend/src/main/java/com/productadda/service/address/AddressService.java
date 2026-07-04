@@ -1,4 +1,4 @@
-package com.productadda.service.user;
+package com.productadda.service.address;
 
 import java.util.List;
 import java.util.UUID;

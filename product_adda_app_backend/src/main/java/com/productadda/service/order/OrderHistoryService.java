@@ -12,9 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.productadda.dto.order.OrderHistoryResponseDto;
 import com.productadda.dto.order.OrderItemSummaryDto;
+
 import com.productadda.entity.Order;
 import com.productadda.entity.User;
+
 import com.productadda.exception.ApiException;
+
 import com.productadda.repository.OrderItemRepository;
 import com.productadda.repository.OrderRepository;
 import com.productadda.repository.UserRepository;
@@ -46,6 +49,7 @@ public class OrderHistoryService {
         // ==========================================
         // 1.2 CONTEXT AUTHENTICATION
         // ==========================================
+        // Note: Parameterless methodology tracking. No request variables to assert.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
@@ -93,12 +97,19 @@ public class OrderHistoryService {
                             .productNameSnapshot(item.getProductNameSnapshot())
                             .quantity(item.getQuantity())
                             .unitPrice(item.getUnitPrice())
+                            .lineTotal(item.getLineTotal())
                             .build())
                     .collect(Collectors.toList());
 
             return OrderHistoryResponseDto.builder()
                     .orderId(order.getPkOrderId())
+                    .orderNumber(order.getOrderNumber())
+                    // TODO: check this condition, it disgustung.
                     .statusName(order.getFkStatus() != null ? order.getFkStatus().getStatusName() : "UNKNOWN")
+                    .subtotal(order.getSubtotal())
+                    .couponDiscount(order.getCouponDiscount())
+                    .shippingCost(order.getShippingCost())
+                    .taxAmount(order.getTaxAmount())
                     .totalAmount(order.getTotalAmount())
                     .createdAtUtc(order.getCreatedAtUtc())
                     .items(itemSummaries)

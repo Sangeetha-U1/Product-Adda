@@ -13,7 +13,12 @@ import lombok.*;
 @Builder
 public class OrderHistoryResponseDto {
     private UUID orderId;
+    private String orderNumber;
     private String statusName;
+    private BigDecimal subtotal; 
+    private BigDecimal couponDiscount;
+    private BigDecimal shippingCost;
+    private BigDecimal taxAmount;
     private BigDecimal totalAmount;
     private LocalDateTime createdAtUtc;
     private List<OrderItemSummaryDto> items;

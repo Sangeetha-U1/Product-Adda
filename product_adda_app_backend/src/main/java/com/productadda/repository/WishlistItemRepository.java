@@ -7,5 +7,8 @@ import com.productadda.entity.Wishlist;
 import com.productadda.entity.WishlistItem;
 
 public interface WishlistItemRepository extends JpaRepository<WishlistItem, UUID> {
+
     List<WishlistItem> findByFkWishlist(Wishlist wishlist);
+
+    List<WishlistItem> findByFkWishlistAndIsActiveTrueAndIsDeletedFalse(Wishlist wishlist);
 }

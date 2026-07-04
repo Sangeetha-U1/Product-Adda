@@ -3,7 +3,6 @@ package com.productadda.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,13 +10,13 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "inventory_reservations")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Order {
+public class InventoryReservation {
 
     /*
      * =========================================================
@@ -26,8 +25,8 @@ public class Order {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_order_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkOrderId;
+    @Column(name = "pk_reservation_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkReservationId;
 
     /*
      * =========================================================
@@ -35,51 +34,27 @@ public class Order {
      * =========================================================
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_user_id", nullable = false)
-    private User fkUser;
+    @JoinColumn(name = "fk_product_id", nullable = false)
+    private Product fkProduct;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_cart_id")
+    @JoinColumn(name = "fk_cart_id", nullable = false)
     private Cart fkCart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_status_id", nullable = false)
-    private OrderStatus fkStatus;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_address_id", nullable = false)
-    private Address fkAddress;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_coupon_id")
-    private Coupon fkCoupon;
+    @JoinColumn(name = "fk_cart_item_id", nullable = false)
+    private CartItem fkCartItem;
 
     /*
      * =========================================================
-     * ORDER INFO
+     * RESERVATION DETAILS
      * =========================================================
      */
-    @Column(name = "order_number", nullable = false, unique = true, length = 50)
-    private String orderNumber;
+    @Column(name = "reserved_quantity", nullable = false)
+    private Integer reservedQuantity;
 
-    @Column(name = "subtotal", nullable = false, precision = 10, scale = 2)
-    private BigDecimal subtotal;
-
-    @Column(name = "coupon_discount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal couponDiscount;
-
-    @Column(name = "shipping_cost", nullable = false, precision = 10, scale = 2)
-    private BigDecimal shippingCost;
-
-    @Column(name = "tax_amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal taxAmount;
-
-    @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "idempotency_key", columnDefinition = "BINARY(16)", nullable = false, unique = true)
-    private UUID idempotencyKey;
-
-    @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal totalAmount;
+    @Column(name = "expires_at_utc", nullable = false)
+    private LocalDateTime expiresAtUtc;
 
     /*
      * =========================================================

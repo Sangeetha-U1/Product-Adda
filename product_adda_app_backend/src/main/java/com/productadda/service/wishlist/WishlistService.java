@@ -1,4 +1,4 @@
-package com.productadda.service.user;
+package com.productadda.service.wishlist;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,30 +32,9 @@ public class WishlistService {
     private final WishlistItemRepository wishlistItemRepository;
     private final UserRepository userRepository;
 
-    /*
-     * ================================================================
-     * GET CURRENT USER WISHLIST
-     * Description: Retrieves the collection of active catalog products saved to
-     * the wishlist of the currently logged-in context session user.
-     * ================================================================
-     */
     @Transactional(readOnly = true)
     public List<WishlistResponseDto> getMyWishlist() {
 
-        /*
-         * ================================================================
-         * 1. VALIDATION SECTION
-         * ================================================================
-         */
-
-        // ==========================================
-        // 1.1 REQUEST VALIDATION
-        // ==========================================
-        // Structural context retrieval. No explicit body parameters are validated.
-
-        // ==========================================
-        // 1.2 CONTEXT AUTHENTICATION
-        // ==========================================
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -69,17 +48,9 @@ public class WishlistService {
             email = authentication.getName();
         }
 
-        // ==========================================
-        // 1.3 DATABASE LOOKUP VALIDATION
-        // ==========================================
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user no longer exists"));
 
-        /*
-         * ================================================================
-         * 2. BUSINESS RULES & PROCESSING / WORKFLOW
-         * ================================================================
-         */
         Optional<Wishlist> wishlistOpt = wishlistRepository.findByFkUser(user);
 
         if (wishlistOpt.isEmpty()) {
@@ -88,14 +59,14 @@ public class WishlistService {
 
         List<WishlistItem> items = wishlistItemRepository.findByFkWishlist(wishlistOpt.get());
 
-        /*
-         * ================================================================
-         * 4. RESPONSE MAPPING
-         * ================================================================
-         */
         List<WishlistResponseDto> responseList = new ArrayList<>();
 
         for (WishlistItem item : items) {
+            // SCAN FIX: Filter out items marked as soft-deleted in the altered table
+            if (Boolean.TRUE.equals(item.getIsDeleted())) {
+                continue;
+            }
+
             Product product = item.getFkProduct();
 
             if (product == null) {
@@ -108,11 +79,14 @@ public class WishlistService {
                 brandName = product.getFkBrand().getBrandName();
             }
 
+            // SCAN FIX: Map new data fields populated from the altered columns
             WishlistResponseDto dto = WishlistResponseDto.builder()
                     .wishlistItemId(item.getPkWishlistItemId())
                     .productId(product.getPkProductId())
                     .productName(product.getTitle())
-                    .price(product.getPrice())
+                    .price(product.getPrice()) 
+                    .priceAtAdd(item.getPriceAtAdd())
+                    .expiresAtUtc(item.getExpiresAtUtc())
                     .brandName(brandName)
                     .build();
 

@@ -11,13 +11,13 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "wishlist_items")
+@Table(name = "shipping_methods")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class WishlistItem {
+public class ShippingMethod {
 
     /*
      * =========================================================
@@ -26,43 +26,42 @@ public class WishlistItem {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_wishlist_item_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkWishlistItemId;
+    @Column(name = "pk_shipping_method_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkShippingMethodId;
 
     /*
      * =========================================================
-     * RELATIONSHIPS
+     * SHIPPING METHOD DETAILS
      * =========================================================
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_wishlist_id", nullable = false)
-    private Wishlist fkWishlist;
+    @Column(name = "shipping_method_name", nullable = false, unique = true, length = 100)
+    private String shippingMethodName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_product_id", nullable = false)
-    private Product fkProduct;
+    @Lob
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "base_cost", nullable = false, precision = 10, scale = 2)
+    private BigDecimal baseCost;
+
+    @Column(name = "cost_per_kg", nullable = false, precision = 10, scale = 2)
+    private BigDecimal costPerKg;
+
+    @Column(name = "estimated_delivery_days", nullable = false)
+    private Integer estimatedDeliveryDays;
 
     /*
      * =========================================================
-     * WISHLIST ITEM DETAILS
+     * STATUS
      * =========================================================
      */
-    @Column(name = "price_at_add", nullable = false, precision = 10, scale = 2)
-    private BigDecimal priceAtAdd;
-
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    @Column(name = "is_deleted", nullable = false)
-    private Boolean isDeleted;
-
-    @Column(name = "expires_at_utc")
-    private LocalDateTime expiresAtUtc;
-
     /*
-     * =========================================================
+     * ===========================================================================
      * AUDIT
-     * =========================================================
+     * ===========================================================================
      */
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;

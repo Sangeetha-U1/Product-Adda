@@ -52,7 +52,7 @@ public class PublicRoutes {
             new PublicConfig("/api/auth/forgot-password", HttpMethod.POST),
 
             // Token & Email Verification Lifecycle
-            new PublicConfig("/api/token/verify-email", HttpMethod.GET),
+            new PublicConfig("/api/token/verify-email", HttpMethod.POST),
             new PublicConfig("/api/token/resend-verification-email", HttpMethod.POST),
             new PublicConfig("/api/token/reset-password", HttpMethod.POST),
             new PublicConfig("/api/token/refresh-token", HttpMethod.POST),

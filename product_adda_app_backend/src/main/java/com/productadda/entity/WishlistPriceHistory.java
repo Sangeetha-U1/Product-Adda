@@ -11,13 +11,13 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "order_items")
+@Table(name = "wishlist_price_history")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderItem {
+public class WishlistPriceHistory {
 
     /*
      * =========================================================
@@ -26,8 +26,8 @@ public class OrderItem {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_order_item_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkOrderItemId;
+    @Column(name = "pk_history_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkHistoryId;
 
     /*
      * =========================================================
@@ -35,33 +35,22 @@ public class OrderItem {
      * =========================================================
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_order_id", nullable = false)
-    private Order fkOrder;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_product_id", nullable = false)
-    private Product fkProduct;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_vendor_id", nullable = false)
-    private Vendor fkVendor;
+    @JoinColumn(name = "fk_wishlist_item_id", nullable = false)
+    private WishlistItem fkWishlistItem;
 
     /*
      * =========================================================
-     * ORDER ITEM DETAILS & SNAPSHOTS
+     * PRICE HISTORY DETAILS
      * =========================================================
      */
-    @Column(name = "product_name_snapshot", nullable = false, length = 255)
-    private String productNameSnapshot;
+    @Column(name = "price_snapshot", nullable = false, precision = 10, scale = 2)
+    private BigDecimal priceSnapshot;
 
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    @Column(name = "price_drop_percentage", precision = 5, scale = 2)
+    private BigDecimal priceDropPercentage;
 
-    @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
-    private BigDecimal unitPrice;
-
-    @Column(name = "line_total", nullable = false, precision = 10, scale = 2)
-    private BigDecimal lineTotal;
+    @Column(name = "snapshot_at_utc", nullable = false)
+    private LocalDateTime snapshotAtUtc;
 
     /*
      * =========================================================
@@ -72,9 +61,9 @@ public class OrderItem {
     private Boolean isActive;
 
     /*
-     * =========================================================
+     * ===========================================================================
      * AUDIT
-     * =========================================================
+     * ===========================================================================
      */
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;

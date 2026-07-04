@@ -5,12 +5,14 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.productadda.entity.Order;
 import com.productadda.entity.Payment;
 
-public interface PaymentRepository
-                extends JpaRepository<Payment, UUID> {
+public interface PaymentRepository extends JpaRepository<Payment, UUID> {
 
         Optional<Payment> findByGatewayOrderId(String gatewayOrderId);
 
         Optional<Payment> findByGatewayPaymentLinkId(String gatewayPaymentLinkId);
+
+        Optional<Payment> findByFkOrder(Order fkOrder);
 }

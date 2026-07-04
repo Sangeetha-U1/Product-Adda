@@ -11,8 +11,7 @@ import com.productadda.entity.Order;
 import com.productadda.entity.OrderItem;
 import com.productadda.entity.Vendor;
 
-public interface OrderItemRepository
-                extends JpaRepository<OrderItem, UUID> {
+public interface OrderItemRepository extends JpaRepository<OrderItem, UUID> {
 
         // Conveniently fetch every item tied to a specific order
         List<OrderItem> findByFkOrder(Order fkOrder);
@@ -25,9 +24,9 @@ public interface OrderItemRepository
         // ==========================================
         // 1. TOTAL ORDER LINE ITEMS BY VENDOR
         // Description: Counts every individual order
-        // line item linked to this vendor's products.
+        // line item directly linked to this vendor.
         // ==========================================
-        long countByFkProductFkVendor(Vendor vendor);
+        long countByFkVendor(Vendor vendor);
 
         // ==========================================
         // 2. DISTINCT ORDERS BY VENDOR
@@ -35,6 +34,6 @@ public interface OrderItemRepository
         // that contain at least one product from
         // this vendor's catalogue.
         // ==========================================
-        @Query("SELECT COUNT(DISTINCT oi.fkOrder.pkOrderId) FROM OrderItem oi WHERE oi.fkProduct.fkVendor = :vendor")
+        @Query("SELECT COUNT(DISTINCT oi.fkOrder.pkOrderId) FROM OrderItem oi WHERE oi.fkVendor = :vendor")
         long countDistinctOrdersByVendor(@Param("vendor") Vendor vendor);
 }

@@ -1,4 +1,4 @@
-package com.productadda.controller.user;
+package com.productadda.controller.wishlist;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.productadda.dto.ApiSuccessResponseDto;
 import com.productadda.dto.user.WishlistResponseDto;
-import com.productadda.service.user.WishlistService;
+import com.productadda.service.wishlist.WishlistService;
 
 @RestController
 @RequestMapping("/api/users/wishlist")
