@@ -1,4 +1,4 @@
-package com.productadda.dto.user;
+package com.productadda.dto.wishlist;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.user.AddressRequestDto;
-import com.productadda.dto.user.AddressResponseDto;
+import com.productadda.dto.address.AddressRequestDto;
+import com.productadda.dto.address.AddressResponseDto;
 import com.productadda.entity.Address;
 import com.productadda.entity.AddressType;
 import com.productadda.entity.User;

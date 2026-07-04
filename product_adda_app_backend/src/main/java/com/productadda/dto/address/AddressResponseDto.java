@@ -1,4 +1,4 @@
-package com.productadda.dto.user;
+package com.productadda.dto.address;
 
 import java.util.UUID;
 import lombok.*;

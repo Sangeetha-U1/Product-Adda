@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.productadda.dto.ApiSuccessResponseDto;
-import com.productadda.dto.user.AddressRequestDto;
-import com.productadda.dto.user.AddressResponseDto;
+import com.productadda.dto.address.AddressRequestDto;
+import com.productadda.dto.address.AddressResponseDto;
 import com.productadda.service.address.AddressService;
 
 @RestController

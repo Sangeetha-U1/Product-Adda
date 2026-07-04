@@ -139,6 +139,8 @@ public class AuthServiceLogin {
          * ================================================================
          */
 
+        // TODO: init cart and wishlist tables with empty.
+
         /*
          * ================================================================
          * 4. RESPONSE MAPPING
