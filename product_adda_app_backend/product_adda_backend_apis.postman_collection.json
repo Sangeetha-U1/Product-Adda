@@ -1360,7 +1360,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"elonmusk@tesla.com\",\r\n    \"password\": \"Test123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"jigob58138@fishnone.com\",\r\n    \"password\": \"Test123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1816,7 +1816,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbG9ubXVza0B0ZXNsYS5jb20iLCJ1c2VySWQiOiIwMTlmMmM5OC0wMjYzLTcxNjgtYWY3My1jMjU0OWFlMGM2ZjAiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzE2MDQzNiwiZXhwIjoxNzgzMTY0MDM2fQ.RsLZztCXeuFV42td2QIw0mxYyj3URCVQFnR8NkAopFGsl2ERPt1dnrznqoCumS4M",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMTY1NzU2LCJleHAiOjE3ODMxNjkzNTZ9.Kl-eo5GtqX-jB0uPRIrUz2z9tRfGZU2OkHt-_xuj1o8qteb4ZhvDZxhaogxbgud4",
                   "type": "string"
                 }
               ]
@@ -1825,7 +1825,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\": \"019f2ca4-f68b-7121-a427-0b30b80b083e\"\r\n}",
+              "raw": "{\r\n    \"refreshToken\": \"019f2cf6-241d-7079-aa45-ad09eabb42ca\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -6618,7 +6618,7 @@
           "name": "filter",
           "item": [
             {
-              "name": "/api/products/filter?categoryId=019ed714-ddaa-7038-86ce-07e6fce0d4d9&minPrice=1000&maxPrice=5000&page=0&size=10",
+              "name": "/api/products/filter?categoryId={categoryId}&minPrice=1000&maxPrice=5000&page=0&size=10",
               "request": {
                 "method": "GET",
                 "header": [],
@@ -6763,7 +6763,7 @@
               ]
             },
             {
-              "name": "/api/products/filter?categoryId=019ed714-ddb2-74ad-bef0-e177d38403b7&brandId=019ed714-dd9f-757d-9d34-9dcd0078bf3e&page=0&size=10",
+              "name": "/api/products/filter?categoryId={categoryId}&brandId=019ed714-dd9f-757d-9d34-9dcd0078bf3e&page=0&size=10",
               "request": {
                 "method": "GET",
                 "header": [],
@@ -7259,7 +7259,7 @@
               ]
             },
             {
-              "name": "/api/admin/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/approve",
+              "name": "/api/admin/products/{productId}/approve",
               "request": {
                 "auth": {
                   "type": "bearer",
@@ -7374,7 +7374,7 @@
               ]
             },
             {
-              "name": "/api/admin/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/reject",
+              "name": "/api/admin/products/{productId}/reject",
               "request": {
                 "auth": {
                   "type": "bearer",
@@ -7595,7 +7595,7 @@
               ]
             },
             {
-              "name": "/api/admin/products/00000000-0000-0000-0000-000000000000/approve",
+              "name": "/api/admin/products/{productId}/approve",
               "request": {
                 "auth": {
                   "type": "bearer",
@@ -7710,7 +7710,7 @@
               ]
             },
             {
-              "name": "/api/admin/products/019ed714-ddbf-7364-8528-7407e10a7da1/approve",
+              "name": "/api/admin/products/{productId}/approve",
               "request": {
                 "auth": {
                   "type": "bearer",
@@ -10796,14 +10796,14 @@
           ]
         },
         {
-          "name": "/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items",
+          "name": "/api/carts/{cartId}/items",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbG9ubXVza0B0ZXNsYS5jb20iLCJ1c2VySWQiOiIwMTlmMmM5OC0wMjYzLTcxNjgtYWY3My1jMjU0OWFlMGM2ZjAiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzE2MDQzNiwiZXhwIjoxNzgzMTY0MDM2fQ.RsLZztCXeuFV42td2QIw0mxYyj3URCVQFnR8NkAopFGsl2ERPt1dnrznqoCumS4M",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMTY1NzU2LCJleHAiOjE3ODMxNjkzNTZ9.Kl-eo5GtqX-jB0uPRIrUz2z9tRfGZU2OkHt-_xuj1o8qteb4ZhvDZxhaogxbgud4",
                   "type": "string"
                 }
               ]
@@ -10812,7 +10812,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\r\n  \"quantity\": 50\r\n}",
+              "raw": "{\r\n  \"productId\": \"019ed714-ddc1-7374-b33f-87b3e8ee079d\",\r\n  \"quantity\": 3\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -11378,14 +11378,14 @@
           ]
         },
         {
-          "name": "/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+          "name": "/api/carts/{cartId}",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbG9ubXVza0B0ZXNsYS5jb20iLCJ1c2VySWQiOiIwMTlmMmM5OC0wMjYzLTcxNjgtYWY3My1jMjU0OWFlMGM2ZjAiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzE2MDQzNiwiZXhwIjoxNzgzMTY0MDM2fQ.RsLZztCXeuFV42td2QIw0mxYyj3URCVQFnR8NkAopFGsl2ERPt1dnrznqoCumS4M",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMTY1NzU2LCJleHAiOjE3ODMxNjkzNTZ9.Kl-eo5GtqX-jB0uPRIrUz2z9tRfGZU2OkHt-_xuj1o8qteb4ZhvDZxhaogxbgud4",
                   "type": "string"
                 }
               ]
@@ -11647,6 +11647,709 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": false,\n    \"message\": \"You do not have permission to access this cart\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            },
+            {
+              "name": "401 Unauthorized The provided access token has expired. Please use a refresh token.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "019f2c84-be7c-7abf-a11f-6c93d8bb46ae"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "140"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 04 Jul 2026 12:19:17 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"The provided access token has expired. Please use a refresh token.\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"TOKEN_EXPIRED\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/carts/{cartId}/items/{itemId}",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMTY1NzU2LCJleHAiOjE3ODMxNjkzNTZ9.Kl-eo5GtqX-jB0uPRIrUz2z9tRfGZU2OkHt-_xuj1o8qteb4ZhvDZxhaogxbgud4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items/019f2c8f-9bf9-70aa-9623-f18bfa7e321f",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "carts",
+                "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+                "items",
+                "019f2c8f-9bf9-70aa-9623-f18bfa7e321f"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK Item quantity updated",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"quantity\": 5\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items/019f2c8f-9bf9-70aa-9623-f18bfa7e321f",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+                    "items",
+                    "019f2c8f-9bf9-70aa-9623-f18bfa7e321f"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 04 Jul 2026 11:58:36 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Item quantity updated\",\n    \"data\": {\n        \"cartId\": \"019f2c84-be7c-7abf-a11f-6c93d8bb46ae\",\n        \"status\": \"ACTIVE\",\n        \"createdAt\": null,\n        \"expiresAt\": \"2026-10-02T09:45:25\",\n        \"items\": [\n            {\n                \"itemId\": \"019f2c8f-9bf9-70aa-9623-f18bfa7e321f\",\n                \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                \"quantity\": 5,\n                \"priceAtAdd\": 129999,\n                \"currentPrice\": null,\n                \"priceDeltaPercentage\": null,\n                \"priceAlert\": false\n            }\n        ],\n        \"totals\": null,\n        \"lastUpdated\": null\n    }\n}"
+            },
+            {
+              "name": "409 Conflict Only number additional units available",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"quantity\": 5000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items/019f2c8f-9bf9-70aa-9623-f18bfa7e321f",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+                    "items",
+                    "019f2c8f-9bf9-70aa-9623-f18bfa7e321f"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 04 Jul 2026 12:02:30 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Only 100 additional units available\",\n    \"error\": {\n        \"code\": 409,\n        \"type\": \"CONFLICT\"\n    }\n}"
+            },
+            {
+              "name": "400 Bad Request Quantity must be greater than 0",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"quantity\": 0\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items/019f2c8f-9bf9-70aa-9623-f18bfa7e321f",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+                    "items",
+                    "019f2c8f-9bf9-70aa-9623-f18bfa7e321f"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 04 Jul 2026 12:04:15 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Quantity must be greater than 0\",\n    \"error\": {\n        \"code\": 400,\n        \"type\": \"BAD_REQUEST\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/carts/{cartId}/items/{itemId}",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMTY1NzU2LCJleHAiOjE3ODMxNjkzNTZ9.Kl-eo5GtqX-jB0uPRIrUz2z9tRfGZU2OkHt-_xuj1o8qteb4ZhvDZxhaogxbgud4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items/019ed714-ddbf-7364-8528-7407e10a7da1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "carts",
+                "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+                "items",
+                "019ed714-ddbf-7364-8528-7407e10a7da1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items/019f2c8f-9bf9-70aa-9623-f18bfa7e321f",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+                    "items",
+                    "019f2c8f-9bf9-70aa-9623-f18bfa7e321f"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 04 Jul 2026 12:06:54 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Item removed from cart successfully\",\n    \"data\": {\n        \"cartId\": \"019f2c84-be7c-7abf-a11f-6c93d8bb46ae\",\n        \"status\": \"ACTIVE\",\n        \"createdAt\": null,\n        \"expiresAt\": \"2026-10-02T09:45:25\",\n        \"items\": [],\n        \"totals\": null,\n        \"lastUpdated\": null\n    }\n}"
+            },
+            {
+              "name": "404 Not Found Item not found in cart",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items/019ed714-ddbf-7364-8528-7407e10a7da1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+                    "items",
+                    "019ed714-ddbf-7364-8528-7407e10a7da1"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 04 Jul 2026 12:09:13 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Item not found in cart\",\n    \"error\": {\n        \"code\": 404,\n        \"type\": \"NOT_FOUND\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/carts/{cartId}",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMTY1NzU2LCJleHAiOjE3ODMxNjkzNTZ9.Kl-eo5GtqX-jB0uPRIrUz2z9tRfGZU2OkHt-_xuj1o8qteb4ZhvDZxhaogxbgud4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "carts",
+                "019f2c84-be7c-7abf-a11f-6c93d8bb46ae"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "carts",
+                    "019f2c84-be7c-7abf-a11f-6c93d8bb46ae"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 04 Jul 2026 12:22:33 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Cart cleared successfully\",\n    \"data\": null\n}"
             }
           ]
         }
