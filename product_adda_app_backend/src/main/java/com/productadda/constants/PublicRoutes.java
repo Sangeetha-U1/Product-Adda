@@ -68,6 +68,9 @@ public class PublicRoutes {
             new PublicConfig("/api/auth/admin/auth/register", HttpMethod.POST),
             new PublicConfig("/api/auth/admin/login", HttpMethod.POST),
 
+            // Coupon Public Verification Endpoint (POST Only)
+            new PublicConfig("/api/coupons/validate", HttpMethod.POST),
+
             // OpenAPI v3 & Swagger UI Static Assets (Empty methods array allows all
             // methods)
             new PublicConfig("/swagger-ui.html"),

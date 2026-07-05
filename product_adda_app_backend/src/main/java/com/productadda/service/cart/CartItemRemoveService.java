@@ -14,78 +14,80 @@ import com.productadda.repository.CartRepository;
 import com.productadda.repository.CartItemRepository;
 import com.productadda.repository.InventoryReservationRepository;
 import com.productadda.repository.UserRepository;
+import com.productadda.repository.CartStatusRepository;
 
 import com.productadda.entity.Cart;
 import com.productadda.entity.CartItem;
+import com.productadda.entity.CartStatus;
 import com.productadda.entity.InventoryReservation;
 import com.productadda.entity.User;
 
 import com.productadda.dto.cart.CartResponseDto;
 import com.productadda.dto.cart.CartItemResponseDto;
+import com.productadda.dto.cart.CartTotalsDto;
+
+import com.productadda.service.cart.CartPricingService;
 
 import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
 
+// TODO: Replace direct InventoryReservation delete with event publishing (CartReservationCleanupEvent)
+// TODO: Publish CartReservationCleanupEvent instead of deleting inventory reservations directly
+
 @Service
 @RequiredArgsConstructor
 public class CartItemRemoveService {
+
+    private static final String ACTIVE_CART_STATUS = "ACTIVE";
 
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final InventoryReservationRepository inventoryReservationRepository;
     private final UserRepository userRepository;
+    private final CartStatusRepository cartStatusRepository;
+
+    private final CartPricingService cartPricingService;
 
     @Transactional
-    public CartResponseDto removeItem(UUID cartId, UUID itemId) {
+    public CartResponseDto removeItem(UUID itemId) {
         /*
          * ================================================================
          * 1. VALIDATION SECTION
          * ================================================================
          */
 
-        // ==========================================
-        // 1.1 REQUEST VALIDATION
-        // ==========================================
-        // Check input method parameters for missing structural metrics
-        if (cartId == null || itemId == null) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "Identifiers cannot be null");
+        if (itemId == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Cart item ID is required");
         }
 
-        // ==========================================
-        // 1.2 CONTEXT AUTHENTICATION
-        // ==========================================
-        // Intercept user domain metrics securely from active runtime thread block
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "User authentication context missing");
         }
+
         String currentUsername = authentication.getName();
 
-        // ==========================================
-        // 1.3 DATABASE LOOKUP VALIDATION
-        // ==========================================
-        // Parse database reference schema using email string identities safely
         User user = userRepository.findByEmail(currentUsername)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User entity mapping missing"));
-        UUID currentUserId = user.getPkUserId();
 
-        // Verify active parent container record visibility mappings
-        Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Cart not found"));
+        CartStatus activeStatus = cartStatusRepository.findByStatusCode(ACTIVE_CART_STATUS)
+                .orElseThrow(() -> new ApiException(
+                        HttpStatus.NOT_FOUND,
+                        "Lookup cart status 'ACTIVE' not found"));
 
-        // Match structural boundaries against client profile configuration mappings
-        if (cart.getFkUser() == null || !cart.getFkUser().getPkUserId().equals(currentUserId)) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "Access denied: You do not own this cart");
-        }
+        Cart cart = cartRepository.findByFkUserAndFkCartStatusAndIsActiveTrue(
+                user,
+                activeStatus)
+                .orElseThrow(() -> new ApiException(
+                        HttpStatus.NOT_FOUND,
+                        "No active cart found for the authenticated user."));
 
-        // Locate targeted database row entries cleanly
         CartItem cartItem = cartItemRepository.findById(itemId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Item not found in cart"));
 
-        // Guard horizontal domain traversal parameters safely
-        if (cartItem.getFkCart() == null || !cartItem.getFkCart().getPkCartId().equals(cartId)) {
-            throw new ApiException(HttpStatus.CONFLICT, "Item does not belong to the specified cart");
+        if (cartItem.getFkCart() == null || !cartItem.getFkCart().getPkCartId().equals(cart.getPkCartId())) {
+            throw new ApiException(HttpStatus.CONFLICT, "Item does not belong to the active cart");
         }
 
         /*
@@ -93,21 +95,16 @@ public class CartItemRemoveService {
          * 2. BUSINESS RULES & PROCESSING / WORKFLOW
          * ================================================================
          */
-        // Linear Step 1: Locate all valid allocation tracking chains matching the
-        // product reference context
+
         List<InventoryReservation> linkedReservations = inventoryReservationRepository
                 .findByFkProductAndIsActiveTrue(cartItem.getFkProduct());
 
-        // Linear Step 2: Hard delete the assigned allocations matched within this
-        // specific cart structure framework
         for (InventoryReservation res : linkedReservations) {
-            if (res.getFkCart() != null && res.getFkCart().getPkCartId().equals(cartId)) {
+            if (res.getFkCart() != null && res.getFkCart().getPkCartId().equals(cart.getPkCartId())) {
                 inventoryReservationRepository.delete(res);
             }
         }
 
-        // Linear Step 3: Hard delete the specific target cart item entity permanently
-        // from the database table rows
         cartItemRepository.delete(cartItem);
 
         /*
@@ -115,57 +112,54 @@ public class CartItemRemoveService {
          * 3. DB SAVING SECTION
          * ================================================================
          */
-        cartRepository.save(cart);
 
         /*
          * ================================================================
          * 4. POST-SAVING DATA SANITIZATION & MASKING
          * ================================================================
          */
-        // Extract remaining active structural items following execution path deletions
-        List<CartItem> structuralItems = cartItemRepository.findByFkCartAndIsActiveTrue(cart);
 
-        // Initialize target response list item collection container
+        List<CartItem> structuralItems = cartItemRepository.findByFkCartAndIsActiveTrue(cart);
         List<CartItemResponseDto> sanitizedItems = new ArrayList<>();
 
-        // Sequentially map remaining structural items into sanitized nested DTO records
-        // without inline chaining
         for (CartItem item : structuralItems) {
             UUID mappedProductId = null;
             if (item.getFkProduct() != null) {
                 mappedProductId = item.getFkProduct().getPkProductId();
             }
 
-            CartItemResponseDto childDto = CartItemResponseDto.builder()
+            sanitizedItems.add(CartItemResponseDto.builder()
                     .itemId(item.getPkCartItemId())
                     .productId(mappedProductId)
                     .quantity(item.getQuantity())
                     .priceAtAdd(item.getPriceAtAdd())
-                    .build();
-
-            sanitizedItems.add(childDto);
+                    .build());
         }
 
-        // Safe status string resolution from related structural configurations
         String resolvedStatus = null;
         if (cart.getFkCartStatus() != null) {
             resolvedStatus = cart.getFkCartStatus().getStatusCode();
         }
 
-        // Completely compose response blueprint architecture inside Section 4 boundary
-        CartResponseDto outputPayload = CartResponseDto.builder()
+        /*
+         * ================================================================
+         * 5. PRICING ENGINE INTEGRATION
+         * ================================================================
+         */
+        CartTotalsDto totalsDto = cartPricingService.calculateTotals(structuralItems, cart);
+
+        /*
+         * ================================================================
+         * 6. RESPONSE MAPPING
+         * ================================================================
+         */
+
+        return CartResponseDto.builder()
                 .cartId(cart.getPkCartId())
                 .status(resolvedStatus)
                 .expiresAt(cart.getExpiresAtUtc())
                 .items(sanitizedItems)
+                .totals(totalsDto)
                 .build();
-
-        /*
-         * ================================================================
-         * 5. RESPONSE MAPPING
-         * ================================================================
-         */
-        // Return pre-constructed response object mapping cleanly
-        return outputPayload;
     }
 }

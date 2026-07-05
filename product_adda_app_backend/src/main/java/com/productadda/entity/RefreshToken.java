@@ -29,83 +29,68 @@ import lombok.Setter;
 @Builder
 public class RefreshToken {
 
-    /*
-     * =========================================================
-     * PRIMARY KEY
-     * =========================================================
-     */
-    @Id
-    @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(
-            name = "pk_refresh_token_id",
-            columnDefinition = "BINARY(16)",
-            nullable = false)
-    private UUID pkRefreshTokenId;
+        /*
+         * =========================================================
+         * PRIMARY KEY
+         * =========================================================
+         */
+        @Id
+        @JdbcTypeCode(SqlTypes.BINARY)
+        @Column(name = "pk_refresh_token_id", columnDefinition = "BINARY(16)", nullable = false)
+        private UUID pkRefreshTokenId;
 
-    /*
-     * =========================================================
-     * FOREIGN KEY → USERS
-     * =========================================================
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "fk_user_id",
-            nullable = false)
-    private User fkUser;
+        /*
+         * =========================================================
+         * FOREIGN KEY → USERS
+         * =========================================================
+         */
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "fk_user_id", nullable = false)
+        private User fkUser;
 
-    /*
-     * =========================================================
-     * TOKEN HASH
-     * =========================================================
-     */
-    @Column(
-            name = "token_hash",
-            nullable = false,
-            unique = true,
-            length = 255)
-    private String tokenHash;
+        @Column(name = "token_family_id", columnDefinition = "BINARY(16)", nullable = false)
+        private UUID tokenFamilyId;
 
-    /*
-     * =========================================================
-     * EXPIRY
-     * =========================================================
-     */
-    @Column(
-            name = "expires_at_utc",
-            nullable = false)
-    private LocalDateTime expiresAtUtc;
+        /*
+         * =========================================================
+         * TOKEN HASH
+         * =========================================================
+         */
+        @Column(name = "token_hash", nullable = false, unique = true, length = 255)
+        private String tokenHash;
 
-    /*
-     * =========================================================
-     * REVOCATION
-     * =========================================================
-     */
-    @Column(name = "revoked_at_utc")
-    private LocalDateTime revokedAtUtc;
+        /*
+         * =========================================================
+         * EXPIRY
+         * =========================================================
+         */
+        @Column(name = "expires_at_utc", nullable = false)
+        private LocalDateTime expiresAtUtc;
 
-    /*
-     * =========================================================
-     * STATUS
-     * =========================================================
-     */
-    @Column(name = "is_active", nullable = false)
-    private Boolean isActive;
+        /*
+         * =========================================================
+         * REVOCATION
+         * =========================================================
+         */
+        @Column(name = "revoked_at_utc")
+        private LocalDateTime revokedAtUtc;
 
-    /*
-     * =========================================================
-     * AUDIT
-     * =========================================================
-     */
-    @Column(
-            name = "created_at_utc",
-            nullable = false,
-            insertable = false,
-            updatable = false)
-    private LocalDateTime createdAtUtc;
+        /*
+         * =========================================================
+         * STATUS
+         * =========================================================
+         */
+        @Column(name = "is_active", nullable = false)
+        private Boolean isActive;
 
-    @Column(
-            name = "updated_at_utc", 
-            nullable = false, 
-            insertable = false)
-    private LocalDateTime updatedAtUtc;
+        /*
+         * =========================================================
+         * AUDIT
+         * =========================================================
+         */
+        @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
+        private LocalDateTime createdAtUtc;
+
+        @Column(name = "updated_at_utc", nullable = false, insertable = false)
+        private LocalDateTime updatedAtUtc;
 }

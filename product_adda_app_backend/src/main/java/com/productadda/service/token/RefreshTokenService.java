@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 import java.util.List;
+import java.util.UUID;
 
 import com.productadda.repository.RefreshTokenRepository;
 import com.productadda.repository.UserRoleRepository;
@@ -31,8 +32,10 @@ public class RefreshTokenService {
 
         private final RefreshTokenRepository refreshTokenRepository;
         private final UserRoleRepository userRoleRepository;
+
         private final TokenProvider.JwtService jwtService;
         private final TokenProvider.TokenService tokenService;
+
         private final UuidUtil uuidUtil;
 
         /*
@@ -42,38 +45,13 @@ public class RefreshTokenService {
          * ================================================================
          */
         @Transactional
-        public String createRefreshToken(User user) {
+        public String createRefreshToken(User user, UUID tokenFamilyId) {
 
-                /*
-                 * ================================================================
-                 * 1. VALIDATION SECTION
-                 * ================================================================
-                 */
-
-                // ==========================================
-                // 1.1 REQUEST VALIDATION
-                // ==========================================
                 if (user == null) {
                         throw new ApiException(HttpStatus.UNAUTHORIZED,
                                         "User authentication failed or user does not exist");
                 }
 
-                // ==========================================
-                // 1.2 CONTEXT AUTHENTICATION
-                // ==========================================
-                // Note: Security parameters inherited implicitly from the parameter signature
-                // invocation.
-
-                // ==========================================
-                // 1.3 DATABASE LOOKUP VALIDATION
-                // ==========================================
-                // No supplemental lookup validations required.
-
-                /*
-                 * ================================================================
-                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
-                 * ================================================================
-                 */
                 TokenProvider.TokenService.TokenResult tokenResult = tokenService.generateToken();
                 String rawRefreshToken = tokenResult.rawToken();
                 String hashedRefreshToken = tokenResult.hashedToken();
@@ -83,6 +61,7 @@ public class RefreshTokenService {
                 RefreshToken refreshToken = RefreshToken.builder()
                                 .pkRefreshTokenId(uuidUtil.generateUuidV7())
                                 .fkUser(user)
+                                .tokenFamilyId(tokenFamilyId)
                                 .tokenHash(hashedRefreshToken)
                                 .expiresAtUtc(jwtService.getRefreshTokenExpiryDate())
                                 .createdAtUtc(nowUtc)
@@ -91,18 +70,8 @@ public class RefreshTokenService {
                                 .revokedAtUtc(null)
                                 .build();
 
-                /*
-                 * ================================================================
-                 * 3. DB SAVING SECTION
-                 * ================================================================
-                 */
                 refreshTokenRepository.save(refreshToken);
 
-                /*
-                 * ================================================================
-                 * 4. RESPONSE MAPPING
-                 * ================================================================
-                 */
                 return rawRefreshToken;
         }
 
@@ -121,55 +90,66 @@ public class RefreshTokenService {
                  * ================================================================
                  */
 
-                // ==========================================
-                // 1.1 REQUEST VALIDATION
-                // ==========================================
                 if (rawRefreshToken == null || rawRefreshToken.isBlank()) {
                         throw new ApiException(HttpStatus.BAD_REQUEST,
                                         "Refresh token value is missing or empty in the request payload");
                 }
 
-                // ==========================================
-                // 1.2 CONTEXT AUTHENTICATION
-                // ==========================================
-                // Note: Open authorization validation routing checkpoint.
+                /*
+                 * ================================================================
+                 * 2. DATABASE LOOKUP VALIDATION
+                 * ================================================================
+                 */
 
-                // ==========================================
-                // 1.3 DATABASE LOOKUP VALIDATION
-                // ==========================================
                 String tokenHash = tokenService.hashToken(rawRefreshToken);
 
                 RefreshToken refreshToken = refreshTokenRepository.findByTokenHash(tokenHash)
                                 .orElseThrow(() -> new ApiException(HttpStatus.UNAUTHORIZED,
                                                 "No active session found matching this refresh token hash. The token may not be stored in the database."));
 
+                LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
+
+                /*
+                 * ================================================================
+                 * REUSE DETECTION (CRITICAL SECURITY CHECK)
+                 * If token exists but is already revoked → replay attack
+                 * ================================================================
+                 */
                 if (refreshToken.getRevokedAtUtc() != null) {
+
+                        UUID compromisedFamilyId = refreshToken.getTokenFamilyId();
+
+                        refreshTokenRepository.findAllByTokenFamilyIdAndIsActiveTrue(compromisedFamilyId)
+                                        .forEach(token -> {
+                                                token.setRevokedAtUtc(nowUtc);
+                                                token.setIsActive(false);
+                                        });
+
+                        refreshTokenRepository.flush();
+
                         throw new ApiException(HttpStatus.UNAUTHORIZED,
-                                        "Refresh token is invalid because it was explicitly revoked at: "
-                                                        + refreshToken.getRevokedAtUtc());
+                                        "Refresh token reuse detected. This session has been revoked. Please login again.");
                 }
+
+                /*
+                 * ================================================================
+                 * NORMAL VALIDATION
+                 * ================================================================
+                 */
 
                 if (!Boolean.TRUE.equals(refreshToken.getIsActive())) {
                         throw new ApiException(HttpStatus.UNAUTHORIZED,
-                                        "Refresh token is invalid because its operational status is set to inactive");
+                                        "Refresh token is inactive. Please login again.");
                 }
 
-                if (refreshToken.getExpiresAtUtc().isBefore(LocalDateTime.now(ZoneOffset.UTC))) {
+                if (refreshToken.getExpiresAtUtc().isBefore(nowUtc)) {
                         throw new ApiException(HttpStatus.UNAUTHORIZED,
-                                        "Refresh token session has expired temporally at: "
-                                                        + refreshToken.getExpiresAtUtc() + " UTC");
+                                        "Refresh token has expired at: " + refreshToken.getExpiresAtUtc() + " UTC");
                 }
 
                 /*
                  * ================================================================
-                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
-                 * ================================================================
-                 */
-                // Read-only structural tracking method. No business transitions applied.
-
-                /*
-                 * ================================================================
-                 * 4. RESPONSE MAPPING
+                 * RESPONSE
                  * ================================================================
                  */
                 return refreshToken;
@@ -241,35 +221,39 @@ public class RefreshTokenService {
                  * ================================================================
                  */
 
-                // ==========================================
-                // 1.1 REQUEST VALIDATION
-                // ==========================================
-                if (request == null) {
-                        throw new ApiException(HttpStatus.BAD_REQUEST, "Rotation data body payload cannot be null");
+                if (request == null || request.getRefreshToken() == null || request.getRefreshToken().isBlank()) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Refresh token is missing in request payload");
                 }
 
                 String rawRefreshToken = request.getRefreshToken();
 
-                // ==========================================
-                // 1.2 CONTEXT AUTHENTICATION
-                // ==========================================
-                // Note: Opaque verification checkpoint. Validation handled down-funnel inside
-                // token processing layer.
+                /*
+                 * ================================================================
+                 * 2. VALIDATE TOKEN (FAIL FAST IF INVALID)
+                 * ================================================================
+                 */
 
-                // ==========================================
-                // 1.3 DATABASE LOOKUP VALIDATION
-                // ==========================================
                 RefreshToken refreshToken = validateRefreshToken(rawRefreshToken);
 
+                /*
+                 * ================================================================
+                 * 3. EXTRACT USER CONTEXT
+                 * ================================================================
+                 */
+
                 User user = refreshToken.getFkUser();
+
                 if (user == null) {
                         throw new ApiException(HttpStatus.UNAUTHORIZED,
-                                        "User context associated with this session token is missing");
+                                        "User context associated with this refresh token is missing");
                 }
 
                 List<UserRole> userRoles = userRoleRepository.findByFkUser(user);
+
                 if (userRoles.isEmpty()) {
-                        throw new ApiException(HttpStatus.NOT_FOUND, "User role mapping not found");
+                        throw new ApiException(HttpStatus.NOT_FOUND,
+                                        "User role mapping not found");
                 }
 
                 List<String> assignedRoles = userRoles.stream()
@@ -278,27 +262,44 @@ public class RefreshTokenService {
 
                 /*
                  * ================================================================
-                 * 2. BUSINESS RULES & PROCESSING / WORKFLOW
+                 * 4. SECURITY CHECK (TOKEN STATE VALIDATION ALREADY DONE)
                  * ================================================================
+                 * At this point token is:
+                 * - not expired
+                 * - not revoked
+                 * - active
+                 * - not reused
                  */
-                String accessToken = jwtService.generateAccessToken(
-                                user.getPkUserId(),
-                                user.getEmail(),
-                                assignedRoles);
-                String newRefreshToken = createRefreshToken(user);
 
                 /*
                  * ================================================================
-                 * 3. DB SAVING SECTION
+                 * 5. REVOKE OLD TOKEN (IMPORTANT: BEFORE ISSUING NEW ONE)
                  * ================================================================
                  */
+
                 revokeRefreshToken(refreshToken);
 
                 /*
                  * ================================================================
-                 * 4. RESPONSE MAPPING
+                 * 6. GENERATE NEW TOKENS
                  * ================================================================
                  */
+
+                String accessToken = jwtService.generateAccessToken(
+                                user.getPkUserId(),
+                                user.getEmail(),
+                                assignedRoles);
+
+                UUID tokenFamilyId = uuidUtil.generateUuidV7();
+
+                String newRefreshToken = createRefreshToken(user, tokenFamilyId);
+
+                /*
+                 * ================================================================
+                 * 7. RESPONSE MAPPING
+                 * ================================================================
+                 */
+
                 TokenDto token = TokenDto.builder()
                                 .accessToken(accessToken)
                                 .refreshToken(newRefreshToken)
@@ -324,42 +325,42 @@ public class RefreshTokenService {
                  * ================================================================
                  */
 
-                // ==========================================
-                // 1.1 REQUEST VALIDATION
-                // ==========================================
                 if (user == null) {
                         return;
                 }
-
-                // ==========================================
-                // 1.2 CONTEXT AUTHENTICATION
-                // ==========================================
-                // Note: Domain lifecycle hook.
-
-                // ==========================================
-                // 1.3 DATABASE LOOKUP VALIDATION
-                // ==========================================
-                // Dynamic collections evaluated dynamically on execution pipeline inside the
-                // business step.
 
                 /*
                  * ================================================================
                  * 2. BUSINESS RULES & PROCESSING / WORKFLOW
                  * ================================================================
                  */
+
                 LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
+
+                List<RefreshToken> activeTokens = refreshTokenRepository.findAllByFkUserAndIsActiveTrue(user);
+
+                if (activeTokens == null || activeTokens.isEmpty()) {
+                        return;
+                }
 
                 /*
                  * ================================================================
-                 * 3. DB SAVING SECTION
+                 * 3. STATE UPDATE (BATCH IN MEMORY)
                  * ================================================================
                  */
-                refreshTokenRepository.findAllByFkUserAndIsActiveTrue(user)
-                                .forEach(token -> {
-                                        token.setRevokedAtUtc(nowUtc);
-                                        token.setUpdatedAtUtc(nowUtc);
-                                        token.setIsActive(false);
-                                        refreshTokenRepository.save(token);
-                                });
+
+                activeTokens.forEach(token -> {
+                        token.setRevokedAtUtc(nowUtc);
+                        token.setUpdatedAtUtc(nowUtc);
+                        token.setIsActive(false);
+                });
+
+                /*
+                 * ================================================================
+                 * 4. DB SAVE (ONE BATCH CALL)
+                 * ================================================================
+                 */
+
+                refreshTokenRepository.saveAll(activeTokens);
         }
 }

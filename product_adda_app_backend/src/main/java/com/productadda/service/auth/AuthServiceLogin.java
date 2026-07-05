@@ -2,6 +2,7 @@ package com.productadda.service.auth;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ import com.productadda.repository.UserRepository;
 import com.productadda.repository.UserRoleRepository;
 import com.productadda.service.token.RefreshTokenService;
 import com.productadda.service.token.TokenProvider;
+import com.productadda.util.UuidUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,22 +27,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthServiceLogin {
 
-    /*
-     * ================================================================
-     * REPOSITORIES
-     * ================================================================
-     */
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
 
-    /*
-     * ================================================================
-     * SECURITY
-     * ================================================================
-     */
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider.JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
+
+    private final UuidUtil uuidUtil;
 
     /*
      * ================================================================
@@ -124,7 +118,9 @@ public class AuthServiceLogin {
                 user.getEmail(),
                 assignedRoles);
 
-        String refreshToken = refreshTokenService.createRefreshToken(user);
+        UUID tokenFamilyId = uuidUtil.generateUuidV7();
+
+        String refreshToken = refreshTokenService.createRefreshToken(user, tokenFamilyId);
 
         TokenDto token = TokenDto.builder()
                 .accessToken(accessToken)

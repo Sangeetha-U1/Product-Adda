@@ -5,6 +5,7 @@ import com.productadda.entity.WishlistItem;
 import com.productadda.entity.Product;
 import com.productadda.entity.Cart;
 import com.productadda.entity.CartItem;
+import com.productadda.entity.CartStatus;
 import com.productadda.entity.InventoryReservation;
 
 import com.productadda.exception.ApiException;
@@ -12,6 +13,7 @@ import com.productadda.exception.ApiException;
 import com.productadda.repository.UserRepository;
 import com.productadda.repository.WishlistItemRepository;
 import com.productadda.repository.CartRepository;
+import com.productadda.repository.CartStatusRepository;
 import com.productadda.repository.CartItemRepository;
 import com.productadda.repository.InventoryReservationRepository;
 
@@ -34,11 +36,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class WishlistMoveToCartService {
 
+        private static final String ACTIVE_CART_STATUS = "ACTIVE";
+
         private final UuidUtil uuidUtil;
         private final UserRepository userRepository;
         private final WishlistItemRepository wishlistItemRepository;
         private final CartRepository cartRepository;
         private final CartItemRepository cartItemRepository;
+        private final CartStatusRepository cartStatusRepository;
+
         private final InventoryReservationRepository inventoryReservationRepository;
 
         @Transactional
@@ -102,10 +108,15 @@ public class WishlistMoveToCartService {
 
                 Product matchingProductEntity = targetWishlistItem.getFkProduct();
 
+                CartStatus activeStatus = cartStatusRepository.findByStatusCode(ACTIVE_CART_STATUS)
+                                .orElseThrow(() -> new ApiException(
+                                                HttpStatus.NOT_FOUND,
+                                                "Lookup cart status 'ACTIVE' not found"));
+
                 // Enforce explicit initialization structure alignment by changing default
                 // generation to an explicit error throw
                 Cart operationalCart = cartRepository
-                                .findByFkUserAndFkCartStatus_StatusCodeAndIsActiveTrue(authenticatedUser, "ACTIVE")
+                                .findByFkUserAndFkCartStatusAndIsActiveTrue(authenticatedUser, activeStatus)
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "Active cart container tracking session has not been initialized"));
 

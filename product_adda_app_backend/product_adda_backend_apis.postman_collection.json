@@ -1816,7 +1816,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMTY1NzU2LCJleHAiOjE3ODMxNjkzNTZ9.Kl-eo5GtqX-jB0uPRIrUz2z9tRfGZU2OkHt-_xuj1o8qteb4ZhvDZxhaogxbgud4",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjU2Mzc1LCJleHAiOjE3ODMyNTk5NzV9.UFqCgRa5r6cWU8RiK8yrkiFncupDsWobCQZBMg2tGGERXOLmyO7ZTdS95RZHprsc",
                   "type": "string"
                 }
               ]
@@ -1825,7 +1825,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\": \"019f2cf6-241d-7079-aa45-ad09eabb42ca\"\r\n}",
+              "raw": "{\r\n    \"refreshToken\": \"019f325c-dfd1-7473-8aa1-646f00367b50\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2367,7 +2367,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMTc3NTY5LCJleHAiOjE3ODMxODExNjl9.PsI6BH1MStCN976L_XSkOknuD9mm0SYZyBd-Dv5ReXpDIY3_zudnN7KQZVZqEc6t",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjUyMjg2LCJleHAiOjE3ODMyNTU4ODZ9.1-vxi9r4_UOHUBEql3dg73iEGrtuo_31z_jKYF48XKp5cqGTukOkbWftKituuWCk",
                   "type": "string"
                 }
               ]
@@ -2376,7 +2376,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\" : \"019f2daa-665b-7e0f-993a-dcfa8e6b89f9\"\r\n}\r\n",
+              "raw": "{\r\n    \"refreshToken\" : \"019f321e-7d17-7e5d-93f5-38485f0f8255\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2563,6 +2563,96 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": false,\n    \"message\": \"Invalid refresh token\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"UNAUTHORIZED\"\n    }\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"refreshToken\" : \"019f321e-7d17-7e5d-93f5-38485f0f8255\"\r\n}\r\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/token/refresh-token",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "token",
+                    "refresh-token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 05 Jul 2026 12:59:35 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Token refreshed successfully\",\n    \"data\": {\n        \"token\": {\n            \"accessToken\": \"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjU2Mzc1LCJleHAiOjE3ODMyNTk5NzV9.UFqCgRa5r6cWU8RiK8yrkiFncupDsWobCQZBMg2tGGERXOLmyO7ZTdS95RZHprsc\",\n            \"refreshToken\": \"019f325c-dfd1-7473-8aa1-646f00367b50\"\n        }\n    }\n}"
             }
           ]
         },
@@ -12232,7 +12322,7 @@
           ]
         },
         {
-          "name": "/api/carts/{cartId}/items",
+          "name": "/api/carts/items",
           "request": {
             "auth": {
               "type": "bearer",
@@ -12256,14 +12346,13 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items",
+              "raw": "{{baseUrl}}/api/carts/items",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "carts",
-                "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
                 "items"
               ]
             }
@@ -12814,14 +12903,14 @@
           ]
         },
         {
-          "name": "/api/carts/{cartId}",
+          "name": "/api/carts",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMTY1NzU2LCJleHAiOjE3ODMxNjkzNTZ9.Kl-eo5GtqX-jB0uPRIrUz2z9tRfGZU2OkHt-_xuj1o8qteb4ZhvDZxhaogxbgud4",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjU2Mzc1LCJleHAiOjE3ODMyNTk5NzV9.UFqCgRa5r6cWU8RiK8yrkiFncupDsWobCQZBMg2tGGERXOLmyO7ZTdS95RZHprsc",
                   "type": "string"
                 }
               ]
@@ -12829,14 +12918,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+              "raw": "{{baseUrl}}/api/carts",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
-                "carts",
-                "019f2c84-be7c-7abf-a11f-6c93d8bb46ae"
+                "carts"
               ]
             }
           },
@@ -13168,7 +13256,7 @@
           ]
         },
         {
-          "name": "/api/carts/{cartId}/items/{itemId}",
+          "name": "/api/carts/items/{itemId}",
           "request": {
             "auth": {
               "type": "bearer",
@@ -13192,14 +13280,13 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items/019f2c8f-9bf9-70aa-9623-f18bfa7e321f",
+              "raw": "{{baseUrl}}/api/carts/items/019f2c8f-9bf9-70aa-9623-f18bfa7e321f",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "carts",
-                "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
                 "items",
                 "019f2c8f-9bf9-70aa-9623-f18bfa7e321f"
               ]
@@ -13481,7 +13568,7 @@
           ]
         },
         {
-          "name": "/api/carts/{cartId}/items/{itemId}",
+          "name": "/api/carts/items/{itemId}",
           "request": {
             "auth": {
               "type": "bearer",
@@ -13496,14 +13583,13 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae/items/019ed714-ddbf-7364-8528-7407e10a7da1",
+              "raw": "{{baseUrl}}/api/carts/items/019ed714-ddbf-7364-8528-7407e10a7da1",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "carts",
-                "019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
                 "items",
                 "019ed714-ddbf-7364-8528-7407e10a7da1"
               ]
@@ -13679,7 +13765,7 @@
           ]
         },
         {
-          "name": "/api/carts/{cartId}",
+          "name": "/api/carts",
           "request": {
             "auth": {
               "type": "bearer",
@@ -13694,14 +13780,13 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/carts/019f2c84-be7c-7abf-a11f-6c93d8bb46ae",
+              "raw": "{{baseUrl}}/api/carts",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
-                "carts",
-                "019f2c84-be7c-7abf-a11f-6c93d8bb46ae"
+                "carts"
               ]
             }
           },
@@ -13786,6 +13871,726 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Cart cleared successfully\",\n    \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/coupons/apply",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjU2Mzc1LCJleHAiOjE3ODMyNTk5NzV9.UFqCgRa5r6cWU8RiK8yrkiFncupDsWobCQZBMg2tGGERXOLmyO7ZTdS95RZHprsc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n  \"couponCode\": \"LIMITED100USES\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/coupons/apply",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "coupons",
+                "apply"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \r\n  \"couponCode\": \"FLAT500\" \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/coupons/apply",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons",
+                    "apply"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 05 Jul 2026 08:25:47 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Coupon applied successfully\",\n    \"data\": {\n        \"cartId\": \"019f2c84-be7c-7abf-a11f-6c93d8bb46ae\",\n        \"status\": \"ACTIVE\",\n        \"createdAt\": \"2026-07-04T15:15:24\",\n        \"expiresAt\": null,\n        \"items\": [\n            {\n                \"itemId\": \"019f2de8-8a43-7854-ab89-988b786053c6\",\n                \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                \"quantity\": 1,\n                \"priceAtAdd\": 129999,\n                \"currentPrice\": 129999,\n                \"priceDeltaPercentage\": 0,\n                \"priceAlert\": false\n            }\n        ],\n        \"totals\": {\n            \"itemCount\": 0,\n            \"subtotal\": 129999,\n            \"couponDiscount\": 500,\n            \"shippingCost\": 15,\n            \"taxAmount\": 10359.92,\n            \"total\": 139873.92\n        },\n        \"lastUpdated\": \"2026-07-05T08:25:47.000087\"\n    }\n}"
+            },
+            {
+              "name": "409 Conflict A coupon is already applied to this cart. Remove it first.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \r\n  \"couponCode\": \"FLAT500\" \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/coupons/apply",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons",
+                    "apply"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 05 Jul 2026 13:00:25 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"A coupon is already applied to this cart. Remove it first.\",\n    \"error\": {\n        \"code\": 409,\n        \"type\": \"CONFLICT\"\n    }\n}"
+            },
+            {
+              "name": "409 Conflict A coupon is already applied to this cart. Remove it first.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \r\n  \"couponCode\": \"EXPIRED10\" \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/coupons/apply",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons",
+                    "apply"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 05 Jul 2026 13:30:01 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"A coupon is already applied to this cart. Remove it first.\",\n    \"error\": {\n        \"code\": 409,\n        \"type\": \"CONFLICT\"\n    }\n}"
+            },
+            {
+              "name": "409 Conflict Coupon global usage limit has been reached.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \r\n  \"couponCode\": \"LIMITED100USES\" \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/coupons/apply",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons",
+                    "apply"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 05 Jul 2026 13:42:35 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Coupon global usage limit has been reached.\",\n    \"error\": {\n        \"code\": 409,\n        \"type\": \"CONFLICT\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/coupons/remove",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjU2Mzc1LCJleHAiOjE3ODMyNTk5NzV9.UFqCgRa5r6cWU8RiK8yrkiFncupDsWobCQZBMg2tGGERXOLmyO7ZTdS95RZHprsc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/coupons/remove",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "coupons",
+                "remove"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/coupons/remove",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons",
+                    "remove"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 05 Jul 2026 13:04:07 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Coupon removed successfully\",\n    \"data\": {\n        \"cartId\": \"019f2c84-be7c-7abf-a11f-6c93d8bb46ae\",\n        \"status\": \"ACTIVE\",\n        \"createdAt\": \"2026-07-04T15:15:24\",\n        \"expiresAt\": null,\n        \"items\": [\n            {\n                \"itemId\": \"019f2de8-8a43-7854-ab89-988b786053c6\",\n                \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                \"quantity\": 1,\n                \"priceAtAdd\": 129999,\n                \"currentPrice\": 129999,\n                \"priceDeltaPercentage\": 0,\n                \"priceAlert\": false\n            }\n        ],\n        \"totals\": {\n            \"itemCount\": 0,\n            \"subtotal\": 129999,\n            \"couponDiscount\": 0,\n            \"shippingCost\": 15,\n            \"taxAmount\": 10399.92,\n            \"total\": 140413.92\n        },\n        \"lastUpdated\": \"2026-07-05T13:04:07.4583815\"\n    }\n}"
+            },
+            {
+              "name": "409 Conflict No applied coupon found on this cart.",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/coupons/remove",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons",
+                    "remove"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 05 Jul 2026 13:05:17 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"No applied coupon found on this cart.\",\n    \"error\": {\n        \"code\": 409,\n        \"type\": \"CONFLICT\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/coupons/validate",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjU2Mzc1LCJleHAiOjE3ODMyNTk5NzV9.UFqCgRa5r6cWU8RiK8yrkiFncupDsWobCQZBMg2tGGERXOLmyO7ZTdS95RZHprsc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n  \"couponCode\": \"EXPIRED10\" \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/coupons/validate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "coupons",
+                "validate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{ \r\n  \"couponCode\": \"EXPIRED10\" \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/coupons/validate",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "coupons",
+                    "validate"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 05 Jul 2026 13:34:30 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Coupon validation step completed\",\n    \"data\": {\n        \"valid\": false,\n        \"reason\": \"Coupon code does not exist.\",\n        \"message\": null,\n        \"discountType\": null,\n        \"discountValue\": null,\n        \"maxDiscountAmount\": null,\n        \"minPurchaseAmount\": null,\n        \"expiresAt\": null\n    }\n}"
             }
           ]
         }

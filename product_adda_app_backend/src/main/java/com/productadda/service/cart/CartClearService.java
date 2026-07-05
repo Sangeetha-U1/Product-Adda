@@ -14,101 +14,95 @@ import com.productadda.repository.CartRepository;
 import com.productadda.repository.CartItemRepository;
 import com.productadda.repository.InventoryReservationRepository;
 import com.productadda.repository.UserRepository;
+import com.productadda.repository.CartStatusRepository;
 
 import com.productadda.entity.Cart;
 import com.productadda.entity.CartItem;
+import com.productadda.entity.CartStatus;
 import com.productadda.entity.InventoryReservation;
 import com.productadda.entity.User;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
+
+// TODO: Replace direct InventoryReservation delete with event publishing (CartReservationCleanupEvent)
+// TODO: Publish CartReservationCleanupEvent instead of deleting inventory reservations directly
 
 @Service
 @RequiredArgsConstructor
 public class CartClearService {
 
+    private static final String ACTIVE_CART_STATUS = "ACTIVE";
+
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final InventoryReservationRepository inventoryReservationRepository;
     private final UserRepository userRepository;
+    private final CartStatusRepository cartStatusRepository;
 
     @Transactional
-    public void clearCart(UUID cartId) {
+    public void clearCart() {
         /*
          * ================================================================
          * 1. VALIDATION SECTION
          * ================================================================
          */
 
-        // ==========================================
-        // 1.1 REQUEST VALIDATION
-        // ==========================================
-        // Confirm baseline structural state references
-        if (cartId == null) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "Cart ID cannot be null");
-        }
-
-        // ==========================================
-        // 1.2 CONTEXT AUTHENTICATION
-        // ==========================================
-        // Inspect valid thread domain permissions programmatically
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "User authentication context missing");
         }
+
         String currentUsername = authentication.getName();
 
-        // ==========================================
-        // 1.3 DATABASE LOOKUP VALIDATION
-        // ==========================================
-        // Retrieve the corresponding structural user footprint via parsed security data
-        // context
         User user = userRepository.findByEmail(currentUsername)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User entity mapping missing"));
-        UUID currentUserId = user.getPkUserId();
 
-        // Extract targeted reference instance parameters
-        Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Cart not found"));
+        CartStatus activeStatus = cartStatusRepository.findByStatusCode(ACTIVE_CART_STATUS)
+                .orElseThrow(() -> new ApiException(
+                        HttpStatus.NOT_FOUND,
+                        "Lookup cart status 'ACTIVE' not found"));
 
-        // Match safety boundaries with ownership profile records
-        if (cart.getFkUser() == null || !cart.getFkUser().getPkUserId().equals(currentUserId)) {
-            throw new ApiException(HttpStatus.FORBIDDEN, "Access denied: You do not own this cart");
-        }
+        Cart cart = cartRepository.findByFkUserAndFkCartStatusAndIsActiveTrue(
+                user,
+                activeStatus)
+                .orElseThrow(() -> new ApiException(
+                        HttpStatus.NOT_FOUND,
+                        "No active cart found for the authenticated user."));
 
         /*
          * ================================================================
          * 2. BUSINESS RULES & PROCESSING / WORKFLOW
          * ================================================================
          */
-        // Linear Step 1: Gather active container contents for processing execution path
-        // metrics
+
         List<CartItem> structuralItems = cartItemRepository.findByFkCartAndIsActiveTrue(cart);
 
-        // Linear Step 2: Symmetrically iterate loop to hard delete inventory
-        // allocations tied to items in this cart
         for (CartItem item : structuralItems) {
             List<InventoryReservation> activeReservations = inventoryReservationRepository
                     .findByFkProductAndIsActiveTrue(item.getFkProduct());
 
             for (InventoryReservation res : activeReservations) {
-                if (res.getFkCart() != null && res.getFkCart().getPkCartId().equals(cartId)) {
+                if (res.getFkCart() != null &&
+                        res.getFkCart().getPkCartId().equals(cart.getPkCartId())) {
                     inventoryReservationRepository.delete(res);
                 }
             }
         }
 
-        // Linear Step 3: Permanently wipe matching item records via a hard repository
-        // clear loop
         for (CartItem item : structuralItems) {
             cartItemRepository.delete(item);
         }
 
         /*
          * ================================================================
-         * 3. DB SAVING SECTION
+         * 3. CART STATE RESET (IMPORTANT FOR PRICING ENGINE CONSISTENCY)
          * ================================================================
          */
+        cart.setFkCoupon(null);
+        cart.setUpdatedAtUtc(LocalDateTime.now(ZoneOffset.UTC));
+
         cartRepository.save(cart);
 
         /*
@@ -116,14 +110,6 @@ public class CartClearService {
          * 4. POST-SAVING DATA SANITIZATION & MASKING
          * ================================================================
          */
-        // Omitted: logic rules require zero structural scrubbing
-
-        /*
-         * ================================================================
-         * 5. RESPONSE MAPPING
-         * ================================================================
-         */
-        // Void process control sequence returns safely to standard endpoint thread
-        // context
+        // No response payload required
     }
 }

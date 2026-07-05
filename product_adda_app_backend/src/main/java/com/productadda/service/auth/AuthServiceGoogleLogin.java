@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,15 +17,20 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.productadda.dto.auth.GoogleLoginRequestDto;
 import com.productadda.dto.auth.LoginResponseDto;
 import com.productadda.dto.token.TokenDto;
+
 import com.productadda.entity.Role;
 import com.productadda.entity.User;
 import com.productadda.entity.UserRole;
+
 import com.productadda.exception.ApiException;
+
 import com.productadda.repository.RoleRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.repository.UserRoleRepository;
+
 import com.productadda.service.token.RefreshTokenService;
 import com.productadda.service.token.TokenProvider.JwtService;
+
 import com.productadda.util.UuidUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -38,10 +44,11 @@ public class AuthServiceGoogleLogin {
     private final UserRoleRepository userRoleRepository;
 
     private final JwtService jwtService;
-    private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder passwordEncoder;
     private final UuidUtil uuidUtil;
     private final GoogleIdTokenVerifier googleTokenVerifier;
+
+    private final RefreshTokenService refreshTokenService;
 
     /*
      * ================================================================
@@ -169,7 +176,9 @@ public class AuthServiceGoogleLogin {
                 user.getEmail(),
                 assignedRoles);
 
-        String refreshToken = refreshTokenService.createRefreshToken(user);
+        UUID tokenFamilyId = uuidUtil.generateUuidV7();
+
+        String refreshToken = refreshTokenService.createRefreshToken(user, tokenFamilyId);
 
         TokenDto token = TokenDto.builder()
                 .accessToken(accessToken)

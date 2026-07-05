@@ -33,8 +33,8 @@ public class Cart {
      * RELATIONSHIPS
      * =========================================================
      */
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_user_id", nullable = false, unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_user_id", nullable = false)
     private User fkUser;
 
     @ManyToOne(fetch = FetchType.LAZY)

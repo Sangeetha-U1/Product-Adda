@@ -21,8 +21,6 @@ public class RefreshTokenController {
 
         private final RefreshTokenService refreshTokenService;
 
-        // TODO: refresh token should be generated only if it got expired or revoked, if
-        // not just serve the same refresh token
         @PostMapping("/refresh-token")
         public ResponseEntity<ApiSuccessResponseDto<RefreshTokenResponseDto>> refreshToken(
                         @RequestBody RefreshTokenRequestDto request) {

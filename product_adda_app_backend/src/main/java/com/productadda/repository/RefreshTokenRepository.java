@@ -23,4 +23,6 @@ public interface RefreshTokenRepository
     void deleteByFkUser(User fkUser);
 
     List<RefreshToken> findAllByFkUserAndIsActiveTrue(User fkUser);
+
+    List<RefreshToken> findAllByTokenFamilyIdAndIsActiveTrue(UUID tokenFamilyId);
 }
