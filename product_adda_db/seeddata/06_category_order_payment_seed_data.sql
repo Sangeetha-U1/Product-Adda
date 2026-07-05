@@ -101,8 +101,41 @@ INSERT INTO payments (pk_payment_id, fk_order_id, fk_status_id, fk_gateway_id, p
 
 INSERT INTO coupons (pk_coupon_id, coupon_code, description, fk_discount_type_id, fk_coupon_status_id, discount_value, maximum_discount_amount, minimum_purchase_amount, maximum_global_usage, maximum_user_usage, usage_count, is_one_time, starts_at_utc, expires_at_utc, is_active, created_at_utc)
 VALUES
-(UUID_V7(), 'WELCOME10', '10% discount for new customers', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code = 'PERCENTAGE'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code = 'ACTIVE'), 10.00, 500.00, 1000.00, 1000, 1, 0, TRUE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
-(UUID_V7(), 'FLAT500', 'Flat ₹500 discount', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code = 'FIXED'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code = 'ACTIVE'), 500.00, NULL, 5000.00, 500, 1, 0, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP());
+-- ACTIVE PERCENTAGE COUPONS
+
+(UUID_V7(), 'WELCOME10', '10% off up to ₹500 on purchases above ₹1,000. Single-use promotional coupon.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='PERCENTAGE'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 10.00, 500.00, 1000.00, 1, 1, 0, TRUE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
+
+(UUID_V7(), 'SAVE20', '20% off up to ₹1,000 on purchases above ₹2,500.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='PERCENTAGE'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 20.00, 1000.00, 2500.00, 50000, 5, 0, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
+
+(UUID_V7(), 'BIGSALE30', '30% off up to ₹2,500 on purchases above ₹10,000.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='PERCENTAGE'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 30.00, 2500.00, 10000.00, 10000, 2, 0, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
+
+(UUID_V7(), 'MEGA50', '50% off up to ₹5,000 on purchases above ₹20,000.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='PERCENTAGE'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 50.00, 5000.00, 20000.00, 5000, 1, 0, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
+
+-- ACTIVE FIXED COUPONS
+
+(UUID_V7(), 'FLAT250', 'Flat ₹250 off on purchases above ₹2,000.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='FIXED'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 250.00, NULL, 2000.00, 100000, 10, 0, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
+
+(UUID_V7(), 'FLAT500', 'Flat ₹500 off on purchases above ₹5,000.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='FIXED'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 500.00, NULL, 5000.00, 50000, 5, 0, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
+
+(UUID_V7(), 'FLAT1000', 'Flat ₹1,000 off on purchases above ₹10,000.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='FIXED'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 1000.00, NULL, 10000.00, 10000, 2, 0, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
+
+(UUID_V7(), 'FIRSTORDER750', 'Flat ₹750 off on purchases above ₹3,000. Single-use promotional coupon.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='FIXED'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 750.00, NULL, 3000.00, 1, 1, 0, TRUE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
+
+-- EXPIRED COUPON
+
+(UUID_V7(), 'EXPIRED10', 'Expired promotional coupon for API testing.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='PERCENTAGE'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='EXPIRED'), 10.00, 500.00, 1000.00, 1000, 1, 0, FALSE, '2025-01-01 00:00:00', '2025-12-31 23:59:59', FALSE, UTC_TIMESTAMP()),
+
+-- INACTIVE COUPON
+
+(UUID_V7(), 'DISABLED500', 'Inactive coupon for API testing.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='FIXED'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='INACTIVE'), 500.00, NULL, 2000.00, 1000, 1, 0, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', FALSE, UTC_TIMESTAMP()),
+
+-- GLOBAL USAGE LIMIT REACHED
+
+(UUID_V7(), 'LIMITED100USES', 'Flat ₹100 off coupon with global usage limit reached.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='FIXED'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 100.00, NULL, 500.00, 100, 10, 100, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP()),
+
+-- PER-USER USAGE LIMIT.
+
+(UUID_V7(), 'SAVE50', '50% off up to ₹2,000 with per-user usage limit.', (SELECT pk_discount_type_id FROM coupon_discount_types WHERE discount_type_code='PERCENTAGE'), (SELECT pk_status_id FROM coupon_statuses WHERE status_code='ACTIVE'), 50.00, 2000.00, 5000.00, 100000, 1, 0, FALSE, '2026-01-01 00:00:00', '2027-01-01 00:00:00', TRUE, UTC_TIMESTAMP());
 
 /*==============================================================
 043. SEED DATA FOR: shipping_methods
