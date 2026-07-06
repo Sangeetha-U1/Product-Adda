@@ -56,8 +56,6 @@ CREATE TABLE products
 
     discount_price DECIMAL(10,2) NULL,
 
-    stock_quantity INT NOT NULL DEFAULT 0,
-
     average_rating DECIMAL(3,2) NOT NULL DEFAULT 0.00,
 
     total_reviews INT NOT NULL DEFAULT 0,
@@ -94,11 +92,10 @@ CREATE TABLE products
         REFERENCES brands(pk_brand_id)
         ON DELETE RESTRICT
     
-    CONSTRAINT fk_products_status_lookup
+    CONSTRAINT fk_product_statuses
         FOREIGN KEY (fk_status_id)
-        REFERENCES product_status_lookup(pk_status_id)
+        REFERENCES product_statuses(pk_status_id)
         ON DELETE RESTRICT;
-
 );
 
 -- ============================================================================

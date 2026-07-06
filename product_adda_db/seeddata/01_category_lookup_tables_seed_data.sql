@@ -44,7 +44,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE `coupon_discount_types`;
 TRUNCATE TABLE `coupon_statuses`;
 TRUNCATE TABLE `cart_statuses`;
-TRUNCATE TABLE `product_status_lookup`;
+TRUNCATE TABLE `product_statuses`;
 TRUNCATE TABLE `report_types`;
 TRUNCATE TABLE `notification_channels`;
 TRUNCATE TABLE `notification_types`;
@@ -163,12 +163,12 @@ INSERT INTO report_types (pk_report_type_id, report_type_name, description, is_a
 (UUID_V7(), 'VENDOR_PERFORMANCE', 'Vendor performance report', TRUE, '2026-06-17 16:45:22');
 
 /*==============================================================
-035. SEED DATA FOR: product_status_lookup
+035. SEED DATA FOR: product_statuses
 TODO: Add description column to this table and update the insert values below
 ==============================================================*/
 
 
-INSERT INTO product_status_lookup
+INSERT INTO product_statuses
     (pk_status_id, status_code, status_label, display_order, is_active)
 VALUES
     (UUID_V7(),       'DRAFT',            'Draft',            1, TRUE),

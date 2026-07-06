@@ -27,7 +27,6 @@ CREATE TABLE carts
     expires_at_utc TIMESTAMP NULL,
 
     CONSTRAINT pk_carts_cart_id PRIMARY KEY (pk_cart_id),
-    CONSTRAINT uq_carts_user UNIQUE (fk_user_id),
     CONSTRAINT fk_carts_user_id FOREIGN KEY (fk_user_id) REFERENCES users(pk_user_id) ON DELETE CASCADE,
     CONSTRAINT fk_carts_cart_status_id FOREIGN KEY (fk_cart_status_id) REFERENCES cart_statuses(pk_status_id) ON DELETE RESTRICT,
     CONSTRAINT fk_carts_coupon_id FOREIGN KEY (fk_coupon_id) REFERENCES coupons(pk_coupon_id) ON DELETE SET NULL

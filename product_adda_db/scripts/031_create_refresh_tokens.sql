@@ -21,6 +21,8 @@ CREATE TABLE refresh_tokens
 
     fk_user_id BINARY(16) NOT NULL,
 
+    `token_family_id` binary(16) NOT NULL,
+
     token_hash VARCHAR(255) NOT NULL,
 
     expires_at_utc DATETIME NOT NULL,

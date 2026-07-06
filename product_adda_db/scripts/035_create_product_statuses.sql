@@ -1,6 +1,6 @@
 /*
 ===============================================================================
-Table       : product_status_lookup
+Table       : product_statuses
 Description :
     Lookup table defining all valid product lifecycle states.
 
@@ -18,13 +18,13 @@ USE product_adda_db;
 -- Drop Table
 -- ============================================================================
 
-DROP TABLE IF EXISTS product_status_lookup;
+DROP TABLE IF EXISTS product_statuses;
 
 -- ============================================================================
 -- Create Table
 -- ============================================================================
-
-CREATE TABLE product_status_lookup
+product_statuses
+CREATE TABLE product_statuses
 (
     pk_status_id    BINARY(16) NOT NULL,
 
@@ -43,10 +43,10 @@ CREATE TABLE product_status_lookup
         DEFAULT (UTC_TIMESTAMP())
         ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT pk_product_status_lookup_id
+    CONSTRAINT pk_product_statuses_pk_status_id
         PRIMARY KEY (pk_status_id),
 
-    CONSTRAINT uq_product_status_code
+    CONSTRAINT uq_product_statuses_status_code
         UNIQUE (status_code)
 );
 
@@ -54,16 +54,16 @@ CREATE TABLE product_status_lookup
 -- Indexes
 -- ============================================================================
 
-CREATE INDEX idx_product_status_code
-    ON product_status_lookup(status_code);
+CREATE INDEX idx_product_statuses_status_code
+    ON product_statuses(status_code);
 
-CREATE INDEX idx_product_status_is_active
-    ON product_status_lookup(is_active);
+CREATE INDEX idx_product_statuses_is_active
+    ON product_statuses(is_active);
 
 -- ============================================================================
 -- Verification
 -- ============================================================================
 
-DESCRIBE product_status_lookup;
+DESCRIBE product_statuses;
 
-SHOW CREATE TABLE product_status_lookup;
+SHOW CREATE TABLE product_statuses;
