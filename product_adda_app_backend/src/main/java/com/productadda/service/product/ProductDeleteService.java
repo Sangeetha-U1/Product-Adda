@@ -1,16 +1,21 @@
 package com.productadda.service.product;
 
 import com.productadda.dto.product.ProductResponseDto;
+
 import com.productadda.entity.Product;
-import com.productadda.entity.ProductStatusLookup;
+import com.productadda.entity.ProductStatus;
 import com.productadda.entity.User;
 import com.productadda.entity.Vendor;
+
 import com.productadda.exception.ApiException;
+
 import com.productadda.repository.ProductRepository;
-import com.productadda.repository.ProductStatusLookupRepository;
+import com.productadda.repository.ProductStatusRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.repository.VendorRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,7 +29,7 @@ import java.util.UUID;
 public class ProductDeleteService {
 
     private final ProductRepository productRepository;
-    private final ProductStatusLookupRepository statusLookupRepository;
+    private final ProductStatusRepository productStatusLookupRepository;
     private final UserRepository userRepository;
     private final VendorRepository vendorRepository;
 
@@ -82,7 +87,7 @@ public class ProductDeleteService {
          * 2. BUSINESS RULES & PROCESSING
          * ================================================================
          */
-        ProductStatusLookup deletedStatus = statusLookupRepository.findByStatusCode("DELETED")
+        ProductStatus deletedStatus = productStatusLookupRepository.findByStatusCode("DELETED")
                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                         "DELETED status configuration missing"));
 

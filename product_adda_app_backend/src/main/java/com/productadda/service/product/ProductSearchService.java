@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
@@ -17,10 +18,13 @@ import com.productadda.dto.product.CategoryResponseDto;
 import com.productadda.dto.product.BrandResponseDto;
 import com.productadda.dto.product.ProductSearchListResponseDto;
 import com.productadda.dto.product.ProductSearchResponseDto;
+
 import com.productadda.exception.ApiException;
+
 import com.productadda.repository.CategoryRepository;
 import com.productadda.repository.BrandRepository;
 import com.productadda.repository.ProductRepository;
+
 import com.productadda.entity.Product;
 
 /**
@@ -323,7 +327,6 @@ public class ProductSearchService {
                         .brandName(p.getFkBrand() != null ? p.getFkBrand().getBrandName() : null)
                         .price(p.getPrice() != null ? p.getPrice().intValue() : 0)
                         .status(p.getFkStatus() != null ? p.getFkStatus().getStatusCode() : "PENDING")
-                        .stock(p.getStockQuantity() != null ? p.getStockQuantity() : 0)
                         .build())
                 .collect(Collectors.toList());
 
@@ -397,6 +400,7 @@ public class ProductSearchService {
         // 1.2 CONTEXT AUTHENTICATION
         // ==========================================
         boolean isAdmin = false;
+        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             isAdmin = authentication.getAuthorities().stream()
@@ -464,7 +468,6 @@ public class ProductSearchService {
                         .brandName(p.getFkBrand() != null ? p.getFkBrand().getBrandName() : null)
                         .price(p.getPrice() != null ? p.getPrice().intValue() : 0)
                         .status(p.getFkStatus() != null ? p.getFkStatus().getStatusCode() : "PENDING")
-                        .stock(p.getStockQuantity() != null ? p.getStockQuantity() : 0)
                         .build())
                 .collect(Collectors.toList());
 

@@ -3,12 +3,15 @@ package com.productadda.service.product;
 import com.productadda.dto.product.ProductResponseDto;
 import com.productadda.dto.product.ProductUpdateResponseDto;
 import com.productadda.dto.product.ProductUpdateRequestDto;
+
 import com.productadda.entity.Brand;
 import com.productadda.entity.Category;
 import com.productadda.entity.Product;
 import com.productadda.entity.User;
 import com.productadda.entity.Vendor;
+
 import com.productadda.exception.ApiException;
+
 import com.productadda.repository.BrandRepository;
 import com.productadda.repository.CategoryRepository;
 import com.productadda.repository.ProductRepository;
@@ -213,7 +216,6 @@ public class ProductUpdateService {
                 .brandId(savedProduct.getFkBrand() != null ? savedProduct.getFkBrand().getPkBrandId() : null)
                 .price(savedProduct.getPrice())
                 .discountPrice(savedProduct.getDiscountPrice())
-                .stockQuantity(savedProduct.getStockQuantity())
                 .status(savedProduct.getFkStatus() != null ? savedProduct.getFkStatus().getStatusCode() : null)
                 .createdAtUtc(java.time.ZonedDateTime.now(java.time.ZoneOffset.UTC)
                         .format(DateTimeFormatter.ISO_INSTANT))

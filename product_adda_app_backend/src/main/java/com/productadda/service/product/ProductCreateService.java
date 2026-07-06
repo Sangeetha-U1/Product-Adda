@@ -3,9 +3,21 @@ package com.productadda.service.product;
 import com.productadda.dto.product.ProductCreateRequestDto;
 import com.productadda.dto.product.ProductResponseDto;
 
-import com.productadda.entity.*;
+import com.productadda.entity.User;
+import com.productadda.entity.Inventory;
+import com.productadda.entity.Product;
+import com.productadda.entity.ProductStatus;
+import com.productadda.entity.Brand;
+import com.productadda.entity.Category;
+import com.productadda.entity.Vendor;
 
-import com.productadda.repository.*;
+import com.productadda.repository.ProductRepository;
+import com.productadda.repository.ProductStatusRepository;
+import com.productadda.repository.CategoryRepository;
+import com.productadda.repository.BrandRepository;
+import com.productadda.repository.UserRepository;
+import com.productadda.repository.VendorRepository;
+import com.productadda.repository.InventoryRepository;
 
 import com.productadda.util.UuidUtil;
 
@@ -27,12 +39,13 @@ import java.util.UUID;
 public class ProductCreateService {
 
         private final ProductRepository productRepository;
-        private final ProductStatusLookupRepository statusLookupRepository;
+        private final ProductStatusRepository productStatusRepository;
         private final CategoryRepository categoryRepository;
         private final BrandRepository brandRepository;
         private final UserRepository userRepository;
         private final VendorRepository vendorRepository;
         private final InventoryRepository inventoryRepository;
+
         private final UuidUtil uuidUtil;
 
         @Transactional
@@ -122,7 +135,7 @@ public class ProductCreateService {
                                 .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST,
                                                 "Specified brand matching target ID does not exist"));
 
-                ProductStatusLookup initialStatus = statusLookupRepository.findByStatusCode("PENDING_APPROVAL")
+                ProductStatus initialStatus = productStatusRepository.findByStatusCode("PENDING_APPROVAL")
                                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                                                 "Target systemic lifecycle code configuration elements missing"));
 
@@ -148,7 +161,6 @@ public class ProductCreateService {
                                 .price(request.getPrice())
                                 .discountPrice(request.getDiscountPrice() != null ? request.getDiscountPrice()
                                                 : BigDecimal.ZERO)
-                                .stockQuantity(request.getStockQuantity() != null ? request.getStockQuantity() : 0)
                                 .averageRating(BigDecimal.ZERO)
                                 .totalReviews(0)
                                 .isActive(true)
@@ -195,7 +207,6 @@ public class ProductCreateService {
                                 .skuCode(savedProduct.getSku())
                                 .price(savedProduct.getPrice())
                                 .discountPrice(savedProduct.getDiscountPrice())
-                                .stockQuantity(savedProduct.getStockQuantity())
                                 .categoryId(category.getPkCategoryId())
                                 .brandId(brand.getPkBrandId())
                                 .status(initialStatus.getStatusCode())

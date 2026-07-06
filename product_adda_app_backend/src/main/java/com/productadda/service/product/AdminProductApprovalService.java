@@ -13,10 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.productadda.dto.product.AdminProductApprovalResponseDto;
 import com.productadda.dto.product.AdminProductRejectionRequestDto;
 import com.productadda.entity.Product;
-import com.productadda.entity.ProductStatusLookup;
+import com.productadda.entity.ProductStatus;
 import com.productadda.exception.ApiException;
 import com.productadda.repository.ProductRepository;
-import com.productadda.repository.ProductStatusLookupRepository;
+import com.productadda.repository.ProductStatusRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminProductApprovalService {
 
     private final ProductRepository productRepository;
-    private final ProductStatusLookupRepository productStatusLookupRepository;
+    private final ProductStatusRepository productStatusRepository;
 
     @Transactional
     public AdminProductApprovalResponseDto approveProduct(UUID productId) {
@@ -56,7 +56,7 @@ public class AdminProductApprovalService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Product is already in " + currentStatus + " status");
         }
 
-        ProductStatusLookup approvedStatus = productStatusLookupRepository.findByStatusCode("APPROVED")
+        ProductStatus approvedStatus = productStatusRepository.findByStatusCode("APPROVED")
                 .orElseThrow(
                         () -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Configured mapping target missing"));
 
@@ -104,7 +104,7 @@ public class AdminProductApprovalService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Product is already in " + currentStatus + " status");
         }
 
-        ProductStatusLookup rejectedStatus = productStatusLookupRepository.findByStatusCode("REJECTED")
+        ProductStatus rejectedStatus = productStatusRepository.findByStatusCode("REJECTED")
                 .orElseThrow(
                         () -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Configured mapping target missing"));
 
