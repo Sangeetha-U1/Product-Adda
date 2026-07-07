@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 00000208 7478:274D
+Volume serial number is 00000276 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -43,6 +43,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       
 |   |           |   +---cart
 |   |           |   |       CartController.java
+|   |           |   |       CheckoutController.java
 |   |           |   |       CouponController.java
 |   |           |   |       
 |   |           |   +---order
@@ -107,12 +108,22 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       CartItemResponseDto.java
 |   |           |   |       CartResponseDto.java
 |   |           |   |       CartTotalsDto.java
+|   |           |   |       CheckoutRequestDto.java
+|   |           |   |       CheckoutResponseDto.java
+|   |           |   |       CheckoutValidateResponseDto.java
+|   |           |   |       CheckoutWarningDto.java
 |   |           |   |       CouponApplyRequestDto.java
 |   |           |   |       CouponValidationResponseDto.java
 |   |           |   |       
 |   |           |   +---order
+|   |           |   |       OrderAddressSummaryDto.java
+|   |           |   |       OrderCouponSummaryDto.java
+|   |           |   |       OrderDetailResponseDto.java
 |   |           |   |       OrderHistoryResponseDto.java
 |   |           |   |       OrderItemSummaryDto.java
+|   |           |   |       OrderListItemDto.java
+|   |           |   |       OrderPaymentSummaryDto.java
+|   |           |   |       PaginatedOrderResponseDto.java
 |   |           |   |       
 |   |           |   +---payment
 |   |           |   |       PaymentCreateRequestDto.java
@@ -195,7 +206,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       PaymentStatus.java
 |   |           |       Product.java
 |   |           |       ProductImage.java
-|   |           |       ProductStatusLookup.java
+|   |           |       ProductStatus.java
 |   |           |       RefreshToken.java
 |   |           |       Review.java
 |   |           |       ReviewStatus.java
@@ -239,7 +250,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       PaymentStatusRepository.java
 |   |           |       ProductImageRepository.java
 |   |           |       ProductRepository.java
-|   |           |       ProductStatusLookupRepository.java
+|   |           |       ProductStatusRepository.java
 |   |           |       RefreshTokenRepository.java
 |   |           |       ReviewRepository.java
 |   |           |       RoleRepository.java
@@ -287,9 +298,13 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       CartItemUpdateService.java
 |   |           |   |       CartPricingService.java
 |   |           |   |       CartRetrievalService.java
+|   |           |   |       CheckoutPricingService.java
+|   |           |   |       CheckoutService.java
+|   |           |   |       CheckoutValidationService.java
 |   |           |   |       CouponApplyService.java
 |   |           |   |       CouponRemoveService.java
 |   |           |   |       CouponValidationService.java
+|   |           |   |       OrderCreationService.java
 |   |           |   |       
 |   |           |   +---mail
 |   |           |   |       EmailService.java
@@ -297,6 +312,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       
 |   |           |   +---order
 |   |           |   |       OrderHistoryService.java
+|   |           |   |       OrderRetrievalService.java
 |   |           |   |       
 |   |           |   +---payment
 |   |           |   |       PaymentServicePaymentCreate.java
@@ -357,12 +373,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 00000162 7478:274D
+Volume serial number is 000001A3 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 000001FA 7478:274D
+Volume serial number is 00000244 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

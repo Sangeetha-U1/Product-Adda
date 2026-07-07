@@ -1,36 +1,31 @@
 package com.productadda.service.cart;
 
-import lombok.RequiredArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.Authentication;
 
-import com.productadda.exception.ApiException;
-
-import com.productadda.repository.CartRepository;
-import com.productadda.repository.CartItemRepository;
-import com.productadda.repository.InventoryReservationRepository;
-import com.productadda.repository.UserRepository;
-import com.productadda.repository.CartStatusRepository;
-
+import com.productadda.dto.cart.CartItemResponseDto;
+import com.productadda.dto.cart.CartResponseDto;
+import com.productadda.dto.cart.CartTotalsDto;
 import com.productadda.entity.Cart;
 import com.productadda.entity.CartItem;
 import com.productadda.entity.CartStatus;
 import com.productadda.entity.InventoryReservation;
 import com.productadda.entity.User;
+import com.productadda.exception.ApiException;
+import com.productadda.repository.CartItemRepository;
+import com.productadda.repository.CartRepository;
+import com.productadda.repository.CartStatusRepository;
+import com.productadda.repository.InventoryReservationRepository;
+import com.productadda.repository.UserRepository;
 
-import com.productadda.dto.cart.CartResponseDto;
-import com.productadda.dto.cart.CartItemResponseDto;
-import com.productadda.dto.cart.CartTotalsDto;
-
-import com.productadda.service.cart.CartPricingService;
-
-import java.util.UUID;
-import java.util.List;
-import java.util.ArrayList;
+import lombok.RequiredArgsConstructor;
 
 // TODO: Replace direct InventoryReservation delete with event publishing (CartReservationCleanupEvent)
 // TODO: Publish CartReservationCleanupEvent instead of deleting inventory reservations directly
@@ -51,25 +46,43 @@ public class CartItemRemoveService {
 
     @Transactional
     public CartResponseDto removeItem(UUID itemId) {
+
         /*
          * ================================================================
          * 1. VALIDATION SECTION
+         * Description: Validate request input, authenticated user context,
+         * and all required database entities before removing the cart item.
          * ================================================================
          */
+
+        // ==========================================
+        // 1.1 REQUEST VALIDATION
+        // ==========================================
 
         if (itemId == null) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Cart item ID is required");
         }
 
+        // ==========================================
+        // 1.2 CONTEXT AUTHENTICATION
+        // ==========================================
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "User authentication context missing");
         }
 
         String currentUsername = authentication.getName();
 
+        // ==========================================
+        // 1.3 DATABASE LOOKUP VALIDATION
+        // ==========================================
+
         User user = userRepository.findByEmail(currentUsername)
-                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User entity mapping missing"));
+                .orElseThrow(() -> new ApiException(
+                        HttpStatus.NOT_FOUND,
+                        "User entity mapping missing"));
 
         CartStatus activeStatus = cartStatusRepository.findByStatusCode(ACTIVE_CART_STATUS)
                 .orElseThrow(() -> new ApiException(
@@ -77,14 +90,16 @@ public class CartItemRemoveService {
                         "Lookup cart status 'ACTIVE' not found"));
 
         Cart cart = cartRepository.findByFkUserAndFkCartStatusAndIsActiveTrue(
-                user,
-                activeStatus)
+                        user,
+                        activeStatus)
                 .orElseThrow(() -> new ApiException(
                         HttpStatus.NOT_FOUND,
                         "No active cart found for the authenticated user."));
 
         CartItem cartItem = cartItemRepository.findById(itemId)
-                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Item not found in cart"));
+                .orElseThrow(() -> new ApiException(
+                        HttpStatus.NOT_FOUND,
+                        "Item not found in cart"));
 
         if (cartItem.getFkCart() == null || !cartItem.getFkCart().getPkCartId().equals(cart.getPkCartId())) {
             throw new ApiException(HttpStatus.CONFLICT, "Item does not belong to the active cart");
@@ -113,6 +128,9 @@ public class CartItemRemoveService {
          * ================================================================
          */
 
+        // Delete operations were completed during the workflow above.
+        // No additional persistence operations are required.
+
         /*
          * ================================================================
          * 4. POST-SAVING DATA SANITIZATION & MASKING
@@ -120,23 +138,28 @@ public class CartItemRemoveService {
          */
 
         List<CartItem> structuralItems = cartItemRepository.findByFkCartAndIsActiveTrue(cart);
+
         List<CartItemResponseDto> sanitizedItems = new ArrayList<>();
 
         for (CartItem item : structuralItems) {
+
             UUID mappedProductId = null;
+
             if (item.getFkProduct() != null) {
                 mappedProductId = item.getFkProduct().getPkProductId();
             }
 
-            sanitizedItems.add(CartItemResponseDto.builder()
-                    .itemId(item.getPkCartItemId())
-                    .productId(mappedProductId)
-                    .quantity(item.getQuantity())
-                    .priceAtAdd(item.getPriceAtAdd())
-                    .build());
+            sanitizedItems.add(
+                    CartItemResponseDto.builder()
+                            .itemId(item.getPkCartItemId())
+                            .productId(mappedProductId)
+                            .quantity(item.getQuantity())
+                            .priceAtAdd(item.getPriceAtAdd())
+                            .build());
         }
 
         String resolvedStatus = null;
+
         if (cart.getFkCartStatus() != null) {
             resolvedStatus = cart.getFkCartStatus().getStatusCode();
         }
@@ -146,6 +169,7 @@ public class CartItemRemoveService {
          * 5. PRICING ENGINE INTEGRATION
          * ================================================================
          */
+
         CartTotalsDto totalsDto = cartPricingService.calculateTotals(structuralItems, cart);
 
         /*

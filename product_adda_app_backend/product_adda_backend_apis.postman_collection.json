@@ -1355,12 +1355,25 @@
         },
         {
           "name": "/api/auth/login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"jigob58138@fishnone.com\",\r\n    \"password\": \"Test123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"donaldtrump@trump.com\",\r\n    \"password\": \"Test123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1816,7 +1829,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjU2Mzc1LCJleHAiOjE3ODMyNTk5NzV9.UFqCgRa5r6cWU8RiK8yrkiFncupDsWobCQZBMg2tGGERXOLmyO7ZTdS95RZHprsc",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
                   "type": "string"
                 }
               ]
@@ -1825,7 +1838,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\": \"019f325c-dfd1-7473-8aa1-646f00367b50\"\r\n}",
+              "raw": "{\r\n    \"refreshToken\": \"019f3d1a-7c77-71d2-bf07-ae5acd98e7c9\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -3069,14 +3082,14 @@
       "name": "order",
       "item": [
         {
-          "name": "/api/users/orders",
+          "name": "/api/orders",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODE4ODM4ODksImV4cCI6MTc4MTg4NzQ4OX0.lwmGUPTYz1Y_crvLAJnqG6QRU02Gb0f4PJZcm9YwBiH_R9ZXKY5Tgz3xgVtRZVSo",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
                   "type": "string"
                 }
               ]
@@ -3084,18 +3097,210 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/users/orders",
+              "raw": "{{baseUrl}}/api/orders",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
-                "users",
                 "orders"
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "orders"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Jul 2026 15:44:45 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"User order history fetched successfully\",\n    \"data\": {\n        \"orders\": [\n            {\n                \"orderId\": \"019f3d3d-c201-77b2-ab0e-120b4cc1d5ac\",\n                \"orderNumber\": \"ORD-20260707154125-019F3D\",\n                \"statusName\": \"PENDING\",\n                \"totalAmount\": 153162.82,\n                \"createdAtUtc\": \"2026-07-07T21:11:25\"\n            }\n        ],\n        \"totalCount\": 1,\n        \"page\": 0,\n        \"pageSize\": 20\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/orders/{orderId}",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/019f3d3d-c201-77b2-ab0e-120b4cc1d5ac",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "019f3d3d-c201-77b2-ab0e-120b4cc1d5ac"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/orders/019f3d3d-c201-77b2-ab0e-120b4cc1d5ac",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "orders",
+                    "019f3d3d-c201-77b2-ab0e-120b4cc1d5ac"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Jul 2026 15:49:14 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Order details fetched successfully\",\n    \"data\": {\n        \"orderId\": \"019f3d3d-c201-77b2-ab0e-120b4cc1d5ac\",\n        \"orderNumber\": \"ORD-20260707154125-019F3D\",\n        \"statusName\": \"PENDING\",\n        \"subtotal\": 129999,\n        \"couponDiscount\": 250,\n        \"shippingCost\": 50,\n        \"taxAmount\": 23363.82,\n        \"totalAmount\": 153162.82,\n        \"createdAtUtc\": \"2026-07-07T21:11:25\",\n        \"items\": [\n            {\n                \"orderItemId\": \"019f3d3d-c213-7eb5-95b6-b21185d6450c\",\n                \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                \"productNameSnapshot\": \"Samsung Galaxy S24 Ultra\",\n                \"quantity\": 1,\n                \"unitPrice\": 129999,\n                \"lineTotal\": 129999\n            }\n        ],\n        \"address\": {\n            \"addressId\": \"499959d5-228a-4199-b0ab-9289ee8820d5\",\n            \"addressLine1\": \"725 Fifth Avenue\",\n            \"addressLine2\": \"Apartment 58B\",\n            \"landmark\": \"Near Central Park\",\n            \"city\": \"New York\",\n            \"state\": \"New York\",\n            \"postalCode\": \"10022\",\n            \"country\": \"United States\"\n        },\n        \"coupon\": {\n            \"couponId\": \"019f326b-2fd7-7c3d-ba4b-bbe704fe11e2\",\n            \"couponCode\": \"FLAT250\",\n            \"discountType\": \"FIXED\",\n            \"discountValue\": 250\n        },\n        \"payment\": null\n    }\n}"
+            }
+          ]
         }
       ]
     },
@@ -10422,7 +10627,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODE4ODM4ODksImV4cCI6MTc4MTg4NzQ4OX0.lwmGUPTYz1Y_crvLAJnqG6QRU02Gb0f4PJZcm9YwBiH_R9ZXKY5Tgz3xgVtRZVSo",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
                   "type": "string"
                 }
               ]
@@ -10431,7 +10636,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"addressLine1\": \"123 Tech Park Avenue\",\r\n    \"addressLine2\": \"Suite 404, Block B\",\r\n    \"landmark\": \"Opposite Cyber Tower\",\r\n    \"city\": \"Khammam\",\r\n    \"state\": \"Telangana\",\r\n    \"postalCode\": \"507001\",\r\n    \"country\": \"India\",\r\n    \"addressTypeName\": \"HOME\",\r\n    \"isDefault\": true\r\n}",
+              "raw": "{\r\n    \"addressLine1\": \"725 Fifth Avenue\",\r\n    \"addressLine2\": \"Apartment 58B\",\r\n    \"landmark\": \"Near Central Park\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"New York\",\r\n    \"postalCode\": \"10022\",\r\n    \"country\": \"United States\",\r\n    \"addressTypeName\": \"HOME\",\r\n    \"isDefault\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -10551,7 +10756,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWh1bC52ZXJtYUBnbWFpbC5jb20iLCJpYXQiOjE3ODE4ODM4ODksImV4cCI6MTc4MTg4NzQ4OX0.lwmGUPTYz1Y_crvLAJnqG6QRU02Gb0f4PJZcm9YwBiH_R9ZXKY5Tgz3xgVtRZVSo",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
                   "type": "string"
                 }
               ]
@@ -12910,7 +13115,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjU2Mzc1LCJleHAiOjE3ODMyNTk5NzV9.UFqCgRa5r6cWU8RiK8yrkiFncupDsWobCQZBMg2tGGERXOLmyO7ZTdS95RZHprsc",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
                   "type": "string"
                 }
               ]
@@ -13882,7 +14087,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjU2Mzc1LCJleHAiOjE3ODMyNTk5NzV9.UFqCgRa5r6cWU8RiK8yrkiFncupDsWobCQZBMg2tGGERXOLmyO7ZTdS95RZHprsc",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
                   "type": "string"
                 }
               ]
@@ -13891,7 +14096,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{ \r\n  \"couponCode\": \"LIMITED100USES\" \r\n}",
+              "raw": "{ \r\n  \"couponCode\": \"FLAT250\" \r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -14595,6 +14800,261 @@
           ]
         }
       ]
+    },
+    {
+      "name": "checkout",
+      "item": [
+        {
+          "name": "/api/checkout/validate",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/checkout/validate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "checkout",
+                "validate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/checkout/validate",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "checkout",
+                    "validate"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Jul 2026 15:20:43 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Cart passed checkout validation\",\n    \"data\": {\n        \"valid\": true,\n        \"warnings\": [],\n        \"estimatedTotals\": {\n            \"itemCount\": 1,\n            \"subtotal\": 129999,\n            \"couponDiscount\": 250,\n            \"shippingCost\": 50,\n            \"taxAmount\": 23363.82,\n            \"total\": 153162.82\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/checkout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "019f3d3b-c192-7e57-bb5f-8945b7cb52a2",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"addressId\": \"499959d5-228a-4199-b0ab-9289ee8820d5\",\r\n    \"shippingMethodId\": \"019f2907-2288-7803-9645-ba7980b1d156\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/checkout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "checkout"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "019f3d3b-c192-7e57-bb5f-8945b7cb52a2",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"addressId\": \"499959d5-228a-4199-b0ab-9289ee8820d5\",\r\n    \"shippingMethodId\": \"019f2907-2288-7803-9645-ba7980b1d156\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/checkout",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "checkout"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 07 Jul 2026 15:41:26 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Checkout completed successfully\",\n    \"data\": {\n        \"orderId\": \"019f3d3d-c201-77b2-ab0e-120b4cc1d5ac\",\n        \"orderNumber\": \"ORD-20260707154125-019F3D\",\n        \"statusName\": \"PENDING\",\n        \"subtotal\": 129999,\n        \"couponDiscount\": 250,\n        \"shippingCost\": 50,\n        \"taxAmount\": 23363.82,\n        \"totalAmount\": 153162.82,\n        \"idempotencyKey\": \"019f3d3b-c192-7e57-bb5f-8945b7cb52a2\",\n        \"createdAtUtc\": null,\n        \"items\": [\n            {\n                \"orderItemId\": \"019f3d3d-c213-7eb5-95b6-b21185d6450c\",\n                \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                \"productNameSnapshot\": \"Samsung Galaxy S24 Ultra\",\n                \"quantity\": 1,\n                \"unitPrice\": 129999,\n                \"lineTotal\": 129999\n            }\n        ]\n    }\n}"
+            }
+          ]
+        }
+      ]
     }
   ],
   "variable": [
@@ -14609,6 +15069,14 @@
     {
       "key": "supabase_service_role_api_key_12fp",
       "secret": true
+    },
+    {
+      "key": "accessTokenLogin",
+      "value": ""
+    },
+    {
+      "key": "refreshTokenLogin",
+      "value": ""
     }
   ]
 }

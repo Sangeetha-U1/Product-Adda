@@ -1,8 +1,8 @@
 package com.productadda.service.order;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,19 +10,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.order.OrderHistoryResponseDto;
-import com.productadda.dto.order.OrderItemSummaryDto;
+import com.productadda.dto.order.OrderListItemDto;
+import com.productadda.dto.order.PaginatedOrderResponseDto;
 
 import com.productadda.entity.Order;
 import com.productadda.entity.User;
 
 import com.productadda.exception.ApiException;
 
-import com.productadda.repository.OrderItemRepository;
 import com.productadda.repository.OrderRepository;
 import com.productadda.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +32,9 @@ public class OrderHistoryService {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
 
     @Transactional(readOnly = true)
-    public List<OrderHistoryResponseDto> getMyOrderHistory() {
+    public PaginatedOrderResponseDto getMyOrderHistory(int page, int pageSize, String sortBy, String sortOrder) {
 
         /*
          * ================================================================
@@ -44,18 +45,26 @@ public class OrderHistoryService {
         // ==========================================
         // 1.1 REQUEST VALIDATION
         // ==========================================
-        // Note: Parameterless methodology tracking. No request variables to assert.
+        int safePage = page < 0 ? 0 : page;
+        int safePageSize = (pageSize <= 0 || pageSize > 100) ? 20 : pageSize;
+
+        String safeSortBy = (sortBy == null || sortBy.trim().isEmpty()) ? "createdAtUtc" : sortBy.trim();
+
+        Sort.Direction direction = "ASC".equalsIgnoreCase(sortOrder)
+                ? Sort.Direction.ASC
+                : Sort.Direction.DESC;
 
         // ==========================================
         // 1.2 CONTEXT AUTHENTICATION
         // ==========================================
-        // Note: Parameterless methodology tracking. No request variables to assert.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
         }
 
         String email;
+
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
             email = userDetails.getUsername();
         } else {
@@ -73,47 +82,47 @@ public class OrderHistoryService {
          * 2. BUSINESS RULES & PROCESSING / WORKFLOW
          * ================================================================
          */
-        List<Order> userOrders = orderRepository.findByFkUserAndIsActiveTrueOrderByCreatedAtUtcDesc(currentUser);
+        PageRequest pageRequest = PageRequest.of(safePage, safePageSize, Sort.by(direction, safeSortBy));
+
+        Page<Order> orderPage;
+        try {
+            orderPage = orderRepository.findByFkUserAndIsActiveTrue(currentUser, pageRequest);
+        } catch (IllegalArgumentException  ex) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid sortBy field: " + safeSortBy);
+        }
 
         /*
          * ================================================================
-         * 3. DB SAVING SECTION
-         * Note: Read-only query execution profile context.
+         * 3. DB SAVING SECTION (Skip if Read-Only GET)
+         * Reason: Read-only paginated lookup, no mutations performed.
          * ================================================================
          */
 
         /*
          * ================================================================
-         * 4. RESPONSE MAPPING
+         * 4. POST-SAVING DATA SANITIZATION & MASKING
          * ================================================================
          */
-        return userOrders.stream().map(order -> {
+        List<OrderListItemDto> items = orderPage.getContent().stream()
+                .map(order -> OrderListItemDto.builder()
+                        .orderId(order.getPkOrderId())
+                        .orderNumber(order.getOrderNumber())
+                        .statusName(order.getFkStatus() != null ? order.getFkStatus().getStatusName() : "UNKNOWN")
+                        .totalAmount(order.getTotalAmount())
+                        .createdAtUtc(order.getCreatedAtUtc())
+                        .build())
+                .collect(Collectors.toList());
 
-            List<OrderItemSummaryDto> itemSummaries = orderItemRepository.findByFkOrderAndIsActiveTrue(order)
-                    .stream()
-                    .map(item -> OrderItemSummaryDto.builder()
-                            .orderItemId(item.getPkOrderItemId())
-                            .productId(item.getFkProduct() != null ? item.getFkProduct().getPkProductId() : null)
-                            .productNameSnapshot(item.getProductNameSnapshot())
-                            .quantity(item.getQuantity())
-                            .unitPrice(item.getUnitPrice())
-                            .lineTotal(item.getLineTotal())
-                            .build())
-                    .collect(Collectors.toList());
-
-            return OrderHistoryResponseDto.builder()
-                    .orderId(order.getPkOrderId())
-                    .orderNumber(order.getOrderNumber())
-                    // TODO: check this condition, it disgustung.
-                    .statusName(order.getFkStatus() != null ? order.getFkStatus().getStatusName() : "UNKNOWN")
-                    .subtotal(order.getSubtotal())
-                    .couponDiscount(order.getCouponDiscount())
-                    .shippingCost(order.getShippingCost())
-                    .taxAmount(order.getTaxAmount())
-                    .totalAmount(order.getTotalAmount())
-                    .createdAtUtc(order.getCreatedAtUtc())
-                    .items(itemSummaries)
-                    .build();
-        }).collect(Collectors.toList());
+        /*
+         * ================================================================
+         * 5. RESPONSE MAPPING
+         * ================================================================
+         */
+        return PaginatedOrderResponseDto.builder()
+                .orders(items)
+                .totalCount(orderPage.getTotalElements())
+                .page(safePage)
+                .pageSize(safePageSize)
+                .build();
     }
 }
