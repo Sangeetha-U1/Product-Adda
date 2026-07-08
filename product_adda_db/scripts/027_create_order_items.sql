@@ -22,6 +22,7 @@ CREATE TABLE order_items
     fk_order_id BINARY(16) NOT NULL,
     fk_product_id BINARY(16) NOT NULL,
     fk_vendor_id BINARY(16) NOT NULL,
+    fk_item_status_id BINARY(16) NOT NULL,
     product_name_snapshot VARCHAR(255) NOT NULL,
     quantity INT NOT NULL,
     unit_price DECIMAL(10,2) NOT NULL,
@@ -34,9 +35,11 @@ CREATE TABLE order_items
     CONSTRAINT chk_order_items_quantity_positive CHECK (quantity > 0),
     CONSTRAINT chk_order_items_unit_price_positive CHECK (unit_price >= 0),
     CONSTRAINT chk_order_items_line_total_positive CHECK (line_total >= 0),
+
     CONSTRAINT fk_order_items_order_id FOREIGN KEY (fk_order_id) REFERENCES orders(pk_order_id) ON DELETE CASCADE,
     CONSTRAINT fk_order_items_product_id FOREIGN KEY (fk_product_id) REFERENCES products(pk_product_id) ON DELETE RESTRICT,
     CONSTRAINT fk_order_items_vendor_id FOREIGN KEY (fk_vendor_id) REFERENCES vendors(pk_vendor_id) ON DELETE RESTRICT
+    CONSTRAINT fk_order_items_item_status_id FOREIGN KEY (fk_item_status_id) REFERENCES item_statuses(pk_item_status_id) ON DELETE RESTRICT;
 );
 
 -- ============================================================================
@@ -49,6 +52,7 @@ CREATE INDEX idx_order_items_vendor ON order_items(fk_vendor_id);
 CREATE INDEX idx_order_items_line_total ON order_items(line_total);
 CREATE INDEX idx_order_items_created_at ON order_items(created_at_utc);
 CREATE INDEX idx_order_items_is_active ON order_items(is_active);
+CREATE INDEX idx_order_items_item_status ON order_items(fk_item_status_id);
 
 -- ============================================================================
 -- Verification

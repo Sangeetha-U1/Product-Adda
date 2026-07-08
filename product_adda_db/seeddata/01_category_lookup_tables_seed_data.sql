@@ -53,6 +53,7 @@ TRUNCATE TABLE `address_types`;
 TRUNCATE TABLE `payment_gateways`;
 TRUNCATE TABLE `review_statuses`;
 TRUNCATE TABLE `payment_statuses`;
+
 TRUNCATE TABLE `order_statuses`;
 TRUNCATE TABLE `roles`;
 
@@ -82,6 +83,17 @@ INSERT INTO order_statuses (pk_status_id, status_name, description, is_active, c
 (UUID_V7(), 'CANCELLED', 'Order cancelled', TRUE, '2024-02-04 15:45:10'),
 (UUID_V7(), 'RETURNED', 'Order returned', TRUE, '2024-02-05 11:20:00'),
 (UUID_V7(), 'REFUNDED', 'Order refunded', TRUE, '2024-02-06 16:10:22');
+
+/*==============================================================
+049. Seed Data  : item_statuses
+Description: Seeds lookup values for individual order item lifecycle statuses.
+==============================================================*/
+
+INSERT INTO item_statuses (pk_item_status_id, status_name, description, is_active, created_at_utc) 
+VALUES 
+(UUID_TO_BIN(UUID_V7()), 'PENDING', 'Order item is awaiting vendor processing.', TRUE, UTC_TIMESTAMP()), 
+(UUID_TO_BIN(UUID_V7()), 'PROCESSING', 'Vendor has started processing the order item.', TRUE, UTC_TIMESTAMP()), 
+(UUID_TO_BIN(UUID_V7()), 'SHIPPED', 'Order item has been shipped by the vendor.', TRUE, UTC_TIMESTAMP());
 
 /*==============================================================
 003. SEED DATA FOR: payment_statuses
@@ -211,4 +223,27 @@ VALUES
     (UUID_V7(), 'FIXED',      'Fixed Amount', 1, TRUE),
     (UUID_V7(), 'PERCENTAGE', 'Percentage',   2, TRUE);
 
-    
+
+/*==============================================================
+050. SEED DATA FOR: delivery_partner_statuses
+==============================================================*/
+
+INSERT INTO delivery_partner_statuses ( pk_delivery_partner_status_id, status_name, description, is_active, created_at_utc)
+VALUES
+(UUID_V7(), 'AVAILABLE', 'Available for new assignments.', TRUE, UTC_TIMESTAMP()),
+(UUID_V7(), 'BUSY', 'Currently handling deliveries.', TRUE, UTC_TIMESTAMP()),
+(UUID_V7(), 'OFFLINE', 'Temporarily unavailable.', TRUE, UTC_TIMESTAMP()),
+(UUID_V7(), 'ON_LEAVE', 'On leave.', TRUE, UTC_TIMESTAMP());
+
+/*==============================================================
+051. SEED DATA FOR: delivery_assignment_statuses
+==============================================================*/
+
+USE product_adda_db;
+
+INSERT INTO delivery_assignment_statuses ( pk_delivery_assignment_status_id, status_name, description, is_active, created_at_utc)
+VALUES
+(UUID_V7(), 'PENDING', 'Assignment awaiting partner response.', TRUE, UTC_TIMESTAMP()),
+(UUID_V7(), 'ACCEPTED', 'Assignment accepted by delivery partner.', TRUE, UTC_TIMESTAMP()),
+(UUID_V7(), 'REJECTED', 'Assignment rejected by delivery partner.', TRUE, UTC_TIMESTAMP()),
+(UUID_V7(), 'COMPLETED', 'Delivery assignment completed.', TRUE, UTC_TIMESTAMP());

@@ -82,3 +82,15 @@ INSERT INTO addresses (pk_address_id, fk_user_id, fk_address_type_id, address_li
 (UUID_V7(), (SELECT pk_user_id FROM users WHERE email = 'pooja.singh@yahoo.com'), (SELECT pk_address_type_id FROM address_types WHERE address_type_name = 'SHIPPING'), 'House No 45', 'Palm Meadows', 'Near Park', 'Pune', 'Maharashtra', '411001', 'India', TRUE, TRUE, '2025-03-05 17:00:00'),
 (UUID_V7(), (SELECT pk_user_id FROM users WHERE email = 'vikram.m@gmail.com'), (SELECT pk_address_type_id FROM address_types WHERE address_type_name = 'HOME'), 'Flat 404', 'Sunshine Residency', 'Near Temple', 'Chennai', 'Tamil Nadu', '600001', 'India', TRUE, TRUE, '2025-03-10 10:00:00');
 
+/*==============================================================
+045. SEED DATA FOR: delivery_partners
+==============================================================*/
+
+INSERT INTO delivery_partners (pk_delivery_partner_id, fk_status_id, partner_name, email, phone, current_location, max_concurrent_deliveries, active_deliveries, rating, total_deliveries, joined_at, is_active, created_at_utc)
+SELECT UUID_V7(), s.pk_delivery_partner_status_id, 'Rahul Delivery Services', 'rahul.delivery@productadda.com', '+91-9876500001', 'Hyderabad', 25, 3, 4.80, 1420, UTC_TIMESTAMP(), TRUE, UTC_TIMESTAMP() FROM delivery_partner_statuses s WHERE s.status_name = 'AVAILABLE'
+UNION ALL
+SELECT UUID_V7(), s.pk_delivery_partner_status_id, 'SpeedX Logistics', 'speedx@productadda.com', '+91-9876500002', 'Bengaluru', 20, 18, 4.65, 2385, UTC_TIMESTAMP(), TRUE, UTC_TIMESTAMP() FROM delivery_partner_statuses s WHERE s.status_name = 'BUSY'
+UNION ALL
+SELECT UUID_V7(), s.pk_delivery_partner_status_id, 'QuickMove Express', 'quickmove@productadda.com', '+91-9876500003', 'Chennai', 30, 5, 4.91, 3150, UTC_TIMESTAMP(), TRUE, UTC_TIMESTAMP() FROM delivery_partner_statuses s WHERE s.status_name = 'AVAILABLE'
+UNION ALL
+SELECT UUID_V7(), s.pk_delivery_partner_status_id, 'CityRunner Logistics', 'cityrunner@productadda.com', '+91-9876500004', 'Vijayawada', 15, 0, 4.50, 980, UTC_TIMESTAMP(), TRUE, UTC_TIMESTAMP() FROM delivery_partner_statuses s WHERE s.status_name = 'ON_LEAVE';

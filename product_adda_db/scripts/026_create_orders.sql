@@ -25,6 +25,7 @@ CREATE TABLE orders
     fk_status_id BINARY(16) NOT NULL,
     fk_address_id BINARY(16) NOT NULL,
     fk_coupon_id BINARY(16) NULL,
+    fk_delivery_partner_id BINARY(16) NOT NULL,
     subtotal DECIMAL(10,2) NOT NULL,
     coupon_discount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     shipping_cost DECIMAL(10,2) NOT NULL DEFAULT 0.00,
@@ -43,7 +44,8 @@ CREATE TABLE orders
     CONSTRAINT fk_orders_status_id FOREIGN KEY (fk_status_id) REFERENCES order_statuses(pk_status_id) ON DELETE RESTRICT,
     CONSTRAINT fk_orders_address_id FOREIGN KEY (fk_address_id) REFERENCES addresses(pk_address_id) ON DELETE RESTRICT,
     CONSTRAINT fk_orders_coupon_id FOREIGN KEY (fk_coupon_id) REFERENCES coupons(pk_coupon_id) ON DELETE SET NULL,
-    
+    CONSTRAINT fk_orders_delivery_partner_id FOREIGN KEY (fk_delivery_partner_id) REFERENCES delivery_partners(pk_delivery_partner_id),
+
     CONSTRAINT chk_orders_subtotal CHECK (subtotal >= 0),
     CONSTRAINT chk_orders_coupon_discount CHECK (coupon_discount >= 0),
     CONSTRAINT chk_orders_shipping_cost CHECK (shipping_cost >= 0),
@@ -64,6 +66,7 @@ CREATE INDEX idx_orders_coupon ON orders(fk_coupon_id);
 CREATE INDEX idx_orders_total_amount ON orders(total_amount);
 CREATE INDEX idx_orders_created_at ON orders(created_at_utc);
 CREATE INDEX idx_orders_is_active ON orders(is_active);
+CREATE INDEX idx_orders_delivery_partner_id ON orders(fk_delivery_partner_id);
 
 -- ============================================================================
 -- Verification

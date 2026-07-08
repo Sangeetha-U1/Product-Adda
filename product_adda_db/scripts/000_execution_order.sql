@@ -61,6 +61,10 @@ Description :
 042_create_coupon_usage_history.sql
 043_create_shipping_methods.sql
 044_create_tax_configurations.sql
+045_create_delivery_partners.sql
+046_create_delivery_assignments.sql
+047_create_invoices.sql
+048_create_invoice_line_items.sql
 
 029_create_reviews.sql
 
@@ -141,6 +145,10 @@ mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\04
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\042_create_coupon_usage_history.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\043_create_shipping_methods.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\044_create_tax_configurations.sql"
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\045_create_delivery_partners.sql
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\046_create_delivery_assignments.sql
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\047_create_invoices.sql
+mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\048_create_invoice_line_items.sql
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\029_create_reviews.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\030_create_email_verification_tokens.sql"
 mysql -u root "-p$env:MYSQLROOTPASS" product_adda_db -e "source $ScriptFolder\031_create_refresh_tokens.sql"
@@ -183,6 +191,10 @@ TRUNCATE TABLE `password_reset_tokens`;
 TRUNCATE TABLE `refresh_tokens`;
 TRUNCATE TABLE `email_verification_tokens`;
 TRUNCATE TABLE `reviews`;
+TRUNCATE TABLE `invoice_line_items`;
+TRUNCATE TABLE `invoices`;
+TRUNCATE TABLE `delivery_assignments`;
+TRUNCATE TABLE `delivery_partners`;
 TRUNCATE TABLE `tax_configurations`;
 TRUNCATE TABLE `shipping_methods`;
 TRUNCATE TABLE `coupons`;
@@ -243,6 +255,10 @@ DROP TABLE IF EXISTS `email_verification_tokens`;
 DROP TABLE IF EXISTS `reviews`;
 
 -- 3. Order / Transactional Tables
+DROP TABLE IF EXISTS `delivery_partners`;
+DROP TABLE IF EXISTS `delivery_assignments`;
+DROP TABLE IF EXISTS `invoices`;
+DROP TABLE IF EXISTS `invoice_line_items`;
 DROP TABLE IF EXISTS `tax_configurations`;
 DROP TABLE IF EXISTS `shipping_methods`;
 DROP TABLE IF EXISTS `coupons`;
