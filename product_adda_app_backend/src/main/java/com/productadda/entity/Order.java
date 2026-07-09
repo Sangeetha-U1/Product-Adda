@@ -29,11 +29,6 @@ import org.hibernate.type.SqlTypes;
 @AllArgsConstructor
 @Builder
 public class Order {
-    // TODO: Add cancellation tracking fields (fk_cancellation_reason_id,
-    // cancelled_by, cancelled_at_utc) once Order Cancellation Service
-    // requirements are finalized. Depends on: a new cancellation_reasons
-    // lookup table + OrderCancellationService business rules, scheduled
-    // for a later Week 6 day per the execution plan.
 
     // Define your sorting constants here
     public static final String SORT_BY_CREATED_AT_UTC = "createdAtUtc";
@@ -103,6 +98,23 @@ public class Order {
 
     @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
+
+    // ==========================================
+    // CANCELLATION TRACKING
+    // Description: cancelled_by is a plain string ("CUSTOMER"/"ADMIN")
+    // capturing the acting role at cancellation time -- an audit label,
+    // not a domain workflow status, so it is intentionally NOT a
+    // lookup-table FK (Zero-Enum Rule targets state-machine values,
+    // not free-text initiator labels).
+    // ==========================================
+    @Column(name = "cancelled_by", length = 50)
+    private String cancelledBy;
+
+    @Column(name = "cancellation_reason", length = 500)
+    private String cancellationReason;
+
+    @Column(name = "cancelled_at_utc")
+    private LocalDateTime cancelledAtUtc;
 
     /*
      * =========================================================

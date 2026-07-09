@@ -80,6 +80,12 @@ public class OrderItem {
     @Column(name = "line_total", nullable = false, precision = 10, scale = 2)
     private BigDecimal lineTotal;
 
+    // ==========================================
+    // CANCELLATION TRACKING
+    // ==========================================
+    @Column(name = "cancelled_at_utc")
+    private LocalDateTime cancelledAtUtc;
+
     /*
      * =========================================================
      * STATUS
