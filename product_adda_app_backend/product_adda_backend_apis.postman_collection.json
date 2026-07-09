@@ -1373,7 +1373,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"donaldtrump@trump.com\",\r\n    \"password\": \"Test123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"rajesh@techsolutions.com\",\r\n    \"password\": \"Test123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1829,7 +1829,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4MzQzNjU3MywiZXhwIjoxNzgzNDQwMTczfQ.AL1OdDOtvP-UVOqax394HfJiY553D10KcJL_fFQzmyucO9Iwwdn4htg7D53XhjBJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzgzNTg5NTAwLCJleHAiOjE3ODM1OTMxMDB9.kHWVrB1ONw7UNiLKemsOa01AI8FXThltx1TxMB6nLuauF89KZa4X74jMtVcnzpH6",
                   "type": "string"
                 }
               ]
@@ -1838,7 +1838,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\": \"019f3d1a-7c77-71d2-bf07-ae5acd98e7c9\"\r\n}",
+              "raw": "{\r\n    \"refreshToken\": \"019f4637-fa1c-7915-8e90-48b058b16fdc\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2380,7 +2380,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJqaWdvYjU4MTM4QGZpc2hub25lLmNvbSIsInVzZXJJZCI6IjAxOWVmNDZkLTlkODktNzVjYi05NDQ5LTZlZjI1ZmVhNDUwOSIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNzgzMjUyMjg2LCJleHAiOjE3ODMyNTU4ODZ9.1-vxi9r4_UOHUBEql3dg73iEGrtuo_31z_jKYF48XKp5cqGTukOkbWftKituuWCk",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbml0YUBmYXNoaW9uaHViLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjctN2MwMC1iYTU0LWQ1YWE1ZWY3MmMxMiIsInJvbGVzIjpbIlZFTkRPUiJdLCJpYXQiOjE3ODM1Nzc5NDcsImV4cCI6MTc4MzU4MTU0N30.VtYkoM-dk-tOlx0G5K-vL7IVhril6s5g0Az9Mcfr-jjK9W9cdZdjwp41KFE_6aan",
                   "type": "string"
                 }
               ]
@@ -2389,7 +2389,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\" : \"019f321e-7d17-7e5d-93f5-38485f0f8255\"\r\n}\r\n",
+              "raw": "{\r\n    \"refreshToken\" : \"019f4587-ac39-7d0e-aaa5-f20c555f444b\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -3299,6 +3299,581 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Order details fetched successfully\",\n    \"data\": {\n        \"orderId\": \"019f3d3d-c201-77b2-ab0e-120b4cc1d5ac\",\n        \"orderNumber\": \"ORD-20260707154125-019F3D\",\n        \"statusName\": \"PENDING\",\n        \"subtotal\": 129999,\n        \"couponDiscount\": 250,\n        \"shippingCost\": 50,\n        \"taxAmount\": 23363.82,\n        \"totalAmount\": 153162.82,\n        \"createdAtUtc\": \"2026-07-07T21:11:25\",\n        \"items\": [\n            {\n                \"orderItemId\": \"019f3d3d-c213-7eb5-95b6-b21185d6450c\",\n                \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                \"productNameSnapshot\": \"Samsung Galaxy S24 Ultra\",\n                \"quantity\": 1,\n                \"unitPrice\": 129999,\n                \"lineTotal\": 129999\n            }\n        ],\n        \"address\": {\n            \"addressId\": \"499959d5-228a-4199-b0ab-9289ee8820d5\",\n            \"addressLine1\": \"725 Fifth Avenue\",\n            \"addressLine2\": \"Apartment 58B\",\n            \"landmark\": \"Near Central Park\",\n            \"city\": \"New York\",\n            \"state\": \"New York\",\n            \"postalCode\": \"10022\",\n            \"country\": \"United States\"\n        },\n        \"coupon\": {\n            \"couponId\": \"019f326b-2fd7-7c3d-ba4b-bbe704fe11e2\",\n            \"couponCode\": \"FLAT250\",\n            \"discountType\": \"FIXED\",\n            \"discountValue\": 250\n        },\n        \"payment\": null\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/customers/orders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhbml0YUBmYXNoaW9uaHViLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjctN2MwMC1iYTU0LWQ1YWE1ZWY3MmMxMiIsInJvbGVzIjpbIlZFTkRPUiJdLCJpYXQiOjE3ODM1ODczODUsImV4cCI6MTc4MzU5MDk4NX0.9fyAh_1ONzVjaDpq7OwgWCENpkdbMNV3PE8lmiHjz9spL_5STTuQGOsMUSlbwh7v",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/orders?page=0&size=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "customers",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/customers/orders?page=0&size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "customers",
+                    "orders"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 09 Jul 2026 06:05:37 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Orders retrieved successfully\",\n    \"data\": {\n        \"content\": [\n            {\n                \"orderId\": \"019ed8f4-8928-7677-b806-189be09ec6e1\",\n                \"orderNumber\": \"ORD-4F62BF7E4450\",\n                \"statusName\": \"PENDING\",\n                \"totalAmount\": 850,\n                \"itemCount\": 1,\n                \"createdAtUtc\": \"2025-05-27T23:40:00\",\n                \"shippingCity\": \"Bengaluru\",\n                \"shippingState\": \"Karnataka\"\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7a44-b85d-6bb073bb1711\",\n                \"orderNumber\": \"ORD-AB5E9DA11633\",\n                \"statusName\": \"PENDING\",\n                \"totalAmount\": 1899,\n                \"itemCount\": 1,\n                \"createdAtUtc\": \"2025-05-27T19:30:00\",\n                \"shippingCity\": \"Bengaluru\",\n                \"shippingState\": \"Karnataka\"\n            },\n            {\n                \"orderId\": \"019ed8f4-8922-75fd-87d7-6dafaee31230\",\n                \"orderNumber\": \"ORD-0D1A6ED913ED\",\n                \"statusName\": \"SHIPPED\",\n                \"totalAmount\": 4200,\n                \"itemCount\": 1,\n                \"createdAtUtc\": \"2025-05-25T17:30:00\",\n                \"shippingCity\": \"Bengaluru\",\n                \"shippingState\": \"Karnataka\"\n            },\n            {\n                \"orderId\": \"019ed8f4-8911-7e2d-959d-7d3de7cbbff8\",\n                \"orderNumber\": \"ORD-2D7C4D7F39E7\",\n                \"statusName\": \"CONFIRMED\",\n                \"totalAmount\": 131998,\n                \"itemCount\": 1,\n                \"createdAtUtc\": \"2025-05-01T19:30:00\",\n                \"shippingCity\": \"Bengaluru\",\n                \"shippingState\": \"Karnataka\"\n            }\n        ],\n        \"totalElements\": 4,\n        \"page\": 0,\n        \"size\": 20\n    }\n}"
+            },
+            {
+              "name": "403 Forbidden Access Denied",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/customers/orders?page=0&size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "customers",
+                    "orders"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 09 Jul 2026 08:56:55 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Access Denied\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/vendors/orders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzgzNTg5NTAwLCJleHAiOjE3ODM1OTMxMDB9.kHWVrB1ONw7UNiLKemsOa01AI8FXThltx1TxMB6nLuauF89KZa4X74jMtVcnzpH6",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/vendors/orders?page=0&size=5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "vendors",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/vendors/orders?page=0&size=5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "vendors",
+                    "orders"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "5"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 09 Jul 2026 09:32:12 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Vendor orders retrieved successfully\",\n    \"data\": {\n        \"content\": [\n            {\n                \"orderId\": \"019f3d3d-c201-77b2-ab0e-120b4cc1d5ac\",\n                \"orderNumber\": \"ORD-20260707154125-019F3D\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Donald\",\n                \"orderTotalAmount\": 153162.82,\n                \"createdAtUtc\": \"2026-07-07T21:11:25\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019f3d3d-c213-7eb5-95b6-b21185d6450c\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Samsung Galaxy S24 Ultra\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 129999,\n                        \"lineTotal\": 129999,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            },\n            {\n                \"orderId\": \"019ed8f4-8928-7677-b806-189be09ec6e1\",\n                \"orderNumber\": \"ORD-4F62BF7E4450\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Rahul\",\n                \"orderTotalAmount\": 850,\n                \"createdAtUtc\": \"2025-05-27T23:40:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7882-8935-8b326f71c65a\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Braided Multi-USB Cable Set\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 850,\n                        \"lineTotal\": 850,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7bfe-8cc2-37302057ce54\",\n                \"orderNumber\": \"ORD-79384D4BD963\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Vikram\",\n                \"orderTotalAmount\": 63900,\n                \"createdAtUtc\": \"2025-05-27T21:50:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7b81-af29-98e0cc869973\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"4K Ultra-Wide Desk Display\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 63900,\n                        \"lineTotal\": 63900,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7281-b458-d7869aea81bf\",\n                \"orderNumber\": \"ORD-C018A0F00F89\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Pooja\",\n                \"orderTotalAmount\": 4750,\n                \"createdAtUtc\": \"2025-05-27T21:15:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-76bd-9145-4f9b93f1a3df\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Bohemian Living Room Rug\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 4750,\n                        \"lineTotal\": 4750,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7a44-b85d-6bb073bb1711\",\n                \"orderNumber\": \"ORD-AB5E9DA11633\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Rahul\",\n                \"orderTotalAmount\": 1899,\n                \"createdAtUtc\": \"2025-05-27T19:30:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7f90-8533-de37297e9e27\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"MagSafe Powerbank Pack\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 1899,\n                        \"lineTotal\": 1899,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            }\n        ],\n        \"totalElements\": 22,\n        \"page\": 0,\n        \"size\": 5\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/admin/orders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4MzU4OTc2MSwiZXhwIjoxNzgzNTkzMzYxfQ.KqJK75tHSa_-LO-udLb8algZR7GkjKMKS2X0R5RjG2HQLZRHZ-NzG5id0kczuBJa",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders?page=0&size=5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "403 Forbidden Access Denied: Only admins can access moderation endpoints",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders?page=0&size=5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "orders"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "5"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 09 Jul 2026 09:34:11 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Access Denied: Only admins can access moderation endpoints\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            },
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders?page=0&size=5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "orders"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "5"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 09 Jul 2026 09:36:16 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Admin order records fetched successfully\",\n    \"data\": {\n        \"content\": [\n            {\n                \"orderId\": \"019f3d3d-c201-77b2-ab0e-120b4cc1d5ac\",\n                \"orderNumber\": \"ORD-20260707154125-019F3D\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ef46d-9d89-75cb-9449-6ef25fea4509\",\n                \"customerFullName\": \"Donald trump\",\n                \"customerEmail\": \"donaldtrump@trump.com\",\n                \"subtotal\": 129999,\n                \"couponDiscount\": 250,\n                \"shippingCost\": 50,\n                \"taxAmount\": 23363.82,\n                \"totalAmount\": 153162.82,\n                \"createdAtUtc\": \"2026-07-07T21:11:25\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019f3d3d-c213-7eb5-95b6-b21185d6450c\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Samsung Galaxy S24 Ultra\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 129999,\n                        \"lineTotal\": 129999\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"499959d5-228a-4199-b0ab-9289ee8820d5\",\n                    \"addressLine1\": \"725 Fifth Avenue\",\n                    \"addressLine2\": \"Apartment 58B\",\n                    \"landmark\": \"Near Central Park\",\n                    \"city\": \"New York\",\n                    \"state\": \"New York\",\n                    \"postalCode\": \"10022\",\n                    \"country\": \"United States\"\n                },\n                \"coupon\": {\n                    \"couponId\": \"019f326b-2fd7-7c3d-ba4b-bbe704fe11e2\",\n                    \"couponCode\": \"FLAT250\",\n                    \"discountType\": \"FIXED\",\n                    \"discountValue\": 250\n                },\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            },\n            {\n                \"orderId\": \"019ed8f4-8928-7677-b806-189be09ec6e1\",\n                \"orderNumber\": \"ORD-4F62BF7E4450\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ed70e-d8f7-7840-afca-5a2ca3eae137\",\n                \"customerFullName\": \"Rahul Verma\",\n                \"customerEmail\": \"rahul.verma@gmail.com\",\n                \"subtotal\": 850,\n                \"couponDiscount\": 0,\n                \"shippingCost\": 0,\n                \"taxAmount\": 0,\n                \"totalAmount\": 850,\n                \"createdAtUtc\": \"2025-05-27T23:40:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7882-8935-8b326f71c65a\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Braided Multi-USB Cable Set\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 850,\n                        \"lineTotal\": 850\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"019ed70e-d924-7347-8903-cd5ec07e6a70\",\n                    \"addressLine1\": \"Flat 301\",\n                    \"addressLine2\": \"Lake View Apartments\",\n                    \"landmark\": \"Near School\",\n                    \"city\": \"Bengaluru\",\n                    \"state\": \"Karnataka\",\n                    \"postalCode\": \"560001\",\n                    \"country\": \"India\"\n                },\n                \"coupon\": null,\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7bfe-8cc2-37302057ce54\",\n                \"orderNumber\": \"ORD-79384D4BD963\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ed70e-d8f7-70e8-8293-1ff762bc1b92\",\n                \"customerFullName\": \"Vikram Malhotra\",\n                \"customerEmail\": \"vikram.m@gmail.com\",\n                \"subtotal\": 63900,\n                \"couponDiscount\": 0,\n                \"shippingCost\": 0,\n                \"taxAmount\": 0,\n                \"totalAmount\": 63900,\n                \"createdAtUtc\": \"2025-05-27T21:50:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7b81-af29-98e0cc869973\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"4K Ultra-Wide Desk Display\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 63900,\n                        \"lineTotal\": 63900\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"019ed70e-d925-7b08-9029-b889950de4cd\",\n                    \"addressLine1\": \"Flat 404\",\n                    \"addressLine2\": \"Sunshine Residency\",\n                    \"landmark\": \"Near Temple\",\n                    \"city\": \"Chennai\",\n                    \"state\": \"Tamil Nadu\",\n                    \"postalCode\": \"600001\",\n                    \"country\": \"India\"\n                },\n                \"coupon\": null,\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7281-b458-d7869aea81bf\",\n                \"orderNumber\": \"ORD-C018A0F00F89\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ed70e-d8f7-71c3-8368-fe041c4665c4\",\n                \"customerFullName\": \"Pooja Singh\",\n                \"customerEmail\": \"pooja.singh@yahoo.com\",\n                \"subtotal\": 4750,\n                \"couponDiscount\": 0,\n                \"shippingCost\": 0,\n                \"taxAmount\": 0,\n                \"totalAmount\": 4750,\n                \"createdAtUtc\": \"2025-05-27T21:15:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-76bd-9145-4f9b93f1a3df\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Bohemian Living Room Rug\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 4750,\n                        \"lineTotal\": 4750\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"019ed70e-d925-7dba-83b6-b699babb6f9a\",\n                    \"addressLine1\": \"House No 45\",\n                    \"addressLine2\": \"Palm Meadows\",\n                    \"landmark\": \"Near Park\",\n                    \"city\": \"Pune\",\n                    \"state\": \"Maharashtra\",\n                    \"postalCode\": \"411001\",\n                    \"country\": \"India\"\n                },\n                \"coupon\": null,\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7a44-b85d-6bb073bb1711\",\n                \"orderNumber\": \"ORD-AB5E9DA11633\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ed70e-d8f7-7840-afca-5a2ca3eae137\",\n                \"customerFullName\": \"Rahul Verma\",\n                \"customerEmail\": \"rahul.verma@gmail.com\",\n                \"subtotal\": 1899,\n                \"couponDiscount\": 0,\n                \"shippingCost\": 0,\n                \"taxAmount\": 0,\n                \"totalAmount\": 1899,\n                \"createdAtUtc\": \"2025-05-27T19:30:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7f90-8533-de37297e9e27\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"MagSafe Powerbank Pack\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 1899,\n                        \"lineTotal\": 1899\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"019ed70e-d924-7347-8903-cd5ec07e6a70\",\n                    \"addressLine1\": \"Flat 301\",\n                    \"addressLine2\": \"Lake View Apartments\",\n                    \"landmark\": \"Near School\",\n                    \"city\": \"Bengaluru\",\n                    \"state\": \"Karnataka\",\n                    \"postalCode\": \"560001\",\n                    \"country\": \"India\"\n                },\n                \"coupon\": null,\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            }\n        ],\n        \"totalElements\": 22,\n        \"page\": 0,\n        \"size\": 5\n    }\n}"
             }
           ]
         }
@@ -5560,7 +6135,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n\"email\": \"admin@productadda.com\",\r\n\"password\": \"Test123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"superadmin@productadda.com\",\r\n    \"password\": \"Test123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"

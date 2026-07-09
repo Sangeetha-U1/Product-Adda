@@ -1,7 +1,18 @@
 package com.productadda.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,6 +29,8 @@ import org.hibernate.type.SqlTypes;
 @AllArgsConstructor
 @Builder
 public class OrderItem {
+
+    public static final String SORT_BY_ORDER_CREATED_AT_UTC = "fkOrder.createdAtUtc";
 
     /*
      * =========================================================
@@ -45,6 +58,10 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_vendor_id", nullable = false)
     private Vendor fkVendor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_item_status_id", nullable = false)
+    private ItemStatus fkItemStatus;
 
     /*
      * =========================================================

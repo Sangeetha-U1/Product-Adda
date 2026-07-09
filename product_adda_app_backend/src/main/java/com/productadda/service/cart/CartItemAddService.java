@@ -82,7 +82,7 @@ public class CartItemAddService {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
                 if (authentication == null || !authentication.isAuthenticated()) {
-                        throw new ApiException(HttpStatus.UNAUTHORIZED, "JWT token is missing or invalid");
+                        throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
                 }
 
                 String currentUsername = authentication.getName();

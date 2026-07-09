@@ -23,6 +23,7 @@ import com.productadda.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,15 +66,18 @@ public class CouponApplyService {
         // ==========================================
         // 1.2 CONTEXT AUTHENTICATION
         // ==========================================
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (email == null || email.equals("anonymousUser")) {
-            throw new ApiException(HttpStatus.UNAUTHORIZED, "User context is unauthenticated.");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
         }
+
+        String currentUsername = authentication.getName();
 
         // ==========================================
         // 1.3 DATABASE LOOKUP VALIDATION
         // ==========================================
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(currentUsername)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user not found."));
 
         CartStatus activeStatus = cartStatusRepository.findByStatusCode(ACTIVE_CART_STATUS)
@@ -117,7 +121,7 @@ public class CouponApplyService {
         }
 
         long userUsageCount = couponUsageHistoryRepository.countByFkCouponAndFkUser(coupon, user);
-        
+
         if (coupon.getMaximumUserUsage() != null && userUsageCount >= coupon.getMaximumUserUsage()) {
             throw new ApiException(HttpStatus.CONFLICT,
                     "You have exceeded the maximum allowed usage limit for this coupon.");

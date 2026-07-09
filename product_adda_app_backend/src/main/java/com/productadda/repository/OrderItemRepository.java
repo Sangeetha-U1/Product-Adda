@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.productadda.entity.Order;
 import com.productadda.entity.OrderItem;
@@ -36,4 +38,40 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, UUID> {
         // ==========================================
         @Query("SELECT COUNT(DISTINCT oi.fkOrder.pkOrderId) FROM OrderItem oi WHERE oi.fkVendor = :vendor")
         long countDistinctOrdersByVendor(@Param("vendor") Vendor vendor);
+
+        // ==========================================
+        // 3. TOTAL ITEM COUNT FOR ONE ORDER
+        // Description: Counts active line items belonging to a single
+        // order, used to populate itemCount on CustomerOrderListDto.
+        // ==========================================
+        long countByFkOrderAndIsActiveTrue(Order order);
+
+        // ==========================================
+        // 4. VENDOR-SCOPED ITEMS WITHIN ONE ORDER
+        // Description: Returns only this vendor's items within a given
+        // order, enforcing vendor isolation on multi-vendor orders.
+        // ==========================================
+        List<OrderItem> findByFkOrderAndFkVendorAndIsActiveTrue(Order order, Vendor vendor);
+
+        // ==========================================
+        // 5. DISTINCT PAGINATED ORDERS FOR A VENDOR
+        // Description: Returns the distinct parent Order entities that
+        // contain at least one active item from this vendor, paginated
+        // at the order level (not the item level).
+        // ==========================================
+        @Query(value = "SELECT DISTINCT oi.fkOrder FROM OrderItem oi " +
+                        "WHERE oi.fkVendor.pkVendorId = :vendorId AND oi.isActive = true", countQuery = "SELECT COUNT(DISTINCT oi.fkOrder) FROM OrderItem oi "
+                                        +
+                                        "WHERE oi.fkVendor.pkVendorId = :vendorId AND oi.isActive = true")
+        Page<Order> findDistinctOrdersByVendorId(@Param("vendorId") UUID vendorId, Pageable pageable);
+
+        // ==========================================
+        // 6. DISTINCT ORDER IDS FOR A VENDOR (ADMIN FILTER)
+        // Description: Used by AdminOrderRetrievalService to narrow the
+        // admin order query down to orders containing this vendor's items,
+        // when the optional vendorId filter is supplied.
+        // ==========================================
+        @Query("SELECT DISTINCT oi.fkOrder.pkOrderId FROM OrderItem oi WHERE oi.fkVendor.pkVendorId = :vendorId")
+        List<UUID> findDistinctOrderIdsByVendorId(@Param("vendorId") UUID vendorId);
+
 }

@@ -19,6 +19,7 @@ import com.productadda.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,15 +59,18 @@ public class CouponRemoveService {
                 // ==========================================
                 // 1.2 CONTEXT AUTHENTICATION
                 // ==========================================
-                String email = SecurityContextHolder.getContext().getAuthentication().getName();
-                if (email == null || email.equals("anonymousUser")) {
-                        throw new ApiException(HttpStatus.UNAUTHORIZED, "User context is unauthenticated.");
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+                if (authentication == null || !authentication.isAuthenticated()) {
+                        throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
                 }
+
+                String currentUsername = authentication.getName();
 
                 // ==========================================
                 // 1.3 DATABASE LOOKUP VALIDATION
                 // ==========================================
-                User user = userRepository.findByEmail(email)
+                User user = userRepository.findByEmail(currentUsername)
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                 "Authenticated user not found."));
 

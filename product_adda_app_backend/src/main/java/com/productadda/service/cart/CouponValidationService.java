@@ -51,6 +51,7 @@ public class CouponValidationService {
         // 1.2 CONTEXT AUTHENTICATION
         // ==========================================
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        
         Optional<User> optionalUser = (email != null && !email.equals("anonymousUser"))
                 ? userRepository.findByEmail(email)
                 : Optional.empty();
