@@ -1,6 +1,7 @@
 package com.productadda.repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -73,5 +74,13 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, UUID> {
         // ==========================================
         @Query("SELECT DISTINCT oi.fkOrder.pkOrderId FROM OrderItem oi WHERE oi.fkVendor.pkVendorId = :vendorId")
         List<UUID> findDistinctOrderIdsByVendorId(@Param("vendorId") UUID vendorId);
+
+        // ==========================================
+        // 7. SINGLE ITEM SCOPED TO A SPECIFIC ORDER
+        // Description: Fetches one order item by its own primary key,
+        // additionally verifying it belongs to the given order, in a
+        // single query rather than a separate manual ownership check.
+        // ==========================================
+        Optional<OrderItem> findByPkOrderItemIdAndFkOrder_PkOrderId(UUID orderItemId, UUID orderId);
 
 }

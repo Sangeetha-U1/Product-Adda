@@ -2,6 +2,8 @@ package com.productadda.controller.order;
 
 import java.util.UUID;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,9 +18,12 @@ import com.productadda.dto.ApiSuccessResponseDto;
 import com.productadda.dto.order.PaginatedAdminOrderResponseDto;
 import com.productadda.dto.order.OrderCancellationRequestDto;
 import com.productadda.dto.order.OrderCancellationResponseDto;
+import com.productadda.dto.order.AdminOrderStatusUpdateRequestDto;
+import com.productadda.dto.order.AdminOrderStatusUpdateResponseDto;
 
 import com.productadda.service.order.OrderCancellationService;
 import com.productadda.service.order.AdminOrderRetrievalService;
+import com.productadda.service.order.OrderStatusTransitionService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +33,7 @@ public class AdminOrderController {
 
         private final AdminOrderRetrievalService adminOrderRetrievalService;
         private final OrderCancellationService orderCancellationService;
+        private final OrderStatusTransitionService orderStatusTransitionService;
 
         // ==========================================
         // FULL-VISIBILITY ADMIN ORDER RETRIEVAL
@@ -71,6 +77,24 @@ public class AdminOrderController {
                                 .body(ApiSuccessResponseDto.<OrderCancellationResponseDto>builder()
                                                 .success(true)
                                                 .message("Order force-cancelled successfully")
+                                                .data(response)
+                                                .build());
+        }
+
+        @PutMapping("/api/admin/orders/{orderId}/status")
+        @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPER_ADMIN')")
+        public ResponseEntity<ApiSuccessResponseDto<AdminOrderStatusUpdateResponseDto>> updateOrderStatus(
+                        @PathVariable UUID orderId,
+                        @Valid @RequestBody AdminOrderStatusUpdateRequestDto request) {
+
+                AdminOrderStatusUpdateResponseDto response = orderStatusTransitionService
+                                .forceStatusTransition(orderId, request.getRequestedStatus(), request.getReason());
+
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<AdminOrderStatusUpdateResponseDto>builder()
+                                                .success(true)
+                                                .message("Order status updated successfully")
                                                 .data(response)
                                                 .build());
         }

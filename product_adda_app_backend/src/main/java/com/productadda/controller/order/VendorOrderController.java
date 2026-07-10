@@ -1,5 +1,10 @@
 package com.productadda.controller.order;
 
+import java.util.UUID;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -7,10 +12,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
+import com.productadda.dto.order.ItemStatusBatchRequestDto;
+import com.productadda.dto.order.ItemStatusBatchResponseDto;
+import com.productadda.dto.order.ItemStatusUpdateRequestDto;
+import com.productadda.dto.order.OrderItemResponseDto;
 import com.productadda.dto.ApiSuccessResponseDto;
 import com.productadda.dto.order.PaginatedVendorOrderItemResponseDto;
 
 import com.productadda.service.order.VendorOrderRetrievalService;
+import com.productadda.service.order.OrderStatusTransitionService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class VendorOrderController {
 
     private final VendorOrderRetrievalService vendorOrderRetrievalService;
+    private final OrderStatusTransitionService orderStatusTransitionService;
 
     // ==========================================
     // VENDOR-SCOPED ORDER ITEM RETRIEVAL
@@ -36,6 +49,43 @@ public class VendorOrderController {
                 .body(ApiSuccessResponseDto.<PaginatedVendorOrderItemResponseDto>builder()
                         .success(true)
                         .message("Vendor orders retrieved successfully")
+                        .data(response)
+                        .build());
+    }
+
+    @PutMapping("/api/vendors/orders/{orderId}/items/{itemId}/status")
+    @PreAuthorize("hasAuthority('VENDOR')")
+    public ResponseEntity<ApiSuccessResponseDto<OrderItemResponseDto>> updateItemStatus(
+            @PathVariable UUID orderId,
+            @PathVariable UUID itemId,
+            @Valid @RequestBody ItemStatusUpdateRequestDto request) {
+
+        OrderItemResponseDto response = orderStatusTransitionService
+                .updateVendorItemStatus(orderId, itemId, request.getRequestedStatus());
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponseDto.<OrderItemResponseDto>builder()
+                        .success(true)
+                        .message("Item status updated successfully")
+                        .data(response)
+                        .build());
+    }
+
+    @PutMapping("/api/vendors/orders/{orderId}/items/status/batch")
+    @PreAuthorize("hasAuthority('VENDOR')")
+    public ResponseEntity<ApiSuccessResponseDto<ItemStatusBatchResponseDto>> batchUpdateItemStatus(
+            @PathVariable UUID orderId,
+            @Valid @RequestBody ItemStatusBatchRequestDto request) {
+
+        ItemStatusBatchResponseDto response = orderStatusTransitionService
+                .batchUpdateVendorItemStatus(orderId, request.getItems());
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponseDto.<ItemStatusBatchResponseDto>builder()
+                        .success(true)
+                        .message("Batch item status update completed successfully")
                         .data(response)
                         .build());
     }
