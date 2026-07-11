@@ -45,6 +45,7 @@ public class DeliveryPartner {
      * FOREIGN KEYS / RELATIONSHIPS
      * =========================================================
      */
+    // TODO: Add unique true and in db too.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_user_id", nullable = false)
     private User fkUser;

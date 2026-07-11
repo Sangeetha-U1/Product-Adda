@@ -1,5 +1,6 @@
 package com.productadda.dto.order;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,26 +13,30 @@ import lombok.NoArgsConstructor;
  * ================================================================
  * RESPONSE DTO
  * Description: Sanitized, frontend-ready confirmation payload
- * returned after assigning a delivery partner to an order.
+ * returned after invoice generation or regeneration.
  * ================================================================
  */
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliveryAssignmentResponseDto {
+public class InvoiceResponseDto {
 
-    private UUID assignmentId;
+    private UUID invoiceId;
+
+    private String invoiceNumber;
+
+    private Integer invoiceVersion;
 
     private UUID orderId;
 
-    private UUID partnerId;
+    private BigDecimal invoiceAmount;
 
-    private String partnerName;
+    private LocalDateTime generatedAt;
 
-    private String assignmentStatusName;
+    private String fileUrl;
 
-    private LocalDateTime assignedAt;
-
-    private LocalDateTime acceptedAt;
+    // private String presignedUrl;
+    
+    // private LocalDateTime urlExpirationUtc;
 }

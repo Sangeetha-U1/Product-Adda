@@ -63,6 +63,8 @@ public class AdminOrderDetailDto {
 
     private String deliveryPartnerName;
 
+    private UUID invoiceId;
+
     private String invoiceNumber;
 
     private BigDecimal invoiceAmount;

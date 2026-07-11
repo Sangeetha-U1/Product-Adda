@@ -2380,7 +2380,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc1Mzk4OSwiZXhwIjoxNzgzNzU3NTg5fQ.-HykY8fvIWRy-CmWZwkbJ4LH9Qp4NUgZxCxA8zmHLynOWwXTPjTQVRWz18iIzYwF",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc2NDQyOSwiZXhwIjoxNzgzNzY4MDI5fQ.nWafEXzxsL6a14ExnTtEUJ-wLsNnQwBKlxjShHbu7egHJGOziaK24hIJSs33pvgG",
                   "type": "string"
                 }
               ]
@@ -2389,7 +2389,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\" : \"019f5005-e02a-768c-8793-0909414b38b9\"\r\n}\r\n",
+              "raw": "{\r\n    \"refreshToken\" : \"019f50a5-2bfc-74ea-8434-431433fa117c\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -3663,7 +3663,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4MzU4OTc2MSwiZXhwIjoxNzgzNTkzMzYxfQ.KqJK75tHSa_-LO-udLb8algZR7GkjKMKS2X0R5RjG2HQLZRHZ-NzG5id0kczuBJa",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc4MTUxNSwiZXhwIjoxNzgzNzg1MTE1fQ.aCjDRRJgWlkU2sDrWcaBjYeZDRNWyQk4ahErLmeS3I2eZlvQLWXr7tpMw29DNxt7",
                   "type": "string"
                 }
               ]
@@ -3671,7 +3671,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/admin/orders?page=0&size=5",
+              "raw": "{{baseUrl}}/api/admin/orders?page=0&size=10",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -3687,7 +3687,7 @@
                 },
                 {
                   "key": "size",
-                  "value": "5"
+                  "value": "10"
                 }
               ]
             }
@@ -4443,6 +4443,433 @@
               "body": "{\n    \"success\": false,\n    \"message\": \"Order already has a delivery partner assigned\",\n    \"error\": {\n        \"code\": 409,\n        \"type\": \"CONFLICT\"\n    }\n}"
             }
           ]
+        },
+        {
+          "name": "/api/orders/invoices",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/invoices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "invoices"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/admin/orders/{orderId}/invoices/generate",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc4MTUxNSwiZXhwIjoxNzgzNzg1MTE1fQ.aCjDRRJgWlkU2sDrWcaBjYeZDRNWyQk4ahErLmeS3I2eZlvQLWXr7tpMw29DNxt7",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/019ed8f4-8922-75fd-87d7-6dafaee31230/invoices/generate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                "019ed8f4-8922-75fd-87d7-6dafaee31230",
+                "invoices",
+                "generate"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders/019ed8f4-8922-75fd-87d7-6dafaee31230/invoices/generate",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "orders",
+                    "019ed8f4-8922-75fd-87d7-6dafaee31230",
+                    "invoices",
+                    "generate"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 11 Jul 2026 14:59:36 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Invoice compiled successfully. Version 1\",\n    \"data\": {\n        \"invoiceId\": \"019f51b0-bec0-7ab4-ad65-9b0a3fef7d90\",\n        \"invoiceNumber\": \"INV-20260711-019F51\",\n        \"invoiceVersion\": 1,\n        \"orderId\": \"019ed8f4-8922-75fd-87d7-6dafaee31230\",\n        \"invoiceAmount\": 4200,\n        \"generatedAt\": \"2026-07-11T14:59:25.2419867\",\n        \"fileUrl\": null,\n        \"presignedUrl\": \"https://s3.us-east-005.backblazeb2.com/bucketProductAdda/invoices/INV-20260711-019F51.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260711T145936Z&X-Amz-SignedHeaders=host&X-Amz-Credential=00567412f31c3300000000001%2F20260711%2Fus-east-005%2Fs3%2Faws4_request&X-Amz-Expires=900&X-Amz-Signature=f11f0411bcb2604be16ebef295f284cbcc8fd820af161f92badf2807705e0740\"\n    }\n}"
+            },
+            {
+              "name": "409 Conflict Invoice is already up to date. No changes detected.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders/019ed8f4-8922-75fd-87d7-6dafaee31230/invoices/generate",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "orders",
+                    "019ed8f4-8922-75fd-87d7-6dafaee31230",
+                    "invoices",
+                    "generate"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 11 Jul 2026 15:11:56 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Invoice is already up to date. No changes detected.\",\n    \"error\": {\n        \"code\": 409,\n        \"type\": \"CONFLICT\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/admin/orders/invoices",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc4MTUxNSwiZXhwIjoxNzgzNzg1MTE1fQ.aCjDRRJgWlkU2sDrWcaBjYeZDRNWyQk4ahErLmeS3I2eZlvQLWXr7tpMw29DNxt7",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/invoices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                "invoices"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK empty",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders/invoices",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "orders",
+                    "invoices"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 11 Jul 2026 14:58:49 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Global system invoice records loaded successfully.\",\n    \"data\": {\n        \"content\": [],\n        \"totalElements\": 0,\n        \"page\": 0,\n        \"size\": 10\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/admin/orders/invoices/{invoiceId}/download",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc4MTUxNSwiZXhwIjoxNzgzNzg1MTE1fQ.aCjDRRJgWlkU2sDrWcaBjYeZDRNWyQk4ahErLmeS3I2eZlvQLWXr7tpMw29DNxt7",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/invoices/019f4800-0000-7000-8000-000000000001/download",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                "invoices",
+                "019f4800-0000-7000-8000-000000000001",
+                "download"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/delivery-partners/assignments/{assignmentId}/accept",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc4MTUxNSwiZXhwIjoxNzgzNzg1MTE1fQ.aCjDRRJgWlkU2sDrWcaBjYeZDRNWyQk4ahErLmeS3I2eZlvQLWXr7tpMw29DNxt7",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/delivery-partners/assignments/{assignmentId}/accept",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "delivery-partners",
+                "assignments",
+                "{assignmentId}",
+                "accept"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/delivery-partners/assignments/{assignmentId}/reject",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc4MTUxNSwiZXhwIjoxNzgzNzg1MTE1fQ.aCjDRRJgWlkU2sDrWcaBjYeZDRNWyQk4ahErLmeS3I2eZlvQLWXr7tpMw29DNxt7",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/delivery-partners/assignments/{assignmentId}/reject",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "delivery-partners",
+                "assignments",
+                "{assignmentId}",
+                "reject"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },

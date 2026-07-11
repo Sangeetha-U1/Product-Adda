@@ -12,14 +12,18 @@ import lombok.NoArgsConstructor;
  * ================================================================
  * RESPONSE DTO
  * Description: Sanitized, frontend-ready confirmation payload
- * returned after assigning a delivery partner to an order.
+ * returned after a delivery partner rejects an assignment. Kept as a
+ * separate DTO from DeliveryAssignmentResponseDto (used by accept and
+ * by Day 4's assignment creation) rather than overloading one shape
+ * with fields that are only relevant to one outcome, per your
+ * explicit instruction.
  * ================================================================
  */
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliveryAssignmentResponseDto {
+public class DeliveryAssignmentRejectResponseDto {
 
     private UUID assignmentId;
 
@@ -27,11 +31,9 @@ public class DeliveryAssignmentResponseDto {
 
     private UUID partnerId;
 
-    private String partnerName;
-
     private String assignmentStatusName;
 
-    private LocalDateTime assignedAt;
+    private LocalDateTime rejectedAt;
 
-    private LocalDateTime acceptedAt;
+    private String rejectionReason;
 }

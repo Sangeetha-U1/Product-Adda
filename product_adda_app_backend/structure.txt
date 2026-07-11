@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 000002C3 7478:274D
+Volume serial number is 0000017E 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -18,6 +18,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   ProductaddaApplication.java
 |   |           |   
 |   |           +---config
+|   |           |       BackblazeConfig.java
 |   |           |       GoogleOAuthConfig.java
 |   |           |       JacksonConfig.java
 |   |           |       OpenApiConfig.java
@@ -48,8 +49,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       CouponController.java
 |   |           |   |       
 |   |           |   +---order
+|   |           |   |       AdminInvoiceController.java
 |   |           |   |       AdminOrderController.java
 |   |           |   |       CustomerOrderController.java
+|   |           |   |       DeliveryPartnerAssignmentController.java
+|   |           |   |       InvoiceController.java
 |   |           |   |       OrderController.java
 |   |           |   |       VendorOrderController.java
 |   |           |   |       
@@ -120,14 +124,20 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       CouponValidationResponseDto.java
 |   |           |   |       
 |   |           |   +---order
+|   |           |   |       AdminInvoiceDetailDto.java
+|   |           |   |       AdminInvoiceDownloadResponseDto.java
 |   |           |   |       AdminOrderDetailDto.java
 |   |           |   |       AdminOrderStatusUpdateRequestDto.java
 |   |           |   |       AdminOrderStatusUpdateResponseDto.java
 |   |           |   |       CustomerOrderListDto.java
+|   |           |   |       DeliveryAssignmentRejectRequestDto.java
+|   |           |   |       DeliveryAssignmentRejectResponseDto.java
 |   |           |   |       DeliveryAssignmentRequestDto.java
 |   |           |   |       DeliveryAssignmentResponseDto.java
 |   |           |   |       DeliveryPartnerCreateRequestDto.java
 |   |           |   |       DeliveryPartnerResponseDto.java
+|   |           |   |       InvoiceDownloadResponseDto.java
+|   |           |   |       InvoiceResponseDto.java
 |   |           |   |       ItemStatusBatchEntryDto.java
 |   |           |   |       ItemStatusBatchRequestDto.java
 |   |           |   |       ItemStatusBatchResponseDto.java
@@ -142,10 +152,13 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       OrderItemSummaryDto.java
 |   |           |   |       OrderListItemDto.java
 |   |           |   |       OrderPaymentSummaryDto.java
+|   |           |   |       PaginatedAdminInvoiceResponseDto.java
 |   |           |   |       PaginatedAdminOrderResponseDto.java
 |   |           |   |       PaginatedCustomerOrderResponseDto.java
 |   |           |   |       PaginatedOrderResponseDto.java
 |   |           |   |       PaginatedVendorOrderItemResponseDto.java
+|   |           |   |       UserInvoiceSummaryDto.java
+|   |           |   |       UserInvoiceWrapperDto.java
 |   |           |   |       VendorOrderItemDetailDto.java
 |   |           |   |       VendorOrderItemListDto.java
 |   |           |   |       
@@ -227,6 +240,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       InventoryReservation.java
 |   |           |       Invoice.java
 |   |           |       InvoiceLineItem.java
+|   |           |       InvoicePresignedUrl.java
 |   |           |       ItemStatus.java
 |   |           |       Order.java
 |   |           |       OrderItem.java
@@ -277,6 +291,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       InventoryRepository.java
 |   |           |       InventoryReservationRepository.java
 |   |           |       InvoiceLineItemRepository.java
+|   |           |       InvoicePresignedUrlRepository.java
 |   |           |       InvoiceRepository.java
 |   |           |       ItemStatusRepository.java
 |   |           |       OrderItemRepository.java
@@ -349,12 +364,21 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       MailStartupValidator.java
 |   |           |   |       
 |   |           |   +---order
+|   |           |   |       AdminInvoiceDownloadService.java
+|   |           |   |       AdminInvoiceGenerationService.java
+|   |           |   |       AdminInvoicesRetrievalService.java
 |   |           |   |       AdminOrderRetrievalService.java
 |   |           |   |       AggregatedStatusCalculationService.java
 |   |           |   |       CustomerOrderRetrievalService.java
 |   |           |   |       DeliveryAssignmentService.java
+|   |           |   |       DeliveryPartnerAcceptanceService.java
 |   |           |   |       DeliveryPartnerManagementService.java
 |   |           |   |       InventoryReleaseService.java
+|   |           |   |       InvoiceDownloadService.java
+|   |           |   |       InvoiceGenerationService.java
+|   |           |   |       InvoicePdfRenderer.java
+|   |           |   |       InvoiceQueryService.java
+|   |           |   |       InvoiceStorageService.java
 |   |           |   |       OrderCancellationService.java
 |   |           |   |       OrderHistoryService.java
 |   |           |   |       OrderRetrievalService.java
@@ -411,6 +435,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |       |       
 |       +---static
 |       \---templates
+|               invoice-template.html
+|               
 \---test
     \---java
         \---com
@@ -420,12 +446,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 00000287 7478:274D
+Volume serial number is 00000242 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 00000235 7478:274D
+Volume serial number is 000002C0 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

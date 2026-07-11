@@ -54,13 +54,15 @@ public class OrderStatusTransitionService {
     private final OrderStatusRepository orderStatusRepository;
     private final ItemStatusRepository itemStatusRepository;
     private final DeliveryPartnerRepository deliveryPartnerRepository;
+
     private final AggregatedStatusCalculationService aggregatedStatusCalculationService;
+    private final InvoiceGenerationService invoiceGenerationService;
 
     // Order statuses confirmed as seeded in this project's order_statuses
     // table. "ABANDONED" was referenced in the Day 3 plan text but is not
     // currently seeded, so it is intentionally excluded from this set.
     private static final Set<String> VALID_ORDER_STATUSES = Set.of(
-            "PENDING", "CONFIRMED", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED", "RETURNED");
+            "PENDING", "CONFIRMED", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED", "RETURNED", "OUT_FOR_DELIVERY");
 
     /*
      * ================================================================
@@ -475,6 +477,13 @@ public class OrderStatusTransitionService {
         }
 
         order.setFkStatus(newOrderStatus);
+
+        // auto-generate invoice when order
+        // reaches CONFIRMED for the first time.
+        if ("CONFIRMED".equals(safeRequestedStatus) &&
+                !"CONFIRMED".equals(previousStatusName)) {
+            invoiceGenerationService.generateInvoice(order.getPkOrderId());
+        }
 
         boolean activeDeliveriesIncremented = false;
 

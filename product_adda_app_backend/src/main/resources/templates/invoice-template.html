@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Invoice</title>
+    <style>
+        body { font-family: Helvetica, Arial, sans-serif; font-size: 12px; color: #1a1a1a; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 24px; }
+        .company-name { font-size: 20px; font-weight: bold; }
+        .invoice-meta { text-align: right; }
+        .section-title { font-size: 13px; font-weight: bold; margin-top: 20px; margin-bottom: 6px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; }
+        th { background-color: #f5f5f5; }
+        .totals-table td { text-align: right; }
+        .totals-table td:first-child { text-align: left; }
+        .grand-total { font-weight: bold; font-size: 14px; }
+        .address-block { line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="company-name">ProductAdda</div>
+        <div class="invoice-meta">
+            <div>Invoice #: <span th:text="${invoiceNumber}">INV-00000000-000000</span></div>
+            <div>Version: <span th:text="${invoiceVersion}">1</span></div>
+            <div>Generated: <span th:text="${generatedAt}">2026-01-01T00:00:00</span></div>
+            <div>Order #: <span th:text="${orderNumber}">ORD-00000000-000000</span></div>
+        </div>
+    </div>
+
+    <div class="section-title">Bill To</div>
+    <div class="address-block">
+        <div th:text="${customerName}">Customer Name</div>
+        <div th:text="${addressLine1}">Address Line 1</div>
+        <div th:if="${addressLine2 != null}" th:text="${addressLine2}">Address Line 2</div>
+        <div>
+            <span th:text="${city}">City</span>,
+            <span th:text="${state}">State</span>
+            <span th:text="${postalCode}">Postal Code</span>
+        </div>
+        <div th:text="${country}">Country</div>
+    </div>
+
+    <div class="section-title">Items</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Line Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${items}">
+                <td th:text="${item.description}">Product Name (Qty: 1)</td>
+                <td th:text="${item.quantity}">1</td>
+                <td th:text="${item.unitPrice}">0.00</td>
+                <td th:text="${item.lineAmount}">0.00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">Summary</div>
+    <table class="totals-table">
+        <tr>
+            <td>Subtotal</td>
+            <td th:text="${subtotal}">0.00</td>
+        </tr>
+        <tr>
+            <td>Coupon Discount</td>
+            <td th:text="${couponDiscount}">0.00</td>
+        </tr>
+        <tr>
+            <td>Shipping</td>
+            <td th:text="${shippingCost}">0.00</td>
+        </tr>
+        <tr>
+            <td>Tax</td>
+            <td th:text="${taxAmount}">0.00</td>
+        </tr>
+        <tr class="grand-total">
+            <td>Total</td>
+            <td th:text="${totalAmount}">0.00</td>
+        </tr>
+    </table>
+
+</body>
+</html>

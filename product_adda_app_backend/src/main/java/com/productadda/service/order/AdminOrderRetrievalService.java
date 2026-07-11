@@ -322,6 +322,8 @@ public class AdminOrderRetrievalService {
                                                         .deliveryPartnerName(deliveryPartner != null
                                                                         ? deliveryPartner.getPartnerName()
                                                                         : null)
+                                                        .invoiceId(invoice != null ? invoice.getPkInvoiceId()
+                                                                        : null)
                                                         .invoiceNumber(invoice != null ? invoice.getInvoiceNumber()
                                                                         : null)
                                                         .invoiceAmount(invoice != null ? invoice.getInvoiceAmount()
