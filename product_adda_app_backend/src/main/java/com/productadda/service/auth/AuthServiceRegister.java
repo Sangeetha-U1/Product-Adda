@@ -12,17 +12,22 @@ import org.springframework.transaction.annotation.Transactional;
 import com.productadda.dto.SendEmailRequestDto;
 import com.productadda.dto.auth.RegisterRequestDto;
 import com.productadda.dto.auth.RegisterResponseDto;
+
 import com.productadda.entity.EmailVerificationToken;
 import com.productadda.entity.Role;
 import com.productadda.entity.User;
 import com.productadda.entity.UserRole;
+
 import com.productadda.exception.ApiException;
+
 import com.productadda.repository.EmailVerificationTokenRepository;
 import com.productadda.repository.RoleRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.repository.UserRoleRepository;
+
 import com.productadda.service.token.TokenProvider.TokenService;
 import com.productadda.service.mail.EmailService;
+
 import com.productadda.util.UuidUtil;
 
 import lombok.RequiredArgsConstructor;

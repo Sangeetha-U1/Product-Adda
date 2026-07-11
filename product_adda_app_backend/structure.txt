@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 000001E1 7478:274D
+Volume serial number is 000002C3 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -35,6 +35,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       
 |   |           |   +---admin
 |   |           |   |       AdminAuthController.java
+|   |           |   |       AdminDeliveryPartnerController.java
 |   |           |   |       AdminUserController.java
 |   |           |   |       AdminVendorManagementController.java
 |   |           |   |       
@@ -123,6 +124,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       AdminOrderStatusUpdateRequestDto.java
 |   |           |   |       AdminOrderStatusUpdateResponseDto.java
 |   |           |   |       CustomerOrderListDto.java
+|   |           |   |       DeliveryAssignmentRequestDto.java
+|   |           |   |       DeliveryAssignmentResponseDto.java
+|   |           |   |       DeliveryPartnerCreateRequestDto.java
+|   |           |   |       DeliveryPartnerResponseDto.java
 |   |           |   |       ItemStatusBatchEntryDto.java
 |   |           |   |       ItemStatusBatchRequestDto.java
 |   |           |   |       ItemStatusBatchResponseDto.java
@@ -347,6 +352,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       AdminOrderRetrievalService.java
 |   |           |   |       AggregatedStatusCalculationService.java
 |   |           |   |       CustomerOrderRetrievalService.java
+|   |           |   |       DeliveryAssignmentService.java
+|   |           |   |       DeliveryPartnerManagementService.java
 |   |           |   |       InventoryReleaseService.java
 |   |           |   |       OrderCancellationService.java
 |   |           |   |       OrderHistoryService.java
@@ -413,12 +420,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 000001BD 7478:274D
+Volume serial number is 00000287 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 0000022E 7478:274D
+Volume serial number is 00000235 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

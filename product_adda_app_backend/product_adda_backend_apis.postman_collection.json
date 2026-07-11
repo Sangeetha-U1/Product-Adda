@@ -2380,7 +2380,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzgzNjYzMzUwLCJleHAiOjE3ODM2NjY5NTB9.kjF2D55toVX7EPJZkchRhWYme92AFaB2ncTwWpeEFhiPyueYDKC4LNjhmGPwS4_E",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc1Mzk4OSwiZXhwIjoxNzgzNzU3NTg5fQ.-HykY8fvIWRy-CmWZwkbJ4LH9Qp4NUgZxCxA8zmHLynOWwXTPjTQVRWz18iIzYwF",
                   "type": "string"
                 }
               ]
@@ -2389,7 +2389,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"refreshToken\" : \"019f4a9e-d369-7278-90c6-10f28534e468\"\r\n}\r\n",
+              "raw": "{\r\n    \"refreshToken\" : \"019f5005-e02a-768c-8793-0909414b38b9\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -4308,6 +4308,139 @@
               "header": null,
               "cookie": [],
               "body": "{\r\n    \"success\": true,\r\n    \"message\": \"Order status updated successfully\",\r\n    \"data\": {\r\n        \"orderId\": \"019ed8f4-8911-7e2d-959d-7d3de7cbbff8\",\r\n        \"previousStatusName\": \"PROCESSING\",\r\n        \"newStatusName\": \"SHIPPED\",\r\n        \"reason\": \"Manual operational override\",\r\n        \"updatedAtUtc\": \"2026-07-09T03:15:44\",\r\n        \"deliveryPartnerActiveDeliveriesIncremented\": false,\r\n        \"warning\": null\r\n    }\r\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/admin/orders/{orderId}/assign-delivery-partner",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc2NDQyOSwiZXhwIjoxNzgzNzY4MDI5fQ.nWafEXzxsL6a14ExnTtEUJ-wLsNnQwBKlxjShHbu7egHJGOziaK24hIJSs33pvgG",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"deliveryPartnerId\": \"019f50ab-4036-71a6-8107-79fabd1f0daa\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/019ed8f4-8922-75fd-87d7-6dafaee31230/assign-delivery-partner",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                "019ed8f4-8922-75fd-87d7-6dafaee31230",
+                "assign-delivery-partner"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "409 Conflict Order already has a delivery partner assigned",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"deliveryPartnerId\": \"019f50ab-4036-71a6-8107-79fabd1f0daa\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders/019ed8f4-8922-75fd-87d7-6dafaee31230/assign-delivery-partner",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "orders",
+                    "019ed8f4-8922-75fd-87d7-6dafaee31230",
+                    "assign-delivery-partner"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 11 Jul 2026 10:18:04 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Order already has a delivery partner assigned\",\n    \"error\": {\n        \"code\": 409,\n        \"type\": \"CONFLICT\"\n    }\n}"
             }
           ]
         }
@@ -7890,6 +8023,225 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Vendor operational lifecycle status overridden completely and session tokens evicted\",\n    \"data\": {\n        \"vendorId\": \"019ef51a-dd61-7a1e-a989-f47857e7c618\",\n        \"isActive\": false\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/admin/delivery-partners",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc2NDQyOSwiZXhwIjoxNzgzNzY4MDI5fQ.nWafEXzxsL6a14ExnTtEUJ-wLsNnQwBKlxjShHbu7egHJGOziaK24hIJSs33pvgG",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"partnerName\": \"Swift Delivery Co.\",\r\n  \"firstName\": \"Swift\",\r\n  \"lastName\": \"Courier\",\r\n  \"email\": \"contact@swiftdelivery.com\",\r\n  \"password\": \"Test123\",\r\n  \"phone\": \"9876513210\",\r\n  \"maxConcurrentDeliveries\": 15,\r\n  \"currentLocation\": \"Bangalore Central Hub\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/delivery-partners",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "delivery-partners"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "409 Conflict Mobile number xx is already registered",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"partnerName\": \"Swift Delivery Co.\",\r\n  \"firstName\": \"Swift\",\r\n  \"lastName\": \"Courier\",\r\n  \"email\": \"contact@swiftdelivery.com\",\r\n  \"password\": \"Test123\",\r\n  \"phone\": \"9876513210\",\r\n  \"maxConcurrentDeliveries\": 15,\r\n  \"currentLocation\": \"Bangalore Central Hub\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/delivery-partners",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "delivery-partners"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 11 Jul 2026 10:12:30 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Mobile number 9876543210 is already registered\",\n    \"error\": {\n        \"code\": 409,\n        \"type\": \"CONFLICT\"\n    }\n}"
+            },
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"partnerName\": \"Swift Delivery Co.\",\r\n  \"firstName\": \"Swift\",\r\n  \"lastName\": \"Courier\",\r\n  \"email\": \"contact@swiftdelivery.com\",\r\n  \"password\": \"Test123\",\r\n  \"phone\": \"9876513210\",\r\n  \"maxConcurrentDeliveries\": 15,\r\n  \"currentLocation\": \"Bangalore Central Hub\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/delivery-partners",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "delivery-partners"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 11 Jul 2026 10:13:48 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Delivery partner created successfully\",\n    \"data\": {\n        \"partnerId\": \"019f50ab-4036-71a6-8107-79fabd1f0daa\",\n        \"partnerName\": \"Swift Delivery Co.\",\n        \"email\": \"contact@swiftdelivery.com\",\n        \"phone\": \"9876513210\",\n        \"currentLocation\": \"Bangalore Central Hub\",\n        \"statusName\": \"AVAILABLE\",\n        \"rating\": 0,\n        \"totalDeliveries\": 0,\n        \"activeDeliveries\": 0,\n        \"maxConcurrentDeliveries\": 15,\n        \"joinedAt\": \"2026-07-11T10:13:48.0231861\"\n    }\n}"
             }
           ]
         }

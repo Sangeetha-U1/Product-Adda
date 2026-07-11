@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.productadda.dto.order.DeliveryAssignmentRequestDto;
+import com.productadda.dto.order.DeliveryAssignmentResponseDto;
 import com.productadda.dto.ApiSuccessResponseDto;
 import com.productadda.dto.order.PaginatedAdminOrderResponseDto;
 import com.productadda.dto.order.OrderCancellationRequestDto;
@@ -24,6 +27,7 @@ import com.productadda.dto.order.AdminOrderStatusUpdateResponseDto;
 import com.productadda.service.order.OrderCancellationService;
 import com.productadda.service.order.AdminOrderRetrievalService;
 import com.productadda.service.order.OrderStatusTransitionService;
+import com.productadda.service.order.DeliveryAssignmentService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +38,7 @@ public class AdminOrderController {
         private final AdminOrderRetrievalService adminOrderRetrievalService;
         private final OrderCancellationService orderCancellationService;
         private final OrderStatusTransitionService orderStatusTransitionService;
+        private final DeliveryAssignmentService deliveryAssignmentService;
 
         // ==========================================
         // FULL-VISIBILITY ADMIN ORDER RETRIEVAL
@@ -95,6 +100,24 @@ public class AdminOrderController {
                                 .body(ApiSuccessResponseDto.<AdminOrderStatusUpdateResponseDto>builder()
                                                 .success(true)
                                                 .message("Order status updated successfully")
+                                                .data(response)
+                                                .build());
+        }
+
+        @PostMapping("/api/admin/orders/{orderId}/assign-delivery-partner")
+        @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPER_ADMIN')")
+        public ResponseEntity<ApiSuccessResponseDto<DeliveryAssignmentResponseDto>> assignDeliveryPartner(
+                        @PathVariable UUID orderId,
+                        @Valid @RequestBody DeliveryAssignmentRequestDto request) {
+
+                DeliveryAssignmentResponseDto response = deliveryAssignmentService
+                                .assignDeliveryPartnerToOrder(orderId, request.getDeliveryPartnerId());
+
+                return ResponseEntity
+                                .status(HttpStatus.CREATED)
+                                .body(ApiSuccessResponseDto.<DeliveryAssignmentResponseDto>builder()
+                                                .success(true)
+                                                .message("Delivery partner assigned successfully. Awaiting partner acceptance.")
                                                 .data(response)
                                                 .build());
         }

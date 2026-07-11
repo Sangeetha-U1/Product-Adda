@@ -46,6 +46,10 @@ public class DeliveryPartner {
      * =========================================================
      */
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_user_id", nullable = false)
+    private User fkUser;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_status_id", nullable = false)
     private DeliveryPartnerStatus fkStatus;
 
@@ -56,12 +60,6 @@ public class DeliveryPartner {
      */
     @Column(name = "partner_name", nullable = false, length = 255)
     private String partnerName;
-
-    @Column(name = "email", nullable = false, unique = true, length = 255)
-    private String email;
-
-    @Column(name = "phone", nullable = false, length = 20)
-    private String phone;
 
     @Column(name = "current_location", length = 500)
     private String currentLocation;
