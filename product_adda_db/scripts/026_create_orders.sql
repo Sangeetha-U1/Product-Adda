@@ -25,7 +25,11 @@ CREATE TABLE orders
     fk_status_id BINARY(16) NOT NULL,
     fk_address_id BINARY(16) NOT NULL,
     fk_coupon_id BINARY(16) NULL,
-    fk_delivery_partner_id BINARY(16) NOT NULL,
+    fk_delivery_partner_id BINARY(16) NULL,
+    fk_payment_id BINARY(16) DEFAULT NULL,
+    payment_initiated_at_utc TIMESTAMP NULL DEFAULT NULL,
+    payment_confirmed_at_utc TIMESTAMP NULL DEFAULT NULL,
+    total_refunded_amount_in_paise BIGINT NOT NULL DEFAULT 0,
     subtotal DECIMAL(10,2) NOT NULL,
     coupon_discount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     shipping_cost DECIMAL(10,2) NOT NULL DEFAULT 0.00,
@@ -45,12 +49,14 @@ CREATE TABLE orders
     CONSTRAINT fk_orders_address_id FOREIGN KEY (fk_address_id) REFERENCES addresses(pk_address_id) ON DELETE RESTRICT,
     CONSTRAINT fk_orders_coupon_id FOREIGN KEY (fk_coupon_id) REFERENCES coupons(pk_coupon_id) ON DELETE SET NULL,
     CONSTRAINT fk_orders_delivery_partner_id FOREIGN KEY (fk_delivery_partner_id) REFERENCES delivery_partners(pk_delivery_partner_id),
+    CONSTRAINT fk_orders_payment_id FOREIGN KEY (fk_payment_id) REFERENCES payments(pk_payment_id) ON DELETE SET NULL,
 
     CONSTRAINT chk_orders_subtotal CHECK (subtotal >= 0),
     CONSTRAINT chk_orders_coupon_discount CHECK (coupon_discount >= 0),
     CONSTRAINT chk_orders_shipping_cost CHECK (shipping_cost >= 0),
     CONSTRAINT chk_orders_tax_amount CHECK (tax_amount >= 0),
-    CONSTRAINT chk_orders_total_amount CHECK (total_amount >= 0)
+    CONSTRAINT chk_orders_total_amount CHECK (total_amount >= 0),
+    CONSTRAINT chk_orders_total_refunded CHECK (total_refunded_amount_in_paise >= 0)
 );
 
 -- ============================================================================
@@ -67,6 +73,7 @@ CREATE INDEX idx_orders_total_amount ON orders(total_amount);
 CREATE INDEX idx_orders_created_at ON orders(created_at_utc);
 CREATE INDEX idx_orders_is_active ON orders(is_active);
 CREATE INDEX idx_orders_delivery_partner_id ON orders(fk_delivery_partner_id);
+CREATE INDEX idx_orders_payment_id ON orders(fk_payment_id);
 
 -- ============================================================================
 -- Verification

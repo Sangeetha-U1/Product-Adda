@@ -31,6 +31,8 @@ CREATE TABLE vendor_bank_details
 
     fk_vendor_id BINARY(16) NOT NULL,
 
+    payout_account_status VARCHAR(20) NOT NULL DEFAULT 'unverified',
+
     account_holder_name VARCHAR(255) NOT NULL,
 
     bank_name VARCHAR(255) NOT NULL,
