@@ -6,7 +6,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,24 +56,17 @@ public class OrderHistoryService {
         // ==========================================
         // 1.2 CONTEXT AUTHENTICATION
         // ==========================================
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
         }
 
-        String email;
-
-        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-            email = userDetails.getUsername();
-        } else {
-            email = authentication.getName();
-        }
+        String currentUsername = authentication.getName();
 
         // ==========================================
         // 1.3 DATABASE LOOKUP VALIDATION
         // ==========================================
-        User currentUser = userRepository.findByEmail(email)
+        User currentUser = userRepository.findByEmail(currentUsername)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user no longer exists"));
 
         /*

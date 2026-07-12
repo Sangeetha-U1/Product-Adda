@@ -88,7 +88,8 @@ public class Order {
     private LocalDateTime paymentConfirmedAtUtc;
 
     @Column(name = "total_refunded_amount_in_paise", nullable = false)
-    private Long totalRefundedAmountInPaise;
+    @Builder.Default
+    private Long totalRefundedAmountInPaise = 0L;
 
     /*
      * =========================================================

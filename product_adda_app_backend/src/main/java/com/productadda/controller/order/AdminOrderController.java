@@ -26,7 +26,7 @@ import com.productadda.dto.order.AdminOrderStatusUpdateResponseDto;
 
 import com.productadda.service.order.OrderCancellationService;
 import com.productadda.service.order.AdminOrderRetrievalService;
-import com.productadda.service.order.OrderStatusTransitionService;
+import com.productadda.service.order.AdminOrderForceStatusTransitionService;
 import com.productadda.service.order.DeliveryAssignmentService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class AdminOrderController {
 
         private final AdminOrderRetrievalService adminOrderRetrievalService;
         private final OrderCancellationService orderCancellationService;
-        private final OrderStatusTransitionService orderStatusTransitionService;
+        private final AdminOrderForceStatusTransitionService adminOrderForceStatusTransitionService;
         private final DeliveryAssignmentService deliveryAssignmentService;
 
         // ==========================================
@@ -92,7 +92,7 @@ public class AdminOrderController {
                         @PathVariable UUID orderId,
                         @Valid @RequestBody AdminOrderStatusUpdateRequestDto request) {
 
-                AdminOrderStatusUpdateResponseDto response = orderStatusTransitionService
+                AdminOrderStatusUpdateResponseDto response = adminOrderForceStatusTransitionService
                                 .forceStatusTransition(orderId, request.getRequestedStatus(), request.getReason());
 
                 return ResponseEntity

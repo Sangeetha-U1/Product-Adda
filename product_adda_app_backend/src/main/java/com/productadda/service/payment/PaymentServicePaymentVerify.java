@@ -171,16 +171,17 @@ public class PaymentServicePaymentVerify {
                                         .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                                                         "Status SUCCESS not found"));
 
-                        OrderStatus processingStatus = orderStatusRepository.findByStatusName("PROCESSING")
+                        OrderStatus paidStatus = orderStatusRepository.findByStatusName("PAID")
                                         .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
-                                                        "Status PROCESSING not found"));
+                                                        "Status PAID not found"));
 
                         payment.setFkStatus(successStatus);
                         payment.setGatewayTransactionId(paymentId);
                         payment.setGatewayOrderId(razorpayFetchedOrderId);
                         payment.setGatewaySignature(requestDto.getRazorpaySignature());
                         payment.setPaidAtUtc(LocalDateTime.now(ZoneOffset.UTC));
-                        order.setFkStatus(processingStatus);
+                        
+                        order.setFkStatus(paidStatus);
 
                         /*
                          * ================================================================

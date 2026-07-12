@@ -4870,6 +4870,35 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "/api/delivery-partners/available-orders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzdXBlcmFkbWluQHByb2R1Y3RhZGRhLmNvbSIsInVzZXJJZCI6IjAxOWVkNzBlLWQ4ZjUtNzBiMy05N2IyLWM4OGMyMDQ4ZjdlMiIsInJvbGVzIjpbIlNVUEVSX0FETUlOIl0sImlhdCI6MTc4Mzc4MTUxNSwiZXhwIjoxNzgzNzg1MTE1fQ.aCjDRRJgWlkU2sDrWcaBjYeZDRNWyQk4ahErLmeS3I2eZlvQLWXr7tpMw29DNxt7",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/delivery-partners/available-orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "delivery-partners",
+                "available-orders"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },

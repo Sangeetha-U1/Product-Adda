@@ -4,18 +4,21 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
+import com.razorpay.PaymentLink;
 
 import com.productadda.dto.payment.PaymentCreateRequestDto;
 import com.productadda.dto.payment.PaymentCreateResponseDto;
@@ -55,6 +58,9 @@ public class PaymentServicePaymentCreate {
     private String frontendBaseUrl;
 
     public PaymentCreateResponseDto paymentCreate(PaymentCreateRequestDto requestDto) {
+
+        Map<String, Object> metaData = new HashMap<>();
+
         try {
             /*
              * ================================================================
@@ -84,12 +90,7 @@ public class PaymentServicePaymentCreate {
                 throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
             }
 
-            String email;
-            if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-                email = userDetails.getUsername();
-            } else {
-                email = authentication.getName();
-            }
+            String email = authentication.getName();
 
             // ==========================================
             // 1.3 DATABASE LOOKUP VALIDATION
@@ -102,7 +103,7 @@ public class PaymentServicePaymentCreate {
 
             if (order.getFkUser() == null || !order.getFkUser().getPkUserId().equals(currentUser.getPkUserId())) {
                 throw new ApiException(HttpStatus.FORBIDDEN, "Access denied: This order does not belong to user "
-                        + email + " with user id " + currentUser.getPkUserId());
+                        + currentUser.getEmail() + " with user id " + currentUser.getPkUserId());
             }
 
             PaymentStatus pendingStatus = paymentStatusRepository.findByStatusName("PENDING")
@@ -113,6 +114,15 @@ public class PaymentServicePaymentCreate {
                     .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                             "Payment gateway RAZORPAY configuration record missing from database"));
 
+            Payment existingPayment = paymentRepository.findByIdempotencyKey(order.getIdempotencyKey())
+                    .orElse(null);
+
+            if (existingPayment != null) {
+                throw new ApiException(
+                        HttpStatus.CONFLICT,
+                        "Payment already initiated for this order. Retrieve existing payment details.");
+            }
+            
             /*
              * ================================================================
              * 2. BUSINESS RULES & PROCESSING / WORKFLOW
@@ -132,8 +142,11 @@ public class PaymentServicePaymentCreate {
             linkOptions.put("callback_method", "get");
 
             // External gateway communication safely isolated outside local DB locks
-            com.razorpay.PaymentLink paymentLink = razorpayClient.paymentLink.create(linkOptions);
+            PaymentLink paymentLink = razorpayClient.paymentLink.create(linkOptions);
+
             String razorpayPaymentLinkId = paymentLink.get("id");
+
+            metaData.put("paymentLink", paymentLink.toJson().toMap());
 
             /*
              * ================================================================
@@ -147,6 +160,7 @@ public class PaymentServicePaymentCreate {
             transactionTemplate.executeWithoutResult(status -> {
                 Payment payment = Payment.builder()
                         .pkPaymentId(uuidUtil.generateUuidV7())
+                        .fkUser(currentUser)
                         .fkOrder(order)
                         .fkGateway(razorpayGateway)
                         // TODO: Create lookup table for payment methods
@@ -155,12 +169,13 @@ public class PaymentServicePaymentCreate {
                         .fkPaymentSource(null)
                         .idempotencyKey(order.getIdempotencyKey())
                         .amountInPaise(amountInPaise)
+                        .currency("INR")
                         .gatewayTransactionId(null)
                         .gatewayOrderId(null)
                         .gatewayPaymentLinkId(razorpayPaymentLinkId)
                         .gatewaySignature(null)
                         .paidAtUtc(null)
-                        .metadata(null)
+                        .metadata(metaData)
                         .capturedAtUtc(null)
                         .failedAtUtc(null)
                         .webhookReceivedAtUtc(null)

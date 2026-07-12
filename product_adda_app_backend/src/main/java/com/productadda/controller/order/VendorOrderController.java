@@ -22,7 +22,8 @@ import com.productadda.dto.ApiSuccessResponseDto;
 import com.productadda.dto.order.PaginatedVendorOrderItemResponseDto;
 
 import com.productadda.service.order.VendorOrderRetrievalService;
-import com.productadda.service.order.OrderStatusTransitionService;
+import com.productadda.service.order.VendorOrderStatusBatchTransitionService;
+import com.productadda.service.order.VendorOrderStatusTransitionService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,63 +31,64 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VendorOrderController {
 
-    private final VendorOrderRetrievalService vendorOrderRetrievalService;
-    private final OrderStatusTransitionService orderStatusTransitionService;
+        private final VendorOrderRetrievalService vendorOrderRetrievalService;
+        private final VendorOrderStatusTransitionService vendorOrderStatusTransitionService;
+        private final VendorOrderStatusBatchTransitionService vendorOrderStatusBatchTransitionService;
 
-    // ==========================================
-    // VENDOR-SCOPED ORDER ITEM RETRIEVAL
-    // ==========================================
-    @GetMapping("/api/vendors/orders")
-    @PreAuthorize("hasAuthority('VENDOR')")
-    public ResponseEntity<ApiSuccessResponseDto<PaginatedVendorOrderItemResponseDto>> getVendorOrders(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
+        // ==========================================
+        // VENDOR-SCOPED ORDER ITEM RETRIEVAL
+        // ==========================================
+        @GetMapping("/api/vendors/orders")
+        @PreAuthorize("hasAuthority('VENDOR')")
+        public ResponseEntity<ApiSuccessResponseDto<PaginatedVendorOrderItemResponseDto>> getVendorOrders(
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "20") int size) {
 
-        PaginatedVendorOrderItemResponseDto response = vendorOrderRetrievalService.getVendorOrders(page, size);
+                PaginatedVendorOrderItemResponseDto response = vendorOrderRetrievalService.getVendorOrders(page, size);
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ApiSuccessResponseDto.<PaginatedVendorOrderItemResponseDto>builder()
-                        .success(true)
-                        .message("Vendor orders retrieved successfully")
-                        .data(response)
-                        .build());
-    }
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<PaginatedVendorOrderItemResponseDto>builder()
+                                                .success(true)
+                                                .message("Vendor orders retrieved successfully")
+                                                .data(response)
+                                                .build());
+        }
 
-    @PutMapping("/api/vendors/orders/{orderId}/items/{itemId}/status")
-    @PreAuthorize("hasAuthority('VENDOR')")
-    public ResponseEntity<ApiSuccessResponseDto<OrderItemResponseDto>> updateItemStatus(
-            @PathVariable UUID orderId,
-            @PathVariable UUID itemId,
-            @Valid @RequestBody ItemStatusUpdateRequestDto request) {
+        @PutMapping("/api/vendors/orders/{orderId}/items/{itemId}/status")
+        @PreAuthorize("hasAuthority('VENDOR')")
+        public ResponseEntity<ApiSuccessResponseDto<OrderItemResponseDto>> updateItemStatus(
+                        @PathVariable UUID orderId,
+                        @PathVariable UUID itemId,
+                        @Valid @RequestBody ItemStatusUpdateRequestDto request) {
 
-        OrderItemResponseDto response = orderStatusTransitionService
-                .updateVendorItemStatus(orderId, itemId, request.getRequestedStatus());
+                OrderItemResponseDto response = vendorOrderStatusTransitionService
+                                .updateVendorItemStatus(orderId, itemId, request.getRequestedStatus());
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ApiSuccessResponseDto.<OrderItemResponseDto>builder()
-                        .success(true)
-                        .message("Item status updated successfully")
-                        .data(response)
-                        .build());
-    }
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<OrderItemResponseDto>builder()
+                                                .success(true)
+                                                .message("Item status updated successfully")
+                                                .data(response)
+                                                .build());
+        }
 
-    @PutMapping("/api/vendors/orders/{orderId}/items/status/batch")
-    @PreAuthorize("hasAuthority('VENDOR')")
-    public ResponseEntity<ApiSuccessResponseDto<ItemStatusBatchResponseDto>> batchUpdateItemStatus(
-            @PathVariable UUID orderId,
-            @Valid @RequestBody ItemStatusBatchRequestDto request) {
+        @PutMapping("/api/vendors/orders/{orderId}/items/status/batch")
+        @PreAuthorize("hasAuthority('VENDOR')")
+        public ResponseEntity<ApiSuccessResponseDto<ItemStatusBatchResponseDto>> batchUpdateItemStatus(
+                        @PathVariable UUID orderId,
+                        @Valid @RequestBody ItemStatusBatchRequestDto request) {
 
-        ItemStatusBatchResponseDto response = orderStatusTransitionService
-                .batchUpdateVendorItemStatus(orderId, request.getItems());
+                ItemStatusBatchResponseDto response = vendorOrderStatusBatchTransitionService
+                                .batchUpdateVendorItemStatus(orderId, request.getItems());
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ApiSuccessResponseDto.<ItemStatusBatchResponseDto>builder()
-                        .success(true)
-                        .message("Batch item status update completed successfully")
-                        .data(response)
-                        .build());
-    }
+                return ResponseEntity
+                                .status(HttpStatus.OK)
+                                .body(ApiSuccessResponseDto.<ItemStatusBatchResponseDto>builder()
+                                                .success(true)
+                                                .message("Batch item status update completed successfully")
+                                                .data(response)
+                                                .build());
+        }
 }

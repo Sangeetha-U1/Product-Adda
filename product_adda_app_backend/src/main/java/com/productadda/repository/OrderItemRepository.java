@@ -83,4 +83,10 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, UUID> {
         // ==========================================
         Optional<OrderItem> findByPkOrderItemIdAndFkOrder_PkOrderId(UUID orderItemId, UUID orderId);
 
+        // ==========================================
+        // BATCH ITEMS RETRIEVAL FOR ORDER PAGE
+        // Description: Fetches all active line items belonging to a collection
+        // of orders in a single database round-trip to avoid N+1 queries.
+        // ==========================================
+        List<OrderItem> findByFkOrderInAndIsActiveTrue(List<Order> orders);
 }
