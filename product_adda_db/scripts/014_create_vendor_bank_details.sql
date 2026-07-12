@@ -2,14 +2,16 @@
 ===============================================================================
 Table       : vendor_bank_details
 Description :
-    Stores vendor banking information.
+Stores vendor banking information.
 
-    Used for:
-    - Settlement processing
-    - Commission payout
-    - Revenue transfer
+Used for:
+- Vendor payout processing
+- Settlement transfers
+- Revenue disbursement
 
-    Separated from vendors table for security and normalization.
+Stores only the vendor's bank account details and bank verification status.
+Individual payout transactions are tracked separately in the
+vendor_payouts table.
 ===============================================================================
 */
 
