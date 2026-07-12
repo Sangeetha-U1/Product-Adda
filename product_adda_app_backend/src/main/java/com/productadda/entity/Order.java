@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.JoinColumn;
 
 import lombok.AllArgsConstructor;
@@ -71,6 +72,23 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_delivery_partner_id")
     private DeliveryPartner fkDeliveryPartner;
+
+    @OneToOne(mappedBy = "fkOrder", fetch = FetchType.LAZY)
+    private Payment payment;
+
+    /*
+     * =========================================================
+     * PAYMENT TRACKING
+     * =========================================================
+     */
+    @Column(name = "payment_initiated_at_utc")
+    private LocalDateTime paymentInitiatedAtUtc;
+
+    @Column(name = "payment_confirmed_at_utc")
+    private LocalDateTime paymentConfirmedAtUtc;
+
+    @Column(name = "total_refunded_amount_in_paise", nullable = false)
+    private Long totalRefundedAmountInPaise;
 
     /*
      * =========================================================

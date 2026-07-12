@@ -1,6 +1,5 @@
 package com.productadda.service.payment;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
@@ -161,7 +160,7 @@ public class PaymentServicePaymentVerify {
 
                         String razorpayFetchedOrderId = razorpayPayment.get("order_id");
                         long razorpayAmountInPaise = ((Number) razorpayPayment.get("amount")).longValue();
-                        long dbAmountInPaise = payment.getAmountPaid().multiply(BigDecimal.valueOf(100)).longValue();
+                        long dbAmountInPaise = payment.getAmountInPaise();
 
                         if (dbAmountInPaise != razorpayAmountInPaise) {
                                 throw new ApiException(HttpStatus.BAD_REQUEST,

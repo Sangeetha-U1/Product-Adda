@@ -16,8 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -59,6 +59,18 @@ public class Payment {
     @JoinColumn(name = "fk_gateway_id", nullable = false)
     private PaymentGateway fkGateway;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_user_id", nullable = false)
+    private User fkUser;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_payment_source_id")
+    private PaymentMethod fkPaymentSource;
+
+    @JdbcTypeCode(SqlTypes.BINARY)
+    @Column(name = "idempotency_key", columnDefinition = "BINARY(16)", nullable = false, unique = true)
+    private UUID idempotencyKey;
+
     /*
      * =========================================================
      * PAYMENT DETAILS
@@ -83,11 +95,31 @@ public class Payment {
     @Column(name = "error_message", columnDefinition = "TEXT")
     private String errorMessage;
 
-    @Column(name = "amount_paid", nullable = false, precision = 10, scale = 2)
-    private BigDecimal amountPaid;
+    @Column(name = "amount_in_paise", nullable = false)
+    private Long amountInPaise;
+
+    @Column(name = "currency", nullable = false, length = 3)
+    private String currency;
 
     @Column(name = "paid_at_utc")
     private LocalDateTime paidAtUtc;
+
+    @Column(name = "captured_at_utc")
+    private LocalDateTime capturedAtUtc;
+
+    @Column(name = "failed_at_utc")
+    private LocalDateTime failedAtUtc;
+
+    @Column(name = "webhook_received_at_utc")
+    private LocalDateTime webhookReceivedAtUtc;
+
+    @Lob
+    @Column(name = "failure_reason", columnDefinition = "TEXT")
+    private String failureReason;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "metadata")
+    private Map<String, Object> metadata;
 
     /*
      * =========================================================

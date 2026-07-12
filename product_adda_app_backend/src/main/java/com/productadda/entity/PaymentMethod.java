@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 
 import lombok.AllArgsConstructor;
@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -20,13 +21,13 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "vendor_bank_details")
+@Table(name = "payment_methods")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VendorBankDetail {
+public class PaymentMethod {
 
     /*
      * =========================================================
@@ -35,49 +36,54 @@ public class VendorBankDetail {
      */
     @Id
     @JdbcTypeCode(SqlTypes.BINARY)
-    @Column(name = "pk_vendor_bank_detail_id", columnDefinition = "BINARY(16)", nullable = false)
-    private UUID pkVendorBankDetailId;
+    @Column(name = "pk_payment_method_id", columnDefinition = "BINARY(16)", nullable = false)
+    private UUID pkPaymentMethodId;
 
     /*
      * =========================================================
-     * RELATION → VENDORS (One-to-One unique constraint in DB)
+     * RELATIONSHIPS
      * =========================================================
      */
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_vendor_id", nullable = false, unique = true)
-    private Vendor fkVendor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_user_id", nullable = false)
+    private User fkUser;
 
     /*
      * =========================================================
-     * PAYOUT ACCOUNT STATUS
+     * PAYMENT METHOD DETAILS
      * =========================================================
      */
-    @Column(name = "payout_account_status", nullable = false, length = 20)
-    private String payoutAccountStatus;
+    @Column(name = "payment_gateway", nullable = false, length = 50)
+    private String paymentGateway;
+
+    @Column(name = "gateway_token_id", nullable = false, length = 255)
+    private String gatewayTokenId;
+
+    @Column(name = "method_type", nullable = false, length = 30)
+    private String methodType;
+
+    @Column(name = "card_last_four", length = 4)
+    private String cardLastFour;
+
+    @Column(name = "card_brand", length = 30)
+    private String cardBrand;
+
+    @Column(name = "card_expiry_month")
+    private Byte cardExpiryMonth;
+
+    @Column(name = "card_expiry_year")
+    private Short cardExpiryYear;
 
     /*
      * =========================================================
-     * BANKING ROUTING METRICS
+     * STATUS
      * =========================================================
      */
-    @Column(name = "account_holder_name", nullable = false, length = 255)
-    private String accountHolderName;
+    @Column(name = "is_primary", nullable = false)
+    private Boolean isPrimary;
 
-    @Column(name = "bank_name", nullable = false, length = 255)
-    private String bankName;
-
-    @Column(name = "account_number", nullable = false, length = 50)
-    private String accountNumber;
-
-    @Column(name = "ifsc_code", nullable = false, length = 20)
-    private String ifscCode;
-
-    @Column(name = "branch_name", length = 255)
-    private String branchName;
-
-    @Builder.Default
     @Column(name = "is_active", nullable = false)
-    private boolean isActive = true;
+    private Boolean isActive;
 
     /*
      * ===========================================================================

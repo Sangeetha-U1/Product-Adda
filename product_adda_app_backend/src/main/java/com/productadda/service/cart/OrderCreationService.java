@@ -104,6 +104,7 @@ public class OrderCreationService {
                                 .taxAmount(totals.getTaxAmount())
                                 .idempotencyKey(idempotencyKey)
                                 .totalAmount(totals.getTotal())
+                                .totalRefundedAmountInPaise(0L)
                                 .isActive(true)
                                 .build();
 

@@ -124,6 +124,7 @@ public class PaymentServicePaymentCreate {
 
             JSONObject linkOptions = new JSONObject();
             linkOptions.put("amount", amountInPaise);
+            // TODO: Add currency lookup table and add fk col in order and add here
             linkOptions.put("currency", "INR");
             linkOptions.put("description", "Verification Testing for Order " + orderId);
             linkOptions.put("reference_id", order.getPkOrderId().toString());
@@ -151,12 +152,19 @@ public class PaymentServicePaymentCreate {
                         // TODO: Create lookup table for payment methods
                         .paymentMethod("RAZORPAY")
                         .fkStatus(pendingStatus)
-                        .amountPaid(order.getTotalAmount())
+                        .fkPaymentSource(null)
+                        .idempotencyKey(order.getIdempotencyKey())
+                        .amountInPaise(amountInPaise)
                         .gatewayTransactionId(null)
                         .gatewayOrderId(null)
                         .gatewayPaymentLinkId(razorpayPaymentLinkId)
                         .gatewaySignature(null)
                         .paidAtUtc(null)
+                        .metadata(null)
+                        .capturedAtUtc(null)
+                        .failedAtUtc(null)
+                        .webhookReceivedAtUtc(null)
+                        .failureReason(null)
                         .isActive(true)
                         .createdAtUtc(nowUtc)
                         .updatedAtUtc(nowUtc)

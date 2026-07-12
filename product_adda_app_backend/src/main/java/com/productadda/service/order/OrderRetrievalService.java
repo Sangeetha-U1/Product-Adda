@@ -142,7 +142,7 @@ public class OrderRetrievalService {
                 .paymentId(payment.getPkPaymentId())
                 .statusName(payment.getFkStatus().getStatusName())
                 .paymentMethod(payment.getPaymentMethod())
-                .amountPaid(payment.getAmountPaid())
+                .amountPaidInPaise(payment.getAmountInPaise())
                 .paidAtUtc(payment.getPaidAtUtc())
                 .build();
 

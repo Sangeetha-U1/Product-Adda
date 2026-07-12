@@ -1,6 +1,6 @@
 package com.productadda.dto.order;
 
-import java.math.BigDecimal;
+import java.lang.Long;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -29,7 +29,7 @@ public class OrderPaymentSummaryDto {
 
     private String paymentMethod;
 
-    private BigDecimal amountPaid;
+    private Long amountPaidInPaise;
 
     private LocalDateTime paidAtUtc;
 }
