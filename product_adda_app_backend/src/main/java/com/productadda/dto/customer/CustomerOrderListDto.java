@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
  * NESTED ITEM DTO
  * Description: Sanitized, frontend-ready summary of a single order
  * belonging to the authenticated customer. Excludes payment details
- * per Day 1 security requirements.
+ * per security requirements.
  * ================================================================
  */
 @Getter

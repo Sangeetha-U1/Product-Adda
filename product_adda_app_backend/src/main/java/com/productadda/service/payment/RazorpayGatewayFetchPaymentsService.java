@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
  * ================================================================
  * RazorpayGatewayService
  * REVISION NOTE: added fetchPayments(...) below
- * fetchRefundStatus(...) - everything from Day 1-3 is unchanged.
+ * fetchRefundStatus(...) - everything from is unchanged.
  *
  * Thin, dedicated Razorpay integration boundary using the existing
  * RazorpayClient bean / RazorpayConfig already wired up for the

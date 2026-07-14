@@ -15,7 +15,7 @@ import lombok.Setter;
  * NAMING NOTE: A PaymentVerifyRequestDto already exists for the legacy
  * Razorpay Payment Links flow (razorpayPaymentId/razorpaySignature/etc).
  * This is a deliberately distinct class name/shape to avoid colliding
- * with it - see CHANGES_DAY2.md.
+ * with it
  * ================================================================
  */
 @Getter

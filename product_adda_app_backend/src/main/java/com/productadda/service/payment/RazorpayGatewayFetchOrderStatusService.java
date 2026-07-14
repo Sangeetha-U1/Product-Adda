@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
  * ================================================================
  * RazorpayGatewayService
  * REVISION NOTE: added fetchPayments(...) below
- * fetchRefundStatus(...) - everything from Day 1-3 is unchanged.
+ * fetchRefundStatus(...) - everything from is unchanged.
  *
  * Thin, dedicated Razorpay integration boundary using the existing
  * RazorpayClient bean / RazorpayConfig already wired up for the
@@ -32,7 +32,7 @@ public class RazorpayGatewayFetchOrderStatusService {
 
     /*
      * Fetches the current status of a Razorpay order. Used by the
-     * Day 2 payment verify / status lookup flow.
+     * payment verify / status lookup flow.
      */
     public String fetchOrderStatus(String gatewayOrderId) {
         if (gatewayOrderId == null || gatewayOrderId.trim().isEmpty()) {

@@ -55,7 +55,7 @@ import lombok.RequiredArgsConstructor;
 
 // TODO: Call payment gateway (Stripe/Razorpay) integration as a separate,
 // explicit client call to POST /api/payment/create after checkout succeeds.
-// Checkout intentionally does not create a Payment record (see Day 5 decision).
+// Checkout intentionally does not create a Payment record.
 
 @Service
 @RequiredArgsConstructor
@@ -278,7 +278,7 @@ public class CheckoutService {
 
                 // Inventory conversion: permanently deduct ordered quantity from available
                 // stock.
-                // TODO: Clarify reserved vs sold inventory states (per Day 5 open decision).
+                // TODO: Clarify reserved vs sold inventory states.
                 // reservedQuantity is intentionally left untouched for now.
                 for (CartItem item : cartItems) {
                         Inventory inventory = inventoryRepository.findByFkProduct(item.getFkProduct())

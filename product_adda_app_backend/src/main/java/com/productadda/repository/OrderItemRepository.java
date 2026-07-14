@@ -3,6 +3,7 @@ package com.productadda.repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -89,4 +90,15 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, UUID> {
         // of orders in a single database round-trip to avoid N+1 queries.
         // ==========================================
         List<OrderItem> findByFkOrderInAndIsActiveTrue(List<Order> orders);
+
+        @Query("SELECT oi FROM OrderItem oi " +
+                        "WHERE oi.fkVendor.pkVendorId = :vendorId " +
+                        "AND oi.isActive = true " +
+                        "AND oi.fkOrder.deliveredAtUtc IS NOT NULL " +
+                        "AND oi.fkOrder.deliveredAtUtc > :sinceUtc " +
+                        "AND oi.fkOrder.deliveredAtUtc <= :eligibleBeforeUtc")
+        List<OrderItem> findEligibleOrderItemsForPayout(
+                        @Param("vendorId") UUID vendorId,
+                        @Param("sinceUtc") LocalDateTime sinceUtc,
+                        @Param("eligibleBeforeUtc") LocalDateTime eligibleBeforeUtc);
 }

@@ -28,7 +28,7 @@ public class PaymentInitiateRequestDto {
     @NotBlank(message = "Idempotency key is required")
     private String idempotencyKey;
 
-    // Optional: reference to a previously saved/tokenized payment method (Day 4)
+    // Optional: reference to a previously saved/tokenized payment method
     private String savedPaymentMethodId;
 
     private String deviceFingerprint;

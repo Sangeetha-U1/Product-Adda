@@ -16,8 +16,7 @@ import lombok.Setter;
  * cancellationReason is intentionally NOT annotated with @NotBlank
  * here, since the two call sites have conflicting requirements:
  *   - Customer cancellation: blank/omitted reason is allowed and
- *     defaults to "Customer requested cancellation" (see Day 2 test
- *     scenario 2, which sends an empty string and expects 200 OK).
+ *     defaults to "Customer requested cancellation" which sends an empty string and expects 200 OK).
  *   - Admin force-cancellation: a non-blank reason is REQUIRED.
  * Because a single shared DTO cannot carry two contradictory bean
  * validation rules for the same field, the blank/required check is

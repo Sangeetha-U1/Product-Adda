@@ -437,7 +437,7 @@ public class OrderCancellationService {
                 // confirmed). If "RETURNED" is never actually assigned to any
                 // order under the current feature set, this comparison is
                 // harmless (it simply never matches), but is left here as
-                // written in the Day 2 plan and should be verified once a
+                // written in the plan and should be verified once a
                 // return-flow exists.
                 boolean isBlockedStatus = "DELIVERED".equals(previousStatusName)
                                 || "RETURNED".equals(previousStatusName);

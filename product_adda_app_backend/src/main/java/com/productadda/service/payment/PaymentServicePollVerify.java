@@ -44,7 +44,7 @@ import lombok.RequiredArgsConstructor;
  *
  * NAMING NOTE: A PaymentServicePaymentVerify already exists for the
  * legacy Razorpay Payment Links flow. This is a deliberately
- * distinct class - see CHANGES_DAY2.md.
+ * distinct class
  * ================================================================
  */
 @Service
@@ -210,6 +210,7 @@ public class PaymentServicePollVerify {
                     .newStatus("SUCCESS")
                     .metadata(metaData)
                     .build();
+                    
             paymentAuditLogRepository.save(auditLog);
 
             // TODO: trigger incident alert for missing webhook (per plan step 6)

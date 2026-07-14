@@ -16,6 +16,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.math.BigDecimal;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -64,6 +65,9 @@ public class Vendor {
 
     @Column(name = "business_description", columnDefinition = "TEXT")
     private String businessDescription;
+
+    @Column(name = "commission_rate", precision = 5, scale = 2)
+    private BigDecimal commissionRate;
 
     /*
      * =========================================================

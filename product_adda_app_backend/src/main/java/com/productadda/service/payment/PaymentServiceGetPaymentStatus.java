@@ -137,8 +137,8 @@ public class PaymentServiceGetPaymentStatus {
         // PCI masking: never expose the raw payment_method column value beyond
         // a generic display string. "Card ending in XXXX" requires the last
         // four digits of the underlying card, which are not present on the
-        // Payment entity itself (they will live on PaymentMethod, Day 4).
-        // Until Day 4, fall back to a generic gateway-based display label.
+        // Payment entity itself (they will live on PaymentMethod,).
+        // Until, fall back to a generic gateway-based display label.
         String paymentMethodDisplay = maskPaymentMethodForDisplay(payment.getPaymentMethod());
 
         /*
@@ -162,7 +162,7 @@ public class PaymentServiceGetPaymentStatus {
 
     /*
      * TODO: Replace with a real "Card ending in XXXX" lookup once
-     * PaymentMethod.java (Day 4) is available and fkPaymentSourceId can be
+     * PaymentMethod.java is available and fkPaymentSourceId can be
      * resolved to a card_last_four value. Generic label only for now.
      */
     private String maskPaymentMethodForDisplay(String paymentMethod) {

@@ -148,8 +148,8 @@ public class AdminOrderForceStatusTransitionService {
         if ("CANCELLED".equals(previousStatusName) && !"CANCELLED".equals(safeRequestedStatus)) {
             // Admin can un-cancel for operational needs.
             // TODO: Un-cancelling does NOT currently restore inventory that
-            // was released during cancellation (see OrderCancellationService
-            // from Day 2). This is a known gap -- inventory re-reservation
+            // was released during cancellation (see OrderCancellationService). This is a
+            // known gap -- inventory re-reservation
             // on un-cancel is not implemented and should be addressed before
             // this override is relied on for real operational recovery.
             warning = "Order was un-cancelled at" + now + "by admin override. Inventory was NOT automatically "
@@ -193,7 +193,7 @@ public class AdminOrderForceStatusTransitionService {
         // timestamp) once an audit_logs table exists. No such table
         // currently exists in this project's schema, so this is deferred
         // rather than introducing a new table now (same decision made for
-        // Day 2's force-cancel endpoint).
+        // force-cancel endpoint).
 
         // TODO: Trigger notifications based on status change.
         // Example: if ("SHIPPED".equals(safeRequestedStatus))

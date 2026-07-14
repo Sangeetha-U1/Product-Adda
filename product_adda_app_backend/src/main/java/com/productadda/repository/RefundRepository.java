@@ -28,7 +28,7 @@ public interface RefundRepository extends JpaRepository<Refund, UUID> {
         // single query rather than a separate manual ownership check.
         // Mirrors OrderItemRepository.findByPkOrderItemIdAndFkOrder_PkOrderId.
         // ==========================================
-        Optional<Refund> findByPkRefundIdAndFkPayment_FkCustomer_PkUserId(UUID refundId, UUID customerId);
+        Optional<Refund> findByPkRefundIdAndFkPayment_FkUser_PkUserId(UUID refundId, UUID customerId);
 
         Optional<Refund> findByGatewayRefundId(String gatewayRefundId);
 }

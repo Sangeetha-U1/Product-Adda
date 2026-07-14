@@ -10308,6 +10308,103 @@
               "body": "{\n    \"success\": true,\n    \"message\": \"Admin order records fetched successfully\",\n    \"data\": {\n        \"content\": [\n            {\n                \"orderId\": \"019f3d3d-c201-77b2-ab0e-120b4cc1d5ac\",\n                \"orderNumber\": \"ORD-20260707154125-019F3D\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ef46d-9d89-75cb-9449-6ef25fea4509\",\n                \"customerFullName\": \"Donald trump\",\n                \"customerEmail\": \"donaldtrump@trump.com\",\n                \"subtotal\": 129999,\n                \"couponDiscount\": 250,\n                \"shippingCost\": 50,\n                \"taxAmount\": 23363.82,\n                \"totalAmount\": 153162.82,\n                \"createdAtUtc\": \"2026-07-07T21:11:25\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019f3d3d-c213-7eb5-95b6-b21185d6450c\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Samsung Galaxy S24 Ultra\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 129999,\n                        \"lineTotal\": 129999\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"499959d5-228a-4199-b0ab-9289ee8820d5\",\n                    \"addressLine1\": \"725 Fifth Avenue\",\n                    \"addressLine2\": \"Apartment 58B\",\n                    \"landmark\": \"Near Central Park\",\n                    \"city\": \"New York\",\n                    \"state\": \"New York\",\n                    \"postalCode\": \"10022\",\n                    \"country\": \"United States\"\n                },\n                \"coupon\": {\n                    \"couponId\": \"019f326b-2fd7-7c3d-ba4b-bbe704fe11e2\",\n                    \"couponCode\": \"FLAT250\",\n                    \"discountType\": \"FIXED\",\n                    \"discountValue\": 250\n                },\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            },\n            {\n                \"orderId\": \"019ed8f4-8928-7677-b806-189be09ec6e1\",\n                \"orderNumber\": \"ORD-4F62BF7E4450\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ed70e-d8f7-7840-afca-5a2ca3eae137\",\n                \"customerFullName\": \"Rahul Verma\",\n                \"customerEmail\": \"rahul.verma@gmail.com\",\n                \"subtotal\": 850,\n                \"couponDiscount\": 0,\n                \"shippingCost\": 0,\n                \"taxAmount\": 0,\n                \"totalAmount\": 850,\n                \"createdAtUtc\": \"2025-05-27T23:40:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7882-8935-8b326f71c65a\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Braided Multi-USB Cable Set\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 850,\n                        \"lineTotal\": 850\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"019ed70e-d924-7347-8903-cd5ec07e6a70\",\n                    \"addressLine1\": \"Flat 301\",\n                    \"addressLine2\": \"Lake View Apartments\",\n                    \"landmark\": \"Near School\",\n                    \"city\": \"Bengaluru\",\n                    \"state\": \"Karnataka\",\n                    \"postalCode\": \"560001\",\n                    \"country\": \"India\"\n                },\n                \"coupon\": null,\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7bfe-8cc2-37302057ce54\",\n                \"orderNumber\": \"ORD-79384D4BD963\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ed70e-d8f7-70e8-8293-1ff762bc1b92\",\n                \"customerFullName\": \"Vikram Malhotra\",\n                \"customerEmail\": \"vikram.m@gmail.com\",\n                \"subtotal\": 63900,\n                \"couponDiscount\": 0,\n                \"shippingCost\": 0,\n                \"taxAmount\": 0,\n                \"totalAmount\": 63900,\n                \"createdAtUtc\": \"2025-05-27T21:50:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7b81-af29-98e0cc869973\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"4K Ultra-Wide Desk Display\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 63900,\n                        \"lineTotal\": 63900\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"019ed70e-d925-7b08-9029-b889950de4cd\",\n                    \"addressLine1\": \"Flat 404\",\n                    \"addressLine2\": \"Sunshine Residency\",\n                    \"landmark\": \"Near Temple\",\n                    \"city\": \"Chennai\",\n                    \"state\": \"Tamil Nadu\",\n                    \"postalCode\": \"600001\",\n                    \"country\": \"India\"\n                },\n                \"coupon\": null,\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7281-b458-d7869aea81bf\",\n                \"orderNumber\": \"ORD-C018A0F00F89\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ed70e-d8f7-71c3-8368-fe041c4665c4\",\n                \"customerFullName\": \"Pooja Singh\",\n                \"customerEmail\": \"pooja.singh@yahoo.com\",\n                \"subtotal\": 4750,\n                \"couponDiscount\": 0,\n                \"shippingCost\": 0,\n                \"taxAmount\": 0,\n                \"totalAmount\": 4750,\n                \"createdAtUtc\": \"2025-05-27T21:15:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-76bd-9145-4f9b93f1a3df\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Bohemian Living Room Rug\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 4750,\n                        \"lineTotal\": 4750\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"019ed70e-d925-7dba-83b6-b699babb6f9a\",\n                    \"addressLine1\": \"House No 45\",\n                    \"addressLine2\": \"Palm Meadows\",\n                    \"landmark\": \"Near Park\",\n                    \"city\": \"Pune\",\n                    \"state\": \"Maharashtra\",\n                    \"postalCode\": \"411001\",\n                    \"country\": \"India\"\n                },\n                \"coupon\": null,\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7a44-b85d-6bb073bb1711\",\n                \"orderNumber\": \"ORD-AB5E9DA11633\",\n                \"statusName\": \"PENDING\",\n                \"customerId\": \"019ed70e-d8f7-7840-afca-5a2ca3eae137\",\n                \"customerFullName\": \"Rahul Verma\",\n                \"customerEmail\": \"rahul.verma@gmail.com\",\n                \"subtotal\": 1899,\n                \"couponDiscount\": 0,\n                \"shippingCost\": 0,\n                \"taxAmount\": 0,\n                \"totalAmount\": 1899,\n                \"createdAtUtc\": \"2025-05-27T19:30:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7f90-8533-de37297e9e27\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"MagSafe Powerbank Pack\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 1899,\n                        \"lineTotal\": 1899\n                    }\n                ],\n                \"address\": {\n                    \"addressId\": \"019ed70e-d924-7347-8903-cd5ec07e6a70\",\n                    \"addressLine1\": \"Flat 301\",\n                    \"addressLine2\": \"Lake View Apartments\",\n                    \"landmark\": \"Near School\",\n                    \"city\": \"Bengaluru\",\n                    \"state\": \"Karnataka\",\n                    \"postalCode\": \"560001\",\n                    \"country\": \"India\"\n                },\n                \"coupon\": null,\n                \"payment\": null,\n                \"deliveryPartnerId\": \"019f4283-629d-7c35-a2f1-d58781da6535\",\n                \"deliveryPartnerName\": \"QuickMove Express\",\n                \"invoiceNumber\": null,\n                \"invoiceAmount\": null,\n                \"invoiceGeneratedAt\": null,\n                \"cancellationReason\": null\n            }\n        ],\n        \"totalElements\": 22,\n        \"page\": 0,\n        \"size\": 5\n    }\n}"
             }
           ]
+        },
+        {
+          "name": "api/vendor-payouts/schedule",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"filterVendorId\": \"<vendor-uuid>\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}api/vendor-payouts/schedule",
+              "host": [
+                "{{baseUrl}}api"
+              ],
+              "path": [
+                "vendor-payouts",
+                "schedule"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/admin/analytics/payments",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/analytics/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "analytics",
+                "payments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/admin/compliance/audit-logs",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/compliance/audit-logs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "compliance",
+                "audit-logs"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },

@@ -3,6 +3,7 @@ package com.productadda.dto.payment;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,10 +18,10 @@ import lombok.Setter;
 @Builder
 public class RefundFullRequestDto {
 
-    @NotBlank(message = "Payment id is required")
+    @NotNull(message = "Payment id is required")
     private UUID paymentId;
 
-    @NotBlank(message = "Order id is required")
+    @NotNull(message = "Order id is required")
     private UUID orderId;
 
     // One of: cancellation, return, manual_admin

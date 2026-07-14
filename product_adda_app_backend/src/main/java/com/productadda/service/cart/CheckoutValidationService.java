@@ -182,7 +182,7 @@ public class CheckoutValidationService {
                  * 4. POST-SAVING DATA SANITIZATION & MASKING
                  * ================================================================
                  */
-                // TODO: /checkout/validate has no addressId in its contract (per Day 5 spec),
+                // TODO: /checkout/validate has no addressId in its contract,
                 // so the tax region is estimated off the user's first active address.
                 // The actual POST /api/checkout call always uses the address explicitly
                 // supplied in CheckoutRequestDto, so this is an estimate only.

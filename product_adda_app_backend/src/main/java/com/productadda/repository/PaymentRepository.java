@@ -76,7 +76,125 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
                         Pageable pageable);
 
         // ==========================================
-        // RECONCILIATION DATE-RANGE LOOKUP (Day 4)
+        // RECONCILIATION DATE-RANGE LOOKUP
         // ==========================================
         List<Payment> findByCreatedAtUtcBetween(LocalDateTime startDate, LocalDateTime endDate);
+
+        // ==========================================
+        // ANALYTICS: TOTAL TRANSACTION COUNT
+        // ==========================================
+        @Query("SELECT COUNT(p) FROM Payment p " +
+                        "WHERE p.createdAtUtc >= :startDate AND p.createdAtUtc <= :endDate " +
+                        "AND (:gatewayName IS NULL OR p.fkGateway.gatewayName = :gatewayName) " +
+                        "AND (:paymentMethod IS NULL OR p.paymentMethod = :paymentMethod)")
+        long countTransactions(
+                        @Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate,
+                        @Param("gatewayName") String gatewayName,
+                        @Param("paymentMethod") String paymentMethod);
+
+        // ==========================================
+        // ANALYTICS: TRANSACTION COUNT BY STATUS
+        // Used for both success_rate_percent and failed_rate_percent.
+        // ==========================================
+        @Query("SELECT COUNT(p) FROM Payment p " +
+                        "WHERE p.createdAtUtc >= :startDate AND p.createdAtUtc <= :endDate " +
+                        "AND p.fkStatus.statusName = :statusName " +
+                        "AND (:gatewayName IS NULL OR p.fkGateway.gatewayName = :gatewayName) " +
+                        "AND (:paymentMethod IS NULL OR p.paymentMethod = :paymentMethod)")
+        long countTransactionsByStatus(
+                        @Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate,
+                        @Param("statusName") String statusName,
+                        @Param("gatewayName") String gatewayName,
+                        @Param("paymentMethod") String paymentMethod);
+
+        // ==========================================
+        // ANALYTICS: REVENUE SUM BY STATUS
+        // CONFIRMED real status value is "SUCCESS" (not "SUCCESSFUL" as the
+        // original plan draft assumed). "REFUNDED"/"PARTIALLY_REFUNDED" are
+        // both confirmed real values too.
+        // ==========================================
+        @Query("SELECT COALESCE(SUM(p.amountInPaise), 0) FROM Payment p " +
+                        "WHERE p.createdAtUtc >= :startDate AND p.createdAtUtc <= :endDate " +
+                        "AND p.fkStatus.statusName = :statusName " +
+                        "AND (:gatewayName IS NULL OR p.fkGateway.gatewayName = :gatewayName) " +
+                        "AND (:paymentMethod IS NULL OR p.paymentMethod = :paymentMethod)")
+        long sumAmountByStatus(
+                        @Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate,
+                        @Param("statusName") String statusName,
+                        @Param("gatewayName") String gatewayName,
+                        @Param("paymentMethod") String paymentMethod);
+
+        // ==========================================
+        // ANALYTICS: REVENUE SUM ACROSS MULTIPLE STATUSES
+        // Used for total_refunded_in_paise = SUM WHERE status IN
+        // (REFUNDED, PARTIALLY_REFUNDED).
+        // ==========================================
+        @Query("SELECT COALESCE(SUM(p.amountInPaise), 0) FROM Payment p " +
+                        "WHERE p.createdAtUtc >= :startDate AND p.createdAtUtc <= :endDate " +
+                        "AND p.fkStatus.statusName IN :statusNames " +
+                        "AND (:gatewayName IS NULL OR p.fkGateway.gatewayName = :gatewayName) " +
+                        "AND (:paymentMethod IS NULL OR p.paymentMethod = :paymentMethod)")
+        long sumAmountByStatusIn(
+                        @Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate,
+                        @Param("statusNames") List<String> statusNames,
+                        @Param("gatewayName") String gatewayName,
+                        @Param("paymentMethod") String paymentMethod);
+
+        // ==========================================
+        // ANALYTICS: PAYMENT METHOD BREAKDOWN
+        // Returns Object[]{ paymentMethod, count, revenueInPaise } rows,
+        // revenue counted only for SUCCESS payments per the plan.
+        // ==========================================
+        @Query("SELECT p.paymentMethod, COUNT(p), COALESCE(SUM(CASE WHEN p.fkStatus.statusName = 'SUCCESS' THEN p.amountInPaise ELSE 0 END), 0) "
+                        +
+                        "FROM Payment p " +
+                        "WHERE p.createdAtUtc >= :startDate AND p.createdAtUtc <= :endDate " +
+                        "AND (:gatewayName IS NULL OR p.fkGateway.gatewayName = :gatewayName) " +
+                        "GROUP BY p.paymentMethod")
+        List<Object[]> getMethodBreakdown(
+                        @Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate,
+                        @Param("gatewayName") String gatewayName);
+
+        // ==========================================
+        // ANALYTICS: PAYMENT GATEWAY BREAKDOWN
+        // Returns Object[]{ gatewayName, count, revenueInPaise } rows.
+        // ==========================================
+        @Query("SELECT p.fkGateway.gatewayName, COUNT(p), COALESCE(SUM(CASE WHEN p.fkStatus.statusName = 'SUCCESS' THEN p.amountInPaise ELSE 0 END), 0) "
+                        +
+                        "FROM Payment p " +
+                        "WHERE p.createdAtUtc >= :startDate AND p.createdAtUtc <= :endDate " +
+                        "AND (:paymentMethod IS NULL OR p.paymentMethod = :paymentMethod) " +
+                        "GROUP BY p.fkGateway.gatewayName")
+        List<Object[]> getGatewayBreakdown(
+                        @Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate,
+                        @Param("paymentMethod") String paymentMethod);
+
+        // ==========================================
+        // ANALYTICS: DAILY REVENUE TREND
+        // Returns Object[]{ dateString, revenueInPaise } rows, one per
+        // calendar day with at least one SUCCESS payment in range.
+        // TODO: only day-level grouping is implemented. The plan also
+        // mentions week/month grouping via an optional group_by param -
+        // not implemented; day-level is returned regardless of any
+        // group_by value the frontend might send.
+        // ==========================================
+        @Query("SELECT FUNCTION('DATE', p.createdAtUtc), COALESCE(SUM(p.amountInPaise), 0) " +
+                        "FROM Payment p " +
+                        "WHERE p.createdAtUtc >= :startDate AND p.createdAtUtc <= :endDate " +
+                        "AND p.fkStatus.statusName = 'SUCCESS' " +
+                        "AND (:gatewayName IS NULL OR p.fkGateway.gatewayName = :gatewayName) " +
+                        "AND (:paymentMethod IS NULL OR p.paymentMethod = :paymentMethod) " +
+                        "GROUP BY FUNCTION('DATE', p.createdAtUtc) " +
+                        "ORDER BY FUNCTION('DATE', p.createdAtUtc) ASC")
+        List<Object[]> getRevenueTrendByDay(
+                        @Param("startDate") LocalDateTime startDate,
+                        @Param("endDate") LocalDateTime endDate,
+                        @Param("gatewayName") String gatewayName,
+                        @Param("paymentMethod") String paymentMethod);
 }

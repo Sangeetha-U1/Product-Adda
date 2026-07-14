@@ -44,7 +44,7 @@ public class DeliveryPartnerPickupOrderService {
      * Description: Delivery-partner-only. Claims an available SHIPPED order
      * belonging to the authenticated partner, moving the order status
      * to PICKED_UP. active_deliveries is intentionally left
-     * unchanged (per the Day 5 plan, it only decrements on delivery
+     * unchanged (per the plan, it only decrements on delivery
      * completion, which is out of scope for today).
      * ================================================================
      */

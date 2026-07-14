@@ -29,10 +29,10 @@ import lombok.RequiredArgsConstructor;
 /*
  * ================================================================
  * RefundServiceGetStatus
- * API 9/14 - GET /api/refunds/{refundId}
+ * GET /api/refunds/{refundId}
  * Role-based access: customer sees own refunds (via
  * Payment.fkCustomer); admin sees all. Optional live gateway sync
- * when status is still INITIATED/PROCESSING.
+ * when status is still INITIATED/PENDING (in-flight refund states).
  * ================================================================
  */
 @Service
@@ -43,7 +43,6 @@ public class RefundServiceGetStatus {
     private final RefundLineItemRepository refundLineItemRepository;
     private final PaymentStatusRepository paymentStatusRepository;
     private final UserRepository userRepository;
-
     private final RazorpayGatewayFetchRefundStatusService razorpayGatewayFetchRefundStatusService;
 
     /*
@@ -93,12 +92,13 @@ public class RefundServiceGetStatus {
         // 1.3 DATABASE LOOKUP VALIDATION
         // ==========================================
         Refund refund;
+
         if (isAdmin) {
             refund = refundRepository.findById(refundId)
                     .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Refund not found"));
         } else {
             refund = refundRepository
-                    .findByPkRefundIdAndFkPayment_FkCustomer_PkUserId(refundId, authenticatedUser.getPkUserId())
+                    .findByPkRefundIdAndFkPayment_FkUser_PkUserId(refundId, authenticatedUser.getPkUserId())
                     .orElseThrow(() -> new ApiException(HttpStatus.FORBIDDEN,
                             "You do not have permission to view this refund"));
         }
@@ -115,14 +115,14 @@ public class RefundServiceGetStatus {
         // has not yet arrived).
         String localStatusName = refund.getFkStatus().getStatusName();
         boolean isInFlight = "INITIATED".equalsIgnoreCase(localStatusName)
-                || "PROCESSING".equalsIgnoreCase(localStatusName);
+                || "PENDING".equalsIgnoreCase(localStatusName);
 
         if (isInFlight && refund.getGatewayRefundId() != null) {
             String gatewayStatus = razorpayGatewayFetchRefundStatusService
                     .fetchRefundStatus(refund.getGatewayRefundId());
 
             // TODO: Razorpay refund statuses are "pending"/"processed"/"failed" -
-            // mapped here to our own PROCESSING/SUCCESS/FAILED vocabulary.
+            // mapped here to our own PENDING/SUCCESS/FAILED vocabulary.
             // Not verified against a real Razorpay refund response.
             if ("processed".equalsIgnoreCase(gatewayStatus)) {
                 PaymentStatus successStatus = paymentStatusRepository.findByStatusName("SUCCESS")

@@ -3,8 +3,8 @@ package com.productadda.service.payment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -17,7 +17,6 @@ import com.productadda.dto.payment.RefundLineItemRequestDto;
 import com.productadda.dto.payment.RefundLineItemResponseDto;
 import com.productadda.dto.payment.RefundPartialRequestDto;
 import com.productadda.dto.payment.RefundResponseDto;
-
 import com.productadda.entity.Inventory;
 import com.productadda.entity.Order;
 import com.productadda.entity.OrderItem;
@@ -27,9 +26,7 @@ import com.productadda.entity.PaymentStatus;
 import com.productadda.entity.Refund;
 import com.productadda.entity.RefundLineItem;
 import com.productadda.entity.User;
-
 import com.productadda.exception.ApiException;
-
 import com.productadda.repository.InventoryRepository;
 import com.productadda.repository.OrderItemRepository;
 import com.productadda.repository.OrderRepository;
@@ -39,7 +36,6 @@ import com.productadda.repository.PaymentStatusRepository;
 import com.productadda.repository.RefundLineItemRepository;
 import com.productadda.repository.RefundRepository;
 import com.productadda.repository.UserRepository;
-
 import com.productadda.util.UuidUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -47,7 +43,7 @@ import lombok.RequiredArgsConstructor;
 /*
  * ================================================================
  * RefundServicePartialRefund
- * API 8/14 - POST /api/refunds/partial
+ * POST /api/refunds/partial
  * Admin-only, same rationale as RefundServiceFullRefund.
  * ================================================================
  */
@@ -76,8 +72,6 @@ public class RefundServicePartialRefund {
          */
         @Transactional
         public RefundResponseDto initiatePartialRefund(RefundPartialRequestDto request) {
-
-                Map<String, Object> metaData = new HashMap<>();
 
                 /*
                  * ================================================================
@@ -210,9 +204,8 @@ public class RefundServicePartialRefund {
                  * ================================================================
                  */
 
-                // TODO: "INITIATED"/"PROCESSING" refund-lifecycle status rows are
-                // NOT confirmed against real payment_statuses data - see
-                // CHANGES_DAY3.md for the corrected seed script.
+                // "INITIATED" exists in the real payment_statuses
+                // table. "PROCESSING" does not - see the correction below.
                 PaymentStatus initiatedStatus = paymentStatusRepository.findByStatusName("INITIATED")
                                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                                                 "INITIATED status not configured"));
@@ -255,14 +248,16 @@ public class RefundServicePartialRefund {
                 }
 
                 // Gateway call: razorpayPaymentId is Payment.gatewayTransactionId,
-                // set during Day 1 webhook processing - NOT the gatewayOrderId.
+                // set during webhook processing - NOT the gatewayOrderId.
                 RazorpayGatewayInitiateRefundService.RazorpayRefundResult gatewayResult = razorpayGatewayInitiateRefundService
                                 .initiateRefund(
                                                 payment.getGatewayTransactionId(), totalRequestedRefundInPaise);
 
-                PaymentStatus processingStatus = paymentStatusRepository.findByStatusName("PROCESSING")
+                // "PROCESSING" does not exist in the real
+                // payment_statuses table - reusing confirmed "PENDING" instead.
+                PaymentStatus processingStatus = paymentStatusRepository.findByStatusName("PENDING")
                                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
-                                                "PROCESSING status not configured"));
+                                                "PENDING status not configured"));
 
                 refund.setGatewayRefundId(gatewayResult.getGatewayRefundId());
                 refund.setFkStatus(processingStatus);
@@ -282,18 +277,14 @@ public class RefundServicePartialRefund {
                  * ================================================================
                  */
                 refund = refundRepository.save(refund);
-
                 payment = paymentRepository.save(payment);
-
                 order = orderRepository.save(order);
 
-                Map<String, Object> details = new HashMap<>();
+                Map<String, Object> metadata = new HashMap<>();
 
-                details.put("refundId", refund.getPkRefundId());
-                details.put("refundedItemsCount", refundLineItems.size());
-                details.put("totalAmountInPaise", totalRequestedRefundInPaise);
-
-                metaData.put("fullRefundOrder", details);
+                metadata.put("refundId", refund.getPkRefundId().toString());
+                metadata.put("refundedItemsCount", refundLineItems.size());
+                metadata.put("totalAmountInPaise", totalRequestedRefundInPaise);
 
                 PaymentAuditLog auditLog = PaymentAuditLog.builder()
                                 .pkAuditLogId(uuidUtil.generateUuidV7())
@@ -304,8 +295,9 @@ public class RefundServicePartialRefund {
                                 .actorRole("ADMIN")
                                 .oldStatus(oldPaymentStatus)
                                 .newStatus("PARTIALLY_REFUNDED")
-                                .metadata(metaData)
+                                .metadata(metadata)
                                 .build();
+
                 paymentAuditLogRepository.save(auditLog);
 
                 // TODO: will trigger refund_initiated notification hooks

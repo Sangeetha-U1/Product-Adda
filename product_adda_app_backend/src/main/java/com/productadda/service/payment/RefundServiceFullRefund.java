@@ -5,15 +5,18 @@ import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.productadda.dto.payment.RefundFullRequestDto;
 import com.productadda.dto.payment.RefundResponseDto;
+
 import com.productadda.entity.Inventory;
 import com.productadda.entity.Order;
 import com.productadda.entity.OrderItem;
@@ -22,7 +25,9 @@ import com.productadda.entity.PaymentAuditLog;
 import com.productadda.entity.PaymentStatus;
 import com.productadda.entity.Refund;
 import com.productadda.entity.User;
+
 import com.productadda.exception.ApiException;
+
 import com.productadda.repository.InventoryRepository;
 import com.productadda.repository.OrderItemRepository;
 import com.productadda.repository.OrderRepository;
@@ -31,14 +36,15 @@ import com.productadda.repository.PaymentRepository;
 import com.productadda.repository.PaymentStatusRepository;
 import com.productadda.repository.RefundRepository;
 import com.productadda.repository.UserRepository;
+
 import com.productadda.util.UuidUtil;
 
 import lombok.RequiredArgsConstructor;
 
 /*
  * ================================================================
- * NEW SERVICE: RefundServiceFullRefund
- * API 7/14 - POST /api/refunds/full
+ * RefundServiceFullRefund
+ * POST /api/refunds/full
  * Admin-only (confirmed: no CUSTOMER_SUPPORT role exists in this
  * project's roles table - customers use the existing
  * OrderCancellationService self-service path instead).
@@ -70,7 +76,7 @@ public class RefundServiceFullRefund {
      */
     @Transactional
     public RefundResponseDto initiateFullRefund(RefundFullRequestDto request) {
-        Map<String, Object> metaData = new HashMap<>();
+
         /*
          * ================================================================
          * 1. VALIDATION SECTION
@@ -80,6 +86,20 @@ public class RefundServiceFullRefund {
         // ==========================================
         // 1.1 REQUEST VALIDATION
         // ==========================================
+        if (request.getPaymentId() == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Payment id is required");
+        }
+
+        if (request.getOrderId() == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Order id is required");
+        }
+
+        if (request.getReason() == null || request.getReason().isBlank()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Reason is required");
+        }
+
+        UUID paymentId = request.getPaymentId();
+        UUID orderId = request.getOrderId();
 
         if (!isValidRefundReason(request.getReason())) {
             throw new ApiException(HttpStatus.BAD_REQUEST,
@@ -94,15 +114,20 @@ public class RefundServiceFullRefund {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
         }
 
-        String currentUsername = authentication.getName();
+        String email;
+        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
+            email = userDetails.getUsername();
+        } else {
+            email = authentication.getName();
+        }
 
-        User actingAdmin = userRepository.findByEmail(currentUsername)
+        User actingAdmin = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user no longer exists"));
 
         // ==========================================
         // 1.3 DATABASE LOOKUP VALIDATION
         // ==========================================
-        Payment payment = paymentRepository.findById(request.getPaymentId())
+        Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Payment not found"));
 
         // CONFIRMED value: legacy PaymentServicePaymentVerify checks "SUCCESS"
@@ -111,7 +136,7 @@ public class RefundServiceFullRefund {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Payment must be in SUCCESS status to refund");
         }
 
-        Order order = orderRepository.findById(request.getOrderId())
+        Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Order not found"));
 
         if (!payment.getFkOrder().getPkOrderId().equals(order.getPkOrderId())) {
@@ -123,7 +148,6 @@ public class RefundServiceFullRefund {
         // from the plan's prose only - verify these OrderStatus rows exist
         // before deploying.
         String orderStatusName = order.getFkStatus().getStatusName();
-
         boolean isRefundEligibleOrderStatus = "PROCESSING".equalsIgnoreCase(orderStatusName)
                 || "SHIPPED".equalsIgnoreCase(orderStatusName)
                 || "DELIVERED".equalsIgnoreCase(orderStatusName);
@@ -161,9 +185,10 @@ public class RefundServiceFullRefund {
             throw new ApiException(HttpStatus.BAD_REQUEST, "No refundable amount remaining on this order");
         }
 
-        // TODO: "INITIATED"/"PROCESSING"/"REFUNDED" refund-lifecycle status
-        // rows are NOT confirmed against real payment_statuses data - see
-        // CHANGES_DAY3.md for the corrected seed script.
+        // real payment_statuses values checked via
+        // SELECT status_name FROM payment_statuses. "INITIATED" and
+        // "REFUNDED" both exist. "PROCESSING" does not - see the
+        // correction a few lines below where it's set.
         PaymentStatus initiatedStatus = paymentStatusRepository.findByStatusName("INITIATED")
                 .orElseThrow(
                         () -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "INITIATED status not configured"));
@@ -182,17 +207,22 @@ public class RefundServiceFullRefund {
                 .refundTriggeredByOrderEvent(request.getReason())
                 .isActive(true)
                 .build();
-
         refund = refundRepository.save(refund);
 
         // Gateway call: razorpayPaymentId is Payment.gatewayTransactionId,
-        // set during Day 1 webhook processing - NOT the gatewayOrderId.
-        RazorpayGatewayInitiateRefundService.RazorpayRefundResult gatewayResult = razorpayGatewayInitiateRefundService.initiateRefund(
-                payment.getGatewayTransactionId(), refundAmountInPaise);
+        // set during webhook processing - NOT the gatewayOrderId.
+        RazorpayGatewayInitiateRefundService.RazorpayRefundResult gatewayResult = razorpayGatewayInitiateRefundService
+                .initiateRefund(
+                        payment.getGatewayTransactionId(), refundAmountInPaise);
 
-        PaymentStatus processingStatus = paymentStatusRepository.findByStatusName("PROCESSING")
-                .orElseThrow(
-                        () -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "PROCESSING status not configured"));
+        // real payment_statuses table confirmed via
+        // SELECT status_name FROM payment_statuses - "PROCESSING" does NOT
+        // exist. Reusing "PENDING" (confirmed) for the refund's in-flight
+        // gateway state instead. This does not conflict with Payment's own
+        // use of PENDING since Refund and Payment are separate rows/tables
+        // sharing the same lookup table.
+        PaymentStatus processingStatus = paymentStatusRepository.findByStatusName("PENDING")
+                .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "PENDING status not configured"));
 
         refund.setGatewayRefundId(gatewayResult.getGatewayRefundId());
         refund.setFkStatus(processingStatus);
@@ -233,12 +263,9 @@ public class RefundServiceFullRefund {
 
         order = orderRepository.save(order);
 
-        Map<String, Object> details = new HashMap<>();
-
-        details.put("refundId", refund.getPkRefundId());
-        details.put("amountInPaise", refund.getRefundAmountInPaise());
-
-        metaData.put("fullRefundOrder", details);
+        Map<String, Object> metadata = new HashMap<>();
+        metadata.put("refundId", refund.getPkRefundId().toString());
+        metadata.put("amountInPaise", refundAmountInPaise);
 
         PaymentAuditLog auditLog = PaymentAuditLog.builder()
                 .pkAuditLogId(uuidUtil.generateUuidV7())
@@ -249,11 +276,10 @@ public class RefundServiceFullRefund {
                 .actorRole("ADMIN")
                 .oldStatus(oldPaymentStatus)
                 .newStatus("REFUNDED")
-                .metadata(metaData)
+                .metadata(metadata)
                 .build();
 
         paymentAuditLogRepository.save(auditLog);
-
         // TODO: will trigger refund_initiated notification hooks
 
         /*

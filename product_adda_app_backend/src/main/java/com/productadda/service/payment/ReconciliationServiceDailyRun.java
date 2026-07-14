@@ -23,23 +23,19 @@ import org.springframework.transaction.annotation.Transactional;
 import com.productadda.dto.payment.ReconciliationDiscrepancyDto;
 import com.productadda.dto.payment.ReconciliationResultDto;
 import com.productadda.dto.payment.ReconciliationTriggerRequestDto;
-
 import com.productadda.entity.Payment;
 import com.productadda.entity.PaymentAuditLog;
 import com.productadda.entity.PaymentGateway;
 import com.productadda.entity.PaymentReconciliationLog;
 import com.productadda.entity.PaymentStatus;
 import com.productadda.entity.User;
-
 import com.productadda.exception.ApiException;
-
 import com.productadda.repository.PaymentAuditLogRepository;
 import com.productadda.repository.PaymentGatewayRepository;
 import com.productadda.repository.PaymentRepository;
 import com.productadda.repository.PaymentReconciliationLogRepository;
 import com.productadda.repository.PaymentStatusRepository;
 import com.productadda.repository.UserRepository;
-
 import com.productadda.util.UuidUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -57,23 +53,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReconciliationServiceDailyRun {
 
-    // TODO: Centralize reconciliation/payment status names into constants or
-    // an enum instead of hard-coded strings (RUNNING,
-    // COMPLETED_WITH_DISCREPANCIES, COMPLETED, etc.).
-
-    // TODO: Optimize reconciliation for large datasets by comparing
-    // transactions using maps/sets or batched processing instead of
-    // nested iterations.
-
     private final PaymentRepository paymentRepository;
     private final PaymentAuditLogRepository paymentAuditLogRepository;
     private final PaymentReconciliationLogRepository paymentReconciliationLogRepository;
     private final PaymentStatusRepository paymentStatusRepository;
     private final PaymentGatewayRepository paymentGatewayRepository;
     private final UserRepository userRepository;
-
     private final RazorpayGatewayFetchPaymentsService razorpayGatewayFetchPaymentsService;
-
     private final UuidUtil uuidUtil;
 
     /*
@@ -159,10 +145,7 @@ public class ReconciliationServiceDailyRun {
      */
     @Transactional
     public ReconciliationResultDto runReconciliation(
-
             LocalDateTime fromUtc, LocalDateTime toUtc, String reconciliationType, User triggeredByUser) {
-
-        Map<String, Object> metaData = new HashMap<>();
 
         /*
          * ================================================================
@@ -170,11 +153,13 @@ public class ReconciliationServiceDailyRun {
          * ================================================================
          */
 
-        // TODO: "RUNNING" and "COMPLETED_WITH_DISCREPANCIES" are NEW status
-        // rows not present in the original Day 1 seed script - see
-        // CHANGES_DAY4.md for the corrected seed script covering both.
-        PaymentStatus runningStatus = paymentStatusRepository.findByStatusName("RUNNING")
-                .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "RUNNING status not configured"));
+        // real payment_statuses table confirmed via
+        // SELECT status_name FROM payment_statuses - "RUNNING" does NOT
+        // exist. Reusing "INITIATED" (confirmed) for the pre-comparison
+        // state instead.
+        PaymentStatus runningStatus = paymentStatusRepository.findByStatusName("INITIATED")
+                .orElseThrow(
+                        () -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "INITIATED status not configured"));
 
         PaymentGateway razorpayGateway = paymentGatewayRepository.findByGatewayName("RAZORPAY")
                 .orElseThrow(
@@ -242,10 +227,12 @@ public class ReconciliationServiceDailyRun {
 
         boolean hasDiscrepancies = !missingInDb.isEmpty() || !orphanedInDb.isEmpty();
 
-        // TODO: "COMPLETED" was already present in the Day 1 seed script
-        // (used for reconciliation/payout success). "COMPLETED_WITH_DISCREPANCIES"
-        // is new - see CHANGES_DAY4.md.
-        String finalStatusName = hasDiscrepancies ? "COMPLETED_WITH_DISCREPANCIES" : "COMPLETED";
+        // "COMPLETED_WITH_DISCREPANCIES" does not exist
+        // in the real payment_statuses table. "FAILED_WITH_ERRORS" DOES
+        // exist (confirmed via SELECT status_name FROM payment_statuses) -
+        // this was actually correct in the original seed script and
+        // was wrongly "corrected" away. Reverted here.
+        String finalStatusName = hasDiscrepancies ? "FAILED_WITH_ERRORS" : "COMPLETED";
         PaymentStatus finalStatus = paymentStatusRepository.findByStatusName(finalStatusName)
                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                         finalStatusName + " status not configured"));
@@ -286,26 +273,26 @@ public class ReconciliationServiceDailyRun {
          */
         reconciliationLog = paymentReconciliationLogRepository.save(reconciliationLog);
 
-        Map<String, Object> details = new HashMap<>();
+        Map<String, Object> detailsMap = new HashMap<>();
 
-        details.put("reconciliationLogId", reconciliationLog.getPkReconciliationLogId());
-        details.put("matchedRecords", matchedCount);
-        details.put("discrepanciesCount", (missingInDb.size() + orphanedInDb.size()));
-
-        metaData.put("paymentMethod", details);
+        detailsMap.put("reconciliationLogId", reconciliationLog.getPkReconciliationLogId().toString());
+        detailsMap.put("matchedRecords", matchedCount);
+        detailsMap.put("discrepanciesCount", missingInDb.size() + orphanedInDb.size());
 
         // Note: PaymentAuditLog has no dedicated reconciliation-log FK column
         // in the current schema - the reconciliation_log_id is embedded in
         // the JSON details payload instead of a formal relationship.
+
         PaymentAuditLog auditLog = PaymentAuditLog.builder()
                 .pkAuditLogId(uuidUtil.generateUuidV7())
                 .action("reconciliation_completed")
                 .fkActor(triggeredByUser)
                 .actorRole(triggeredByUser != null ? "ADMIN" : "SYSTEM")
-                .oldStatus("RUNNING")
+                .oldStatus("INITIATED")
                 .newStatus(finalStatusName)
-                .metadata(metaData)
+                .metadata(detailsMap)
                 .build();
+                
         paymentAuditLogRepository.save(auditLog);
 
         // TODO: if hasDiscrepancies, trigger an incident alert for manual

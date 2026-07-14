@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 000002B7 7478:274D
+Volume serial number is 000001A5 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -36,13 +36,16 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       AddressController.java
 |   |           |   |       
 |   |           |   +---admin
+|   |           |   |       AdminAnalyticsController.java
 |   |           |   |       AdminAuthController.java
+|   |           |   |       AdminComplianceController.java
 |   |           |   |       AdminDeliveryPartnerController.java
 |   |           |   |       AdminInvoiceController.java
 |   |           |   |       AdminOrderController.java
 |   |           |   |       AdminProductController.java
 |   |           |   |       AdminUserController.java
 |   |           |   |       AdminVendorManagementController.java
+|   |           |   |       AdminVendorPayoutController.java
 |   |           |   |       
 |   |           |   +---auth
 |   |           |   |       AuthController.java
@@ -184,16 +187,21 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       UserInvoiceWrapperDto.java
 |   |           |   |       
 |   |           |   +---payment
+|   |           |   |       AuditLogResponseDto.java
+|   |           |   |       PaginatedAuditLogResponseDto.java
 |   |           |   |       PaginatedPaymentHistoryResponseDto.java
 |   |           |   |       PaginatedPaymentResponseDto.java
+|   |           |   |       PaymentAnalyticsResponseDto.java
 |   |           |   |       PaymentCreateRequestDto.java
 |   |           |   |       PaymentCreateResponseDto.java
 |   |           |   |       PaymentDetailResponseDto.java
+|   |           |   |       PaymentGatewayBreakdownDto.java
 |   |           |   |       PaymentGatewayHealthResponseDto.java
 |   |           |   |       PaymentHistoryItemDto.java
 |   |           |   |       PaymentInitiateRequestDto.java
 |   |           |   |       PaymentInitiateResponseDto.java
 |   |           |   |       PaymentListItemDto.java
+|   |           |   |       PaymentMethodBreakdownDto.java
 |   |           |   |       PaymentMethodListDto.java
 |   |           |   |       PaymentMethodRequestDto.java
 |   |           |   |       PaymentMethodResponseDto.java
@@ -211,6 +219,9 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       RefundLineItemResponseDto.java
 |   |           |   |       RefundPartialRequestDto.java
 |   |           |   |       RefundResponseDto.java
+|   |           |   |       RevenueTrendPointDto.java
+|   |           |   |       VendorPayoutResponseDto.java
+|   |           |   |       VendorPayoutScheduleRequestDto.java
 |   |           |   |       
 |   |           |   +---product
 |   |           |   |       AdminModerationStatsResponseDto.java
@@ -371,6 +382,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       UserRepository.java
 |   |           |       UserRoleRepository.java
 |   |           |       VendorBankDetailRepository.java
+|   |           |       VendorPayoutRepository.java
 |   |           |       VendorRepository.java
 |   |           |       WishlistItemRepository.java
 |   |           |       WishlistPriceHistoryRepository.java
@@ -462,7 +474,9 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       OrderHistoryService.java
 |   |           |   |       
 |   |           |   +---payment
+|   |           |   |       ComplianceAuditLogService.java
 |   |           |   |       CustomerPaymentMethodRetrievalService.java
+|   |           |   |       PaymentAnalyticsServiceDashboard.java
 |   |           |   |       PaymentMethodServiceSave.java
 |   |           |   |       PaymentServiceGetPaymentByOrderId.java
 |   |           |   |       PaymentServiceGetPaymentStatus.java
@@ -484,6 +498,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       RefundServiceGetStatus.java
 |   |           |   |       RefundServicePartialRefund.java
 |   |           |   |       ScheduledReconciliationTask.java
+|   |           |   |       VendorPayoutServiceSchedule.java
 |   |           |   |       
 |   |           |   +---product
 |   |           |   |       ProductCreateService.java
@@ -546,12 +561,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 000002BA 7478:274D
+Volume serial number is 00000216 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 00000187 7478:274D
+Volume serial number is 0000026B 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

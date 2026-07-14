@@ -184,7 +184,7 @@ public class CustomerGetCustomerPaymentsService {
                                     : "UNKNOWN")
                             .createdAtUtc(payment.getCreatedAtUtc())
                             .capturedAtUtc(payment.getCapturedAtUtc())
-                            // TODO: refunds table does not exist until Day 3;
+                            // TODO: refunds table does not exist;
                             // hardcoded to 0 until RefundRepository is available.
                             .refundedAmountInPaise(0L)
                             .build();
@@ -206,7 +206,7 @@ public class CustomerGetCustomerPaymentsService {
 
     /*
      * TODO: Replace with a real "Card ending in XXXX" lookup once
-     * PaymentMethod.java (Day 4) is available. Generic label only for now.
+     * PaymentMethod.java is available. Generic label only for now.
      * Duplicated from PaymentServiceGetPaymentStatus intentionally - these
      * are two independent granular services, not sharing a base class,
      * per the project's single-responsibility service convention.

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
  * RESPONSE DTO
  * Description: Sanitized, vendor-scoped view of an order containing
  * only this vendor's items. Customer identity is masked to first
- * name only, per Day 1 vendor-visibility requirements.
+ * name only, per vendor-visibility requirements.
  * ================================================================
  */
 @Getter

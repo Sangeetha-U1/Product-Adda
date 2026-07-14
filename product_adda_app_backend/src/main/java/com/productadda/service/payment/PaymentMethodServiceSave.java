@@ -68,7 +68,7 @@ public class PaymentMethodServiceSave {
         // ==========================================
         // 1.1 REQUEST VALIDATION
         // ==========================================
-        // Razorpay only, per project scope (see CHANGES_DAY4.md)
+        // Razorpay only, per project scope
         if (!"razorpay".equalsIgnoreCase(request.getPaymentGateway())) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "paymentGateway must be razorpay");
         }
@@ -176,6 +176,7 @@ public class PaymentMethodServiceSave {
                 .action("payment_method_saved")
                 .metadata(metaData)
                 .build();
+                
         paymentAuditLogRepository.save(auditLog);
 
         /*

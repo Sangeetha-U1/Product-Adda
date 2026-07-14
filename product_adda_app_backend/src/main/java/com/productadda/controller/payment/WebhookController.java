@@ -16,8 +16,7 @@ import lombok.RequiredArgsConstructor;
  * Razorpay only
  * No Auth Required - HMAC-SHA256 signature verification inside the
  * service is the trust boundary, not Spring Security. This path
- * MUST be added to PublicRoutes.CONFIGS (see CHANGES_DAY1.md for
- * the exact entry to add).
+ * MUST be added to PublicRoutes.CONFIGS
  * ================================================================
  */
 @RestController

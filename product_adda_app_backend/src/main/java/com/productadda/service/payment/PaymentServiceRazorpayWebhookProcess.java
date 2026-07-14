@@ -182,6 +182,7 @@ public class PaymentServiceRazorpayWebhookProcess {
                 .newStatus(newStatus.getStatusName())
                 .metadata(metaData)
                 .build();
+                
         paymentAuditLogRepository.save(auditLog);
 
         // TODO: notification service hook - payment_confirmed event

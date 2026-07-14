@@ -204,6 +204,7 @@ public class PaymentServicePaymentInitiate {
                 .currency("INR")
                 .isActive(true)
                 .build();
+                
         payment = paymentRepository.save(payment);
 
         Map<String, Object> details = new HashMap<>();
