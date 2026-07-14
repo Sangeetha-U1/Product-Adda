@@ -19,7 +19,7 @@ import com.productadda.dto.order.OrderDetailResponseDto;
 import com.productadda.dto.order.PaginatedOrderResponseDto;
 
 import com.productadda.service.order.OrderHistoryService;
-import com.productadda.service.order.OrderRetrievalService;
+import com.productadda.service.order.OrderGetOrderByIdService;
 import com.productadda.service.order.OrderCancellationService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderController {
 
         private final OrderHistoryService orderHistoryService;
-        private final OrderRetrievalService orderRetrievalService;
+        private final OrderGetOrderByIdService orderRetrievalService;
         private final OrderCancellationService orderCancellationService;
 
         @GetMapping("/api/orders")

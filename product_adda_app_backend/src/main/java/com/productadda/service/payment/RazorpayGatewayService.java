@@ -18,7 +18,11 @@ import lombok.RequiredArgsConstructor;
 
 /*
  * ================================================================
- * NEW SERVICE : RazorpayGatewayService
+ * SERVICE (Week 7): RazorpayGatewayService
+ * REVISION NOTE (Day 3): added initiateRefund(...) and
+ * fetchRefundStatus(...) below fetchOrderStatus(...) - everything
+ * from Day 1 is unchanged.
+ *
  * Thin, dedicated Razorpay integration boundary using the existing
  * RazorpayClient bean / RazorpayConfig already wired up for the
  * legacy Payment Links flow (PaymentServicePaymentVerify).
@@ -81,6 +85,62 @@ public class RazorpayGatewayService {
         }
     }
 
+    /*
+     * NEW (Day 3): Initiates a refund against a captured Razorpay payment.
+     * razorpayPaymentId is Payment.gatewayTransactionId (set during webhook
+     * processing on Day 1), NOT the gatewayOrderId.
+     *
+     * TODO: this call is written against the documented Razorpay Java SDK
+     * surface (razorpayClient.payments.refund(paymentId, JSONObject)),
+     * mirroring the confirmed razorpayClient.payments.fetch(paymentId)
+     * usage in the legacy PaymentServicePaymentVerify.java. It has NOT
+     * been verified against your exact installed razorpay-java version -
+     * confirm the method signature compiles before deploying.
+     */
+    public RazorpayRefundResult initiateRefund(String razorpayPaymentId, Long refundAmountInPaise) {
+        if (razorpayPaymentId == null || razorpayPaymentId.trim().isEmpty()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "razorpayPaymentId is required");
+        }
+        if (refundAmountInPaise == null || refundAmountInPaise <= 0) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "refundAmountInPaise must be greater than zero");
+        }
+
+        try {
+            JSONObject refundRequest = new JSONObject();
+            refundRequest.put("amount", refundAmountInPaise);
+
+            // com.razorpay.Refund is fully qualified to avoid a naming clash
+            // with our own com.productadda.entity.Refund
+            com.razorpay.Refund razorpayRefund = razorpayClient.payments.refund(razorpayPaymentId, refundRequest);
+
+            return RazorpayRefundResult.builder()
+                    .gatewayRefundId(razorpayRefund.get("id"))
+                    .gatewayRefundStatus(razorpayRefund.get("status"))
+                    .build();
+
+        } catch (RazorpayException exception) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Razorpay refund initiation failed: " + exception.getMessage());
+        }
+    }
+
+    /*
+     * NEW (Day 3): Fetches the current status of a previously-initiated
+     * Razorpay refund. Used by the Get Refund Status endpoint's optional
+     * live-sync path.
+     */
+    public String fetchRefundStatus(String gatewayRefundId) {
+        if (gatewayRefundId == null || gatewayRefundId.trim().isEmpty()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "gatewayRefundId is required");
+        }
+
+        try {
+            com.razorpay.Refund razorpayRefund = razorpayClient.refunds.fetch(gatewayRefundId);
+            return razorpayRefund.get("status");
+        } catch (RazorpayException exception) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Razorpay refund fetch failed: " + exception.getMessage());
+        }
+    }
+
     // TODO: Razorpay webhooks are typically signed with a dedicated
     // "webhook secret" configured separately in the Razorpay dashboard,
     // NOT the API key-secret used for authenticated API calls. RazorpayConfig
@@ -106,5 +166,20 @@ public class RazorpayGatewayService {
         private String gatewayOrderId;
         private String checkoutRedirectUrl;
         private String checkoutKey;
+    }
+
+    /*
+     * ================================================================
+     * MIDDLE-MAN DTO: RazorpayRefundResult
+     * Internal transfer object for initiateRefund(...). Not a
+     * REST-facing DTO.
+     * ================================================================
+     */
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class RazorpayRefundResult {
+        private String gatewayRefundId;
+        private String gatewayRefundStatus;
     }
 }

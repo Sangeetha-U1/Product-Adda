@@ -36,7 +36,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class OrderRetrievalService {
+public class OrderGetOrderByIdService {
 
         // TODO: Add in resp fields like: when delivery at utc,
         // TODO: shall we maintain order history status? or not required

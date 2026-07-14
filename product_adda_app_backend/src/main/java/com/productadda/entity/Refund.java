@@ -21,6 +21,14 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+/*
+ * ================================================================
+ * NEW ENTITY (Week 7, Day 3): Refund
+ * A Payment can have MULTIPLE Refund rows over time (one full, or
+ * several partials), so fkPayment is @ManyToOne - not @OneToOne
+ * like Payment.fkOrder.
+ * ================================================================
+ */
 @Entity
 @Table(name = "refunds")
 @Getter
@@ -62,21 +70,32 @@ public class Refund {
      * REFUND DETAILS
      * =========================================================
      */
+    // "full" or "partial" - plain varchar per the Zero-Enum-Rule's
+    // "primitive types/string attributes" allowance for non-lifecycle flags
     @Column(name = "refund_type", nullable = false, length = 20)
     private String refundType;
 
     @Column(name = "refund_amount_in_paise", nullable = false)
     private Long refundAmountInPaise;
 
-    @Column(name = "gateway_refund_id", length = 255)
+    @Column(name = "gateway_refund_id", length = 255, unique = true)
     private String gatewayRefundId;
 
-    @Column(name = "initiated_by", nullable = false, length = 30)
+    // ==========================================
+    // INITIATOR TRACKING
+    // Description: initiated_by is a plain string ("ADMIN"/"SYSTEM")
+    // capturing the acting role at refund-initiation time - an audit
+    // label, not a domain workflow status, mirroring Order.cancelledBy
+    // exactly (Zero-Enum-Rule targets state-machine values, not
+    // free-text initiator labels).
+    // ==========================================
+    @Column(name = "initiated_by", length = 30)
     private String initiatedBy;
 
     @Column(name = "reason", length = 500)
     private String reason;
 
+    // "cancellation" / "return" / "manual_admin"
     @Column(name = "refund_triggered_by_order_event", length = 30)
     private String refundTriggeredByOrderEvent;
 
@@ -92,8 +111,16 @@ public class Refund {
 
     /*
      * =========================================================
-     * STATUS / AUDIT
+     * STATUS
      * =========================================================
+     */
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
+
+    /*
+     * ===========================================================================
+     * AUDIT
+     * ===========================================================================
      */
     @Column(name = "created_at_utc", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAtUtc;

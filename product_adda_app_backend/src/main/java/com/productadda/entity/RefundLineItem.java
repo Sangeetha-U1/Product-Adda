@@ -20,6 +20,16 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+/*
+ * ================================================================
+ * NEW ENTITY: RefundLineItem
+ * Partial-refund line-item mapping. fkOrderItem references the real
+ * OrderItem entity (order_items table) - the original draft
+ * called this order_line_items, which does not exist in this schema.
+ * No updatedAtUtc: line items are immutable once created (a refund
+ * cannot be edited in place, only superseded by a new Refund).
+ * ================================================================
+ */
 @Entity
 @Table(name = "refund_line_items")
 @Getter
@@ -59,6 +69,14 @@ public class RefundLineItem {
      */
     @Column(name = "refund_amount_in_paise", nullable = false)
     private Long refundAmountInPaise;
+
+    /*
+     * =========================================================
+     * STATUS
+     * =========================================================
+     */
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
     /*
      * ===========================================================================
