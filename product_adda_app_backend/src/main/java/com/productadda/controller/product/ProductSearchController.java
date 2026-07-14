@@ -3,6 +3,7 @@ package com.productadda.controller.product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
@@ -14,18 +15,25 @@ import com.productadda.dto.ApiSuccessResponseDto;
 import com.productadda.dto.product.CategoryResponseDto;
 import com.productadda.dto.product.BrandResponseDto;
 import com.productadda.dto.product.ProductSearchListResponseDto;
-import com.productadda.service.product.ProductSearchService;
+
+import com.productadda.service.product.ProductSearchFilterProductsService;
+import com.productadda.service.product.ProductSearchGetAllBrandsService;
+import com.productadda.service.product.ProductSearchGetAllCategoriesService;
+import com.productadda.service.product.ProductSearchSearchProductsService;
 
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
 public class ProductSearchController {
 
-        private final ProductSearchService productSearchService;
+        private final ProductSearchGetAllCategoriesService productSearchGetAllCategoriesService;
+        private final ProductSearchGetAllBrandsService productSearchGetAllBrandsService;
+        private final ProductSearchSearchProductsService productSearchSearchProductsService;
+        private final ProductSearchFilterProductsService productSearchFilterProductsService;
 
         @GetMapping("/categories")
         public ResponseEntity<ApiSuccessResponseDto<Map<String, Object>>> getCategories() {
-                List<CategoryResponseDto> categories = productSearchService.getAllCategories();
+                List<CategoryResponseDto> categories = productSearchGetAllCategoriesService.getAllCategories();
 
                 Map<String, Object> data = new HashMap<>();
                 data.put("categories", categories);
@@ -42,7 +50,7 @@ public class ProductSearchController {
 
         @GetMapping("/brands")
         public ResponseEntity<ApiSuccessResponseDto<Map<String, Object>>> getBrands() {
-                List<BrandResponseDto> brands = productSearchService.getAllBrands();
+                List<BrandResponseDto> brands = productSearchGetAllBrandsService.getAllBrands();
 
                 Map<String, Object> data = new HashMap<>();
                 data.put("brands", brands);
@@ -63,7 +71,8 @@ public class ProductSearchController {
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "10") int size) {
 
-                ProductSearchListResponseDto searchResult = productSearchService.searchProducts(keyword, page, size);
+                ProductSearchListResponseDto searchResult = productSearchSearchProductsService.searchProducts(keyword, page, size);
+
                 String successMsg = searchResult.getProducts().isEmpty()
                                 ? "No products found matching keyword '" + keyword + "'"
                                 : "Products found matching keyword '" + keyword + "'";
@@ -86,7 +95,7 @@ public class ProductSearchController {
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "10") int size) {
 
-                ProductSearchListResponseDto filterResult = productSearchService.filterProducts(categoryId, brandId,
+                ProductSearchListResponseDto filterResult = productSearchFilterProductsService.filterProducts(categoryId, brandId,
                                 minPrice, maxPrice, page, size);
 
                 return ResponseEntity

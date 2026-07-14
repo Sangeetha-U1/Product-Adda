@@ -4,12 +4,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HexFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 
 /*
  * ================================================================
- * NEW SERVICE (Week 7): PaymentServiceRazorpayWebhookProcess
+ * NEW SERVICE : PaymentServiceRazorpayWebhookProcess
  * API 2/15 - POST /api/payments/webhooks/razorpay
  * Granular, single-responsibility: Razorpay webhook processing only.
  * No Auth Required at the controller layer - HMAC signature
@@ -48,7 +47,7 @@ public class PaymentServiceRazorpayWebhookProcess {
     private final PaymentAuditLogRepository paymentAuditLogRepository;
     private final OrderRepository orderRepository;
     private final PaymentStatusRepository paymentStatusRepository;
-    
+
     private final RazorpayGatewayService razorpayGatewayService;
 
     private final UuidUtil uuidUtil;
@@ -61,7 +60,7 @@ public class PaymentServiceRazorpayWebhookProcess {
     @Transactional
     public void processWebhook(String rawRequestBody, String signatureHeader) {
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> metaData = new HashMap<>();
 
         /*
          * ================================================================
@@ -153,7 +152,7 @@ public class PaymentServiceRazorpayWebhookProcess {
 
         Order order = payment.getFkOrder();
         if (isSuccessEvent) {
-            // TODO: hook to Week 6 inventory service to decrement stock / mark
+            // TODO: hook to inventory service to decrement stock / mark
             // order_items as 'processing' for every line item on this order.
             order.setPaymentConfirmedAtUtc(nowUtc);
         }
@@ -164,11 +163,14 @@ public class PaymentServiceRazorpayWebhookProcess {
          * ================================================================
          */
         payment = paymentRepository.save(payment);
+
         orderRepository.save(order);
 
-        ObjectNode detailsJson = objectMapper.createObjectNode();
+        Map<String, Object> details = new HashMap<>();
 
-        detailsJson.put("gatewayEvent", gatewayStatus);
+        details.put("status", gatewayStatus);
+
+        metaData.put("gatewayEvent", details);
 
         PaymentAuditLog auditLog = PaymentAuditLog.builder()
                 .pkAuditLogId(uuidUtil.generateUuidV7())
@@ -177,11 +179,11 @@ public class PaymentServiceRazorpayWebhookProcess {
                 .actorRole("SYSTEM")
                 .oldStatus(oldStatus)
                 .newStatus(newStatus.getStatusName())
-                .details(detailsJson)
+                .metadata(metaData)
                 .build();
         paymentAuditLogRepository.save(auditLog);
 
-        // TODO: Week 8 notification service hook - payment_confirmed event
+        // TODO: notification service hook - payment_confirmed event
 
         /*
          * ================================================================

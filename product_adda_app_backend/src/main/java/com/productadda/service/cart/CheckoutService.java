@@ -79,14 +79,16 @@ public class CheckoutService {
         private final OrderRepository orderRepository;
         private final OrderItemRepository orderItemRepository;
         private final OrderStatusRepository orderStatusRepository;
+        private final ItemStatusRepository itemStatusRepository;
+
         private final CheckoutPricingService checkoutPricingService;
         private final OrderCreationService orderCreationService;
-        private final ItemStatusRepository itemStatusRepository;
+        private final CartInitializeService cartInitializeService;
 
         private final UuidUtil uuidUtil;
 
         @Transactional
-        public CheckoutResponseDto checkout(CheckoutRequestDto requestDto, String idempotencyKeyHeader) {
+        public CheckoutResponseDto checkout(CheckoutRequestDto requestDto) {
 
                 /*
                  * ================================================================
@@ -103,16 +105,15 @@ public class CheckoutService {
                         throw new ApiException(HttpStatus.BAD_REQUEST, "Shipping address id is required");
                 }
 
-                if (idempotencyKeyHeader == null || idempotencyKeyHeader.trim().isEmpty()) {
-                        throw new ApiException(HttpStatus.BAD_REQUEST, "Idempotency-Key header is required");
+                if (requestDto.getIdempotencyKey() == null) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST, "Idempotency-Key is required");
                 }
 
-                UUID idempotencyKey;
-                try {
-                        idempotencyKey = UUID.fromString(idempotencyKeyHeader.trim());
-                } catch (IllegalArgumentException ex) {
-                        throw new ApiException(HttpStatus.BAD_REQUEST, "Idempotency-Key header must be a valid UUID");
-                }
+                // Note: the frontend must generate the UUID before calling checkout
+                // and send the same UUID if the user retries the same checkout. The backend
+                // remains the source of truth for idempotency.
+
+                UUID idempotencyKey = requestDto.getIdempotencyKey();
 
                 // ==========================================
                 // 1.2 CONTEXT AUTHENTICATION
@@ -181,6 +182,7 @@ public class CheckoutService {
                                                 "No active cart found for the authenticated user."));
 
                 List<CartItem> cartItems = cartItemRepository.findByFkCartAndIsActiveTrue(cart);
+
                 if (cartItems.isEmpty()) {
                         throw new ApiException(HttpStatus.BAD_REQUEST, "Cart is empty.");
                 }
@@ -199,6 +201,7 @@ public class CheckoutService {
                 }
 
                 Coupon coupon = cart.getFkCoupon();
+
                 if (coupon != null) {
                         CouponValidationResponseDto couponValidation = couponValidationService.validateCoupon(
                                         CouponApplyRequestDto.builder().couponCode(coupon.getCouponCode()).build());
@@ -296,7 +299,11 @@ public class CheckoutService {
                 }
 
                 cart.setFkCartStatus(completedStatus);
+
                 cartRepository.save(cart);
+
+                // Create fresh active cart for next shopping session
+                cartInitializeService.initializeCart();
 
                 /*
                  * ================================================================

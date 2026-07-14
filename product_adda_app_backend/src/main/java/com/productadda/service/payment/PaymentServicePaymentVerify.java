@@ -7,7 +7,6 @@ import java.util.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +17,7 @@ import com.razorpay.Utils;
 import com.productadda.config.RazorpayConfig;
 import com.productadda.dto.payment.PaymentVerifyRequestDto;
 import com.productadda.dto.payment.PaymentVerifyResponseDto;
+import com.productadda.dto.order.InvoiceResponseDto;
 
 import com.productadda.entity.Order;
 import com.productadda.entity.Payment;
@@ -31,6 +31,7 @@ import com.productadda.repository.OrderRepository;
 import com.productadda.repository.PaymentRepository;
 import com.productadda.repository.PaymentStatusRepository;
 import com.productadda.repository.UserRepository;
+import com.productadda.service.invoice.InvoiceGenerationService;
 import com.productadda.repository.OrderStatusRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,9 @@ public class PaymentServicePaymentVerify {
         private final OrderStatusRepository orderStatusRepository;
         private final PaymentRepository paymentRepository;
         private final PaymentStatusRepository paymentStatusRepository;
+
+        private final InvoiceGenerationService invoiceGenerationService;
+
         private final UserRepository userRepository;
         private final RazorpayClient razorpayClient;
         private final RazorpayConfig razorpayConfig;
@@ -83,21 +87,17 @@ public class PaymentServicePaymentVerify {
                         // 1.2 CONTEXT AUTHENTICATION
                         // ==========================================
                         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
                         if (authentication == null || !authentication.isAuthenticated()) {
                                 throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
                         }
 
-                        String email;
-                        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-                                email = userDetails.getUsername();
-                        } else {
-                                email = authentication.getName();
-                        }
+                        String currentUsername = authentication.getName();
 
                         // ==========================================
                         // 1.3 DATABASE LOOKUP VALIDATION
                         // ==========================================
-                        User currentUser = userRepository.findByEmail(email)
+                        User currentUser = userRepository.findByEmail(currentUsername)
                                         .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
                                                         "Authenticated user no longer exists"));
 
@@ -107,6 +107,7 @@ public class PaymentServicePaymentVerify {
                                                         "Payment record not found in DB"));
 
                         Order order = payment.getFkOrder();
+
                         if (order == null) {
                                 throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                                                 "Payment association order link broken");
@@ -119,6 +120,7 @@ public class PaymentServicePaymentVerify {
                         }
 
                         PaymentStatus status = payment.getFkStatus();
+
                         if (status != null && "SUCCESS".equals(status.getStatusName())) {
                                 throw new ApiException(HttpStatus.BAD_REQUEST, "Payment already verified");
                         }
@@ -151,6 +153,7 @@ public class PaymentServicePaymentVerify {
 
                         // API call out using single shared Client dependency bean mapping
                         com.razorpay.Payment razorpayPayment = razorpayClient.payments.fetch(paymentId);
+
                         String razorpayStatus = razorpayPayment.get("status");
 
                         if (!"captured".equalsIgnoreCase(razorpayStatus)) {
@@ -159,7 +162,9 @@ public class PaymentServicePaymentVerify {
                         }
 
                         String razorpayFetchedOrderId = razorpayPayment.get("order_id");
+
                         long razorpayAmountInPaise = ((Number) razorpayPayment.get("amount")).longValue();
+
                         long dbAmountInPaise = payment.getAmountInPaise();
 
                         if (dbAmountInPaise != razorpayAmountInPaise) {
@@ -180,7 +185,7 @@ public class PaymentServicePaymentVerify {
                         payment.setGatewayOrderId(razorpayFetchedOrderId);
                         payment.setGatewaySignature(requestDto.getRazorpaySignature());
                         payment.setPaidAtUtc(LocalDateTime.now(ZoneOffset.UTC));
-                        
+
                         order.setFkStatus(paidStatus);
 
                         /*
@@ -190,6 +195,8 @@ public class PaymentServicePaymentVerify {
                          */
                         paymentRepository.save(payment);
                         orderRepository.save(order);
+
+                        InvoiceResponseDto invoice = invoiceGenerationService.generateInvoice(order.getPkOrderId());
 
                         /*
                          * ================================================================
@@ -204,6 +211,8 @@ public class PaymentServicePaymentVerify {
                                         .razorpayPaymentId(payment.getGatewayTransactionId())
                                         .message("Payment verified and matched successfully!")
                                         .orderId(order.getPkOrderId().toString())
+                                        .invoiceId(invoice.getInvoiceId().toString())
+                                        .invoiceNumber(invoice.getInvoiceNumber())
                                         .build();
 
                 } catch (ApiException ex) {

@@ -135,6 +135,21 @@ public class Order {
     @Column(name = "cancelled_at_utc")
     private LocalDateTime cancelledAtUtc;
 
+    // ==========================================
+    // DELIVERY WORKFLOW TIMESTAMPS
+    // Description: Captured by delivery-partner pickup/complete
+    // transitions. Nullable until the corresponding
+    // transition occurs.
+    // ==========================================
+    @Column(name = "picked_up_at_utc")
+    private LocalDateTime pickedUpAtUtc;
+
+    @Column(name = "out_for_delivery_at_utc")
+    private LocalDateTime outForDeliveryAtUtc;
+
+    @Column(name = "delivered_at_utc")
+    private LocalDateTime deliveredAtUtc;
+
     /*
      * =========================================================
      * STATUS

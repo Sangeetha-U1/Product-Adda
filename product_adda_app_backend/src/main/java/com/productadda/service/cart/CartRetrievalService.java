@@ -45,6 +45,7 @@ public class CartRetrievalService {
 
         @Transactional(readOnly = true)
         public CartResponseDto getCart() {
+
                 /*
                  * ================================================================
                  * 1. VALIDATION SECTION
@@ -95,6 +96,7 @@ public class CartRetrievalService {
                  * ================================================================
                  */
                 List<CartItem> cartItems = cartItemRepository.findByFkCartAndIsActiveTrue(cart);
+                
                 List<CartItemResponseDto> itemDtos = new ArrayList<>();
 
                 for (CartItem item : cartItems) {

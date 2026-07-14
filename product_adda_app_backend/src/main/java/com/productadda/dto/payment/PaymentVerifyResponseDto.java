@@ -26,5 +26,8 @@ public class PaymentVerifyResponseDto {
     private String message;
 
     private String orderId;
-    
+
+    private String invoiceId;
+
+    private String invoiceNumber;
 }

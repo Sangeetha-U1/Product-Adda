@@ -41,6 +41,7 @@ public class CartController {
 
         @PostMapping("/initialize")
         public ResponseEntity<ApiSuccessResponseDto<CartInitializeResponseDto>> initializeCart() {
+                
                 CartInitializeResponseDto response = cartInitializeService.initializeCart();
 
                 ApiSuccessResponseDto<CartInitializeResponseDto> wrapper = ApiSuccessResponseDto

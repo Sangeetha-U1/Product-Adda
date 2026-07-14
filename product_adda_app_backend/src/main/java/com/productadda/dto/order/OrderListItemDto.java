@@ -31,4 +31,11 @@ public class OrderListItemDto {
     private BigDecimal totalAmount;
 
     private LocalDateTime createdAtUtc;
+
+    private LocalDateTime pickedUpAtUtc;
+
+    private LocalDateTime outForDeliveryAtUtc;
+
+    private LocalDateTime deliveredAtUtc;
+
 }

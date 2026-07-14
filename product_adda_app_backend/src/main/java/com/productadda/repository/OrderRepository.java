@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.productadda.entity.Order;
 import com.productadda.entity.User;
+import com.productadda.entity.DeliveryPartner;
 
 public interface OrderRepository extends JpaRepository<Order, UUID> {
 
@@ -81,4 +82,52 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
                         +
                         "ORDER BY o.createdAtUtc ASC")
         Page<Order> findAvailableOrdersForDeliveryPartners(Pageable pageable);
+
+        // ==========================================
+        // DELIVERY PARTNER ACTIVE ("MY") ORDERS
+        // Description: Orders currently assigned to the authenticated
+        // delivery partner across the active in-flight statuses
+        // (PICKED_UP, OUT_FOR_DELIVERY, DELIVERED). Most recent first.
+        // ==========================================
+        @Query("SELECT o FROM Order o " +
+                        "LEFT JOIN FETCH o.fkStatus " +
+                        "LEFT JOIN FETCH o.fkAddress " +
+                        "WHERE o.isActive = true " +
+                        "AND o.fkDeliveryPartner = :partner " +
+                        "AND o.fkStatus.statusName IN :statusNames " +
+                        "ORDER BY o.createdAtUtc DESC")
+        Page<Order> findActiveOrdersForDeliveryPartner(
+                        @Param("partner") DeliveryPartner partner,
+                        @Param("statusNames") List<String> statusNames,
+                        Pageable pageable);
+
+        // ==========================================
+        // DELIVERY PARTNER DELIVERY HISTORY
+        // Description: DELIVERED-only orders for the authenticated
+        // delivery partner, most recently delivered first.
+        // ==========================================
+        @Query("SELECT o FROM Order o " +
+                        "LEFT JOIN FETCH o.fkStatus " +
+                        "LEFT JOIN FETCH o.fkAddress " +
+                        "WHERE o.isActive = true " +
+                        "AND o.fkDeliveryPartner = :partner " +
+                        "AND o.fkStatus.statusName = 'DELIVERED' " +
+                        "ORDER BY o.deliveredAtUtc DESC")
+        Page<Order> findDeliveryHistoryForDeliveryPartner(
+                        @Param("partner") DeliveryPartner partner,
+                        Pageable pageable);
+
+        // ==========================================
+        // CUSTOMER DELIVERY HISTORY
+        // Description: DELIVERED-only orders for the authenticated
+        // customer, most recently delivered first.
+        // ==========================================
+        @Query("SELECT o FROM Order o " +
+                        "WHERE o.isActive = true " +
+                        "AND o.fkUser = :user " +
+                        "AND o.fkStatus.statusName = 'DELIVERED' " +
+                        "ORDER BY o.deliveredAtUtc DESC")
+        Page<Order> findDeliveryHistoryForCustomer(
+                        @Param("user") User user,
+                        Pageable pageable);
 }

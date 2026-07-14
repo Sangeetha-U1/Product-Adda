@@ -1,16 +1,15 @@
 package com.productadda.service.payment;
 
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import com.productadda.dto.payment.PaymentInitiateRequestDto;
 import com.productadda.dto.payment.PaymentInitiateResponseDto;
@@ -64,8 +63,8 @@ public class PaymentServicePaymentInitiate {
      */
     @Transactional
     public PaymentInitiateResponseDto initiatePayment(PaymentInitiateRequestDto request) {
-        
-        ObjectMapper objectMapper = new ObjectMapper();
+
+        Map<String, Object> metaData = new HashMap<>();
 
         /*
          * ================================================================
@@ -77,7 +76,7 @@ public class PaymentServicePaymentInitiate {
         // 1.1 REQUEST VALIDATION
         // ==========================================
         UUID orderId;
-        
+
         try {
             orderId = UUID.fromString(request.getOrderId());
         } catch (IllegalArgumentException exception) {
@@ -192,11 +191,12 @@ public class PaymentServicePaymentInitiate {
                 .build();
         payment = paymentRepository.save(payment);
 
-        ObjectNode auditDetailsJson = objectMapper.createObjectNode();
+        Map<String, Object> details = new HashMap<>();
 
-        auditDetailsJson
-                .put("gatewayOrderId", gatewayOrderId)
-                .put("method", request.getPaymentMethod());
+        details.put("gatewayOrderId", gatewayOrderId);
+        details.put("method", request.getPaymentMethod());
+
+        metaData.put("gatewayOrder", details);
 
         PaymentAuditLog auditLog = PaymentAuditLog.builder()
                 .pkAuditLogId(uuidUtil.generateUuidV7())
@@ -206,11 +206,11 @@ public class PaymentServicePaymentInitiate {
                 .actorRole("CUSTOMER")
                 .oldStatus(null)
                 .newStatus("PENDING")
-                .details(auditDetailsJson)
+                .metadata(metaData)
                 .build();
         paymentAuditLogRepository.save(auditLog);
 
-        // TODO: Week 8 notification service hook - payment_initiated event
+        // TODO: notification service hook - payment_initiated event
 
         /*
          * ================================================================

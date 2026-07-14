@@ -12,6 +12,5 @@ public interface ShippingMethodRepository extends JpaRepository<ShippingMethod, 
 
     List<ShippingMethod> findByIsActiveTrue();
 
-    // Changed from findByMethodCode to match shippingMethodName
     Optional<ShippingMethod> findByShippingMethodName(String shippingMethodName);
 }

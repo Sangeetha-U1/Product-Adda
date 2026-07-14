@@ -25,6 +25,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CheckoutRequestDto {
 
+    @NotNull(message = "IdempotencyKey uuid key is required")
+    private UUID idempotencyKey;
+
     @NotNull(message = "Shipping address id is required")
     private UUID addressId;
 

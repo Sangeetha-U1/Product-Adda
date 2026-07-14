@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 /*
  * ================================================================
- * NEW SERVICE (Week 7): RazorpayGatewayService
+ * NEW SERVICE : RazorpayGatewayService
  * Thin, dedicated Razorpay integration boundary using the existing
  * RazorpayClient bean / RazorpayConfig already wired up for the
  * legacy Payment Links flow (PaymentServicePaymentVerify).

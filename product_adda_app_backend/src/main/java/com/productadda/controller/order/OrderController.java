@@ -37,10 +37,11 @@ public class OrderController {
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "20") int pageSize,
                         @RequestParam(defaultValue = "createdAtUtc") String sortBy,
-                        @RequestParam(defaultValue = "DESC") String sortOrder) {
+                        @RequestParam(defaultValue = "DESC") String sortOrder,
+                        @RequestParam(required = false) String status) {
 
                 PaginatedOrderResponseDto response = orderHistoryService.getMyOrderHistory(page, pageSize, sortBy,
-                                sortOrder);
+                                sortOrder, status);
 
                 return ResponseEntity
                                 .status(HttpStatus.OK)

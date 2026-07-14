@@ -33,7 +33,8 @@ public class OrderHistoryService {
     private final OrderRepository orderRepository;
 
     @Transactional(readOnly = true)
-    public PaginatedOrderResponseDto getMyOrderHistory(int page, int pageSize, String sortBy, String sortOrder) {
+    public PaginatedOrderResponseDto getMyOrderHistory(int page, int pageSize, String sortBy, String sortOrder,
+            String status) {
 
         /*
          * ================================================================
@@ -53,10 +54,14 @@ public class OrderHistoryService {
                 ? Sort.Direction.ASC
                 : Sort.Direction.DESC;
 
+        String safeStatus = (status == null || status.trim().isEmpty())
+                ? null
+                : status.trim().toUpperCase();
+
         // ==========================================
         // 1.2 CONTEXT AUTHENTICATION
         // ==========================================
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Authentication missing or invalid");
         }
@@ -77,9 +82,11 @@ public class OrderHistoryService {
         PageRequest pageRequest = PageRequest.of(safePage, safePageSize, Sort.by(direction, safeSortBy));
 
         Page<Order> orderPage;
+
         try {
-            orderPage = orderRepository.findByFkUserAndIsActiveTrue(currentUser, pageRequest);
-        } catch (IllegalArgumentException  ex) {
+            orderPage = orderRepository.findCustomerOrdersWithFilters(
+                    currentUser, safeStatus, null, null, pageRequest);
+        } catch (IllegalArgumentException ex) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid sortBy field: " + safeSortBy);
         }
 
@@ -95,6 +102,7 @@ public class OrderHistoryService {
          * 4. POST-SAVING DATA SANITIZATION & MASKING
          * ================================================================
          */
+        
         List<OrderListItemDto> items = orderPage.getContent().stream()
                 .map(order -> OrderListItemDto.builder()
                         .orderId(order.getPkOrderId())
@@ -102,6 +110,9 @@ public class OrderHistoryService {
                         .statusName(order.getFkStatus() != null ? order.getFkStatus().getStatusName() : "UNKNOWN")
                         .totalAmount(order.getTotalAmount())
                         .createdAtUtc(order.getCreatedAtUtc())
+                        .pickedUpAtUtc(order.getPickedUpAtUtc())
+                        .outForDeliveryAtUtc(order.getOutForDeliveryAtUtc())
+                        .deliveredAtUtc(order.getDeliveredAtUtc())
                         .build())
                 .collect(Collectors.toList());
 

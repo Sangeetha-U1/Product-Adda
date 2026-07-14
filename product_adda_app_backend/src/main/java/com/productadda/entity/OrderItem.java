@@ -63,6 +63,10 @@ public class OrderItem {
     @JoinColumn(name = "fk_item_status_id", nullable = false)
     private ItemStatus fkItemStatus;
 
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "fk_delivery_partner_id")
+    // private DeliveryPartner fkDeliveryPartner;
+
     /*
      * =========================================================
      * ORDER ITEM DETAILS & SNAPSHOTS

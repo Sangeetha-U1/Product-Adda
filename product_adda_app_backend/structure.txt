@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 00000191 7478:274D
+Volume serial number is 000001B1 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -37,6 +37,9 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---admin
 |   |           |   |       AdminAuthController.java
 |   |           |   |       AdminDeliveryPartnerController.java
+|   |           |   |       AdminInvoiceController.java
+|   |           |   |       AdminOrderController.java
+|   |           |   |       AdminProductController.java
 |   |           |   |       AdminUserController.java
 |   |           |   |       AdminVendorManagementController.java
 |   |           |   |       
@@ -48,14 +51,16 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       CheckoutController.java
 |   |           |   |       CouponController.java
 |   |           |   |       
-|   |           |   +---order
-|   |           |   |       AdminInvoiceController.java
-|   |           |   |       AdminOrderController.java
+|   |           |   +---customer
 |   |           |   |       CustomerOrderController.java
+|   |           |   |       CustomerPaymentController.java
+|   |           |   |       
+|   |           |   +---deliverypartner
 |   |           |   |       DeliveryPartnerController.java
+|   |           |   |       
+|   |           |   +---order
 |   |           |   |       InvoiceController.java
 |   |           |   |       OrderController.java
-|   |           |   |       VendorOrderController.java
 |   |           |   |       
 |   |           |   +---payment
 |   |           |   |       PaymentController.java
@@ -63,7 +68,6 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       WebhookController.java
 |   |           |   |       
 |   |           |   +---product
-|   |           |   |       AdminProductController.java
 |   |           |   |       ProductInventoryController.java
 |   |           |   |       ProductSearchController.java
 |   |           |   |       
@@ -76,6 +80,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---vendor
 |   |           |   |       VendorBankController.java
 |   |           |   |       VendorController.java
+|   |           |   |       VendorOrderController.java
 |   |           |   |       VendorProductController.java
 |   |           |   |       
 |   |           |   \---wishlist
@@ -93,10 +98,17 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       AddressResponseDto.java
 |   |           |   |       
 |   |           |   +---admin
+|   |           |   |       AdminInvoiceDetailDto.java
+|   |           |   |       AdminInvoiceDownloadResponseDto.java
 |   |           |   |       AdminLoginRequestDto.java
 |   |           |   |       AdminLoginResponseDto.java
+|   |           |   |       AdminOrderDetailDto.java
+|   |           |   |       AdminOrderStatusUpdateRequestDto.java
+|   |           |   |       AdminOrderStatusUpdateResponseDto.java
 |   |           |   |       AdminUserCreateRequestDto.java
 |   |           |   |       AdminUserCreateResponseDto.java
+|   |           |   |       PaginatedAdminInvoiceResponseDto.java
+|   |           |   |       PaginatedAdminOrderResponseDto.java
 |   |           |   |       VendorAdminSummaryResponseDto.java
 |   |           |   |       VendorStatusOverrideRequestDto.java
 |   |           |   |       VendorStatusOverrideResponseDto.java
@@ -120,25 +132,32 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       CartTotalsDto.java
 |   |           |   |       CheckoutRequestDto.java
 |   |           |   |       CheckoutResponseDto.java
+|   |           |   |       CheckoutShippingMethodResponseDto.java
 |   |           |   |       CheckoutValidateResponseDto.java
 |   |           |   |       CheckoutWarningDto.java
 |   |           |   |       CouponApplyRequestDto.java
 |   |           |   |       CouponValidationResponseDto.java
 |   |           |   |       
-|   |           |   +---order
-|   |           |   |       AdminInvoiceDetailDto.java
-|   |           |   |       AdminInvoiceDownloadResponseDto.java
-|   |           |   |       AdminOrderDetailDto.java
-|   |           |   |       AdminOrderStatusUpdateRequestDto.java
-|   |           |   |       AdminOrderStatusUpdateResponseDto.java
+|   |           |   +---customer
+|   |           |   |       CustomerDeliveryHistoryListDto.java
 |   |           |   |       CustomerOrderListDto.java
-|   |           |   |       DeliveryAssignmentRejectRequestDto.java
-|   |           |   |       DeliveryAssignmentRejectResponseDto.java
-|   |           |   |       DeliveryAssignmentRequestDto.java
-|   |           |   |       DeliveryAssignmentResponseDto.java
+|   |           |   |       PaginatedCustomerDeliveryHistoryResponseDto.java
+|   |           |   |       PaginatedCustomerOrderResponseDto.java
+|   |           |   |       
+|   |           |   +---deliverypartner
 |   |           |   |       DeliveryPartnerAvailableOrderListDto.java
+|   |           |   |       DeliveryPartnerClaimResponseDto.java
+|   |           |   |       DeliveryPartnerCompleteResponseDto.java
 |   |           |   |       DeliveryPartnerCreateRequestDto.java
+|   |           |   |       DeliveryPartnerMyOrderListDto.java
+|   |           |   |       DeliveryPartnerPickupResponseDto.java
 |   |           |   |       DeliveryPartnerResponseDto.java
+|   |           |   |       PaginatedDeliveryPartnerAvailableOrderResponseDto.java
+|   |           |   |       PaginatedDeliveryPartnerMyOrderResponseDto.java
+|   |           |   |       
+|   |           |   +---order
+|   |           |   |       DeliveryOtpSendResponseDto.java
+|   |           |   |       DeliveryOtpVerifyRequestDto.java
 |   |           |   |       InvoiceDownloadResponseDto.java
 |   |           |   |       InvoiceResponseDto.java
 |   |           |   |       ItemStatusBatchEntryDto.java
@@ -151,27 +170,29 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       OrderCouponSummaryDto.java
 |   |           |   |       OrderDetailResponseDto.java
 |   |           |   |       OrderHistoryResponseDto.java
+|   |           |   |       OrderInvoiceSummaryDto.java
 |   |           |   |       OrderItemResponseDto.java
 |   |           |   |       OrderItemSummaryDto.java
 |   |           |   |       OrderListItemDto.java
 |   |           |   |       OrderPaymentSummaryDto.java
-|   |           |   |       PaginatedAdminInvoiceResponseDto.java
-|   |           |   |       PaginatedAdminOrderResponseDto.java
-|   |           |   |       PaginatedCustomerOrderResponseDto.java
-|   |           |   |       PaginatedDeliveryPartnerAvailableOrderResponseDto.java
 |   |           |   |       PaginatedOrderResponseDto.java
-|   |           |   |       PaginatedVendorOrderItemResponseDto.java
 |   |           |   |       UserInvoiceSummaryDto.java
 |   |           |   |       UserInvoiceWrapperDto.java
-|   |           |   |       VendorOrderItemDetailDto.java
-|   |           |   |       VendorOrderItemListDto.java
 |   |           |   |       
 |   |           |   +---payment
+|   |           |   |       PaginatedPaymentHistoryResponseDto.java
+|   |           |   |       PaginatedPaymentResponseDto.java
 |   |           |   |       PaymentCreateRequestDto.java
 |   |           |   |       PaymentCreateResponseDto.java
+|   |           |   |       PaymentDetailResponseDto.java
 |   |           |   |       PaymentGatewayHealthResponseDto.java
+|   |           |   |       PaymentHistoryItemDto.java
 |   |           |   |       PaymentInitiateRequestDto.java
 |   |           |   |       PaymentInitiateResponseDto.java
+|   |           |   |       PaymentListItemDto.java
+|   |           |   |       PaymentPollVerifyRequestDto.java
+|   |           |   |       PaymentPollVerifyResponseDto.java
+|   |           |   |       PaymentStatusResponseDto.java
 |   |           |   |       PaymentVerifyRequestDto.java
 |   |           |   |       PaymentVerifyResponseDto.java
 |   |           |   |       RazorpayWebhookPayloadDto.java
@@ -179,9 +200,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---product
 |   |           |   |       AdminModerationStatsResponseDto.java
 |   |           |   |       AdminProductApprovalResponseDto.java
+|   |           |   |       AdminProductDataWrapper.java
+|   |           |   |       AdminProductListResponseDto.java
 |   |           |   |       AdminProductPendingDataWrapper.java
 |   |           |   |       AdminProductPendingListResponseDto.java
 |   |           |   |       AdminProductRejectionRequestDto.java
+|   |           |   |       AdminProductResubmissionResponseDto.java
 |   |           |   |       BrandResponseDto.java
 |   |           |   |       CategoryResponseDto.java
 |   |           |   |       ProductCreateRequestDto.java
@@ -212,7 +236,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---vendor
 |   |           |   |       BankAccountRequestDto.java
 |   |           |   |       BankAccountResponseDto.java
+|   |           |   |       PaginatedVendorOrderItemResponseDto.java
 |   |           |   |       VendorDashboardMetricsResponseDto.java
+|   |           |   |       VendorOrderItemDetailDto.java
+|   |           |   |       VendorOrderItemListDto.java
 |   |           |   |       VendorProductCatalogResponseDto.java
 |   |           |   |       VendorProductItemDto.java
 |   |           |   |       VendorProfileResponseDto.java
@@ -239,8 +266,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       CouponStatus.java
 |   |           |       CouponUsageHistory.java
 |   |           |       CustomerPaymentProfile.java
-|   |           |       DeliveryAssignment.java
-|   |           |       DeliveryAssignmentStatus.java
+|   |           |       DeliveryOtp.java
 |   |           |       DeliveryPartner.java
 |   |           |       DeliveryPartnerStatus.java
 |   |           |       EmailVerificationToken.java
@@ -297,8 +323,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       CouponRepository.java
 |   |           |       CouponStatusRepository.java
 |   |           |       CouponUsageHistoryRepository.java
-|   |           |       DeliveryAssignmentRepository.java
-|   |           |       DeliveryAssignmentStatusRepository.java
+|   |           |       DeliveryOtpRepository.java
 |   |           |       DeliveryPartnerRepository.java
 |   |           |       DeliveryPartnerStatusRepository.java
 |   |           |       EmailVerificationTokenRepository.java
@@ -345,7 +370,16 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       AddressService.java
 |   |           |   |       
 |   |           |   +---admin
+|   |           |   |       AdminInvoiceDownloadService.java
+|   |           |   |       AdminInvoiceGenerationService.java
+|   |           |   |       AdminInvoicesRetrievalService.java
 |   |           |   |       AdminLoginService.java
+|   |           |   |       AdminOrderForceStatusTransitionService.java
+|   |           |   |       AdminOrderRetrievalService.java
+|   |           |   |       AdminProductApprovalService.java
+|   |           |   |       AdminProductModerationService.java
+|   |           |   |       AdminProductResubmissionService.java
+|   |           |   |       AdminProductRetrievalService.java
 |   |           |   |       AdminUserCreateService.java
 |   |           |   |       AdminVendorListService.java
 |   |           |   |       AdminVendorStatusOverrideService.java
@@ -368,59 +402,69 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       CartRetrievalService.java
 |   |           |   |       CheckoutPricingService.java
 |   |           |   |       CheckoutService.java
+|   |           |   |       CheckoutShippingMethodService.java
 |   |           |   |       CheckoutValidationService.java
 |   |           |   |       CouponApplyService.java
 |   |           |   |       CouponRemoveService.java
 |   |           |   |       CouponValidationService.java
 |   |           |   |       OrderCreationService.java
 |   |           |   |       
-|   |           |   +---mail
-|   |           |   |       EmailService.java
-|   |           |   |       MailStartupValidator.java
+|   |           |   +---customer
+|   |           |   |       CustomerGetCustomerOrdersService.java
+|   |           |   |       CustomerGetCustomerPaymentsService.java
+|   |           |   |       CustomerGetOrdersDeliveryHistoryService.java
 |   |           |   |       
-|   |           |   +---order
-|   |           |   |       AdminInvoiceDownloadService.java
-|   |           |   |       AdminInvoiceGenerationService.java
-|   |           |   |       AdminInvoicesRetrievalService.java
-|   |           |   |       AdminOrderForceStatusTransitionService.java
-|   |           |   |       AdminOrderRetrievalService.java
-|   |           |   |       AggregatedStatusCalculationService.java
-|   |           |   |       CustomerOrderRetrievalService.java
-|   |           |   |       DeliveryAssignmentService.java
-|   |           |   |       DeliveryPartnerAcceptanceService.java
+|   |           |   +---deliverypartners
+|   |           |   |       DeliveryPartnerDeliveredOrderService.java
+|   |           |   |       DeliveryPartnerGetAvailableOrdersService.java
+|   |           |   |       DeliveryPartnerGetMyOrdersService.java
+|   |           |   |       DeliveryPartnerGetOrdersDeliveryHistoryService.java
 |   |           |   |       DeliveryPartnerManagementService.java
-|   |           |   |       DeliveryPartnerOrdersRetrievalService.java
-|   |           |   |       InventoryReleaseService.java
+|   |           |   |       DeliveryPartnerOutfordeliveryOrderService.java
+|   |           |   |       DeliveryPartnerPickupOrderService.java
+|   |           |   |       DeliveryPartnerSendDeliveryOtpService.java
+|   |           |   |       
+|   |           |   +---invoice
 |   |           |   |       InvoiceDownloadService.java
 |   |           |   |       InvoiceGenerationService.java
 |   |           |   |       InvoicePdfRenderer.java
 |   |           |   |       InvoiceQueryService.java
 |   |           |   |       InvoiceStorageService.java
+|   |           |   |       
+|   |           |   +---mail
+|   |           |   |       EmailService.java
+|   |           |   |       MailStartupValidator.java
+|   |           |   |       
+|   |           |   +---order
+|   |           |   |       AggregatedStatusCalculationService.java
+|   |           |   |       InventoryReleaseService.java
 |   |           |   |       OrderCancellationService.java
 |   |           |   |       OrderHistoryService.java
 |   |           |   |       OrderRetrievalService.java
-|   |           |   |       VendorOrderRetrievalService.java
-|   |           |   |       VendorOrderStatusBatchTransitionService.java
-|   |           |   |       VendorOrderStatusTransitionService.java
 |   |           |   |       
 |   |           |   +---payment
+|   |           |   |       PaymentServiceGetPaymentByOrderId.java
+|   |           |   |       PaymentServiceGetPaymentStatus.java
 |   |           |   |       PaymentServicePaymentCreate.java
 |   |           |   |       PaymentServicePaymentGatewayHealth.java
 |   |           |   |       PaymentServicePaymentInitiate.java
 |   |           |   |       PaymentServicePaymentVerify.java
+|   |           |   |       PaymentServicePollVerify.java
 |   |           |   |       PaymentServiceRazorpayWebhookProcess.java
-|   |           |   |       PaymentServiceRetrievePaymentDetails.java
+|   |           |   |       PaymentsGetAllPaymentsService.java
+|   |           |   |       PaymentsGetByPaymentService.java
 |   |           |   |       RazorpayGatewayService.java
 |   |           |   |       
 |   |           |   +---product
-|   |           |   |       AdminProductApprovalService.java
-|   |           |   |       AdminProductModerationService.java
 |   |           |   |       ProductCreateService.java
 |   |           |   |       ProductDeleteService.java
 |   |           |   |       ProductImageService.java
 |   |           |   |       ProductInventoryService.java
 |   |           |   |       ProductRetrievalService.java
-|   |           |   |       ProductSearchService.java
+|   |           |   |       ProductSearchFilterProductsService.java
+|   |           |   |       ProductSearchGetAllBrandsService.java
+|   |           |   |       ProductSearchGetAllCategoriesService.java
+|   |           |   |       ProductSearchSearchProductsService.java
 |   |           |   |       ProductUpdateService.java
 |   |           |   |       
 |   |           |   +---token
@@ -433,6 +477,9 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---vendor
 |   |           |   |       VendorBankService.java
 |   |           |   |       VendorDashboardMetricsService.java
+|   |           |   |       VendorOrderRetrievalService.java
+|   |           |   |       VendorOrderStatusBatchTransitionService.java
+|   |           |   |       VendorOrderStatusTransitionService.java
 |   |           |   |       VendorProfileService.java
 |   |           |   |       VendorRegisterService.java
 |   |           |   |       VendorStatusCheckService.java
@@ -463,17 +510,18 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
     \---java
         \---com
             \---productadda
+                    HashUtilTest.java
                     ProductaddaApplicationTests.java
                     
 
 
 Folder PATH listing
-Volume serial number is 00000206 7478:274D
+Volume serial number is 00000266 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 000001DD 7478:274D
+Volume serial number is 000001F4 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.productadda.dto.ApiSuccessResponseDto;
-import com.productadda.dto.order.DeliveryPartnerCreateRequestDto;
-import com.productadda.dto.order.DeliveryPartnerResponseDto;
-
-import com.productadda.service.order.DeliveryPartnerManagementService;
+import com.productadda.dto.deliverypartner.DeliveryPartnerCreateRequestDto;
+import com.productadda.dto.deliverypartner.DeliveryPartnerResponseDto;
+import com.productadda.service.deliverypartners.DeliveryPartnerManagementService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

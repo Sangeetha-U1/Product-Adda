@@ -16,11 +16,10 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.Map;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import com.fasterxml.jackson.databind.JsonNode;
 
 @Entity
 @Table(name = "payment_audit_logs")
@@ -75,9 +74,10 @@ public class PaymentAuditLog {
     @Column(name = "new_status", length = 50)
     private String newStatus;
 
+
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "details", columnDefinition = "JSON")
-    private JsonNode details;
+    @Column(name = "metadata")
+    private Map<String, Object> metadata;
 
     /*
      * ===========================================================================

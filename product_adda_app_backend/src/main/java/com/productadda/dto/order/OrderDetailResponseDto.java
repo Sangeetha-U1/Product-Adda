@@ -50,4 +50,7 @@ public class OrderDetailResponseDto {
 
     // Null when no payment has been initiated yet.
     private OrderPaymentSummaryDto payment;
+
+    // Null when no invoice has been initiated yet.
+    private OrderInvoiceSummaryDto invoice;
 }

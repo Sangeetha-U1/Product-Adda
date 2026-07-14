@@ -9,7 +9,7 @@ import com.productadda.entity.PaymentAuditLog;
 
 /*
  * ================================================================
- * NEW REPOSITORY (Week 7): PaymentAuditLogRepository
+ * NEW REPOSITORY : PaymentAuditLogRepository
  * Backs the immutable payment_audit_logs table.
  * ================================================================
  */

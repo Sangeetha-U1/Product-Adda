@@ -34,5 +34,4 @@ public class UserInvoiceSummaryDto {
 
     private String fileUrl;
 
-    private String presignedUrl;
 }

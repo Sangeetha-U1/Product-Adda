@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
         // Pageable)
         // =========================================================================
         @Query(value = "SELECT p.* FROM products p " +
-                        "LEFT JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "LEFT JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE (p.title LIKE :keyword OR p.description LIKE :keyword OR p.sku LIKE :keyword)", nativeQuery = true)
         List<Product> searchAllStatuses(@Param("keyword") String keyword, Pageable pageable);
 
@@ -36,13 +36,13 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
         long countSearchAllStatuses(@Param("keyword") String keyword);
 
         @Query(value = "SELECT p.* FROM products p " +
-                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE (p.title LIKE :keyword OR p.description LIKE :keyword OR p.sku LIKE :keyword) " +
                         "AND s.status_code = 'APPROVED'", nativeQuery = true)
         List<Product> searchApprovedOnly(@Param("keyword") String keyword, Pageable pageable);
 
         @Query(value = "SELECT COUNT(*) FROM products p " +
-                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE (p.title LIKE :keyword OR p.description LIKE :keyword OR p.sku LIKE :keyword) " +
                         "AND s.status_code = 'APPROVED'", nativeQuery = true)
         long countSearchApprovedOnly(@Param("keyword") String keyword);
@@ -51,7 +51,7 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
         // MULTI-CRITERIA FILTER NATIVE QUERIES
         // =========================================================================
         @Query(value = "SELECT p.* FROM products p " +
-                        "LEFT JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "LEFT JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE (:categoryId IS NULL OR p.fk_category_id = :categoryId) " +
                         "AND (:brandId IS NULL OR p.fk_brand_id = :brandId) " +
                         "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
@@ -69,7 +69,7 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
                         @Param("minPrice") BigDecimal minPrice, @Param("maxPrice") BigDecimal maxPrice);
 
         @Query(value = "SELECT p.* FROM products p " +
-                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE s.status_code = 'APPROVED' " +
                         "AND (:categoryId IS NULL OR p.fk_category_id = :categoryId) " +
                         "AND (:brandId IS NULL OR p.fk_brand_id = :brandId) " +
@@ -80,7 +80,7 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
                         Pageable pageable);
 
         @Query(value = "SELECT COUNT(*) FROM products p " +
-                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE s.status_code = 'APPROVED' " +
                         "AND (:categoryId IS NULL OR p.fk_category_id = :categoryId) " +
                         "AND (:brandId IS NULL OR p.fk_brand_id = :brandId) " +
@@ -93,26 +93,40 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
         // ADMINISTRATIVE GOVERNANCE & MODERATION PIPELINES
         // =========================================================================
         @Query(value = "SELECT p.* FROM products p " +
-                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE s.status_code IN (:statusCodes) " +
                         "ORDER BY p.created_at_utc DESC", countQuery = "SELECT COUNT(*) FROM products p " +
-                                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                                        "JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                                         "WHERE s.status_code IN (:statusCodes)", nativeQuery = true)
         Page<Product> findByStatusCodeInNative(@Param("statusCodes") List<String> statusCodes, Pageable pageable);
 
         @Query(value = "SELECT COUNT(*) FROM products p " +
-                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE s.status_code = :statusCode", nativeQuery = true)
         long countByStatusCodeNative(@Param("statusCode") String statusCode);
 
         @Query(value = "SELECT COUNT(*) FROM products p " +
-                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE s.status_code = :statusCode AND p.updated_at_utc >= :dateTime", nativeQuery = true)
         long countByStatusCodeAndUpdatedAtGreaterNative(@Param("statusCode") String statusCode,
                         @Param("dateTime") LocalDateTime dateTime);
 
         @Query(value = "SELECT COUNT(DISTINCT p.fk_vendor_id) FROM products p " +
-                        "JOIN product_status_lookup s ON p.fk_status_id = s.pk_status_id " +
+                        "JOIN product_statuses s ON p.fk_status_id = s.pk_status_id " +
                         "WHERE s.status_code = :statusCode", nativeQuery = true)
         long countDistinctVendorsByStatusCodeNative(@Param("statusCode") String statusCode);
+
+        @Query(value = """
+                        SELECT p.*
+                        FROM products p
+                        JOIN product_statuses s ON p.fk_status_id = s.pk_status_id
+                        WHERE s.status_code <> 'DELETED'
+                        ORDER BY p.created_at_utc DESC
+                        """, countQuery = """
+                        SELECT COUNT(*)
+                        FROM products p
+                        JOIN product_statuses s ON p.fk_status_id = s.pk_status_id
+                        WHERE s.status_code <> 'DELETED'
+                        """, nativeQuery = true)
+        Page<Product> findAllNonDeletedProducts(Pageable pageable);
 }

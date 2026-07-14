@@ -133,7 +133,9 @@ public class PaymentServicePaymentCreate {
             long amountInPaise = order.getTotalAmount().multiply(BigDecimal.valueOf(100)).longValue();
 
             JSONObject linkOptions = new JSONObject();
+
             linkOptions.put("amount", amountInPaise);
+            
             // TODO: Add currency lookup table and add fk col in order and add here
             linkOptions.put("currency", "INR");
             linkOptions.put("description", "Verification Testing for Order " + orderId);

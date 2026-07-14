@@ -39,20 +39,23 @@ public class AggregatedStatusCalculationService {
      * admin override, cancellation) and not by item-level aggregation.
      *
      * Aggregation rule (CANCELLED items excluded entirely):
-     *   - If there are no active (non-CANCELLED) items at all, the
-     *     order status is left unchanged (edge case: fully cancelled
-     *     order, nothing to aggregate).
-     *   - If ALL active items are SHIPPED, the order becomes SHIPPED.
-     *   - Otherwise (any mix of PENDING/PROCESSING/SHIPPED among the
-     *     active items), the order becomes PROCESSING.
+     * - If there are no active (non-CANCELLED) items at all, the
+     * order status is left unchanged (edge case: fully cancelled
+     * order, nothing to aggregate).
+     * - If ALL active items are SHIPPED, the order becomes SHIPPED.
+     * - Otherwise (any mix of PENDING/PROCESSING/SHIPPED among the
+     * active items), the order becomes PROCESSING.
      *
      * Runs inside the caller's existing transaction (default REQUIRED
      * propagation).
      * ================================================================
      */
+
     @Transactional
     public String recalculateAggregatedStatus(Order order) {
-
+        // TODO: Expand aggregation rules when DELIVERY and RETURN workflows are
+        // implemented.
+        // Current implementation intentionally aggregates only PROCESSING and SHIPPED.
         /*
          * ================================================================
          * 1. VALIDATION SECTION

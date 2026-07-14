@@ -35,10 +35,21 @@ public class CartPricingService {
         // ==========================================
         // 1.1 REQUEST VALIDATION
         // ==========================================
-        if (items == null || items.isEmpty()) {
+        if (items == null) {
             throw new ApiException(
                     HttpStatus.BAD_REQUEST,
-                    "Cart items cannot be null or empty");
+                    "Cart items cannot be null");
+        }
+
+        if (items.isEmpty()) {
+            return CartTotalsDto.builder()
+                    .itemCount(0)
+                    .subtotal(BigDecimal.ZERO)
+                    .couponDiscount(BigDecimal.ZERO)
+                    .shippingCost(BigDecimal.ZERO)
+                    .taxAmount(BigDecimal.ZERO)
+                    .total(BigDecimal.ZERO)
+                    .build();
         }
 
         if (cart == null) {
