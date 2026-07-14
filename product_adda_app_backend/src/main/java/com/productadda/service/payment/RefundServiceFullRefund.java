@@ -56,7 +56,9 @@ public class RefundServiceFullRefund {
     private final InventoryRepository inventoryRepository;
     private final RefundRepository refundRepository;
     private final UserRepository userRepository;
-    private final RazorpayGatewayService razorpayGatewayService;
+
+    private final RazorpayGatewayInitiateRefundService razorpayGatewayInitiateRefundService;
+
     private final UuidUtil uuidUtil;
 
     private static final long REFUND_WINDOW_DAYS = 30;
@@ -185,7 +187,7 @@ public class RefundServiceFullRefund {
 
         // Gateway call: razorpayPaymentId is Payment.gatewayTransactionId,
         // set during Day 1 webhook processing - NOT the gatewayOrderId.
-        RazorpayGatewayService.RazorpayRefundResult gatewayResult = razorpayGatewayService.initiateRefund(
+        RazorpayGatewayInitiateRefundService.RazorpayRefundResult gatewayResult = razorpayGatewayInitiateRefundService.initiateRefund(
                 payment.getGatewayTransactionId(), refundAmountInPaise);
 
         PaymentStatus processingStatus = paymentStatusRepository.findByStatusName("PROCESSING")
@@ -252,7 +254,7 @@ public class RefundServiceFullRefund {
 
         paymentAuditLogRepository.save(auditLog);
 
-        // TODO: Week 8 will trigger refund_initiated notification hooks
+        // TODO: will trigger refund_initiated notification hooks
 
         /*
          * ================================================================

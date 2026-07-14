@@ -23,7 +23,7 @@ import org.hibernate.type.SqlTypes;
 
 /*
  * ================================================================
- * NEW ENTITY (Week 7, Day 3): Refund
+ * Refund
  * A Payment can have MULTIPLE Refund rows over time (one full, or
  * several partials), so fkPayment is @ManyToOne - not @OneToOne
  * like Payment.fkOrder.

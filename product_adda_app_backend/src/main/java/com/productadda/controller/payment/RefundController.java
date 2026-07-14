@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 /*
  * ================================================================
- * NEW CONTROLLER (Week 7, Day 3): RefundController
+ * RefundController
  * POST endpoints are Admin-only (confirmed: no CUSTOMER_SUPPORT
  * role exists). GET is open to CUSTOMER/ADMIN/SUPER_ADMIN, with
  * ownership narrowing done in RefundServiceGetStatus.

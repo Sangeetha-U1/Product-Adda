@@ -46,7 +46,7 @@ import lombok.RequiredArgsConstructor;
 
 /*
  * ================================================================
- * NEW SERVICE (Week 7, Day 3): RefundServicePartialRefund
+ * RefundServicePartialRefund
  * API 8/14 - POST /api/refunds/partial
  * Admin-only, same rationale as RefundServiceFullRefund.
  * ================================================================
@@ -64,7 +64,9 @@ public class RefundServicePartialRefund {
         private final RefundRepository refundRepository;
         private final RefundLineItemRepository refundLineItemRepository;
         private final UserRepository userRepository;
-        private final RazorpayGatewayService razorpayGatewayService;
+
+        private final RazorpayGatewayInitiateRefundService razorpayGatewayInitiateRefundService;
+
         private final UuidUtil uuidUtil;
 
         /*
@@ -254,8 +256,9 @@ public class RefundServicePartialRefund {
 
                 // Gateway call: razorpayPaymentId is Payment.gatewayTransactionId,
                 // set during Day 1 webhook processing - NOT the gatewayOrderId.
-                RazorpayGatewayService.RazorpayRefundResult gatewayResult = razorpayGatewayService.initiateRefund(
-                                payment.getGatewayTransactionId(), totalRequestedRefundInPaise);
+                RazorpayGatewayInitiateRefundService.RazorpayRefundResult gatewayResult = razorpayGatewayInitiateRefundService
+                                .initiateRefund(
+                                                payment.getGatewayTransactionId(), totalRequestedRefundInPaise);
 
                 PaymentStatus processingStatus = paymentStatusRepository.findByStatusName("PROCESSING")
                                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -305,7 +308,7 @@ public class RefundServicePartialRefund {
                                 .build();
                 paymentAuditLogRepository.save(auditLog);
 
-                // TODO: Week 8 will trigger refund_initiated notification hooks
+                // TODO: will trigger refund_initiated notification hooks
 
                 /*
                  * ================================================================

@@ -30,6 +30,9 @@ import org.hibernate.type.SqlTypes;
 @Builder
 public class PaymentAuditLog {
 
+    // TODO: Consider adding fk_reconciliation_log_id to payment_audit_logs
+    // instead of storing reconciliationLogId only inside JSON details.
+
     /*
      * =========================================================
      * PRIMARY KEY
@@ -73,7 +76,6 @@ public class PaymentAuditLog {
 
     @Column(name = "new_status", length = 50)
     private String newStatus;
-
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "metadata")

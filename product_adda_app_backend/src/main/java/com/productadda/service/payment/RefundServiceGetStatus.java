@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 
 /*
  * ================================================================
- * NEW SERVICE (Week 7, Day 3): RefundServiceGetStatus
+ * RefundServiceGetStatus
  * API 9/14 - GET /api/refunds/{refundId}
  * Role-based access: customer sees own refunds (via
  * Payment.fkCustomer); admin sees all. Optional live gateway sync
@@ -43,7 +43,8 @@ public class RefundServiceGetStatus {
     private final RefundLineItemRepository refundLineItemRepository;
     private final PaymentStatusRepository paymentStatusRepository;
     private final UserRepository userRepository;
-    private final RazorpayGatewayService razorpayGatewayService;
+
+    private final RazorpayGatewayFetchRefundStatusService razorpayGatewayFetchRefundStatusService;
 
     /*
      * ================================================================
@@ -96,8 +97,10 @@ public class RefundServiceGetStatus {
             refund = refundRepository.findById(refundId)
                     .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Refund not found"));
         } else {
-            refund = refundRepository.findByPkRefundIdAndFkPayment_FkCustomer_PkUserId(refundId, authenticatedUser.getPkUserId())
-                    .orElseThrow(() -> new ApiException(HttpStatus.FORBIDDEN, "You do not have permission to view this refund"));
+            refund = refundRepository
+                    .findByPkRefundIdAndFkPayment_FkCustomer_PkUserId(refundId, authenticatedUser.getPkUserId())
+                    .orElseThrow(() -> new ApiException(HttpStatus.FORBIDDEN,
+                            "You do not have permission to view this refund"));
         }
 
         /*
@@ -111,22 +114,26 @@ public class RefundServiceGetStatus {
         // local row (covers the case where Razorpay's refund webhook, if any,
         // has not yet arrived).
         String localStatusName = refund.getFkStatus().getStatusName();
-        boolean isInFlight = "INITIATED".equalsIgnoreCase(localStatusName) || "PROCESSING".equalsIgnoreCase(localStatusName);
+        boolean isInFlight = "INITIATED".equalsIgnoreCase(localStatusName)
+                || "PROCESSING".equalsIgnoreCase(localStatusName);
 
         if (isInFlight && refund.getGatewayRefundId() != null) {
-            String gatewayStatus = razorpayGatewayService.fetchRefundStatus(refund.getGatewayRefundId());
+            String gatewayStatus = razorpayGatewayFetchRefundStatusService
+                    .fetchRefundStatus(refund.getGatewayRefundId());
 
             // TODO: Razorpay refund statuses are "pending"/"processed"/"failed" -
             // mapped here to our own PROCESSING/SUCCESS/FAILED vocabulary.
             // Not verified against a real Razorpay refund response.
             if ("processed".equalsIgnoreCase(gatewayStatus)) {
                 PaymentStatus successStatus = paymentStatusRepository.findByStatusName("SUCCESS")
-                        .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "SUCCESS status not configured"));
+                        .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
+                                "SUCCESS status not configured"));
                 refund.setFkStatus(successStatus);
                 refund = refundRepository.save(refund);
             } else if ("failed".equalsIgnoreCase(gatewayStatus)) {
                 PaymentStatus failedStatus = paymentStatusRepository.findByStatusName("FAILED")
-                        .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "FAILED status not configured"));
+                        .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
+                                "FAILED status not configured"));
                 refund.setFkStatus(failedStatus);
                 refund = refundRepository.save(refund);
             }

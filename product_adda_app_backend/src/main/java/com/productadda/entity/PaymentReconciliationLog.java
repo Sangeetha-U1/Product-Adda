@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,8 +21,14 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
+/*
+ * ================================================================
+ * PaymentReconciliationLog
+ * One row per reconciliation run (scheduled or manual). Created as
+ * RUNNING, then updated in place once the comparison completes -
+ * no separate "final" row is inserted.
+ * ================================================================
+ */
 @Entity
 @Table(name = "payment_reconciliation_logs")
 @Getter
@@ -54,6 +61,7 @@ public class PaymentReconciliationLog {
     @JoinColumn(name = "fk_status_id", nullable = false)
     private PaymentStatus fkStatus;
 
+    // Nullable: a scheduled run has no human trigger
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_triggered_by_user_id")
     private User fkTriggeredByUser;
@@ -63,6 +71,7 @@ public class PaymentReconciliationLog {
      * RECONCILIATION DETAILS
      * =========================================================
      */
+    // "daily_scheduled" / "on_demand" / "manual"
     @Column(name = "reconciliation_type", nullable = false, length = 30)
     private String reconciliationType;
 
@@ -85,9 +94,9 @@ public class PaymentReconciliationLog {
     @Column(name = "orphaned_in_db", nullable = false)
     private Integer orphanedInDb;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "discrepancy_details", columnDefinition = "JSON")
-    private JsonNode discrepancyDetails;
+    @Lob
+    @Column(name = "discrepancy_details", columnDefinition = "json")
+    private String discrepancyDetails;
 
     @Column(name = "reconciled_at_utc")
     private LocalDateTime reconciledAtUtc;

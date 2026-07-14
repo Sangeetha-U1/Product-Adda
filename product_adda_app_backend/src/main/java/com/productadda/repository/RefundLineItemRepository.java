@@ -10,7 +10,7 @@ import com.productadda.entity.RefundLineItem;
 
 /*
  * ================================================================
- * NEW REPOSITORY (Week 7, Day 3): RefundLineItemRepository
+ * RefundLineItemRepository
  * ================================================================
  */
 public interface RefundLineItemRepository extends JpaRepository<RefundLineItem, UUID> {

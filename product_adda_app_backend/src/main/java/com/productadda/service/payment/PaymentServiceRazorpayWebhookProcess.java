@@ -48,7 +48,7 @@ public class PaymentServiceRazorpayWebhookProcess {
     private final OrderRepository orderRepository;
     private final PaymentStatusRepository paymentStatusRepository;
 
-    private final RazorpayGatewayService razorpayGatewayService;
+    private final RazorpayGatewayFetchOrderStatusService razorpayGatewayFetchOrderStatusService;
 
     private final UuidUtil uuidUtil;
 
@@ -83,7 +83,8 @@ public class PaymentServiceRazorpayWebhookProcess {
         // ==========================================
         // Public endpoint by design. HMAC-SHA256 signature verification
         // below is the sole trust boundary for this service.
-        String computedSignature = computeHmacSha256(rawRequestBody, razorpayGatewayService.getWebhookSecret());
+        String computedSignature = computeHmacSha256(rawRequestBody,
+                razorpayGatewayFetchOrderStatusService.getWebhookSecret());
         if (!computedSignature.equals(signatureHeader)) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Webhook signature verification failed");
         }

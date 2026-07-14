@@ -52,7 +52,7 @@ public class PaymentServicePaymentInitiate {
     private final PaymentGatewayRepository paymentGatewayRepository;
     private final UserRepository userRepository;
 
-    private final RazorpayGatewayService razorpayGatewayService;
+    private final RazorpayGatewayCreateOrderService razorpayGatewayCreateOrderService;
 
     private final UuidUtil uuidUtil;
 
@@ -113,8 +113,22 @@ public class PaymentServicePaymentInitiate {
         // Idempotency check happens first: repeated requests with the same key
         // must short-circuit before touching the order or any gateway.
         Optional<Payment> existingPayment = paymentRepository.findByIdempotencyKey(idempotencyKey);
+
         if (existingPayment.isPresent()) {
-            return buildResponseFromExistingPayment(existingPayment.get());
+            // Extract the actual Payment object from the Optional wrapper
+            Payment payment = existingPayment.get();
+
+            return PaymentInitiateResponseDto.builder()
+                    .paymentId(payment.getPkPaymentId().toString())
+                    .orderId(payment.getFkOrder().getPkOrderId().toString())
+                    .status(payment.getFkStatus().getStatusName())
+                    .amountInPaise(payment.getAmountInPaise())
+                    .currency(payment.getCurrency())
+                    .paymentGateway(payment.getFkGateway().getGatewayName())
+                    .gatewayOrderId(payment.getGatewayOrderId())
+                    .checkoutRedirectUrl(null)
+                    .checkoutKey(null)
+                    .build();
         }
 
         Order order = orderRepository.findById(orderId)
@@ -158,8 +172,9 @@ public class PaymentServicePaymentInitiate {
         String checkoutKey;
 
         if ("RAZORPAY".equalsIgnoreCase(paymentGateway.getGatewayName())) {
-            RazorpayGatewayService.RazorpayOrderResult gatewayResult = razorpayGatewayService.createOrder(amountInPaise,
-                    order.getPkOrderId());
+            RazorpayGatewayCreateOrderService.RazorpayOrderResult gatewayResult = razorpayGatewayCreateOrderService
+                    .createOrder(amountInPaise,
+                            order.getPkOrderId());
             gatewayOrderId = gatewayResult.getGatewayOrderId();
             checkoutRedirectUrl = gatewayResult.getCheckoutRedirectUrl();
             checkoutKey = gatewayResult.getCheckoutKey();
@@ -230,21 +245,4 @@ public class PaymentServicePaymentInitiate {
                 .build();
     }
 
-    /*
-     * Idempotency short-circuit path: reconstructs the response DTO from an
-     * already-persisted Payment row without calling any gateway again.
-     */
-    private PaymentInitiateResponseDto buildResponseFromExistingPayment(Payment payment) {
-        return PaymentInitiateResponseDto.builder()
-                .paymentId(payment.getPkPaymentId().toString())
-                .orderId(payment.getFkOrder().getPkOrderId().toString())
-                .status(payment.getFkStatus().getStatusName())
-                .amountInPaise(payment.getAmountInPaise())
-                .currency(payment.getCurrency())
-                .paymentGateway(payment.getFkGateway().getGatewayName())
-                .gatewayOrderId(payment.getGatewayOrderId())
-                .checkoutRedirectUrl(null)
-                .checkoutKey(null)
-                .build();
-    }
 }

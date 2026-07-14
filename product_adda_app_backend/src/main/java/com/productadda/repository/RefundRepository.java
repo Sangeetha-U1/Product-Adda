@@ -12,7 +12,7 @@ import com.productadda.entity.Refund;
 
 /*
  * ================================================================
- * NEW REPOSITORY (Week 7, Day 3): RefundRepository
+ * RefundRepository
  * ================================================================
  */
 public interface RefundRepository extends JpaRepository<Refund, UUID> {

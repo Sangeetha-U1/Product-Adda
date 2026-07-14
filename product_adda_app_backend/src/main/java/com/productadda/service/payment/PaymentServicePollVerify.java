@@ -56,7 +56,9 @@ public class PaymentServicePollVerify {
     private final OrderRepository orderRepository;
     private final PaymentStatusRepository paymentStatusRepository;
     private final UserRepository userRepository;
-    private final RazorpayGatewayService razorpayGatewayService;
+
+    private final RazorpayGatewayFetchOrderStatusService razorpayGatewayFetchOrderStatusService;
+
     private final UuidUtil uuidUtil;
 
     /*
@@ -165,7 +167,8 @@ public class PaymentServicePollVerify {
         // (created/attempted/paid), NOT the payment-entity-level values
         // (created/authorized/captured/failed) used in the webhook flow.
         // "paid" is the order-level success indicator here.
-        String gatewayOrderStatus = razorpayGatewayService.fetchOrderStatus(payment.getGatewayOrderId());
+        String gatewayOrderStatus = razorpayGatewayFetchOrderStatusService
+                .fetchOrderStatus(payment.getGatewayOrderId());
         LocalDateTime nowUtc = LocalDateTime.now(ZoneOffset.UTC);
 
         if ("paid".equalsIgnoreCase(gatewayOrderStatus)) {

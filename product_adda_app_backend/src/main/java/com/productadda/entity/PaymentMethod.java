@@ -20,6 +20,13 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+/*
+ * ================================================================
+ * PaymentMethod
+ * Tokenized/saved payment methods. Only gateway_token_id and masked
+ * card metadata are stored - never full card numbers or CVV.
+ * ================================================================
+ */
 @Entity
 @Table(name = "payment_methods")
 @Getter
@@ -59,6 +66,7 @@ public class PaymentMethod {
     @Column(name = "gateway_token_id", nullable = false, length = 255)
     private String gatewayTokenId;
 
+    // card / upi / netbanking / wallet
     @Column(name = "method_type", nullable = false, length = 30)
     private String methodType;
 
@@ -69,19 +77,19 @@ public class PaymentMethod {
     private String cardBrand;
 
     @Column(name = "card_expiry_month")
-    private Byte cardExpiryMonth;
+    private Integer cardExpiryMonth;
 
     @Column(name = "card_expiry_year")
-    private Short cardExpiryYear;
+    private Integer cardExpiryYear;
+
+    @Column(name = "is_primary", nullable = false)
+    private Boolean isPrimary;
 
     /*
      * =========================================================
      * STATUS
      * =========================================================
      */
-    @Column(name = "is_primary", nullable = false)
-    private Boolean isPrimary;
-
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 

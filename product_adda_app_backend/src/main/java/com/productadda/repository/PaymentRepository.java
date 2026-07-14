@@ -1,6 +1,7 @@
 package com.productadda.repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,12 +31,7 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
 
         // ==========================================
         // CUSTOMER PAYMENT HISTORY WITH OPTIONAL FILTERS
-        // Description: Supports optional status name, gateway name, and
-        // created-date range filtering for the authenticated customer's own
-        // payments. Mirrors OrderRepository.findCustomerOrdersWithFilters exactly.
         // ==========================================
-        // Changed p.fkCustomer to p.fkUser to match the Payment entity mapping property
-        // definition
         @Query("SELECT p FROM Payment p " +
                         "WHERE p.fkUser = :customer " +
                         "AND (:statusName IS NULL OR p.fkStatus.statusName = :statusName) " +
@@ -52,10 +48,6 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
 
         // ==========================================
         // ALL PAYMENTS FOR AUTHENTICATED USER — FILTER + SEARCH
-        // Description: Backs GET /api/payment. Supports optional status,
-        // gateway, date range, amount range filters, plus a free-text
-        // keyword match against order number, gateway name, or payment
-        // method. All params optional; null skips that condition.
         // ==========================================
         @Query("SELECT p FROM Payment p " +
                         "LEFT JOIN FETCH p.fkOrder o " +
@@ -82,4 +74,9 @@ public interface PaymentRepository extends JpaRepository<Payment, UUID> {
                         @Param("maxAmountInPaise") Long maxAmountInPaise,
                         @Param("keyword") String keyword,
                         Pageable pageable);
+
+        // ==========================================
+        // RECONCILIATION DATE-RANGE LOOKUP (Day 4)
+        // ==========================================
+        List<Payment> findByCreatedAtUtcBetween(LocalDateTime startDate, LocalDateTime endDate);
 }
