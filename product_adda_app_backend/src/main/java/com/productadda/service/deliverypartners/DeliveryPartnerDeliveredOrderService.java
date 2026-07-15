@@ -26,6 +26,7 @@ import com.productadda.repository.OrderRepository;
 import com.productadda.repository.OrderStatusRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.repository.UserRoleRepository;
+import com.productadda.service.notifications.EventListenerServiceHandleOrderDelivered;
 import com.productadda.repository.DeliveryOtpRepository;
 
 import com.productadda.util.HashUtil;
@@ -42,6 +43,9 @@ public class DeliveryPartnerDeliveredOrderService {
         private final OrderRepository orderRepository;
         private final OrderStatusRepository orderStatusRepository;
         private final DeliveryOtpRepository deliveryOtpRepository;
+
+        private final EventListenerServiceHandleOrderDelivered eventListenerServiceHandleOrderDelivered;
+
         private final HashUtil hashUtil;
 
         /*
@@ -166,6 +170,9 @@ public class DeliveryPartnerDeliveredOrderService {
                 deliveryPartnerRepository.save(partner);
 
                 deliveryOtpRepository.save(deliveryOtp);
+
+                // raise ORDER_DELIVERED notification
+                eventListenerServiceHandleOrderDelivered.handleOrderDelivered(order);
 
                 /*
                  * ================================================================

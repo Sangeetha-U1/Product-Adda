@@ -17,4 +17,7 @@ public interface UserRoleRepository
     boolean existsByFkUserAndFkRole_RoleName(User fkUser, String roleName);
 
     List<UserRole> findByFkUser(User user);
+
+    List<UserRole> findByFkRole_RoleName(String roleName);
+
 }

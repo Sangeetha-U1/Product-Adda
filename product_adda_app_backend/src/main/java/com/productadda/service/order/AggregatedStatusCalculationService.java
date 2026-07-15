@@ -15,6 +15,7 @@ import com.productadda.exception.ApiException;
 import com.productadda.repository.OrderItemRepository;
 import com.productadda.repository.OrderRepository;
 import com.productadda.repository.OrderStatusRepository;
+import com.productadda.service.notifications.EventListenerServiceHandleOrderStatusAggregated;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +26,7 @@ public class AggregatedStatusCalculationService {
     private final OrderItemRepository orderItemRepository;
     private final OrderRepository orderRepository;
     private final OrderStatusRepository orderStatusRepository;
+    private final EventListenerServiceHandleOrderStatusAggregated eventListenerServiceHandleOrderStatusAggregated;
 
     /*
      * ================================================================
@@ -122,6 +124,9 @@ public class AggregatedStatusCalculationService {
          * ================================================================
          */
         orderRepository.save(order);
+
+        // raise ORDER_PROCESSING or ORDER_SHIPPED notification
+        eventListenerServiceHandleOrderStatusAggregated.handleOrderStatusAggregated(order, aggregatedStatusName);
 
         /*
          * ================================================================

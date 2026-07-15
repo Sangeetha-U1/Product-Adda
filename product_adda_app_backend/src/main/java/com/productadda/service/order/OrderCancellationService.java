@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.productadda.dto.order.OrderCancellationResponseDto;
+
 import com.productadda.entity.Cart;
 import com.productadda.entity.CartStatus;
 import com.productadda.entity.ItemStatus;
@@ -28,6 +29,7 @@ import com.productadda.repository.OrderRepository;
 import com.productadda.repository.OrderStatusRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.repository.UserRoleRepository;
+import com.productadda.service.notifications.EventListenerServiceHandleOrderCancelled;
 import com.productadda.repository.CartStatusRepository;
 import com.productadda.repository.CartRepository;
 
@@ -49,6 +51,7 @@ public class OrderCancellationService {
         private final CartRepository cartRepository;
 
         private final InventoryReleaseService inventoryReleaseService;
+        private final EventListenerServiceHandleOrderCancelled eventListenerServiceHandleOrderCancelled;
 
         /*
          * ================================================================
@@ -56,7 +59,7 @@ public class OrderCancellationService {
          * Description: Allows the authenticated user to cancel their
          * own order, restricted to PENDING or CONFIRMED status only.
          * Triggers immediate inventory release. Refund workflow deferred
-         * to (see TODO below).
+         * to (see TO DO below).
          * ================================================================
          */
 
@@ -180,6 +183,9 @@ public class OrderCancellationService {
                  */
                 Order savedOrder = orderRepository.save(order);
                 orderItemRepository.saveAll(orderItems);
+
+                // raise ORDER_CANCELLED notification
+                eventListenerServiceHandleOrderCancelled.handleOrderCancelled(savedOrder, safeCancellationReason);
 
                 /*
                  * ================================================================
@@ -335,6 +341,9 @@ public class OrderCancellationService {
                  */
                 Order savedOrder = orderRepository.save(order);
                 orderItemRepository.saveAll(orderItems);
+
+                // raise ORDER_CANCELLED notification
+                eventListenerServiceHandleOrderCancelled.handleOrderCancelled(savedOrder, safeCancellationReason);
 
                 /*
                  * ================================================================
@@ -493,6 +502,9 @@ public class OrderCancellationService {
                  */
                 Order savedOrder = orderRepository.save(order);
                 orderItemRepository.saveAll(orderItems);
+
+                // raise ORDER_CANCELLED notification
+                eventListenerServiceHandleOrderCancelled.handleOrderCancelled(savedOrder, safeCancellationReason);
 
                 /*
                  * ================================================================

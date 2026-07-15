@@ -39,6 +39,8 @@ public class OrderCreationService {
         private final OrderRepository orderRepository;
         private final OrderItemRepository orderItemRepository;
 
+        private final com.productadda.service.notifications.EventListenerServiceHandleOrderPlaced eventListenerServiceHandleOrderPlaced;
+
         private final UuidUtil uuidUtil;
 
         public Order createOrder(
@@ -65,7 +67,8 @@ public class OrderCreationService {
                 // 1.1 REQUEST VALIDATION
                 // ==========================================
                 if (user == null || cart == null || cartItems == null || cartItems.isEmpty()
-                                || address == null || pendingStatus == null || totals == null || itemPendingStatus == null
+                                || address == null || pendingStatus == null || totals == null
+                                || itemPendingStatus == null
                                 || idempotencyKey == null) {
                         throw new ApiException(HttpStatus.BAD_REQUEST, "Incomplete data supplied for order creation");
                 }
@@ -145,6 +148,9 @@ public class OrderCreationService {
                 Order reloadedOrder = orderRepository.findById(savedOrder.getPkOrderId())
                                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                                                 "Order persisted but could not be reloaded"));
+
+                // raise ORDER_PLACED notification
+                eventListenerServiceHandleOrderPlaced.handleOrderPlaced(reloadedOrder);
 
                 /*
                  * ================================================================

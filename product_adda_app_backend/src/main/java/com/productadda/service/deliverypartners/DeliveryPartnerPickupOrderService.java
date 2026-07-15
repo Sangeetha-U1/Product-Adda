@@ -25,6 +25,7 @@ import com.productadda.repository.OrderRepository;
 import com.productadda.repository.OrderStatusRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.repository.UserRoleRepository;
+import com.productadda.service.notifications.EventListenerServiceHandleOrderPickedUp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,6 +38,8 @@ public class DeliveryPartnerPickupOrderService {
     private final DeliveryPartnerRepository deliveryPartnerRepository;
     private final OrderRepository orderRepository;
     private final OrderStatusRepository orderStatusRepository;
+
+    private final EventListenerServiceHandleOrderPickedUp eventListenerServiceHandleOrderPickedUp;
 
     /*
      * ================================================================
@@ -139,11 +142,6 @@ public class DeliveryPartnerPickupOrderService {
         // decrement has something to decrement.
         partner.setActiveDeliveries(partner.getActiveDeliveries() + 1);
 
-        // TODO: Send notification.
-        // Example: notificationService.sendClaimAcceptedNotification(
-        // order.getFkUser().getPkUserId(), order.getPkOrderId(), "Your delivery is on
-        // the way");
-
         /*
          * ================================================================
          * 3. DB SAVING SECTION
@@ -152,6 +150,9 @@ public class DeliveryPartnerPickupOrderService {
         orderRepository.save(order);
 
         deliveryPartnerRepository.save(partner);
+
+        // raise ORDER_PICKED_UP notification
+        eventListenerServiceHandleOrderPickedUp.handleOrderPickedUp(order, partner);
 
         /*
          * ================================================================

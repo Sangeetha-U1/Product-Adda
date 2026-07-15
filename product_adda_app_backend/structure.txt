@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 000001A5 7478:274D
+Volume serial number is 00000207 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -61,6 +61,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       
 |   |           |   +---deliverypartner
 |   |           |   |       DeliveryPartnerController.java
+|   |           |   |       
+|   |           |   +---notifications
+|   |           |   |       NotificationController.java
+|   |           |   |       NotificationHealthController.java
 |   |           |   |       
 |   |           |   +---order
 |   |           |   |       InvoiceController.java
@@ -161,6 +165,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       DeliveryPartnerResponseDto.java
 |   |           |   |       PaginatedDeliveryPartnerAvailableOrderResponseDto.java
 |   |           |   |       PaginatedDeliveryPartnerMyOrderResponseDto.java
+|   |           |   |       
+|   |           |   +---notifications
+|   |           |   |       NotificationContentDto.java
+|   |           |   |       NotificationHealthLiveResponseDto.java
+|   |           |   |       NotificationListItemDto.java
+|   |           |   |       PaginatedNotificationResponseDto.java
 |   |           |   |       
 |   |           |   +---order
 |   |           |   |       DeliveryOtpSendResponseDto.java
@@ -295,6 +305,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       DeliveryOtp.java
 |   |           |       DeliveryPartner.java
 |   |           |       DeliveryPartnerStatus.java
+|   |           |       DispatchStatus.java
 |   |           |       EmailVerificationToken.java
 |   |           |       Inventory.java
 |   |           |       InventoryReservation.java
@@ -302,6 +313,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       InvoiceLineItem.java
 |   |           |       InvoicePresignedUrl.java
 |   |           |       ItemStatus.java
+|   |           |       Notification.java
+|   |           |       NotificationChannel.java
+|   |           |       NotificationLog.java
+|   |           |       NotificationType.java
+|   |           |       NotificationWorkerStatus.java
 |   |           |       Order.java
 |   |           |       OrderItem.java
 |   |           |       OrderStatus.java
@@ -315,6 +331,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       Product.java
 |   |           |       ProductImage.java
 |   |           |       ProductStatus.java
+|   |           |       RecipientRole.java
 |   |           |       RefreshToken.java
 |   |           |       Refund.java
 |   |           |       RefundLineItem.java
@@ -352,6 +369,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       DeliveryOtpRepository.java
 |   |           |       DeliveryPartnerRepository.java
 |   |           |       DeliveryPartnerStatusRepository.java
+|   |           |       DispatchStatusRepository.java
 |   |           |       EmailVerificationTokenRepository.java
 |   |           |       InventoryRepository.java
 |   |           |       InventoryReservationRepository.java
@@ -359,6 +377,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       InvoicePresignedUrlRepository.java
 |   |           |       InvoiceRepository.java
 |   |           |       ItemStatusRepository.java
+|   |           |       NotificationChannelRepository.java
+|   |           |       NotificationLogRepository.java
+|   |           |       NotificationRepository.java
+|   |           |       NotificationTypeRepository.java
+|   |           |       NotificationWorkerStatusRepository.java
 |   |           |       OrderItemRepository.java
 |   |           |       OrderRepository.java
 |   |           |       OrderStatusRepository.java
@@ -372,6 +395,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       ProductImageRepository.java
 |   |           |       ProductRepository.java
 |   |           |       ProductStatusRepository.java
+|   |           |       RecipientRoleRepository.java
 |   |           |       RefreshTokenRepository.java
 |   |           |       RefundLineItemRepository.java
 |   |           |       RefundRepository.java
@@ -466,6 +490,26 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       EmailService.java
 |   |           |   |       MailStartupValidator.java
 |   |           |   |       
+|   |           |   +---notifications
+|   |           |   |       EventListenerServiceHandleOrderCancelled.java
+|   |           |   |       EventListenerServiceHandleOrderConfirmed.java
+|   |           |   |       EventListenerServiceHandleOrderDelivered.java
+|   |           |   |       EventListenerServiceHandleOrderOutForDelivery.java
+|   |           |   |       EventListenerServiceHandleOrderPickedUp.java
+|   |           |   |       EventListenerServiceHandleOrderPlaced.java
+|   |           |   |       EventListenerServiceHandleOrderStatusAggregated.java
+|   |           |   |       EventListenerServiceHandlePaymentSuccessful.java
+|   |           |   |       NotificationContentBuilder.java
+|   |           |   |       NotificationCreationService.java
+|   |           |   |       NotificationDispatchServiceEmail.java
+|   |           |   |       NotificationDispatchServiceInApp.java
+|   |           |   |       NotificationDispatchServiceSms.java
+|   |           |   |       NotificationHealthCheckLiveService.java
+|   |           |   |       NotificationQueueProcessorService.java
+|   |           |   |       NotificationsGetMyNotificationsService.java
+|   |           |   |       RecipientResolverServiceGetAllAdminUsers.java
+|   |           |   |       RecipientResolverServiceGetOrderVendorUsers.java
+|   |           |   |       
 |   |           |   +---order
 |   |           |   |       AggregatedStatusCalculationService.java
 |   |           |   |       InventoryReleaseService.java
@@ -537,10 +581,14 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |           WishlistRemoveItemService.java
 |   |           |           WishlistRetrievalService.java
 |   |           |           
-|   |           \---util
-|   |                   HashUtil.java
-|   |                   UuidUtil.java
-|   |                   
+|   |           +---util
+|   |           |       HashUtil.java
+|   |           |       UuidUtil.java
+|   |           |       
+|   |           \---worker
+|   |               \---notifications
+|   |                       QueueProcessorWorker.java
+|   |                       
 |   \---resources
 |       |   application.properties
 |       |   
@@ -561,12 +609,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 00000216 7478:274D
+Volume serial number is 00000174 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 0000026B 7478:274D
+Volume serial number is 0000024D 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

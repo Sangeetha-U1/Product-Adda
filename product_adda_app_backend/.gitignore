@@ -36,3 +36,8 @@ build/
 **/src/main/resources/application.properties
 
 uploads/
+
+*.env
+
+.infisical.json
+

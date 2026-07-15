@@ -32,6 +32,8 @@ import com.productadda.repository.PaymentRepository;
 import com.productadda.repository.PaymentStatusRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.service.invoice.InvoiceGenerationService;
+import com.productadda.service.notifications.EventListenerServiceHandleOrderConfirmed;
+import com.productadda.service.notifications.EventListenerServiceHandlePaymentSuccessful;
 import com.productadda.repository.OrderStatusRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,8 @@ public class PaymentServicePaymentVerify {
         private final PaymentStatusRepository paymentStatusRepository;
 
         private final InvoiceGenerationService invoiceGenerationService;
+        private final EventListenerServiceHandleOrderConfirmed eventListenerServiceHandleOrderConfirmed;
+        private final EventListenerServiceHandlePaymentSuccessful eventListenerServiceHandlePaymentSuccessful;
 
         private final UserRepository userRepository;
         private final RazorpayClient razorpayClient;
@@ -195,6 +199,10 @@ public class PaymentServicePaymentVerify {
                          */
                         paymentRepository.save(payment);
                         orderRepository.save(order);
+
+                        // raise ORDER_CONFIRMED and PAYMENT_SUCCESS notifications
+                        eventListenerServiceHandleOrderConfirmed.handleOrderConfirmed(order);
+                        eventListenerServiceHandlePaymentSuccessful.handlePaymentSuccessful(order, payment);
 
                         InvoiceResponseDto invoice = invoiceGenerationService.generateInvoice(order.getPkOrderId());
 

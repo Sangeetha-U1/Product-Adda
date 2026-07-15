@@ -31,7 +31,7 @@ import com.productadda.repository.UserRoleRepository;
 import com.productadda.repository.DeliveryOtpRepository;
 
 import com.productadda.service.mail.EmailService;
-
+import com.productadda.service.notifications.EventListenerServiceHandleOrderOutForDelivery;
 import com.productadda.util.HashUtil;
 import com.productadda.util.UuidUtil;
 
@@ -49,6 +49,7 @@ public class DeliveryPartnerOutfordeliveryOrderService {
         private final DeliveryOtpRepository deliveryOtpRepository;
 
         private final EmailService emailService;
+        private final EventListenerServiceHandleOrderOutForDelivery eventListenerServiceHandleOrderOutForDelivery;
 
         private final HashUtil hashUtil;
         private final UuidUtil uuidUtil;
@@ -202,6 +203,11 @@ public class DeliveryPartnerOutfordeliveryOrderService {
                                 .build();
 
                 emailService.sendEmail(sendEmailRequest);
+
+                // raise ORDER_OUT_FOR_DELIVERY notification (separate from
+                // the OTP email above, which is the OTP delivery mechanism, not the
+                // general notification record) ---
+                eventListenerServiceHandleOrderOutForDelivery.handleOrderOutForDelivery(order);
 
                 /*
                  * ================================================================
