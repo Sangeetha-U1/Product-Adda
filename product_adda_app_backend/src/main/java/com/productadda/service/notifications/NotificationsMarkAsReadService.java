@@ -1,11 +1,9 @@
 package com.productadda.service.notifications;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.UUID;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.productadda.dto.notifications.NotificationListItemDto;
-import com.productadda.dto.notifications.PaginatedNotificationResponseDto;
 
 import com.productadda.entity.Notification;
 import com.productadda.entity.User;
@@ -27,23 +24,23 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class NotificationsGetMyNotificationsService {
+public class NotificationsMarkAsReadService {
 
     private final UserRepository userRepository;
     private final NotificationRepository notificationRepository;
 
     /*
      * ================================================================
-     * GET MY NOTIFICATIONS
-     * Description: Paginated in-app notification center for the
-     * authenticated user. unreadOnly=true restricts the list to
-     * is_read=false rows only (addition -- consolidates the
-     * plan's separate GET /api/notifications/center into this same
-     * endpoint rather than duplicating it).
+     * MARK AS READ
+     * Description: Marks a single IN_APP notification owned by the
+     * authenticated user as read. Scoped to IN_APP channel only --
+     * marking an EMAIL/SMS row "read" has no meaningful semantics in
+     * this system, so a non-IN_APP notificationId is rejected the same
+     * way a not-owned one is (404-shaped, no existence leak).
      * ================================================================
      */
-    @Transactional(readOnly = true)
-    public PaginatedNotificationResponseDto getMyNotifications(int page, int pageSize, boolean unreadOnly) {
+    @Transactional
+    public NotificationListItemDto markAsRead(UUID notificationId) {
 
         /*
          * ================================================================
@@ -54,8 +51,9 @@ public class NotificationsGetMyNotificationsService {
         // ==========================================
         // 1.1 REQUEST VALIDATION
         // ==========================================
-        int safePage = page < 0 ? 0 : page;
-        int safePageSize = (pageSize <= 0 || pageSize > 100) ? 20 : pageSize;
+        if (notificationId == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "notificationId is required");
+        }
 
         // ==========================================
         // 1.2 CONTEXT AUTHENTICATION
@@ -73,59 +71,57 @@ public class NotificationsGetMyNotificationsService {
         User currentUser = userRepository.findByEmail(currentUsername)
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Authenticated user no longer exists"));
 
+        Notification notification = notificationRepository
+                .findByPkNotificationIdAndFkUser(notificationId, currentUser)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Notification not found"));
+
+        if (notification.getFkChannel() == null || !"IN_APP".equals(notification.getFkChannel().getChannelName())) {
+            throw new ApiException(HttpStatus.NOT_FOUND, "Notification not found");
+        }
+
         /*
          * ================================================================
          * 2. BUSINESS RULES & PROCESSING / WORKFLOW
          * ================================================================
          */
-        PageRequest pageRequest = PageRequest.of(safePage, safePageSize,
-                Sort.by(Sort.Direction.DESC, "createdAtUtc"));
+        LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
 
-        List<Boolean> isReadValues = unreadOnly ? List.of(false) : List.of(true, false);
-
-        Page<Notification> notificationPage = notificationRepository
-                .findByFkUserAndFkChannel_ChannelNameAndIsReadIn(currentUser, "IN_APP", isReadValues, pageRequest);
+        notification.setIsRead(true);
+        notification.setReadAtUtc(now);
 
         /*
          * ================================================================
-         * 3. DB SAVING SECTION (Skip if Read-Only GET)
-         * Reason: Read-only paginated lookup, no mutations performed.
+         * 3. DB SAVING SECTION
          * ================================================================
          */
+        Notification savedNotification = notificationRepository.save(notification);
 
         /*
          * ================================================================
          * 4. POST-SAVING DATA SANITIZATION & MASKING
+         * Reason: No sensitive fields to strip.
          * ================================================================
          */
-        List<NotificationListItemDto> items = notificationPage.getContent().stream()
-                .map(notification -> NotificationListItemDto.builder()
-                        .notificationId(notification.getPkNotificationId())
-                        .notificationTypeName(notification.getFkType() != null
-                                ? notification.getFkType().getNotificationTypeName()
-                                : null)
-                        .title(notification.getTitle())
-                        .message(notification.getMessage())
-                        .isRead(notification.getIsRead())
-                        .dispatchStatusName(notification.getFkDispatchStatus() != null
-                                ? notification.getFkDispatchStatus().getStatusName()
-                                : null)
-                        .sentAtUtc(notification.getSentAtUtc())
-                        .readAtUtc(notification.getReadAtUtc())
-                        .createdAtUtc(notification.getCreatedAtUtc())
-                        .build())
-                .collect(Collectors.toList());
 
         /*
          * ================================================================
          * 5. RESPONSE MAPPING
          * ================================================================
          */
-        return PaginatedNotificationResponseDto.builder()
-                .notifications(items)
-                .totalCount(notificationPage.getTotalElements())
-                .page(safePage)
-                .pageSize(safePageSize)
+        return NotificationListItemDto.builder()
+                .notificationId(savedNotification.getPkNotificationId())
+                .notificationTypeName(savedNotification.getFkType() != null
+                        ? savedNotification.getFkType().getNotificationTypeName()
+                        : null)
+                .title(savedNotification.getTitle())
+                .message(savedNotification.getMessage())
+                .isRead(savedNotification.getIsRead())
+                .dispatchStatusName(savedNotification.getFkDispatchStatus() != null
+                        ? savedNotification.getFkDispatchStatus().getStatusName()
+                        : null)
+                .sentAtUtc(savedNotification.getSentAtUtc())
+                .readAtUtc(savedNotification.getReadAtUtc())
+                .createdAtUtc(savedNotification.getCreatedAtUtc())
                 .build();
     }
 }

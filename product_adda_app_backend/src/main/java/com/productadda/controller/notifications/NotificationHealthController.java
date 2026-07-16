@@ -26,8 +26,7 @@ public class NotificationHealthController {
      * GET /api/notifications/health/live
      * No Auth - public liveness probe, mirrors the existing
      * /api/health/app and /api/health/db convention. Requires adding
-     * this path to PublicRoutes.java -- see CHANGES_DAY1.md, since
-     * that file was not reviewed this week.
+     * this path to PublicRoutes.java
      * ================================================================
      */
     @GetMapping("/live")

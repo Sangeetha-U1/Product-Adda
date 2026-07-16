@@ -44,6 +44,7 @@ public class PublicRoutes {
             new PublicConfig("/api/health/app", HttpMethod.GET),
             new PublicConfig("/api/health/db", HttpMethod.GET),
             new PublicConfig("/api/payment/health", HttpMethod.GET),
+            new PublicConfig("/api/notifications/health/live", HttpMethod.GET),
 
             // Authentication Lifecycle APIs (POST Only)
             new PublicConfig("/api/auth/register", HttpMethod.POST),

@@ -45,13 +45,12 @@ public class Notification {
     // ==========================================
     // IDEMPOTENCY
     // Description: Generated fresh per EventListenerService*
-    // invocation (Week 8 Day 1 decision, Q3) -- not a stable key
+    // invocation -- not a stable key
     // derived from business data. Combined with fk_user_id and
     // fk_channel_id via a composite unique key, it currently only
     // guards against the exact same insert executing twice within
     // one invocation (e.g. a retried transaction), not against the
-    // same business event firing via two separate calls. See
-    // WEEK_8_EXECUTION_PLAN_REVISED.md item 3 for the full caveat.
+    // same business event firing via two separate calls. 
     // ==========================================
     @JdbcTypeCode(SqlTypes.BINARY)
     @Column(name = "event_id", columnDefinition = "BINARY(16)")
@@ -106,8 +105,8 @@ public class Notification {
      * =========================================================
      * RENDERED CONTENT
      * Description: title/message are the rendered subject/body for
-     * this recipient+channel -- Day 1 populates these via
-     * NotificationContentBuilder; Day 3 swaps the source to
+     * this recipient+channel
+     * NotificationContentBuilder;
      * notification_templates without changing this entity.
      * =========================================================
      */

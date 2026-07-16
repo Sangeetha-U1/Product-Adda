@@ -28,7 +28,7 @@ public class QueueProcessorWorker {
     private final NotificationQueueProcessorService notificationQueueProcessorService;
 
     /*
-     * Runs every 15 seconds, per Dheeraj's Day 1 decision (plan
+     * Runs every 15 seconds,(plan
      * originally specified 5 seconds; 15s was chosen as a better fit
      * for a monolith making real synchronous SMTP calls in-loop).
      * fixedDelay (not fixedRate) is used deliberately -- the next run

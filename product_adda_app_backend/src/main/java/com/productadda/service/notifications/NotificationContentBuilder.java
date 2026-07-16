@@ -17,10 +17,10 @@ public class NotificationContentBuilder {
      * BUILD CONTENT
      * Description: Produces a rendered subject/body pair for a given
      * notification type using plain Java string formatting. This is a
-     * Day 1 placeholder for the Day 3 notification_templates lookup --
+     * placeholder for the notification_templates lookup --
      * the method signature (type name + context map in, subject/body
      * out) is intentionally stable so EventListenerService* callers
-     * never need to change when Day 3 swaps this implementation for a
+     * never need to change, swap this implementation for a
      * real template render.
      * ================================================================
      */
@@ -44,7 +44,7 @@ public class NotificationContentBuilder {
          * ================================================================
          * 2. BUSINESS RULES & PROCESSING / WORKFLOW
          * TODO: Replace this switch with a notification_templates lookup
-         * on Day 3 -- (event_type, channel, recipient_role) -> render.
+         * (event_type, channel, recipient_role) -> render.
          * ================================================================
          */
         String subject;

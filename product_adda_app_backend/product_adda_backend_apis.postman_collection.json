@@ -20546,6 +20546,122 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "/api/notifications/preferences",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/preferences",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "preferences"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/notifications/preferences",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"notificationsEnabled\": true,\r\n    \"emailEnabled\": false,\r\n    \"smsEnabled\": false,\r\n    \"pushEnabled\": false,\r\n    \"inAppEnabled\": true,\r\n    \"quietHoursStart\": \"23:00\",\r\n    \"quietHoursEnd\": \"07:00\",\r\n    \"eventOptOuts\": [\r\n        \"ORDER_SHIPPED\"\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/preferences",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "preferences"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/notifications/{notificationId}/read",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/{notificationId}/read",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "{notificationId}",
+                "read"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/notifications/mark-all-read",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/mark-all-read",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "mark-all-read"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     }

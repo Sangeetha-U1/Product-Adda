@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.productadda.dto.notifications.NotificationGateDecisionDto;
+
 import com.productadda.entity.DispatchStatus;
 import com.productadda.entity.Notification;
 import com.productadda.entity.NotificationLog;
@@ -36,7 +38,7 @@ public class NotificationQueueProcessorService {
     private static final int BATCH_SIZE = 100;
     private static final String WORKER_NAME = "notification_queue_processor";
 
-    // Exponential backoff, per week_8_execution_plan_v2.md (retry 1 = 5
+    // Exponential backoff (retry 1 = 5
     // min, retry 2 = 15 min, retry 3 = 60 min, then MAX_RETRIES_FAILED).
     private static final long RETRY_1_DELAY_MINUTES = 5L;
     private static final long RETRY_2_DELAY_MINUTES = 15L;
@@ -48,6 +50,8 @@ public class NotificationQueueProcessorService {
     private final NotificationLogRepository notificationLogRepository;
     private final NotificationWorkerStatusRepository notificationWorkerStatusRepository;
 
+    private final NotificationPreferenceGateService notificationPreferenceGateService;
+
     private final NotificationDispatchServiceEmail notificationDispatchServiceEmail;
     private final NotificationDispatchServiceInApp notificationDispatchServiceInApp;
     private final NotificationDispatchServiceSms notificationDispatchServiceSms;
@@ -58,10 +62,14 @@ public class NotificationQueueProcessorService {
      * ================================================================
      * PROCESS PENDING BATCH
      * Description: Fetches up to BATCH_SIZE notifications in PENDING or
-     * RETRYING status whose next_retry_at_utc has elapsed (or is null),
-     * dispatches each via its channel, and records the outcome. One
-     * notification's failure is isolated and never halts the batch.
-     * Invoked on a fixed schedule by QueueProcessorWorker.
+     * RETRYING status whose next_retry_at_utc has elapsed (or is null).
+     * For each, first consults NotificationPreferenceGateService
+     * SKIP terminates the notification permanently (recipient
+     * preference blocked it), DEFER pushes next_retry_at_utc out
+     * without counting as a failed attempt (quiet hours / rate limit),
+     * SEND proceeds to actual dispatch as before. One notification's
+     * outcome is always isolated and never halts the batch. Invoked on
+     * a fixed schedule by QueueProcessorWorker.
      * ================================================================
      */
     @Transactional
@@ -89,6 +97,9 @@ public class NotificationQueueProcessorService {
         DispatchStatus maxRetriesFailedStatus = dispatchStatusRepository.findByStatusName("MAX_RETRIES_FAILED")
                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
                         "MAX_RETRIES_FAILED dispatch status lookup row not found"));
+        DispatchStatus skippedStatus = dispatchStatusRepository.findByStatusName("SKIPPED")
+                .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "SKIPPED dispatch status lookup row not found"));
 
         /*
          * ================================================================
@@ -102,9 +113,33 @@ public class NotificationQueueProcessorService {
 
         int sentCount = 0;
         int failedCount = 0;
+        int skippedCount = 0;
+        int deferredCount = 0;
 
         for (Notification notification : batch) {
 
+            NotificationGateDecisionDto decision = notificationPreferenceGateService.evaluate(notification);
+
+            if ("SKIP".equals(decision.getDecisionType())) {
+                notification.setFkDispatchStatus(skippedStatus);
+                notification.setNextRetryAtUtc(null);
+                notificationRepository.save(notification);
+
+                writeLog(notification, notification.getRetryCount() + 1, skippedStatus, decision.getReason(), now);
+
+                skippedCount++;
+                continue;
+            }
+
+            if ("DEFER".equals(decision.getDecisionType())) {
+                notification.setNextRetryAtUtc(decision.getDeferUntilUtc());
+                notificationRepository.save(notification);
+
+                deferredCount++;
+                continue;
+            }
+
+            // decision is SEND -- proceed with actual dispatch.
             notification.setFkDispatchStatus(queuedStatus);
             notificationRepository.save(notification);
 
@@ -153,8 +188,8 @@ public class NotificationQueueProcessorService {
 
         updateWorkerHeartbeat(now, batch.size());
 
-        log.info("Notification queue batch processed: fetched={}, sent={}, failed={}",
-                batch.size(), sentCount, failedCount);
+        log.info("Notification queue batch processed: fetched={}, sent={}, failed={}, skipped={}, deferred={}",
+                batch.size(), sentCount, failedCount, skippedCount, deferredCount);
 
         /*
          * ================================================================
@@ -187,9 +222,8 @@ public class NotificationQueueProcessorService {
      * DISPATCH BY CHANNEL (private helper)
      * Description: Routes to the correct per-channel dispatch service.
      * PUSH has no dispatch service yet (unlike SMS, which has a
-     * structural stub per Dheeraj's explicit Day 1 request); a PUSH
-     * row reaching this switch throws until FCM wiring is added in a
-     * future week.
+     * structural stub); a PUSH row reaching this switch throws until
+     * FCM wiring is added in a future week.
      * ================================================================
      */
     private void dispatchByChannel(String channelName, Notification notification) {
@@ -226,7 +260,7 @@ public class NotificationQueueProcessorService {
      * ================================================================
      * WRITE LOG (private helper)
      * Description: Appends one immutable notification_logs row per
-     * dispatch attempt, success or failure.
+     * dispatch attempt or terminal skip.
      * ================================================================
      */
     private void writeLog(Notification notification, int attemptNumber, DispatchStatus outcomeStatus,

@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 00000207 7478:274D
+Volume serial number is 000001EC 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -65,6 +65,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---notifications
 |   |           |   |       NotificationController.java
 |   |           |   |       NotificationHealthController.java
+|   |           |   |       PreferenceController.java
 |   |           |   |       
 |   |           |   +---order
 |   |           |   |       InvoiceController.java
@@ -167,10 +168,15 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       PaginatedDeliveryPartnerMyOrderResponseDto.java
 |   |           |   |       
 |   |           |   +---notifications
+|   |           |   |       MarkAllReadResponseDto.java
 |   |           |   |       NotificationContentDto.java
+|   |           |   |       NotificationGateDecisionDto.java
 |   |           |   |       NotificationHealthLiveResponseDto.java
 |   |           |   |       NotificationListItemDto.java
+|   |           |   |       NotificationPreferenceResponseDto.java
 |   |           |   |       PaginatedNotificationResponseDto.java
+|   |           |   |       PreferenceUpdateRequestDto.java
+|   |           |   |       RecipientTypeAndIdDto.java
 |   |           |   |       
 |   |           |   +---order
 |   |           |   |       DeliveryOtpSendResponseDto.java
@@ -292,6 +298,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           +---entity
 |   |           |       Address.java
 |   |           |       AddressType.java
+|   |           |       AuditActionType.java
 |   |           |       Brand.java
 |   |           |       Cart.java
 |   |           |       CartItem.java
@@ -314,8 +321,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       InvoicePresignedUrl.java
 |   |           |       ItemStatus.java
 |   |           |       Notification.java
+|   |           |       NotificationAuditLog.java
 |   |           |       NotificationChannel.java
 |   |           |       NotificationLog.java
+|   |           |       NotificationPreference.java
 |   |           |       NotificationType.java
 |   |           |       NotificationWorkerStatus.java
 |   |           |       Order.java
@@ -332,6 +341,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       ProductImage.java
 |   |           |       ProductStatus.java
 |   |           |       RecipientRole.java
+|   |           |       RecipientType.java
 |   |           |       RefreshToken.java
 |   |           |       Refund.java
 |   |           |       RefundLineItem.java
@@ -357,6 +367,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           +---repository
 |   |           |       AddressRepository.java
 |   |           |       AddressTypeRepository.java
+|   |           |       AuditActionTypeRepository.java
 |   |           |       BrandRepository.java
 |   |           |       CartItemRepository.java
 |   |           |       CartRepository.java
@@ -377,8 +388,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       InvoicePresignedUrlRepository.java
 |   |           |       InvoiceRepository.java
 |   |           |       ItemStatusRepository.java
+|   |           |       NotificationAuditLogRepository.java
 |   |           |       NotificationChannelRepository.java
 |   |           |       NotificationLogRepository.java
+|   |           |       NotificationPreferenceRepository.java
 |   |           |       NotificationRepository.java
 |   |           |       NotificationTypeRepository.java
 |   |           |       NotificationWorkerStatusRepository.java
@@ -396,6 +409,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       ProductRepository.java
 |   |           |       ProductStatusRepository.java
 |   |           |       RecipientRoleRepository.java
+|   |           |       RecipientTypeRepository.java
 |   |           |       RefreshTokenRepository.java
 |   |           |       RefundLineItemRepository.java
 |   |           |       RefundRepository.java
@@ -505,10 +519,16 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       NotificationDispatchServiceInApp.java
 |   |           |   |       NotificationDispatchServiceSms.java
 |   |           |   |       NotificationHealthCheckLiveService.java
+|   |           |   |       NotificationPreferenceGateService.java
 |   |           |   |       NotificationQueueProcessorService.java
 |   |           |   |       NotificationsGetMyNotificationsService.java
+|   |           |   |       NotificationsMarkAllAsReadService.java
+|   |           |   |       NotificationsMarkAsReadService.java
+|   |           |   |       PreferenceGetPreferencesService.java
+|   |           |   |       PreferenceUpdatePreferencesService.java
 |   |           |   |       RecipientResolverServiceGetAllAdminUsers.java
 |   |           |   |       RecipientResolverServiceGetOrderVendorUsers.java
+|   |           |   |       RecipientTypeAndIdResolverService.java
 |   |           |   |       
 |   |           |   +---order
 |   |           |   |       AggregatedStatusCalculationService.java
@@ -583,6 +603,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |           
 |   |           +---util
 |   |           |       HashUtil.java
+|   |           |       NotificationPreferenceDefaultsUtil.java
 |   |           |       UuidUtil.java
 |   |           |       
 |   |           \---worker
@@ -609,12 +630,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 00000174 7478:274D
+Volume serial number is 0000013D 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 0000024D 7478:274D
+Volume serial number is 0000023A 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

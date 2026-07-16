@@ -31,9 +31,8 @@ import lombok.RequiredArgsConstructor;
 public class EventListenerServiceHandlePaymentSuccessful {
 
     // Admin high-value alert threshold, inherited from the original
-    // week_8_execution_plan_v2.md ("notify admin if amount exceeds
-    // Rs. 10,000") -- not separately re-confirmed by Dheeraj during the
-    // Day 1 Q&A. Flagged in CHANGES_DAY1.md for explicit sign-off.
+    // ("notify admin if amount exceeds
+    // Rs. 10,000")
     private static final long HIGH_VALUE_THRESHOLD_IN_PAISE = 1_000_000L;
 
     private final NotificationTypeRepository notificationTypeRepository;

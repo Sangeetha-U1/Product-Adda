@@ -22,7 +22,7 @@ public class RecipientResolverServiceGetAllAdminUsers {
      * GET ALL ADMIN USERS
      * Description: Resolves every active user holding the ADMIN role,
      * via user_roles -> roles, for operational notification fan-out.
-     * Per Q4, per-admin opt-out is a Day 2 notification_preferences
+     * Per Q4, per-admin opt-out is a notification_preferences
      * concern -- this method always returns the full admin set.
      * ================================================================
      */
