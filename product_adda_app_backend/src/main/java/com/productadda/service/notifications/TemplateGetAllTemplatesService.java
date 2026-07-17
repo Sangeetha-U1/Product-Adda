@@ -36,7 +36,7 @@ public class TemplateGetAllTemplatesService {
      * GET ALL TEMPLATES
      * Description: Admin-only. Returns every notification_templates
      * row, optionally filtered by eventType and/or channel name.
-     * Unpaginated -- dataset is small (Day 3 baseline: ~18 role-
+     * Unpaginated -- dataset is small (baseline: ~18 role-
      * agnostic rows), per Dheeraj's decision.
      * ================================================================
      */

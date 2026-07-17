@@ -37,7 +37,7 @@ public class EventListenerServiceHandleOrderPlaced {
      * new order has been persisted. Notifies the customer only --
      * per the agreed recipient mapping, vendors/admin are notified at
      * the PAID/ORDER_CONFIRMED transition instead, not at creation.
-     * Day 3 change: passes the raw context map (snake_case keys, per
+     * change: passes the raw context map (snake_case keys, per
      * the template variable convention) instead of pre-built content --
      * NotificationCreationService now resolves content per channel via
      * TemplateContentResolverService.

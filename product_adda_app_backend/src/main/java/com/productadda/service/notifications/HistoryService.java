@@ -43,9 +43,9 @@ public class HistoryService {
      * GET HISTORY
      * Description: Paginated notification delivery history for the
      * authenticated user, across ALL channels (unlike the IN_APP-only
-     * my-notifications endpoint from Day 1/2). One row per notification
-     * (current/final status), not one row per retry attempt -- per
-     * Dheeraj's Day 4 decision (option a). All filters optional; no
+     * my-notifications endpoint). One row per notification
+     * (current/final status), not one row per retry attempt
+     * All filters optional; no
      * default date range (all-time unless the caller filters).
      * ================================================================
      */

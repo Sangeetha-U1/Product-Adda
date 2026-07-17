@@ -14,7 +14,7 @@ public class TemplateRenderingEngine {
     private static final Logger log = LoggerFactory.getLogger(TemplateRenderingEngine.class);
 
     // Matches {{variable_name}} -- plain substitution only, no
-    // Handlebars conditionals/loops/helpers, per Dheeraj's Day 3 scope
+    // Handlebars conditionals/loops/helpers, scope
     // decision (no external Handlebars library either).
     private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{\\{\\s*([a-zA-Z0-9_]+)\\s*\\}\\}");
 

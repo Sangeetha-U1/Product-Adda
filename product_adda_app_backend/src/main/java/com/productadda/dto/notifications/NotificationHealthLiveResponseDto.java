@@ -22,4 +22,10 @@ public class NotificationHealthLiveResponseDto {
     private Long processedCount;
 
     private Long secondsSinceLastRun;
+
+    // count of notifications currently PENDING or
+    // RETRYING (not yet concluded). Lets a caller distinguish "worker
+    // alive but nothing to do" from "worker alive with a growing
+    // backlog" without a separate call.
+    private Long queueDepth;
 }

@@ -29,7 +29,7 @@ public class TemplateContentResolverService {
      * Description: Looks up a notification_templates row matching
      * (type, channel, recipient role) first; if none, falls back to a
      * role-agnostic template (fk_recipient_role_id IS NULL) for that
-     * same (type, channel); if still none, falls back to Day 1's
+     * same (type, channel); if still none, falls back to
      * hardcoded NotificationContentBuilder -- whether because no
      * template was ever seeded for this combination, or a future day's
      * delete feature removed it. Called once per channel, per

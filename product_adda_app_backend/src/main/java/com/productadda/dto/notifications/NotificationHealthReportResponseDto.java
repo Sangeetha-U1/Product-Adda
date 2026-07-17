@@ -15,6 +15,6 @@ public class NotificationHealthReportResponseDto {
 
     // Keyed by channel name (EMAIL, SMS, PUSH, IN_APP) -- not by vendor
     // product name (SendGrid/Twilio/FCM), since this project uses plain
-    // SMTP rather than a named provider API. See CHANGES_DAY4.md.
+    // SMTP rather than a named provider API.
     private Map<String, ChannelHealthDto> channels;
 }

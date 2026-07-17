@@ -51,7 +51,7 @@ public class AnalyticsVendorService {
      * fk_recipient_role = VENDOR -- not a broader join through
      * order_items to every notification touching the vendor's orders
      * (which would also pull in the customer's own notifications for
-     * those orders). See CHANGES_DAY4.md for the reasoning; vendor is
+     * those orders). for the reasoning; vendor is
      * always resolved server-side from the authenticated user, never
      * from a client-supplied vendorId.
      * ================================================================

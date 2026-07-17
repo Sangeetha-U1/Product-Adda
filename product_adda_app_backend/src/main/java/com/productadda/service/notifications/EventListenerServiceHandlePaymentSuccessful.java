@@ -48,7 +48,7 @@ public class EventListenerServiceHandlePaymentSuccessful {
      * payment-receipt notification (PAYMENT_SUCCESS type), not the
      * order-confirmed notification, even though both fire from the
      * same call site and the same business moment. Notifies customer
-     * and vendors always; admins only for high-value payments. Day 3:
+     * and vendors always; admins only for high-value payments.     
      * amount_in_paise is now the raw paise value (not divided to
      * rupees), matching the plan's documented template variable.
      * ================================================================

@@ -61,7 +61,7 @@ public class NotificationCreationService {
      * `notifications` row per channel (EMAIL, IN_APP), each with
      * dispatch_status = PENDING, ready for QueueProcessorWorker.
      *
-     * Day 3 change: content is now resolved PER CHANNEL, inside this
+     * change: content is now resolved PER CHANNEL, inside this
      * loop, via TemplateContentResolverService -- not built once
      * upstream and reused for every channel -- so EMAIL and IN_APP can
      * genuinely differ once role/channel-specific templates exist.

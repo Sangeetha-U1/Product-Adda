@@ -29,8 +29,7 @@ public interface NotificationTemplateRepository extends JpaRepository<Notificati
     /*
      * Used by TemplateGetAllTemplatesService -- fetches everything, with
      * optional eventType/channel filtering done in the service layer
-     * given the tiny dataset size (no pagination needed per Dheeraj's
-     * Day 3 decision).
+     * given the tiny dataset size (no pagination).
      */
     List<NotificationTemplate> findAllByOrderByFkType_NotificationTypeNameAscFkChannel_ChannelNameAsc();
 }

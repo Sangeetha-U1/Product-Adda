@@ -20521,14 +20521,7 @@
           "name": "/api/notifications/health/live",
           "request": {
             "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
-                  "type": "string"
-                }
-              ]
+              "type": "noauth"
             },
             "method": "GET",
             "header": [],
@@ -20974,6 +20967,29 @@
                 "api",
                 "notifications",
                 "health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/notifications/health/readiness",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/health/readiness",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "health",
+                "readiness"
               ]
             }
           },

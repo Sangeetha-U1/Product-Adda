@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 0000020F 7478:274D
+Volume serial number is 0000025F 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -190,6 +190,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       NotificationTemplateDto.java
 |   |           |   |       PaginatedNotificationResponseDto.java
 |   |           |   |       PreferenceUpdateRequestDto.java
+|   |           |   |       ReadinessResponseDto.java
 |   |           |   |       RecipientTypeAndIdDto.java
 |   |           |   |       RetryStatsDto.java
 |   |           |   |       TemplatePreviewRequestDto.java
@@ -551,6 +552,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       NotificationsMarkAsReadService.java
 |   |           |   |       PreferenceGetPreferencesService.java
 |   |           |   |       PreferenceUpdatePreferencesService.java
+|   |           |   |       ReadinessCheckService.java
 |   |           |   |       RecipientResolverServiceGetAllAdminUsers.java
 |   |           |   |       RecipientResolverServiceGetOrderVendorUsers.java
 |   |           |   |       RecipientTypeAndIdResolverService.java
@@ -639,6 +641,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       
 |   |           \---worker
 |   |               \---notifications
+|   |                       HealthMonitoringWorker.java
 |   |                       QueueProcessorWorker.java
 |   |                       
 |   \---resources
@@ -661,12 +664,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 000001CF 7478:274D
+Volume serial number is 00000243 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 00000236 7478:274D
+Volume serial number is 00000173 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

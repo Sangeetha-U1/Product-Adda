@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  * - sent      = every attempted dispatch that reached a terminal outcome
  *               (SENT + FAILED + MAX_RETRIES_FAILED)
  * - delivered = successfully dispatched (dispatch_status = SENT) --
- *               treated as the delivery proxy, per Dheeraj's Day 4 decision
+ *               treated as the delivery proxy
  * - failed    = FAILED + MAX_RETRIES_FAILED
  */
 @Getter

@@ -47,7 +47,7 @@ public class AnalyticsAdminService {
      * analytics for a date range (defaults to the last 30 days),
      * optionally narrowed by eventType and/or channel. Sourced from the
      * `notifications` table directly (not notification_logs), per
-     * Dheeraj's Day 4 decision -- every field needed for these
+     * every field needed for these
      * aggregations already lives there.
      * ================================================================
      */

@@ -41,7 +41,7 @@ public class EventListenerServiceHandleOrderConfirmed {
      * once payment verification succeeds and order.fk_status_id moves
      * to PAID -- treated as the ORDER_CONFIRMED transition since this
      * codebase has no separate CONFIRMED status. Notifies customer,
-     * every vendor on the order, and all admins. Day 3: passes raw
+     * every vendor on the order, and all admins. passes raw
      * context map instead of pre-built content.
      * ================================================================
      */

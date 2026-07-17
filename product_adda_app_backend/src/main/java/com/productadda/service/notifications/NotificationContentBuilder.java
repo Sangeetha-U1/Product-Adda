@@ -19,8 +19,7 @@ public class NotificationContentBuilder {
      * TemplateContentResolverService whenever no notification_templates
      * row matches (type, channel, role) -- whether because none was
      * ever seeded for that combination, or a future day's delete
-     * feature removed it. context keys are snake_case, matching the Day
-     * 3 template variable convention (customer_name, order_id, etc.),
+     * feature removed it. context keys are snake_case, matching the template variable convention (customer_name, order_id, etc.),
      * so the same context map works whether it ends up rendered here or
      * through TemplateRenderingEngine.
      * ================================================================

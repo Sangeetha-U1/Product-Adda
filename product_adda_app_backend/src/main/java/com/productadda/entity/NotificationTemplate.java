@@ -54,7 +54,7 @@ public class NotificationTemplate {
     private NotificationChannel fkChannel;
 
     // Nullable -- NULL means "applies to all recipient roles for this
-    // (type, channel) pair". Day 3 baseline seeds only role-agnostic
+    // (type, channel) pair". baseline seeds only role-agnostic
     // (NULL) rows; role-specific rows are a future-day possibility the
     // schema already supports.
     @ManyToOne(fetch = FetchType.LAZY)

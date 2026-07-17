@@ -3,6 +3,7 @@ package com.productadda.service.notifications;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import com.productadda.entity.NotificationWorkerStatus;
 
 import com.productadda.exception.ApiException;
 
+import com.productadda.repository.NotificationRepository;
 import com.productadda.repository.NotificationWorkerStatusRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,19 +26,28 @@ public class NotificationHealthCheckLiveService {
 
     private static final String WORKER_NAME = "notification_queue_processor";
 
-    // If the worker hasn't reported a heartbeat in over 2 minutes
-    // (roughly 8x its 15-second run interval), something is wrong.
-    private static final long UNHEALTHY_THRESHOLD_SECONDS = 120L;
+    // change: was 120s (8x the old assumed interval). Reconciled
+    // to 60s, matching the plan's own separately-stated "worker_latency
+    // > 60 seconds = bottleneck" threshold -- 4x QueueProcessorWorker's
+    // actual 15-second run interval, a reasonable stuck-detection margin.
+    private static final long UNHEALTHY_THRESHOLD_SECONDS = 60L;
+
+    // Not yet in a terminal state -- used for queue_depth.
+    private static final List<String> IN_FLIGHT_STATUSES = List.of("PENDING", "RETRYING");
 
     private final NotificationWorkerStatusRepository notificationWorkerStatusRepository;
+    private final NotificationRepository notificationRepository;
 
     /*
      * ================================================================
      * CHECK LIVENESS
      * Description: Reports whether QueueProcessorWorker has run
-     * recently, by reading its heartbeat row. isHealthy is false both
-     * when the worker has never run (lastProcessedAtUtc is null) and
-     * when its last run is older than UNHEALTHY_THRESHOLD_SECONDS.
+     * recently, by reading its heartbeat row, plus the current queue
+     * depth (notifications not yet in a terminal state). isHealthy is
+     * false both when the worker has never run (lastProcessedAtUtc is
+     * null) and when its last run is older than
+     * UNHEALTHY_THRESHOLD_SECONDS. The controller maps isHealthy to a
+     * real HTTP status (503 when false).
      * ================================================================
      */
     @Transactional(readOnly = true)
@@ -81,6 +92,8 @@ public class NotificationHealthCheckLiveService {
 
         boolean isHealthy = secondsSinceLastRun != null && secondsSinceLastRun <= UNHEALTHY_THRESHOLD_SECONDS;
 
+        long queueDepth = notificationRepository.countByFkDispatchStatus_StatusNameIn(IN_FLIGHT_STATUSES);
+
         /*
          * ================================================================
          * 3. DB SAVING SECTION (Skip if Read-Only GET)
@@ -106,6 +119,7 @@ public class NotificationHealthCheckLiveService {
                 .lastProcessedAtUtc(lastProcessedAtUtc)
                 .processedCount(workerStatus.getProcessedCount())
                 .secondsSinceLastRun(secondsSinceLastRun)
+                .queueDepth(queueDepth)
                 .build();
     }
 }
