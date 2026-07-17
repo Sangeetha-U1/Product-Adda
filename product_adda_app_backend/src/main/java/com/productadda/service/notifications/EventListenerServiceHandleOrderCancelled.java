@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.notifications.NotificationContentDto;
-
 import com.productadda.entity.NotificationType;
 import com.productadda.entity.Order;
 import com.productadda.entity.RecipientRole;
@@ -31,7 +29,6 @@ public class EventListenerServiceHandleOrderCancelled {
 
     private final NotificationTypeRepository notificationTypeRepository;
     private final RecipientRoleRepository recipientRoleRepository;
-    private final NotificationContentBuilder notificationContentBuilder;
     private final NotificationCreationService notificationCreationService;
     private final RecipientResolverServiceGetOrderVendorUsers recipientResolverServiceGetOrderVendorUsers;
     private final RecipientResolverServiceGetAllAdminUsers recipientResolverServiceGetAllAdminUsers;
@@ -83,12 +80,10 @@ public class EventListenerServiceHandleOrderCancelled {
          */
         UUID eventId = uuidUtil.generateUuidV7();
 
-        Map<String, String> context = new HashMap<>();
-        context.put("customerName", order.getFkUser().getFirstName());
-        context.put("orderNumber", order.getOrderNumber());
-        context.put("cancellationReason", cancellationReason == null ? "Not specified" : cancellationReason);
-
-        NotificationContentDto content = notificationContentBuilder.buildContent("ORDER_CANCELLED", context);
+        Map<String, Object> context = new HashMap<>();
+        context.put("customer_name", order.getFkUser().getFirstName());
+        context.put("order_id", order.getOrderNumber());
+        context.put("cancellation_reason", cancellationReason == null ? "Not specified" : cancellationReason);
 
         List<User> vendorUsers = recipientResolverServiceGetOrderVendorUsers.getOrderVendorUsers(order);
         List<User> adminUsers = recipientResolverServiceGetAllAdminUsers.getAllAdminUsers();
@@ -100,16 +95,16 @@ public class EventListenerServiceHandleOrderCancelled {
          * ================================================================
          */
         notificationCreationService.createNotificationsForRecipient(
-                order.getFkUser(), customerRole, orderCancelledType, eventId, order, null, content);
+                order.getFkUser(), customerRole, orderCancelledType, eventId, order, null, context);
 
         for (User vendorUser : vendorUsers) {
             notificationCreationService.createNotificationsForRecipient(
-                    vendorUser, vendorRole, orderCancelledType, eventId, order, null, content);
+                    vendorUser, vendorRole, orderCancelledType, eventId, order, null, context);
         }
 
         for (User adminUser : adminUsers) {
             notificationCreationService.createNotificationsForRecipient(
-                    adminUser, adminRole, orderCancelledType, eventId, order, null, content);
+                    adminUser, adminRole, orderCancelledType, eventId, order, null, context);
         }
 
         /*

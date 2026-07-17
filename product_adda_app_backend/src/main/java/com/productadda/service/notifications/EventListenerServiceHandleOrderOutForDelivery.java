@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.notifications.NotificationContentDto;
-
 import com.productadda.entity.NotificationType;
 import com.productadda.entity.Order;
 import com.productadda.entity.RecipientRole;
@@ -29,7 +27,6 @@ public class EventListenerServiceHandleOrderOutForDelivery {
 
     private final NotificationTypeRepository notificationTypeRepository;
     private final RecipientRoleRepository recipientRoleRepository;
-    private final NotificationContentBuilder notificationContentBuilder;
     private final NotificationCreationService notificationCreationService;
     private final UuidUtil uuidUtil;
 
@@ -74,11 +71,9 @@ public class EventListenerServiceHandleOrderOutForDelivery {
          */
         UUID eventId = uuidUtil.generateUuidV7();
 
-        Map<String, String> context = new HashMap<>();
-        context.put("customerName", order.getFkUser().getFirstName());
-        context.put("orderNumber", order.getOrderNumber());
-
-        NotificationContentDto content = notificationContentBuilder.buildContent("ORDER_OUT_FOR_DELIVERY", context);
+        Map<String, Object> context = new HashMap<>();
+        context.put("customer_name", order.getFkUser().getFirstName());
+        context.put("order_id", order.getOrderNumber());
 
         /*
          * ================================================================
@@ -87,7 +82,7 @@ public class EventListenerServiceHandleOrderOutForDelivery {
          * ================================================================
          */
         notificationCreationService.createNotificationsForRecipient(
-                order.getFkUser(), customerRole, outForDeliveryType, eventId, order, null, content);
+                order.getFkUser(), customerRole, outForDeliveryType, eventId, order, null, context);
 
         /*
          * ================================================================

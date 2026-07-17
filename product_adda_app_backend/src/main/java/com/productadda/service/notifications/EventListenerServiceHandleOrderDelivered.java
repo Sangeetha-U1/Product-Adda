@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.notifications.NotificationContentDto;
-
 import com.productadda.entity.NotificationType;
 import com.productadda.entity.Order;
 import com.productadda.entity.RecipientRole;
@@ -31,7 +29,6 @@ public class EventListenerServiceHandleOrderDelivered {
 
     private final NotificationTypeRepository notificationTypeRepository;
     private final RecipientRoleRepository recipientRoleRepository;
-    private final NotificationContentBuilder notificationContentBuilder;
     private final NotificationCreationService notificationCreationService;
     private final RecipientResolverServiceGetAllAdminUsers recipientResolverServiceGetAllAdminUsers;
     private final UuidUtil uuidUtil;
@@ -76,11 +73,9 @@ public class EventListenerServiceHandleOrderDelivered {
          */
         UUID eventId = uuidUtil.generateUuidV7();
 
-        Map<String, String> context = new HashMap<>();
-        context.put("customerName", order.getFkUser().getFirstName());
-        context.put("orderNumber", order.getOrderNumber());
-
-        NotificationContentDto content = notificationContentBuilder.buildContent("ORDER_DELIVERED", context);
+        Map<String, Object> context = new HashMap<>();
+        context.put("customer_name", order.getFkUser().getFirstName());
+        context.put("order_id", order.getOrderNumber());
 
         List<User> adminUsers = recipientResolverServiceGetAllAdminUsers.getAllAdminUsers();
 
@@ -91,11 +86,11 @@ public class EventListenerServiceHandleOrderDelivered {
          * ================================================================
          */
         notificationCreationService.createNotificationsForRecipient(
-                order.getFkUser(), customerRole, orderDeliveredType, eventId, order, null, content);
+                order.getFkUser(), customerRole, orderDeliveredType, eventId, order, null, context);
 
         for (User adminUser : adminUsers) {
             notificationCreationService.createNotificationsForRecipient(
-                    adminUser, adminRole, orderDeliveredType, eventId, order, null, content);
+                    adminUser, adminRole, orderDeliveredType, eventId, order, null, context);
         }
 
         /*

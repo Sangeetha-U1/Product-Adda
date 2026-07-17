@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.notifications.NotificationContentDto;
-
 import com.productadda.entity.DeliveryPartner;
 import com.productadda.entity.NotificationType;
 import com.productadda.entity.Order;
@@ -30,7 +28,6 @@ public class EventListenerServiceHandleOrderPickedUp {
 
     private final NotificationTypeRepository notificationTypeRepository;
     private final RecipientRoleRepository recipientRoleRepository;
-    private final NotificationContentBuilder notificationContentBuilder;
     private final NotificationCreationService notificationCreationService;
     private final UuidUtil uuidUtil;
 
@@ -79,12 +76,10 @@ public class EventListenerServiceHandleOrderPickedUp {
          */
         UUID eventId = uuidUtil.generateUuidV7();
 
-        Map<String, String> context = new HashMap<>();
-        context.put("customerName", order.getFkUser().getFirstName());
-        context.put("orderNumber", order.getOrderNumber());
-        context.put("partnerName", partner.getPartnerName());
-
-        NotificationContentDto content = notificationContentBuilder.buildContent("ORDER_PICKED_UP", context);
+        Map<String, Object> context = new HashMap<>();
+        context.put("customer_name", order.getFkUser().getFirstName());
+        context.put("order_id", order.getOrderNumber());
+        context.put("partner_name", partner.getPartnerName());
 
         /*
          * ================================================================
@@ -93,10 +88,10 @@ public class EventListenerServiceHandleOrderPickedUp {
          * ================================================================
          */
         notificationCreationService.createNotificationsForRecipient(
-                order.getFkUser(), customerRole, orderPickedUpType, eventId, order, null, content);
+                order.getFkUser(), customerRole, orderPickedUpType, eventId, order, null, context);
 
         notificationCreationService.createNotificationsForRecipient(
-                partner.getFkUser(), deliveryPartnerRole, orderPickedUpType, eventId, order, null, content);
+                partner.getFkUser(), deliveryPartnerRole, orderPickedUpType, eventId, order, null, context);
 
         /*
          * ================================================================

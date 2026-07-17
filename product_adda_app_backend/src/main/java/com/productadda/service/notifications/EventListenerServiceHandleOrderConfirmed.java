@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.notifications.NotificationContentDto;
-
 import com.productadda.entity.NotificationType;
 import com.productadda.entity.Order;
 import com.productadda.entity.RecipientRole;
@@ -31,7 +29,6 @@ public class EventListenerServiceHandleOrderConfirmed {
 
     private final NotificationTypeRepository notificationTypeRepository;
     private final RecipientRoleRepository recipientRoleRepository;
-    private final NotificationContentBuilder notificationContentBuilder;
     private final NotificationCreationService notificationCreationService;
     private final RecipientResolverServiceGetOrderVendorUsers recipientResolverServiceGetOrderVendorUsers;
     private final RecipientResolverServiceGetAllAdminUsers recipientResolverServiceGetAllAdminUsers;
@@ -44,7 +41,8 @@ public class EventListenerServiceHandleOrderConfirmed {
      * once payment verification succeeds and order.fk_status_id moves
      * to PAID -- treated as the ORDER_CONFIRMED transition since this
      * codebase has no separate CONFIRMED status. Notifies customer,
-     * every vendor on the order, and all admins.
+     * every vendor on the order, and all admins. Day 3: passes raw
+     * context map instead of pre-built content.
      * ================================================================
      */
     @Transactional
@@ -83,12 +81,10 @@ public class EventListenerServiceHandleOrderConfirmed {
          */
         UUID eventId = uuidUtil.generateUuidV7();
 
-        Map<String, String> context = new HashMap<>();
-        context.put("customerName", order.getFkUser().getFirstName());
-        context.put("orderNumber", order.getOrderNumber());
-        context.put("totalAmount", String.valueOf(order.getTotalAmount()));
-
-        NotificationContentDto content = notificationContentBuilder.buildContent("ORDER_CONFIRMED", context);
+        Map<String, Object> context = new HashMap<>();
+        context.put("customer_name", order.getFkUser().getFirstName());
+        context.put("order_id", order.getOrderNumber());
+        context.put("total_amount", order.getTotalAmount());
 
         List<User> vendorUsers = recipientResolverServiceGetOrderVendorUsers.getOrderVendorUsers(order);
         List<User> adminUsers = recipientResolverServiceGetAllAdminUsers.getAllAdminUsers();
@@ -100,16 +96,16 @@ public class EventListenerServiceHandleOrderConfirmed {
          * ================================================================
          */
         notificationCreationService.createNotificationsForRecipient(
-                order.getFkUser(), customerRole, orderConfirmedType, eventId, order, null, content);
+                order.getFkUser(), customerRole, orderConfirmedType, eventId, order, null, context);
 
         for (User vendorUser : vendorUsers) {
             notificationCreationService.createNotificationsForRecipient(
-                    vendorUser, vendorRole, orderConfirmedType, eventId, order, null, content);
+                    vendorUser, vendorRole, orderConfirmedType, eventId, order, null, context);
         }
 
         for (User adminUser : adminUsers) {
             notificationCreationService.createNotificationsForRecipient(
-                    adminUser, adminRole, orderConfirmedType, eventId, order, null, content);
+                    adminUser, adminRole, orderConfirmedType, eventId, order, null, context);
         }
 
         /*

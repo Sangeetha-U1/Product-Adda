@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.notifications.NotificationContentDto;
-
 import com.productadda.entity.NotificationType;
 import com.productadda.entity.Order;
 import com.productadda.entity.Payment;
@@ -31,13 +29,11 @@ import lombok.RequiredArgsConstructor;
 public class EventListenerServiceHandlePaymentSuccessful {
 
     // Admin high-value alert threshold, inherited from the original
-    // ("notify admin if amount exceeds
-    // Rs. 10,000")
+    // plan ("notify admin if amount exceeds Rs. 10,000").
     private static final long HIGH_VALUE_THRESHOLD_IN_PAISE = 1_000_000L;
 
     private final NotificationTypeRepository notificationTypeRepository;
     private final RecipientRoleRepository recipientRoleRepository;
-    private final NotificationContentBuilder notificationContentBuilder;
     private final NotificationCreationService notificationCreationService;
     private final RecipientResolverServiceGetOrderVendorUsers recipientResolverServiceGetOrderVendorUsers;
     private final RecipientResolverServiceGetAllAdminUsers recipientResolverServiceGetAllAdminUsers;
@@ -52,7 +48,9 @@ public class EventListenerServiceHandlePaymentSuccessful {
      * payment-receipt notification (PAYMENT_SUCCESS type), not the
      * order-confirmed notification, even though both fire from the
      * same call site and the same business moment. Notifies customer
-     * and vendors always; admins only for high-value payments.
+     * and vendors always; admins only for high-value payments. Day 3:
+     * amount_in_paise is now the raw paise value (not divided to
+     * rupees), matching the plan's documented template variable.
      * ================================================================
      */
     @Transactional
@@ -95,13 +93,12 @@ public class EventListenerServiceHandlePaymentSuccessful {
          */
         UUID eventId = uuidUtil.generateUuidV7();
 
-        Map<String, String> context = new HashMap<>();
-        context.put("customerName", order.getFkUser().getFirstName());
-        context.put("orderNumber", order.getOrderNumber());
-        context.put("amount", String.valueOf(payment.getAmountInPaise() / 100.0));
-        context.put("transactionId", String.valueOf(payment.getGatewayTransactionId()));
-
-        NotificationContentDto content = notificationContentBuilder.buildContent("PAYMENT_SUCCESS", context);
+        Map<String, Object> context = new HashMap<>();
+        context.put("customer_name", order.getFkUser().getFirstName());
+        context.put("order_id", order.getOrderNumber());
+        context.put("amount_in_paise", payment.getAmountInPaise());
+        context.put("payment_method", payment.getPaymentMethod());
+        context.put("transaction_id", payment.getGatewayTransactionId());
 
         List<User> vendorUsers = recipientResolverServiceGetOrderVendorUsers.getOrderVendorUsers(order);
 
@@ -115,18 +112,18 @@ public class EventListenerServiceHandlePaymentSuccessful {
          * ================================================================
          */
         notificationCreationService.createNotificationsForRecipient(
-                order.getFkUser(), customerRole, paymentSuccessType, eventId, order, payment, content);
+                order.getFkUser(), customerRole, paymentSuccessType, eventId, order, payment, context);
 
         for (User vendorUser : vendorUsers) {
             notificationCreationService.createNotificationsForRecipient(
-                    vendorUser, vendorRole, paymentSuccessType, eventId, order, payment, content);
+                    vendorUser, vendorRole, paymentSuccessType, eventId, order, payment, context);
         }
 
         if (isHighValue) {
             List<User> adminUsers = recipientResolverServiceGetAllAdminUsers.getAllAdminUsers();
             for (User adminUser : adminUsers) {
                 notificationCreationService.createNotificationsForRecipient(
-                        adminUser, adminRole, paymentSuccessType, eventId, order, payment, content);
+                        adminUser, adminRole, paymentSuccessType, eventId, order, payment, context);
             }
         }
 

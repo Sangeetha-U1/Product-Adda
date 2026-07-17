@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.productadda.dto.notifications.NotificationContentDto;
-
 import com.productadda.entity.NotificationType;
 import com.productadda.entity.Order;
 import com.productadda.entity.RecipientRole;
@@ -31,7 +29,6 @@ public class EventListenerServiceHandleOrderStatusAggregated {
 
     private final NotificationTypeRepository notificationTypeRepository;
     private final RecipientRoleRepository recipientRoleRepository;
-    private final NotificationContentBuilder notificationContentBuilder;
     private final NotificationCreationService notificationCreationService;
     private final RecipientResolverServiceGetOrderVendorUsers recipientResolverServiceGetOrderVendorUsers;
     private final UuidUtil uuidUtil;
@@ -89,11 +86,10 @@ public class EventListenerServiceHandleOrderStatusAggregated {
          */
         UUID eventId = uuidUtil.generateUuidV7();
 
-        Map<String, String> context = new HashMap<>();
-        context.put("customerName", order.getFkUser().getFirstName());
-        context.put("orderNumber", order.getOrderNumber());
-
-        NotificationContentDto content = notificationContentBuilder.buildContent(notificationTypeName, context);
+        Map<String, Object> context = new HashMap<>();
+        context.put("customer_name", order.getFkUser().getFirstName());
+        context.put("order_id", order.getOrderNumber());
+        context.put("status", aggregatedStatusName);
 
         List<User> vendorUsers = recipientResolverServiceGetOrderVendorUsers.getOrderVendorUsers(order);
 
@@ -104,11 +100,11 @@ public class EventListenerServiceHandleOrderStatusAggregated {
          * ================================================================
          */
         notificationCreationService.createNotificationsForRecipient(
-                order.getFkUser(), customerRole, notificationType, eventId, order, null, content);
+                order.getFkUser(), customerRole, notificationType, eventId, order, null, context);
 
         for (User vendorUser : vendorUsers) {
             notificationCreationService.createNotificationsForRecipient(
-                    vendorUser, vendorRole, notificationType, eventId, order, null, content);
+                    vendorUser, vendorRole, notificationType, eventId, order, null, context);
         }
 
         /*
