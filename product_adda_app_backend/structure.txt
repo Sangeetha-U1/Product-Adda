@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 000002DC 7478:274D
+Volume serial number is 0000020F 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -17,6 +17,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |       \---productadda
 |   |           |   ProductaddaApplication.java
 |   |           |   
+|   |           +---analyzer
+|   |           |   \---notifications
+|   |           |           NotificationAnalyzer.java
+|   |           |           
 |   |           +---config
 |   |           |       BackblazeConfig.java
 |   |           |       GoogleOAuthConfig.java
@@ -63,6 +67,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       DeliveryPartnerController.java
 |   |           |   |       
 |   |           |   +---notifications
+|   |           |   |       AnalyticsController.java
+|   |           |   |       HistoryController.java
 |   |           |   |       NotificationController.java
 |   |           |   |       NotificationHealthController.java
 |   |           |   |       PreferenceController.java
@@ -169,19 +175,27 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       PaginatedDeliveryPartnerMyOrderResponseDto.java
 |   |           |   |       
 |   |           |   +---notifications
+|   |           |   |       AdminAnalyticsDto.java
+|   |           |   |       ChannelHealthDto.java
+|   |           |   |       DeliveryCountsDto.java
 |   |           |   |       MarkAllReadResponseDto.java
 |   |           |   |       NotificationContentDto.java
 |   |           |   |       NotificationGateDecisionDto.java
 |   |           |   |       NotificationHealthLiveResponseDto.java
+|   |           |   |       NotificationHealthReportResponseDto.java
+|   |           |   |       NotificationHistoryDto.java
+|   |           |   |       NotificationHistoryResponseDto.java
 |   |           |   |       NotificationListItemDto.java
 |   |           |   |       NotificationPreferenceResponseDto.java
 |   |           |   |       NotificationTemplateDto.java
 |   |           |   |       PaginatedNotificationResponseDto.java
 |   |           |   |       PreferenceUpdateRequestDto.java
 |   |           |   |       RecipientTypeAndIdDto.java
+|   |           |   |       RetryStatsDto.java
 |   |           |   |       TemplatePreviewRequestDto.java
 |   |           |   |       TemplatePreviewResponseDto.java
 |   |           |   |       TemplateUpdateRequestDto.java
+|   |           |   |       VendorAnalyticsDto.java
 |   |           |   |       
 |   |           |   +---order
 |   |           |   |       DeliveryOtpSendResponseDto.java
@@ -512,6 +526,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       MailStartupValidator.java
 |   |           |   |       
 |   |           |   +---notifications
+|   |           |   |       AnalyticsAdminService.java
+|   |           |   |       AnalyticsVendorService.java
 |   |           |   |       EventListenerServiceHandleOrderCancelled.java
 |   |           |   |       EventListenerServiceHandleOrderConfirmed.java
 |   |           |   |       EventListenerServiceHandleOrderDelivered.java
@@ -520,6 +536,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       EventListenerServiceHandleOrderPlaced.java
 |   |           |   |       EventListenerServiceHandleOrderStatusAggregated.java
 |   |           |   |       EventListenerServiceHandlePaymentSuccessful.java
+|   |           |   |       HealthCheckService.java
+|   |           |   |       HistoryService.java
 |   |           |   |       NotificationContentBuilder.java
 |   |           |   |       NotificationCreationService.java
 |   |           |   |       NotificationDispatchServiceEmail.java
@@ -643,12 +661,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 00000149 7478:274D
+Volume serial number is 000001CF 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 000001B3 7478:274D
+Volume serial number is 00000236 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties

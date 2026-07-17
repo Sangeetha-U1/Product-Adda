@@ -20821,6 +20821,163 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "/api/notifications/history",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/history",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "history"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/notifications/history?channel=EMAIL&eventType=ORDER_CANCELLED",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/history?channel=EMAIL&eventType=ORDER_CANCELLED",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "history"
+              ],
+              "query": [
+                {
+                  "key": "channel",
+                  "value": "EMAIL"
+                },
+                {
+                  "key": "eventType",
+                  "value": "ORDER_CANCELLED"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/notifications/analytics/admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/analytics/admin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "analytics",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/notifications/analytics/vendor",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/analytics/vendor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "analytics",
+                "vendor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/notifications/health",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "health"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     }
