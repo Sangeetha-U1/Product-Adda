@@ -82,6 +82,6 @@ public class AdminOrderDetailDto {
     // OrderCancellationService business rules, scheduled for a later
     // Field is included here as a
     // placeholder (always null for now) so the response shape does not
-    // need to change again once that day lands.
+    // need to change again.
     private String cancellationReason;
 }

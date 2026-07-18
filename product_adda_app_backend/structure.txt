@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 0000025F 7478:274D
+Volume serial number is 00000179 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -89,6 +89,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---product
 |   |           |   |       ProductInventoryController.java
 |   |           |   |       ProductSearchController.java
+|   |           |   |       
+|   |           |   +---report
+|   |           |   |       AdminReportController.java
+|   |           |   |       FinanceReportController.java
+|   |           |   |       VendorReportController.java
 |   |           |   |       
 |   |           |   +---token
 |   |           |   |       PasswordResetController.java
@@ -282,6 +287,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       ProductUpdateRequestDto.java
 |   |           |   |       ProductUpdateResponseDto.java
 |   |           |   |       
+|   |           |   +---report
+|   |           |   |       ReportJobStatusDto.java
+|   |           |   |       ReportRequestDto.java
+|   |           |   |       
 |   |           |   +---token
 |   |           |   |       ForgotPasswordRequestDto.java
 |   |           |   |       ForgotPasswordResponsetDto.java
@@ -335,6 +344,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       DispatchStatus.java
 |   |           |       EmailVerificationToken.java
 |   |           |       Inventory.java
+|   |           |       InventoryAggregate.java
 |   |           |       InventoryReservation.java
 |   |           |       Invoice.java
 |   |           |       InvoiceLineItem.java
@@ -366,9 +376,16 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       RefreshToken.java
 |   |           |       Refund.java
 |   |           |       RefundLineItem.java
+|   |           |       Report.java
+|   |           |       ReportAuditLog.java
+|   |           |       ReportExportFormat.java
+|   |           |       ReportJobStatus.java
+|   |           |       ReportPresignedUrl.java
+|   |           |       ReportType.java
 |   |           |       Review.java
 |   |           |       ReviewStatus.java
 |   |           |       Role.java
+|   |           |       SalesAggregate.java
 |   |           |       ShippingMethod.java
 |   |           |       TaxConfiguration.java
 |   |           |       User.java
@@ -435,6 +452,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       RefreshTokenRepository.java
 |   |           |       RefundLineItemRepository.java
 |   |           |       RefundRepository.java
+|   |           |       ReportAuditLogRepository.java
+|   |           |       ReportExportFormatRepository.java
+|   |           |       ReportJobStatusRepository.java
+|   |           |       ReportRepository.java
+|   |           |       ReportTypeRepository.java
 |   |           |       ReviewRepository.java
 |   |           |       RoleRepository.java
 |   |           |       ShippingMethodRepository.java
@@ -609,6 +631,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       ProductSearchSearchProductsService.java
 |   |           |   |       ProductUpdateService.java
 |   |           |   |       
+|   |           |   +---report
+|   |           |   |       AdminSalesReportInitiationService.java
+|   |           |   |       FinanceReconciliationReportInitiationService.java
+|   |           |   |       ReportAuditLogService.java
+|   |           |   |       VendorEarningsReportInitiationService.java
+|   |           |   |       
 |   |           |   +---token
 |   |           |   |       EmailVerificationService.java
 |   |           |   |       PasswordResetService.java
@@ -664,12 +692,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 00000243 7478:274D
+Volume serial number is 0000025F 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 00000173 7478:274D
+Volume serial number is 00000181 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties
