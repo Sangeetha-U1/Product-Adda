@@ -64,7 +64,7 @@ public class AdminSalesReportInitiationService {
      * 5. RESPONSE MAPPING
      * ================================================================
      * Description: Creates a PENDING async job record for a platform-wide
-     * sales report (admin only). Background worker (Day 2+) later polls
+     * sales report (admin only). Background worker later polls
      * `reports` WHERE fk_status_id = PENDING and processes it.
      * ================================================================
      */
@@ -157,7 +157,7 @@ public class AdminSalesReportInitiationService {
 
         Report savedReport = reportRepository.save(reportJob);
 
-        // TODO: Enqueue background worker task — ReportGenerationWorker (Day 2+)
+        // TODO: Enqueue background worker task — ReportGenerationWorker
         // will poll `reports` WHERE fk_status_id = PENDING, query
         // sales_aggregates, export to the requested format, upload to S3, and
         // update the job to SUCCESS/FAILED.

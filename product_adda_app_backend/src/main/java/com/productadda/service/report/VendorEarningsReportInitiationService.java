@@ -172,7 +172,7 @@ public class VendorEarningsReportInitiationService {
 
         Report savedReport = reportRepository.save(reportJob);
 
-        // TODO: Enqueue background worker task — ReportGenerationWorker (Day 2+)
+        // TODO: Enqueue background worker task — ReportGenerationWorker
         // will poll `reports` WHERE fk_status_id = PENDING, query
         // sales_aggregates WHERE fk_vendor_id = :vendorId only (hard scoping),
         // export to the requested format, upload to S3, and update the job.
