@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 000002C2 7478:274D
+Volume serial number is 00000220 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -93,8 +93,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---report
 |   |           |   |       AdminReportController.java
 |   |           |   |       CategoryPerformanceReportController.java
+|   |           |   |       FinanceDashboardReportController.java
 |   |           |   |       FinanceReportController.java
 |   |           |   |       InventoryAnalyticsReportController.java
+|   |           |   |       MaterializedViewStatusController.java
+|   |           |   |       PayoutScheduleReportController.java
 |   |           |   |       ReportDownloadController.java
 |   |           |   |       ReportHistoryController.java
 |   |           |   |       ReportStatusController.java
@@ -294,7 +297,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       ProductUpdateResponseDto.java
 |   |           |   |       
 |   |           |   +---report
+|   |           |   |       FinanceDashboardReportRequestDto.java
 |   |           |   |       InventoryAnalyticsReportRequestDto.java
+|   |           |   |       MaterializedViewStatusResponseDto.java
+|   |           |   |       PayoutScheduleReportRequestDto.java
 |   |           |   |       ReportDownloadResponseDto.java
 |   |           |   |       ReportHistoryItemDto.java
 |   |           |   |       ReportHistoryResponseDto.java
@@ -431,6 +437,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       DeliveryPartnerStatusRepository.java
 |   |           |       DispatchStatusRepository.java
 |   |           |       EmailVerificationTokenRepository.java
+|   |           |       InventoryAggregateRepository.java
 |   |           |       InventoryRepository.java
 |   |           |       InventoryReservationRepository.java
 |   |           |       InvoiceLineItemRepository.java
@@ -471,6 +478,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |       ReportTypeRepository.java
 |   |           |       ReviewRepository.java
 |   |           |       RoleRepository.java
+|   |           |       SalesAggregateRepository.java
 |   |           |       ShippingMethodRepository.java
 |   |           |       TaxConfigurationRepository.java
 |   |           |       UserRepository.java
@@ -646,8 +654,11 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   +---report
 |   |           |   |       AdminSalesReportInitiationService.java
 |   |           |   |       CategoryPerformanceReportInitiationService.java
+|   |           |   |       FinanceDashboardReportInitiationService.java
 |   |           |   |       FinanceReconciliationReportInitiationService.java
 |   |           |   |       InventoryAnalyticsReportInitiationService.java
+|   |           |   |       MaterializedViewStatusRetrievalService.java
+|   |           |   |       PayoutScheduleReportInitiationService.java
 |   |           |   |       ReportAuditLogService.java
 |   |           |   |       ReportDownloadService.java
 |   |           |   |       ReportHistoryService.java
@@ -711,12 +722,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 0000014D 7478:274D
+Volume serial number is 000001AB 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 000001F5 7478:274D
+Volume serial number is 000001E0 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties
