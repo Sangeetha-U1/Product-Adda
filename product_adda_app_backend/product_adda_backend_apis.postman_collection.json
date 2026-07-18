@@ -8046,6 +8046,72 @@
               "body": "{\n    \"success\": true,\n    \"message\": \"Vendor orders retrieved successfully\",\n    \"data\": {\n        \"content\": [\n            {\n                \"orderId\": \"019f3d3d-c201-77b2-ab0e-120b4cc1d5ac\",\n                \"orderNumber\": \"ORD-20260707154125-019F3D\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Donald\",\n                \"orderTotalAmount\": 153162.82,\n                \"createdAtUtc\": \"2026-07-07T21:11:25\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019f3d3d-c213-7eb5-95b6-b21185d6450c\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Samsung Galaxy S24 Ultra\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 129999,\n                        \"lineTotal\": 129999,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            },\n            {\n                \"orderId\": \"019ed8f4-8928-7677-b806-189be09ec6e1\",\n                \"orderNumber\": \"ORD-4F62BF7E4450\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Rahul\",\n                \"orderTotalAmount\": 850,\n                \"createdAtUtc\": \"2025-05-27T23:40:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7882-8935-8b326f71c65a\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Braided Multi-USB Cable Set\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 850,\n                        \"lineTotal\": 850,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7bfe-8cc2-37302057ce54\",\n                \"orderNumber\": \"ORD-79384D4BD963\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Vikram\",\n                \"orderTotalAmount\": 63900,\n                \"createdAtUtc\": \"2025-05-27T21:50:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7b81-af29-98e0cc869973\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"4K Ultra-Wide Desk Display\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 63900,\n                        \"lineTotal\": 63900,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7281-b458-d7869aea81bf\",\n                \"orderNumber\": \"ORD-C018A0F00F89\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Pooja\",\n                \"orderTotalAmount\": 4750,\n                \"createdAtUtc\": \"2025-05-27T21:15:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-76bd-9145-4f9b93f1a3df\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"Bohemian Living Room Rug\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 4750,\n                        \"lineTotal\": 4750,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            },\n            {\n                \"orderId\": \"019ed8f4-8927-7a44-b85d-6bb073bb1711\",\n                \"orderNumber\": \"ORD-AB5E9DA11633\",\n                \"orderStatusName\": \"PENDING\",\n                \"customerFirstName\": \"Rahul\",\n                \"orderTotalAmount\": 1899,\n                \"createdAtUtc\": \"2025-05-27T19:30:00\",\n                \"items\": [\n                    {\n                        \"orderItemId\": \"019ed8f4-8944-7f90-8533-de37297e9e27\",\n                        \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                        \"productNameSnapshot\": \"MagSafe Powerbank Pack\",\n                        \"quantity\": 1,\n                        \"unitPrice\": 1899,\n                        \"lineTotal\": 1899,\n                        \"itemStatusName\": \"PENDING\"\n                    }\n                ]\n            }\n        ],\n        \"totalElements\": 22,\n        \"page\": 0,\n        \"size\": 5\n    }\n}"
             }
           ]
+        },
+        {
+          "name": "/api/reports/vendor-performance",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"date_from\": \"2026-01-01\",\r\n    \"date_to\": \"2026-01-31\",\r\n    \"format\": \"PDF\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/vendor-performance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "vendor-performance"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/inventory-analytics",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"category_ids\": [\r\n        \"019f2dc9-44ff-7694-a483-88dcc3924ef9\"\r\n    ],\r\n    \"format\": \"JSON\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/inventory-analytics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "inventory-analytics"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -10479,6 +10545,34 @@
                 "reports",
                 "vendor",
                 "earnings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/category-performance",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"date_from\": \"2026-01-01\",\r\n    \"date_to\": \"2026-01-31\",\r\n    \"category_ids\": [\r\n        \"019f2dc9-44ff-7694-a483-88dcc3924ef9\"\r\n    ],\r\n    \"format\": \"PDF\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/category-performance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "category-performance"
               ]
             }
           },
