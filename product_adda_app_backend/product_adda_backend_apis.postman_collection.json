@@ -8150,6 +8150,64 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "/api/reports/system-health",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/system-health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "system-health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/statistics",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/statistics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "statistics"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -10687,6 +10745,122 @@
                 "api",
                 "reports",
                 "payout-schedule"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/audit-logs",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/audit-logs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "audit-logs"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "/api/reports/audit-logs?limit=20",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports/audit-logs?limit=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports",
+                    "audit-logs"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "/api/reports/system-health",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/system-health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "system-health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/statistics",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/statistics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "statistics"
               ]
             }
           },
@@ -20694,6 +20868,64 @@
               "body": "{\n    \"success\": true,\n    \"message\": \"Delivery history retrieved successfully\",\n    \"data\": {\n        \"orders\": [\n            {\n                \"orderId\": \"019f5be4-038a-7b76-89c7-2769c784c9d0\",\n                \"orderNumber\": \"ORD-20260713143137-019F5B\",\n                \"statusName\": \"DELIVERED\",\n                \"createdAtUtc\": \"2026-07-13T20:01:37\",\n                \"totalAmount\": 159354.28,\n                \"totalItems\": 2,\n                \"estimatedPackageCount\": 4,\n                \"itemSummary\": \"1x Samsung Galaxy S24 Ultra, 3x Nike Sports T-Shirt\",\n                \"city\": \"New York\",\n                \"state\": \"New York\",\n                \"postalCode\": \"10022\",\n                \"pickedUpAtUtc\": null,\n                \"outForDeliveryAtUtc\": \"2026-07-13T21:52:04\",\n                \"deliveredAtUtc\": \"2026-07-14T04:37:06\"\n            }\n        ],\n        \"currentPage\": 0,\n        \"totalPages\": 1,\n        \"totalElements\": 1,\n        \"pageSize\": 10,\n        \"isFirst\": true,\n        \"isLast\": true\n    }\n}"
             }
           ]
+        },
+        {
+          "name": "/api/reports/system-health",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/system-health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "system-health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/statistics",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/statistics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "statistics"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -20754,6 +20986,64 @@
                 "api",
                 "customers",
                 "payment-methods"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/system-health",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/system-health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "system-health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/statistics",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/statistics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "statistics"
               ]
             }
           },
@@ -21453,6 +21743,64 @@
                 "api",
                 "reports",
                 "materialized-view-status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/system-health",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/system-health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "system-health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/api/reports/statistics",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/statistics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "statistics"
               ]
             }
           },

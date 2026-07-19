@@ -9,7 +9,7 @@ structure.txt
 product_adda_backend_apis.postman_collection
 
 Folder PATH listing
-Volume serial number is 00000220 7478:274D
+Volume serial number is 00000205 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 +---main
 |   +---java
@@ -92,6 +92,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       
 |   |           |   +---report
 |   |           |   |       AdminReportController.java
+|   |           |   |       AuditReportController.java
 |   |           |   |       CategoryPerformanceReportController.java
 |   |           |   |       FinanceDashboardReportController.java
 |   |           |   |       FinanceReportController.java
@@ -100,7 +101,9 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       PayoutScheduleReportController.java
 |   |           |   |       ReportDownloadController.java
 |   |           |   |       ReportHistoryController.java
+|   |           |   |       ReportStatisticsController.java
 |   |           |   |       ReportStatusController.java
+|   |           |   |       SystemHealthController.java
 |   |           |   |       VendorPerformanceReportController.java
 |   |           |   |       VendorReportController.java
 |   |           |   |       
@@ -297,6 +300,8 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       ProductUpdateResponseDto.java
 |   |           |   |       
 |   |           |   +---report
+|   |           |   |       AuditLogReportItemDto.java
+|   |           |   |       AuditLogReportResponseDto.java
 |   |           |   |       FinanceDashboardReportRequestDto.java
 |   |           |   |       InventoryAnalyticsReportRequestDto.java
 |   |           |   |       MaterializedViewStatusResponseDto.java
@@ -306,7 +311,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       ReportHistoryResponseDto.java
 |   |           |   |       ReportJobStatusDto.java
 |   |           |   |       ReportRequestDto.java
+|   |           |   |       ReportStatisticsResponseDto.java
 |   |           |   |       ReportStatusResponseDto.java
+|   |           |   |       ReportTypeStatisticsItemDto.java
+|   |           |   |       SystemHealthResponseDto.java
 |   |           |   |       
 |   |           |   +---token
 |   |           |   |       ForgotPasswordRequestDto.java
@@ -653,6 +661,7 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       
 |   |           |   +---report
 |   |           |   |       AdminSalesReportInitiationService.java
+|   |           |   |       AuditReportService.java
 |   |           |   |       CategoryPerformanceReportInitiationService.java
 |   |           |   |       FinanceDashboardReportInitiationService.java
 |   |           |   |       FinanceReconciliationReportInitiationService.java
@@ -662,8 +671,10 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 |   |           |   |       ReportAuditLogService.java
 |   |           |   |       ReportDownloadService.java
 |   |           |   |       ReportHistoryService.java
+|   |           |   |       ReportStatisticsService.java
 |   |           |   |       ReportStatusPollingService.java
 |   |           |   |       ReportStorageService.java
+|   |           |   |       SystemHealthService.java
 |   |           |   |       VendorEarningsReportInitiationService.java
 |   |           |   |       VendorPerformanceReportInitiationService.java
 |   |           |   |       
@@ -722,12 +733,12 @@ C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\SRC
 
 
 Folder PATH listing
-Volume serial number is 000001AB 7478:274D
+Volume serial number is 0000017C 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\UPLOADS
 +---products
 
 Folder PATH listing
-Volume serial number is 000001E0 7478:274D
+Volume serial number is 000002A9 7478:274D
 C:\USERS\ADMIN\DOWNLOADS\VS-CODE\PRODUCT_ADDA\PRODUCT_ADDA_APP_BACKEND\.MVN
 \---wrapper
         maven-wrapper.properties
