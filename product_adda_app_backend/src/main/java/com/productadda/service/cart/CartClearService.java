@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,19 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.productadda.entity.Cart;
 import com.productadda.entity.CartItem;
 import com.productadda.entity.CartStatus;
-import com.productadda.entity.InventoryReservation;
 import com.productadda.entity.User;
+
+import com.productadda.event.cart.CartReservationCleanupEvent;
+
 import com.productadda.exception.ApiException;
+
 import com.productadda.repository.CartItemRepository;
 import com.productadda.repository.CartRepository;
 import com.productadda.repository.CartStatusRepository;
-import com.productadda.repository.InventoryReservationRepository;
 import com.productadda.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-
-// TODO: Replace direct InventoryReservation delete with event publishing (CartReservationCleanupEvent)
-// TODO: Publish CartReservationCleanupEvent instead of deleting inventory reservations directly
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +35,9 @@ public class CartClearService {
 
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
-    private final InventoryReservationRepository inventoryReservationRepository;
     private final UserRepository userRepository;
     private final CartStatusRepository cartStatusRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Transactional
     public void clearCart() {
@@ -90,6 +90,26 @@ public class CartClearService {
                         HttpStatus.NOT_FOUND,
                         "No active cart found for the authenticated user."));
 
+        clearCart(cart);
+    }
+
+    /*
+     * ================================================================
+     * CLEAR CART (cart-scoped overload)
+     * Description: Contains the actual clearing workflow, decoupled
+     * from any HTTP/authentication context, so it can be reused by
+     * both the authenticated clearCart() entry point above and the
+     * scheduled expired-cart job, which resolves carts for many
+     * different users with no SecurityContext available.
+     * ================================================================
+     */
+    @Transactional
+    public void clearCart(Cart cart) {
+
+        if (cart == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "A cart is required to perform clearing");
+        }
+
         /*
          * ================================================================
          * 2. BUSINESS RULES & PROCESSING / WORKFLOW
@@ -98,18 +118,17 @@ public class CartClearService {
 
         List<CartItem> structuralItems = cartItemRepository.findByFkCartAndIsActiveTrue(cart);
 
-        List<InventoryReservation> cartReservations = inventoryReservationRepository
-                .findByFkCartAndIsActiveTrue(cart);
-
-        for (InventoryReservation reservation : cartReservations) {
-            reservation.setIsActive(false);
-            inventoryReservationRepository.save(reservation);
-        }
-
         for (CartItem item : structuralItems) {
             item.setIsActive(false);
             cartItemRepository.save(item);
         }
+
+        /*
+         * Publish for decoupled, idempotent InventoryReservation
+         * cleanup instead of deactivating reservations here directly
+         * see EventListenerServiceHandleCartReservationCleanup.
+         */
+        applicationEventPublisher.publishEvent(new CartReservationCleanupEvent(cart.getPkCartId()));
 
         /*
          * ================================================================

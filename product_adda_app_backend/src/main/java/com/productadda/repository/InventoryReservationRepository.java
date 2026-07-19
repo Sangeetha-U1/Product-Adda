@@ -6,6 +6,7 @@ import com.productadda.entity.Cart;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,8 @@ public interface InventoryReservationRepository extends JpaRepository<InventoryR
     List<InventoryReservation> findByFkProductAndIsActiveTrue(Product product);
 
     List<InventoryReservation> findByFkCartAndIsActiveTrue(Cart cart);
+
+    List<InventoryReservation> findByIsActiveTrueAndExpiresAtUtcBefore(LocalDateTime cutoff);
 
     // TODO: Implement token search functionality when 'reservationToken' column is
     // added to schema

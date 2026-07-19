@@ -46,6 +46,10 @@ public class HealthMonitoringWorker {
     private final NotificationRepository notificationRepository;
     private final NotificationWorkerStatusRepository notificationWorkerStatusRepository;
 
+    // Added field, initialized once when this singleton bean is constructed at
+    // startup.
+    private final LocalDateTime workerInstanceStartedAtUtc = LocalDateTime.now(ZoneOffset.UTC);
+
     /*
      * Runs every 1 minute, per the execution plan.
      */
@@ -93,6 +97,18 @@ public class HealthMonitoringWorker {
             return;
         }
 
+        /*
+         * lastProcessedAtUtc is persisted across restarts, so a value
+         * left over from before this instance started is expected on a
+         * fresh boot -- the queue processor simply hasn't had its first
+         * scheduled run yet this session. Treat that as "not stuck yet",
+         * not as a liveness failure.
+         */
+        if (workerStatus.getLastProcessedAtUtc().isBefore(workerInstanceStartedAtUtc)) {
+            log.info("Notification queue worker has not yet run since this instance started; skipping stuck check.");
+            return;
+        }
+
         long secondsSinceLastRun = Duration.between(
                 workerStatus.getLastProcessedAtUtc(), LocalDateTime.now(ZoneOffset.UTC)).getSeconds();
 
@@ -102,4 +118,5 @@ public class HealthMonitoringWorker {
                     secondsSinceLastRun, WORKER_STUCK_THRESHOLD_SECONDS);
         }
     }
+
 }

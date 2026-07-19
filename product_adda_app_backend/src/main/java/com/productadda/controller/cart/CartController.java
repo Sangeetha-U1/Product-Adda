@@ -22,11 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.UUID;
 
-// TODO: Handle CartReservationCleanupEvent and perform inventory reservation cleanup here
-// Must ensure idempotent deletion (safe to re-run)
-// TODO: Run scheduled job to find expired carts and clear items, reservations, and coupon
-// Should reuse CartClearService logic if possible
-
 @RestController
 @RequestMapping("/api/carts")
 @RequiredArgsConstructor
