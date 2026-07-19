@@ -2,10 +2,23 @@ package com.productadda.service.product;
 
 import com.productadda.dto.vendor.VendorProductCatalogResponseDto;
 import com.productadda.dto.vendor.VendorProductItemDto;
-import com.productadda.entity.*;
-import com.productadda.repository.*;
+
+import com.productadda.entity.User;
+import com.productadda.entity.Vendor;
+import com.productadda.entity.Product;
+import com.productadda.entity.ProductImage;
+import com.productadda.entity.Inventory;
+
+import com.productadda.repository.ProductRepository;
+import com.productadda.repository.UserRepository;
+import com.productadda.repository.VendorRepository;
+import com.productadda.repository.InventoryRepository;
+import com.productadda.repository.ProductImageRepository;
+
 import com.productadda.exception.ApiException;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -16,6 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +41,7 @@ public class ProductRetrievalService {
         private final UserRepository userRepository;
         private final VendorRepository vendorRepository;
         private final InventoryRepository inventoryRepository;
+        private final ProductImageRepository productImageRepository;
 
         @Transactional(readOnly = true)
         public VendorProductCatalogResponseDto getVendorProducts(int page, int size) {
@@ -99,6 +116,21 @@ public class ProductRetrievalService {
                  * without nested models
                  * ================================================================
                  */
+
+                List<Product> productsOnPage = productPage.getContent();
+
+                Map<java.util.UUID, List<String>> imagesByProductId = new LinkedHashMap<>();
+                if (!productsOnPage.isEmpty()) {
+                        List<ProductImage> productImages = productImageRepository
+                                        .findByFkProductInAndIsActiveTrueOrderByDisplayOrderAsc(productsOnPage);
+                        for (ProductImage image : productImages) {
+                                imagesByProductId
+                                                .computeIfAbsent(image.getFkProduct().getPkProductId(),
+                                                                key -> new ArrayList<>())
+                                                .add(image.getImageUrl());
+                        }
+                }
+
                 List<VendorProductItemDto> productItems = productPage.getContent().stream().map(product -> {
                         int stockLevel = inventoryRepository.findByFkProduct(product)
                                         .map(Inventory::getAvailableQuantity)
@@ -120,6 +152,8 @@ public class ProductRetrievalService {
                                         .price(product.getPrice())
                                         .status(product.getFkStatus().getStatusCode())
                                         .stock(stockLevel)
+                                        .imageUrls(imagesByProductId.getOrDefault(product.getPkProductId(),
+                                                        List.of()))
                                         .createdAtUtc(createdAtString)
                                         .build();
                 }).collect(Collectors.toList());

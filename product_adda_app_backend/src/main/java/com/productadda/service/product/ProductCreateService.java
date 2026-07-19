@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -210,6 +211,7 @@ public class ProductCreateService {
                                 .categoryId(category.getPkCategoryId())
                                 .brandId(brand.getPkBrandId())
                                 .status(initialStatus.getStatusCode())
+                                .imageUrls(List.of())
                                 .createdAtUtc(
                                                 java.time.ZonedDateTime.now(java.time.ZoneOffset.UTC)
                                                                 .format(DateTimeFormatter.ISO_INSTANT))

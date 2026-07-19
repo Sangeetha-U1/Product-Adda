@@ -2,6 +2,7 @@ package com.productadda.dto.product;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,5 +28,6 @@ public class ProductResponseDto {
     private BigDecimal discountPrice;
     private Integer stockQuantity;
     private String status;
+    private List<String> imageUrls;
     private String createdAtUtc;
 }

@@ -21,4 +21,7 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, UUID
     boolean existsByFkProductAndIsPrimaryTrue(Product product);
 
     long countByFkProductAndIsActiveTrue(Product product);
+
+    List<ProductImage> findByFkProductInAndIsActiveTrueOrderByDisplayOrderAsc(List<Product> products);
+
 }

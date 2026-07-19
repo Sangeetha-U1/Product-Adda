@@ -1,17 +1,26 @@
 package com.productadda.service.product;
 
 import com.productadda.dto.product.ProductImageDto;
+
 import com.productadda.entity.Product;
 import com.productadda.entity.ProductImage;
 import com.productadda.entity.User;
 import com.productadda.entity.Vendor;
+
 import com.productadda.exception.ApiException;
+
 import com.productadda.repository.ProductImageRepository;
 import com.productadda.repository.ProductRepository;
 import com.productadda.repository.UserRepository;
 import com.productadda.repository.VendorRepository;
+
 import com.productadda.util.UuidUtil;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,9 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import java.util.Map;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
@@ -42,9 +50,10 @@ public class ProductImageService {
     private final UserRepository userRepository;
     private final VendorRepository vendorRepository;
     private final UuidUtil uuidUtil;
+    private final Cloudinary cloudinary;
 
-    @Value("${app.upload.dir:uploads/products}")
-    private String uploadDir;
+    @Value("${cloudinary.folder:product_adda/products}")
+    private String cloudinaryFolder;
 
     // Inject the existing 5MB string rule directly here
     @Value("${spring.servlet.multipart.max-file-size:5MB}")
@@ -161,25 +170,26 @@ public class ProductImageService {
         String originalExtension = getFileExtension(file.getOriginalFilename());
         String filename = imageId + originalExtension;
 
-        // Create upload directory if not exists
-        Path uploadPath = Paths.get(System.getProperty("user.dir"), uploadDir).toAbsolutePath().normalize();
+        // Upload the image bytes directly to Cloudinary under the configured folder
+        Map<?, ?> cloudinaryResult;
+
         try {
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
+            cloudinaryResult = cloudinary.uploader().upload(
+                    file.getBytes(),
+                    ObjectUtils.asMap(
+                            "public_id", imageId.toString(),
+                            "folder", cloudinaryFolder,
+                            "resource_type", "image",
+                            "overwrite", false));
         } catch (IOException e) {
-            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create upload directory");
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload image to Cloudinary");
         }
 
-        // Save file to disk
-        Path filePath = uploadPath.resolve(filename);
-        try {
-            file.transferTo(filePath.toFile());
-        } catch (IOException e) {
-            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to save image file");
-        }
+        // Cloudinary always returns a permanent public HTTPS URL, no bucket ACL needed
+        String imageUrl = (String) cloudinaryResult.get("secure_url");
 
-        String imageUrl = "/uploads/products/" + filename;
+        // Store the Cloudinary public_id, required later to delete/manage this asset
+        String cloudinaryPublicId = (String) cloudinaryResult.get("public_id");
 
         // Get next display order
         Integer maxOrder = productImageRepository.findMaxDisplayOrderByProductId(productId);
@@ -192,6 +202,7 @@ public class ProductImageService {
                 .pkProductImageId(imageId)
                 .fkProduct(product)
                 .imageUrl(imageUrl)
+                .cloudinaryPublicId(cloudinaryPublicId)
                 .fileName(filename)
                 .mimeType(file.getContentType())
                 .fileSizeBytes(file.getSize())

@@ -2,6 +2,7 @@ package com.productadda.dto.product;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,5 +24,6 @@ public class AdminProductListResponseDto {
     private String brandName;
     private BigDecimal price;
     private String status;
+    private List<String> imageUrls;
     private String createdAtUtc;
 }

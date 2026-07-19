@@ -1,6 +1,10 @@
 package com.productadda.service.admin;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,9 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.productadda.dto.product.AdminProductDataWrapper;
 import com.productadda.dto.product.AdminProductListResponseDto;
+
 import com.productadda.entity.Product;
-import com.productadda.exception.ApiException;
+import com.productadda.entity.ProductImage;
+
 import com.productadda.repository.ProductRepository;
+import com.productadda.repository.ProductImageRepository;
+
+import com.productadda.exception.ApiException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,91 +32,107 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminProductRetrievalService {
 
-    private final ProductRepository productRepository;
+        private final ProductRepository productRepository;
+        private final ProductImageRepository productImageRepository;
 
-    @Transactional(readOnly = true)
-    public AdminProductDataWrapper getAllProducts(int page, int size) {
+        @Transactional(readOnly = true)
+        public AdminProductDataWrapper getAllProducts(int page, int size) {
 
-        /*
-         * ================================================================
-         * 1. VALIDATION SECTION
-         * ================================================================
-         */
+                /*
+                 * ================================================================
+                 * 1. VALIDATION SECTION
+                 * ================================================================
+                 */
 
-        if (page < 0) {
-            throw new ApiException(HttpStatus.BAD_REQUEST,
-                    "Page index parameters must not be negative indices");
+                if (page < 0) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Page index parameters must not be negative indices");
+                }
+
+                if (size <= 0) {
+                        throw new ApiException(HttpStatus.BAD_REQUEST,
+                                        "Page batch size parameter must be greater than zero");
+                }
+
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+                if (authentication == null || !authentication.isAuthenticated()) {
+                        throw new ApiException(HttpStatus.UNAUTHORIZED,
+                                        "Security context is missing raw authentication data");
+                }
+
+                boolean isAdmin = authentication.getAuthorities().stream()
+                                .anyMatch(a -> a.getAuthority().equals("SUPER_ADMIN")
+                                                || a.getAuthority().equals("ADMIN"));
+
+                if (!isAdmin) {
+                        throw new ApiException(HttpStatus.FORBIDDEN,
+                                        "Access Denied: Only admins can access product administration endpoints");
+                }
+
+                /*
+                 * ================================================================
+                 * 2. BUSINESS RULES & PROCESSING
+                 * ================================================================
+                 */
+
+                Pageable pageable = PageRequest.of(page, size);
+
+                Page<Product> productPage = productRepository.findAllNonDeletedProducts(pageable);
+
+                Map<UUID, List<String>> imagesByProductId = new LinkedHashMap<>();
+                if (!productPage.getContent().isEmpty()) {
+                        List<ProductImage> productImages = productImageRepository
+                                        .findByFkProductInAndIsActiveTrueOrderByDisplayOrderAsc(
+                                                        productPage.getContent());
+                        for (ProductImage image : productImages) {
+                                imagesByProductId
+                                                .computeIfAbsent(image.getFkProduct().getPkProductId(),
+                                                                key -> new ArrayList<>())
+                                                .add(image.getImageUrl());
+                        }
+                }
+
+                List<AdminProductListResponseDto> products = productPage
+                                .map(product -> AdminProductListResponseDto.builder()
+                                                .productId(product.getPkProductId())
+                                                .productName(product.getTitle())
+                                                .description(product.getDescription())
+                                                .vendorId(product.getFkVendor() != null
+                                                                ? product.getFkVendor().getPkVendorId()
+                                                                : null)
+                                                .vendorName(product.getFkVendor() != null
+                                                                ? product.getFkVendor().getBusinessName()
+                                                                : null)
+                                                .categoryName(product.getFkCategory() != null
+                                                                ? product.getFkCategory().getCategoryName()
+                                                                : null)
+                                                .brandName(product.getFkBrand() != null
+                                                                ? product.getFkBrand().getBrandName()
+                                                                : null)
+                                                .price(product.getPrice())
+                                                .status(product.getFkStatus() != null
+                                                                ? product.getFkStatus().getStatusCode()
+                                                                : "UNKNOWN")
+                                                .imageUrls(imagesByProductId.getOrDefault(product.getPkProductId(),
+                                                                List.of()))
+                                                .createdAtUtc(product.getCreatedAtUtc() != null
+                                                                ? product.getCreatedAtUtc().toString()
+                                                                : null)
+                                                .build())
+                                .getContent();
+
+                /*
+                 * ================================================================
+                 * 3. RESPONSE MAPPING
+                 * ================================================================
+                 */
+
+                return AdminProductDataWrapper.builder()
+                                .products(products)
+                                .totalProducts(productPage.getTotalElements())
+                                .currentPage(page)
+                                .pageSize(size)
+                                .build();
         }
-
-        if (size <= 0) {
-            throw new ApiException(HttpStatus.BAD_REQUEST,
-                    "Page batch size parameter must be greater than zero");
-        }
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new ApiException(HttpStatus.UNAUTHORIZED,
-                    "Security context is missing raw authentication data");
-        }
-
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("SUPER_ADMIN")
-                        || a.getAuthority().equals("ADMIN"));
-
-        if (!isAdmin) {
-            throw new ApiException(HttpStatus.FORBIDDEN,
-                    "Access Denied: Only admins can access product administration endpoints");
-        }
-
-        /*
-         * ================================================================
-         * 2. BUSINESS RULES & PROCESSING
-         * ================================================================
-         */
-
-        Pageable pageable = PageRequest.of(page, size);
-
-        Page<Product> productPage = productRepository.findAllNonDeletedProducts(pageable);
-
-        List<AdminProductListResponseDto> products = productPage
-                .map(product -> AdminProductListResponseDto.builder()
-                        .productId(product.getPkProductId())
-                        .productName(product.getTitle())
-                        .description(product.getDescription())
-                        .vendorId(product.getFkVendor() != null
-                                ? product.getFkVendor().getPkVendorId()
-                                : null)
-                        .vendorName(product.getFkVendor() != null
-                                ? product.getFkVendor().getBusinessName()
-                                : null)
-                        .categoryName(product.getFkCategory() != null
-                                ? product.getFkCategory().getCategoryName()
-                                : null)
-                        .brandName(product.getFkBrand() != null
-                                ? product.getFkBrand().getBrandName()
-                                : null)
-                        .price(product.getPrice())
-                        .status(product.getFkStatus() != null
-                                ? product.getFkStatus().getStatusCode()
-                                : "UNKNOWN")
-                        .createdAtUtc(product.getCreatedAtUtc() != null
-                                ? product.getCreatedAtUtc().toString()
-                                : null)
-                        .build())
-                .getContent();
-
-        /*
-         * ================================================================
-         * 3. RESPONSE MAPPING
-         * ================================================================
-         */
-
-        return AdminProductDataWrapper.builder()
-                .products(products)
-                .totalProducts(productPage.getTotalElements())
-                .currentPage(page)
-                .pageSize(size)
-                .build();
-    }
 }

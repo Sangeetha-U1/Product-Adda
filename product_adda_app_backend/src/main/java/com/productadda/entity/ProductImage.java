@@ -56,6 +56,10 @@ public class ProductImage {
     @Column(name = "image_url", length = 1000)
     private String imageUrl;
 
+    // Cloudinary's public_id, required to manage or delete this asset later
+    @Column(name = "cloudinary_public_id", length = 255)
+    private String cloudinaryPublicId;
+
     @Column(name = "image_data", columnDefinition = "LONGBLOB")
     private byte[] imageData;
 

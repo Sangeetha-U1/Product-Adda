@@ -13,6 +13,12 @@ import java.util.UUID;
 import java.util.List;
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import com.productadda.entity.Product;
+import com.productadda.entity.ProductImage;
 
 import com.productadda.dto.product.ProductSearchListResponseDto;
 import com.productadda.dto.product.ProductSearchResponseDto;
@@ -22,8 +28,7 @@ import com.productadda.exception.ApiException;
 import com.productadda.repository.CategoryRepository;
 import com.productadda.repository.BrandRepository;
 import com.productadda.repository.ProductRepository;
-
-import com.productadda.entity.Product;
+import com.productadda.repository.ProductImageRepository;
 
 /**
  * =========================================================================
@@ -52,6 +57,7 @@ public class ProductSearchFilterProductsService {
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
     private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
 
     /**
      * =========================================================================
@@ -174,6 +180,17 @@ public class ProductSearchFilterProductsService {
          * 5. RESPONSE MAPPING
          * ================================================================
          */
+        Map<UUID, List<String>> imagesByProductId = new LinkedHashMap<>();
+        if (!matchedEntities.isEmpty()) {
+            List<ProductImage> productImages = productImageRepository
+                    .findByFkProductInAndIsActiveTrueOrderByDisplayOrderAsc(matchedEntities);
+            for (ProductImage image : productImages) {
+                imagesByProductId
+                        .computeIfAbsent(image.getFkProduct().getPkProductId(), key -> new ArrayList<>())
+                        .add(image.getImageUrl());
+            }
+        }
+
         List<ProductSearchResponseDto> mappedResults = matchedEntities.stream()
                 .map(p -> ProductSearchResponseDto.builder()
                         .productId(p.getPkProductId())
@@ -183,6 +200,7 @@ public class ProductSearchFilterProductsService {
                         .brandName(p.getFkBrand() != null ? p.getFkBrand().getBrandName() : null)
                         .price(p.getPrice() != null ? p.getPrice().intValue() : 0)
                         .status(p.getFkStatus() != null ? p.getFkStatus().getStatusCode() : "PENDING")
+                        .imageUrls(imagesByProductId.getOrDefault(p.getPkProductId(), List.of()))
                         .build())
                 .collect(Collectors.toList());
 

@@ -15,11 +15,18 @@ import java.util.stream.Collectors;
 import com.productadda.dto.product.ProductSearchListResponseDto;
 import com.productadda.dto.product.ProductSearchResponseDto;
 
-import com.productadda.exception.ApiException;
+import com.productadda.entity.ProductImage;
+import com.productadda.entity.Product;
 
+import com.productadda.repository.ProductImageRepository;
 import com.productadda.repository.ProductRepository;
 
-import com.productadda.entity.Product;
+import com.productadda.exception.ApiException;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * =========================================================================
@@ -46,6 +53,7 @@ import com.productadda.entity.Product;
 public class ProductSearchSearchProductsService {
 
     private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
 
     /**
      * =========================================================================
@@ -102,7 +110,9 @@ public class ProductSearchSearchProductsService {
         // 1.2 CONTEXT AUTHENTICATION
         // ==========================================
         boolean isAdmin = false;
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if (authentication != null && authentication.isAuthenticated()) {
             isAdmin = authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("SUPER_ADMIN"));
@@ -119,7 +129,9 @@ public class ProductSearchSearchProductsService {
          * ================================================================
          */
         String matchTerm = "%" + keyword.trim() + "%";
+
         List<Product> matchedEntities;
+
         long totalCount;
 
         Pageable pageable = PageRequest.of(page, size);
@@ -151,6 +163,19 @@ public class ProductSearchSearchProductsService {
          * 5. RESPONSE MAPPING
          * ================================================================
          */
+
+        Map<UUID, List<String>> imagesByProductId = new LinkedHashMap<>();
+
+        if (!matchedEntities.isEmpty()) {
+            List<ProductImage> productImages = productImageRepository
+                    .findByFkProductInAndIsActiveTrueOrderByDisplayOrderAsc(matchedEntities);
+            for (ProductImage image : productImages) {
+                imagesByProductId
+                        .computeIfAbsent(image.getFkProduct().getPkProductId(), key -> new ArrayList<>())
+                        .add(image.getImageUrl());
+            }
+        }
+
         List<ProductSearchResponseDto> mappedResults = matchedEntities.stream()
                 .map(p -> ProductSearchResponseDto.builder()
                         .productId(p.getPkProductId())
@@ -160,6 +185,7 @@ public class ProductSearchSearchProductsService {
                         .brandName(p.getFkBrand() != null ? p.getFkBrand().getBrandName() : null)
                         .price(p.getPrice() != null ? p.getPrice().intValue() : 0)
                         .status(p.getFkStatus() != null ? p.getFkStatus().getStatusCode() : "PENDING")
+                        .imageUrls(imagesByProductId.getOrDefault(p.getPkProductId(), List.of()))
                         .build())
                 .collect(Collectors.toList());
 

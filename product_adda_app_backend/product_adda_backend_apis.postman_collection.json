@@ -7425,7 +7425,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJpYXQiOjE3ODI0OTgxODAsImV4cCI6MTc4MjUwMTc4MH0.XCgYE5xSgb76OCCkgMNNWc1hN_OxdIb5Pt2Lyvt8sb0oekHz1p3djWI6rR8qFnHw",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -7532,7 +7532,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 26 Jun 2026 18:33:41 GMT"
+                  "value": "Sun, 19 Jul 2026 10:15:54 GMT"
                 },
                 {
                   "key": "Keep-Alive",
@@ -7544,7 +7544,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"Vendor products retrieved successfully\",\n    \"data\": {\n        \"products\": [\n            {\n                \"productId\": \"019ed714-ddc1-7374-b33f-87b3e8ee079d\",\n                \"productName\": \"Dell XPS 15\",\n                \"description\": \"Premium performance laptop\",\n                \"skuCode\": \"LAP-DELL-XPS15-001\",\n                \"categoryName\": \"Laptops\",\n                \"brandName\": \"Dell\",\n                \"price\": 159999,\n                \"status\": \"APPROVED\",\n                \"stock\": 50,\n                \"createdAtUtc\": \"2025-07-22T20:00:00Z\"\n            },\n            {\n                \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                \"productName\": \"Samsung Galaxy S24 Ultra\",\n                \"description\": \"Samsung flagship smartphone\",\n                \"skuCode\": \"MOB-SAMSUNG-S24-001\",\n                \"categoryName\": \"Mobile Phones\",\n                \"brandName\": \"Samsung\",\n                \"price\": 129999,\n                \"status\": \"APPROVED\",\n                \"stock\": 100,\n                \"createdAtUtc\": \"2025-03-10T15:30:00Z\"\n            },\n            {\n                \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n                \"productName\": \"Wireless Bluetooth Headphones\",\n                \"description\": \"High-quality noise-cancelling headphones with 30-hour battery life\",\n                \"skuCode\": \"WBH-001-BLK\",\n                \"categoryName\": \"Electronics\",\n                \"brandName\": \"Sony\",\n                \"price\": 4999,\n                \"status\": \"PENDING_APPROVAL\",\n                \"stock\": 0,\n                \"createdAtUtc\": \"2026-06-26T23:57:32Z\"\n            }\n        ],\n        \"totalProducts\": 3,\n        \"currentPage\": 0,\n        \"pageSize\": 10\n    }\n}"
+              "body": "{\n    \"success\": true,\n    \"message\": \"Vendor products retrieved successfully\",\n    \"data\": {\n        \"products\": [\n            {\n                \"productId\": \"019ed714-ddc1-7374-b33f-87b3e8ee079d\",\n                \"productName\": \"Dell XPS 15\",\n                \"description\": \"Premium performance laptop\",\n                \"skuCode\": \"LAP-DELL-XPS15-001\",\n                \"categoryName\": \"Laptops\",\n                \"brandName\": \"Dell\",\n                \"price\": 159999,\n                \"status\": \"APPROVED\",\n                \"imageUrls\": [],\n                \"stock\": 50,\n                \"createdAtUtc\": \"2025-07-22T20:00:00Z\"\n            },\n            {\n                \"productId\": \"019ed714-ddbf-7364-8528-7407e10a7da1\",\n                \"productName\": \"Samsung Galaxy S24 Ultra\",\n                \"description\": \"Samsung flagship smartphone\",\n                \"skuCode\": \"MOB-SAMSUNG-S24-001\",\n                \"categoryName\": \"Mobile Phones\",\n                \"brandName\": \"Samsung\",\n                \"price\": 129999,\n                \"status\": \"APPROVED\",\n                \"imageUrls\": [],\n                \"stock\": 100,\n                \"createdAtUtc\": \"2025-03-10T15:30:00Z\"\n            },\n            {\n                \"productId\": \"019f094b-13b4-73ff-ac5e-ba77676ad886\",\n                \"productName\": \"Dummy Product For Lazy Delete Testing\",\n                \"description\": \"This item is injected directly via SQL to test your delete endpoint.\",\n                \"skuCode\": \"TEST-LAZY-DELETE-999\",\n                \"categoryName\": \"Laptops\",\n                \"brandName\": \"Dell\",\n                \"price\": 999,\n                \"status\": \"DELETED\",\n                \"imageUrls\": [],\n                \"stock\": 0,\n                \"createdAtUtc\": \"2026-06-28T00:35:42Z\"\n            },\n            {\n                \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n                \"productName\": \"Wireless Bluetooth Headphones\",\n                \"description\": \"High-quality noise-cancelling headphones with 30-hour battery life\",\n                \"skuCode\": \"WBH-001-BLK\",\n                \"categoryName\": \"Electronics\",\n                \"brandName\": \"Sony\",\n                \"price\": 4999,\n                \"status\": \"APPROVED\",\n                \"imageUrls\": [\n                    \"https://res.cloudinary.com/htkqvmgi/image/upload/v1784456142/product_adda/products/019f79df-c74c-71b8-af33-3437230efe79.png\"\n                ],\n                \"stock\": 150,\n                \"createdAtUtc\": \"2026-06-26T23:57:32Z\"\n            }\n        ],\n        \"totalProducts\": 4,\n        \"currentPage\": 0,\n        \"pageSize\": 10\n    }\n}"
             }
           ]
         },
@@ -8159,7 +8159,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -8178,7 +8178,507 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports/system-health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports",
+                    "system-health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:23:01 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"System health retrieved\",\n    \"data\": {\n        \"overallStatus\": \"CRITICAL\",\n        \"healthScore\": 50,\n        \"databaseStatus\": \"DEGRADED\",\n        \"databaseLatencyMs\": 350,\n        \"cacheStatus\": \"NOT_CONFIGURED\",\n        \"s3Status\": \"NOT_CONFIGURED\",\n        \"workerStatus\": \"NOT_IMPLEMENTED\",\n        \"workerPendingJobsCount\": 0,\n        \"workerFailedJobsLast24hCount\": 0,\n        \"materializedViewsStatus\": \"CRITICAL\",\n        \"materializedViewsFreshnessAgeMinutes\": null,\n        \"checkedAtUtc\": \"2026-07-19T10:23:01.7166423\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/products/{productId}/images",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                  "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/products/:productId/images",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                ":productId",
+                "images"
+              ],
+              "variable": [
+                {
+                  "key": "productId",
+                  "value": "019f052f-e3aa-7ad5-8b4a-902f891050d4"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "401 Unauthorized TOKEN_EXPIRED",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                      "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "images"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "140"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 15:09:44 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"The provided access token has expired. Please use a refresh token.\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"TOKEN_EXPIRED\"\n    }\n}"
+            },
+            {
+              "name": "500 Internal Server Error Required part 'image' is not present.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                      "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "images"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 15:13:31 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Required part 'image' is not present.\",\n    \"error\": {\n        \"code\": 500,\n        \"type\": \"INTERNAL_SERVER_ERROR\"\n    }\n}"
+            },
+            {
+              "name": "413 Request Entity Too Large Maximum upload size exceeded",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                      "src": "/C:/Users/ADMIN/Downloads/BlackMarble_2016_1200m_australia_labeled.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
+                    "images"
+                  ]
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 27 Jun 2026 16:33:20 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Maximum upload size exceeded\",\n    \"error\": {\n        \"code\": 413,\n        \"type\": \"413 PAYLOAD_TOO_LARGE\"\n    }\n}"
+            },
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "image",
+                      "type": "file",
+                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
+                      "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/:productId/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    ":productId",
+                    "images"
+                  ],
+                  "variable": [
+                    {
+                      "key": "productId",
+                      "value": "019f052f-e3aa-7ad5-8b4a-902f891050d4"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:15:42 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Product image uploaded successfully\",\n    \"data\": {\n        \"imageId\": \"019f79df-c74c-71b8-af33-3437230efe79\",\n        \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n        \"imageUrl\": \"https://res.cloudinary.com/htkqvmgi/image/upload/v1784456142/product_adda/products/019f79df-c74c-71b8-af33-3437230efe79.png\",\n        \"displayOrder\": 1,\n        \"altText\": \"Wireless Bluetooth Headphones image 1\",\n        \"uploadedAtUtc\": \"2026-07-19T10:15:42.470393400Z\"\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/reports/statistics",
@@ -8208,6 +8708,119 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "/api/notifications/analytics/vendor",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/analytics/vendor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "analytics",
+                "vendor"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/analytics/vendor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "analytics",
+                    "vendor"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:29:20 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Vendor notification analytics retrieved successfully\",\n    \"data\": {\n        \"vendorId\": \"019ed70e-d90f-74f9-b2bb-84253cb5ba52\",\n        \"dateFrom\": \"2026-06-19T10:29:20.2198954\",\n        \"dateTo\": \"2026-07-19T10:29:20.2198954\",\n        \"byEvent\": {}\n    }\n}"
+            }
+          ]
         }
       ]
     },
@@ -10865,6 +11478,341 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "/api/notifications/health",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "health"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "403 Forbidden Admin role required to access this endpoint",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "health"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:26:48 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Admin role required to access this endpoint\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/notifications/analytics/admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/analytics/admin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "analytics",
+                "admin"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "403 Forbidden Admin role required to access this endpoint",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/analytics/admin",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "analytics",
+                    "admin"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:28:46 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Admin role required to access this endpoint\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "/api/notifications/templates",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/templates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "templates"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "403 Forbidden Admin role required to access this endpoint",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/templates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "templates"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:30:35 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Admin role required to access this endpoint\",\n    \"error\": {\n        \"code\": 403,\n        \"type\": \"FORBIDDEN\"\n    }\n}"
+            }
+          ]
         }
       ]
     },
@@ -14059,412 +15007,6 @@
               ],
               "cookie": [],
               "body": "{\n    \"success\": true,\n    \"message\": \"Product deleted successfully and marked as ARCHIVED\",\n    \"data\": {\n        \"productId\": \"019f094b-13b4-73ff-ac5e-ba77676ad886\",\n        \"vendorId\": \"019ed70e-d90f-74f9-b2bb-84253cb5ba52\",\n        \"productName\": \"Dummy Product For Lazy Delete Testing\",\n        \"description\": null,\n        \"skuCode\": null,\n        \"categoryId\": null,\n        \"brandId\": null,\n        \"price\": null,\n        \"discountPrice\": null,\n        \"stockQuantity\": null,\n        \"status\": \"DELETED\",\n        \"createdAtUtc\": \"2026-06-27T13:41:28.533237900Z\"\n    }\n}"
-            }
-          ]
-        },
-        {
-          "name": "/api/products/{productId}/images",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJpYXQiOjE3ODI1NzcyMzIsImV4cCI6MTc4MjU4MDgzMn0.gDxKCWrQ2U5DSoRPw3mCF_h8nXsbLoJMMJpmc4lpxz_2WPtQXShpwLa2SIQIpNMM",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "formdata",
-              "formdata": [
-                {
-                  "key": "image",
-                  "type": "file",
-                  "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
-                  "src": "/C:/Users/ADMIN/Downloads/BlackMarble_2016_1200m_australia_labeled.png"
-                }
-              ]
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "products",
-                "019f052f-e3aa-7ad5-8b4a-902f891050d4",
-                "images"
-              ]
-            }
-          },
-          "response": [
-            {
-              "name": "401 Unauthorized TOKEN_EXPIRED",
-              "originalRequest": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "file",
-                      "type": "file",
-                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
-                      "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "products",
-                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
-                    "images"
-                  ]
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Vary",
-                  "value": "Origin"
-                },
-                {
-                  "key": "Vary",
-                  "value": "Access-Control-Request-Method"
-                },
-                {
-                  "key": "Vary",
-                  "value": "Access-Control-Request-Headers"
-                },
-                {
-                  "key": "X-Content-Type-Options",
-                  "value": "nosniff"
-                },
-                {
-                  "key": "X-XSS-Protection",
-                  "value": "0"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, no-store, max-age=0, must-revalidate"
-                },
-                {
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "key": "Expires",
-                  "value": "0"
-                },
-                {
-                  "key": "X-Frame-Options",
-                  "value": "DENY"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Content-Length",
-                  "value": "140"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sat, 27 Jun 2026 15:09:44 GMT"
-                },
-                {
-                  "key": "Keep-Alive",
-                  "value": "timeout=60"
-                },
-                {
-                  "key": "Connection",
-                  "value": "keep-alive"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": false,\n    \"message\": \"The provided access token has expired. Please use a refresh token.\",\n    \"error\": {\n        \"code\": 401,\n        \"type\": \"TOKEN_EXPIRED\"\n    }\n}"
-            },
-            {
-              "name": "500 Internal Server Error Required part 'image' is not present.",
-              "originalRequest": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "file",
-                      "type": "file",
-                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
-                      "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "products",
-                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
-                    "images"
-                  ]
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Vary",
-                  "value": "Origin"
-                },
-                {
-                  "key": "Vary",
-                  "value": "Access-Control-Request-Method"
-                },
-                {
-                  "key": "Vary",
-                  "value": "Access-Control-Request-Headers"
-                },
-                {
-                  "key": "X-Content-Type-Options",
-                  "value": "nosniff"
-                },
-                {
-                  "key": "X-XSS-Protection",
-                  "value": "0"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, no-store, max-age=0, must-revalidate"
-                },
-                {
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "key": "Expires",
-                  "value": "0"
-                },
-                {
-                  "key": "X-Frame-Options",
-                  "value": "DENY"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Transfer-Encoding",
-                  "value": "chunked"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sat, 27 Jun 2026 15:13:31 GMT"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": false,\n    \"message\": \"Required part 'image' is not present.\",\n    \"error\": {\n        \"code\": 500,\n        \"type\": \"INTERNAL_SERVER_ERROR\"\n    }\n}"
-            },
-            {
-              "name": "201 Created",
-              "originalRequest": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "image",
-                      "type": "file",
-                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
-                      "src": "/C:/Users/ADMIN/OneDrive/Pictures/assets/wireless-bluetooth-headphones.png"
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "products",
-                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
-                    "images"
-                  ]
-                }
-              },
-              "status": "Created",
-              "code": 201,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Vary",
-                  "value": "Origin"
-                },
-                {
-                  "key": "Vary",
-                  "value": "Access-Control-Request-Method"
-                },
-                {
-                  "key": "Vary",
-                  "value": "Access-Control-Request-Headers"
-                },
-                {
-                  "key": "X-Content-Type-Options",
-                  "value": "nosniff"
-                },
-                {
-                  "key": "X-XSS-Protection",
-                  "value": "0"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, no-store, max-age=0, must-revalidate"
-                },
-                {
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "key": "Expires",
-                  "value": "0"
-                },
-                {
-                  "key": "X-Frame-Options",
-                  "value": "DENY"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Transfer-Encoding",
-                  "value": "chunked"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sat, 27 Jun 2026 15:48:16 GMT"
-                },
-                {
-                  "key": "Keep-Alive",
-                  "value": "timeout=60"
-                },
-                {
-                  "key": "Connection",
-                  "value": "keep-alive"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": true,\n    \"message\": \"Product image uploaded successfully\",\n    \"data\": {\n        \"imageId\": \"019f09c4-6e33-72a4-a211-a49cb8a6eb22\",\n        \"productId\": \"019f052f-e3aa-7ad5-8b4a-902f891050d4\",\n        \"imageUrl\": \"/uploads/products/019f09c4-6e33-72a4-a211-a49cb8a6eb22.png\",\n        \"displayOrder\": 1,\n        \"altText\": \"Wireless Bluetooth Headphones image 1\",\n        \"uploadedAtUtc\": \"2026-06-27T15:48:16.257731800Z\"\n    }\n}"
-            },
-            {
-              "name": "413 Request Entity Too Large Maximum upload size exceeded",
-              "originalRequest": {
-                "method": "POST",
-                "header": [],
-                "body": {
-                  "mode": "formdata",
-                  "formdata": [
-                    {
-                      "key": "image",
-                      "type": "file",
-                      "uuid": "25d3dd24-4264-4ad7-af87-1bc39448d7f6",
-                      "src": "/C:/Users/ADMIN/Downloads/BlackMarble_2016_1200m_australia_labeled.png"
-                    }
-                  ]
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/api/products/019f052f-e3aa-7ad5-8b4a-902f891050d4/images",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "api",
-                    "products",
-                    "019f052f-e3aa-7ad5-8b4a-902f891050d4",
-                    "images"
-                  ]
-                }
-              },
-              "status": "Request Entity Too Large",
-              "code": 413,
-              "_postman_previewlanguage": null,
-              "header": [
-                {
-                  "key": "Vary",
-                  "value": "Origin"
-                },
-                {
-                  "key": "Vary",
-                  "value": "Access-Control-Request-Method"
-                },
-                {
-                  "key": "Vary",
-                  "value": "Access-Control-Request-Headers"
-                },
-                {
-                  "key": "X-Content-Type-Options",
-                  "value": "nosniff"
-                },
-                {
-                  "key": "X-XSS-Protection",
-                  "value": "0"
-                },
-                {
-                  "key": "Cache-Control",
-                  "value": "no-cache, no-store, max-age=0, must-revalidate"
-                },
-                {
-                  "key": "Pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "key": "Expires",
-                  "value": "0"
-                },
-                {
-                  "key": "X-Frame-Options",
-                  "value": "DENY"
-                },
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "Transfer-Encoding",
-                  "value": "chunked"
-                },
-                {
-                  "key": "Date",
-                  "value": "Sat, 27 Jun 2026 16:33:20 GMT"
-                },
-                {
-                  "key": "Connection",
-                  "value": "close"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n    \"success\": false,\n    \"message\": \"Maximum upload size exceeded\",\n    \"error\": {\n        \"code\": 413,\n        \"type\": \"413 PAYLOAD_TOO_LARGE\"\n    }\n}"
             }
           ]
         },
@@ -21062,7 +21604,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -21091,7 +21633,99 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/my-notifications?page=0&pageSize=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "my-notifications"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:25:45 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"In-app notifications retrieved successfully\",\n    \"data\": {\n        \"notifications\": [],\n        \"totalCount\": 0,\n        \"page\": 0,\n        \"pageSize\": 20\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/notifications/health/live",
@@ -21114,7 +21748,90 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/health/live",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "health",
+                    "live"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:24:58 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Notification queue processor is alive\",\n    \"data\": {\n        \"workerName\": \"notification_queue_processor\",\n        \"isHealthy\": true,\n        \"lastProcessedAtUtc\": \"2026-07-19T10:24:48\",\n        \"processedCount\": 0,\n        \"secondsSinceLastRun\": 10,\n        \"queueDepth\": 0\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/notifications/preferences",
@@ -21124,7 +21841,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -21143,7 +21860,89 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/preferences",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "preferences"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:26:16 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Notification preferences retrieved successfully\",\n    \"data\": {\n        \"preferenceId\": \"019f79e9-8a39-7286-adcf-3286ec223e85\",\n        \"notificationsEnabled\": true,\n        \"emailEnabled\": true,\n        \"smsEnabled\": false,\n        \"pushEnabled\": false,\n        \"inAppEnabled\": true,\n        \"quietHoursStart\": \"22:00\",\n        \"quietHoursEnd\": \"08:00\",\n        \"eventOptOuts\": [],\n        \"updatedAtUtc\": null\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/notifications/preferences",
@@ -21227,35 +22026,6 @@
                 "api",
                 "notifications",
                 "mark-all-read"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/api/notifications/templates",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/notifications/templates",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "notifications",
-                "templates"
               ]
             }
           },
@@ -21399,7 +22169,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -21418,7 +22188,89 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/history",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "history"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:28:07 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Notification history retrieved successfully\",\n    \"data\": {\n        \"notifications\": [],\n        \"totalCount\": 0,\n        \"page\": 0,\n        \"pageSize\": 20\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/notifications/history?channel=EMAIL&eventType=ORDER_CANCELLED",
@@ -21428,7 +22280,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -21457,96 +22309,99 @@
               ]
             }
           },
-          "response": []
-        },
-        {
-          "name": "/api/notifications/analytics/admin",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
-                  "type": "string"
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/history?channel=EMAIL&eventType=ORDER_CANCELLED",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "history"
+                  ],
+                  "query": [
+                    {
+                      "key": "channel",
+                      "value": "EMAIL"
+                    },
+                    {
+                      "key": "eventType",
+                      "value": "ORDER_CANCELLED"
+                    }
+                  ]
                 }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/notifications/analytics/admin",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "notifications",
-                "analytics",
-                "admin"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/api/notifications/analytics/vendor",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
                 {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/notifications/analytics/vendor",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "notifications",
-                "analytics",
-                "vendor"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "/api/notifications/health",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+                  "key": "Vary",
+                  "value": "Origin"
+                },
                 {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
-                  "type": "string"
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:28:26 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
                 }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/notifications/health",
-              "host": [
-                "{{baseUrl}}"
               ],
-              "path": [
-                "api",
-                "notifications",
-                "health"
-              ]
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Notification history retrieved successfully\",\n    \"data\": {\n        \"notifications\": [],\n        \"totalCount\": 0,\n        \"page\": 0,\n        \"pageSize\": 20\n    }\n}"
             }
-          },
-          "response": []
+          ]
         },
         {
           "name": "/api/notifications/health/readiness",
@@ -21569,7 +22424,90 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/health/readiness",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "health",
+                    "readiness"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:29:53 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"System ready to accept notification events\",\n    \"data\": {\n        \"status\": \"ready\",\n        \"componentStatus\": {\n            \"in_app\": \"healthy\",\n            \"database\": \"healthy\",\n            \"queue_worker\": \"alive\",\n            \"sms\": \"inactive\",\n            \"email\": \"inactive\",\n            \"push\": \"inactive\"\n        },\n        \"failingComponents\": []\n    }\n}"
+            }
+          ]
         }
       ]
     },
@@ -21655,7 +22593,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -21674,7 +22612,89 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports/history",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports",
+                    "history"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:31:28 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Report history retrieved\",\n    \"data\": {\n        \"items\": [],\n        \"nextCursor\": null,\n        \"hasMore\": false\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/reports/history?status=PENDING&reportType=SALES&limit=5",
@@ -21684,7 +22704,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -21717,7 +22737,103 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports/history?status=PENDING&reportType=SALES&limit=5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports",
+                    "history"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "PENDING"
+                    },
+                    {
+                      "key": "reportType",
+                      "value": "SALES"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:32:00 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Report history retrieved\",\n    \"data\": {\n        \"items\": [],\n        \"nextCursor\": null,\n        \"hasMore\": false\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/reports/materialized-view-status",
@@ -21727,7 +22843,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -21746,7 +22862,89 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports/materialized-view-status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports",
+                    "materialized-view-status"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:32:15 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Snapshot table status retrieved\",\n    \"data\": {\n        \"lastRefreshAt\": null,\n        \"lastRefreshDurationMs\": null,\n        \"nextRefreshScheduledAt\": \"2026-07-20T02:00:00\",\n        \"viewFreshnessAgeMinutes\": null,\n        \"status\": \"STALE\",\n        \"salesAggregatesRowCount\": 0,\n        \"inventoryAggregatesRowCount\": 0\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/reports/system-health",
@@ -21756,7 +22954,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -21775,7 +22973,89 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports/system-health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports",
+                    "system-health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:32:50 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"System health retrieved\",\n    \"data\": {\n        \"overallStatus\": \"CRITICAL\",\n        \"healthScore\": 62,\n        \"databaseStatus\": \"OK\",\n        \"databaseLatencyMs\": 2,\n        \"cacheStatus\": \"NOT_CONFIGURED\",\n        \"s3Status\": \"NOT_CONFIGURED\",\n        \"workerStatus\": \"NOT_IMPLEMENTED\",\n        \"workerPendingJobsCount\": 0,\n        \"workerFailedJobsLast24hCount\": 0,\n        \"materializedViewsStatus\": \"CRITICAL\",\n        \"materializedViewsFreshnessAgeMinutes\": null,\n        \"checkedAtUtc\": \"2026-07-19T10:32:50.2846559\"\n    }\n}"
+            }
+          ]
         },
         {
           "name": "/api/reports/statistics",
@@ -21785,7 +23065,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkb25hbGR0cnVtcEB0cnVtcC5jb20iLCJ1c2VySWQiOiIwMTllZjQ2ZC05ZDg5LTc1Y2ItOTQ0OS02ZWYyNWZlYTQ1MDkiLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTc4NDAxMjg5NCwiZXhwIjoxNzg0MDE2NDk0fQ.hwQevwhzVHi4XUf_zOyWrP_lLdJf139Cfp0W3YjrhBqtwAXXXXBLR_ylkX3x2xKJ",
+                  "value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJyYWplc2hAdGVjaHNvbHV0aW9ucy5jb20iLCJ1c2VySWQiOiIwMTllZDcwZS1kOGY3LTdjOTgtOTlmNy0wMzA4NDY0NjY4ZDMiLCJyb2xlcyI6WyJWRU5ET1IiXSwiaWF0IjoxNzg0NDU1OTM3LCJleHAiOjE3ODQ0NTk1Mzd9.4JNyiM2pX_VFeTjBnQF5bF-UKITz6SdMKEHErH1ATiLn81JKs6j0Xhp9ZIzVOT56",
                   "type": "string"
                 }
               ]
@@ -21804,7 +23084,89 @@
               ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports/statistics",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports",
+                    "statistics"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Method"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Access-Control-Request-Headers"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "Pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "Expires",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 19 Jul 2026 10:33:06 GMT"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Report statistics retrieved\",\n    \"data\": {\n        \"totalToday\": 0,\n        \"successCount\": 0,\n        \"failureCount\": 0,\n        \"successRatePct\": null,\n        \"avgGenerationTimeMs\": null,\n        \"p50GenerationTimeMs\": null,\n        \"p95GenerationTimeMs\": null,\n        \"byReportType\": [],\n        \"maxJobsPerHour\": 100,\n        \"currentLoadPct\": 0,\n        \"healthWarning\": null,\n        \"checkedAtUtc\": \"2026-07-19T10:33:06.2393121\"\n    }\n}"
+            }
+          ]
         }
       ]
     }
